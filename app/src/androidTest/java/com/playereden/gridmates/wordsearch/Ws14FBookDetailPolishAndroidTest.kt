@@ -58,6 +58,8 @@ class Ws14FBookDetailPolishAndroidTest {
             }
         }
         compose.onNodeWithText("Book progress").assertExists()
+        compose.onNodeWithTag("book-detail-progress-panel").assertExists()
+        compose.onNodeWithTag("book-detail-page-panel-" + page.id).assertExists()
         compose.onNodeWithText("Getting Started").assertExists()
         compose.onNodeWithText("Getting Started · TEST").assertDoesNotExist()
         compose.onNodeWithText("TEST BOOK").assertDoesNotExist()
