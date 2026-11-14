@@ -1,16 +1,13 @@
 package com.playereden.gridmates.wordsearch
 
-import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.Card
-import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.FilterChip
 import androidx.compose.material3.TextButton
@@ -23,6 +20,8 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.playereden.gridmates.wordsearch.core.SoloProfile
@@ -59,13 +58,37 @@ internal fun SoloRecordsScreen(profile: SoloProfile) {
     // above Race/Duel makes the selected match history inaccessible without
     // scrolling past unrelated statistics on compact screens.
     if (journalTab == "Solo") {
-    Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-        MetricCard("Completed", profile.completions.toString(), Modifier.weight(1f))
-        MetricCard("Words found", profile.totalWords.toString(), Modifier.weight(1f))
-        MetricCard("With hints", profile.assistedCompletions.toString(), Modifier.weight(1f))
+    // WS16BT: three compressed metrics on a narrow phone truncate labels.
+    // Keep all values visible and readable at larger system font scales.
+    BoxWithConstraints(Modifier.fillMaxWidth().testTag("ws16bt-solo-metrics")) {
+        val fontScale = LocalDensity.current.fontScale
+        if (fontScale >= 1.8f) {
+            Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
+                MetricCard("Completed", profile.completions.toString(), Modifier.fillMaxWidth())
+                MetricCard("Words found", profile.totalWords.toString(), Modifier.fillMaxWidth())
+                MetricCard("With hints", profile.assistedCompletions.toString(), Modifier.fillMaxWidth())
+            }
+        } else if (maxWidth < 350.dp || fontScale >= 1.3f) {
+            Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
+                Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                    MetricCard("Completed", profile.completions.toString(), Modifier.weight(1f))
+                    MetricCard("Words found", profile.totalWords.toString(), Modifier.weight(1f))
+                }
+                MetricCard("With hints", profile.assistedCompletions.toString(), Modifier.fillMaxWidth())
+            }
+        } else {
+            Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                MetricCard("Completed", profile.completions.toString(), Modifier.weight(1f))
+                MetricCard("Words found", profile.totalWords.toString(), Modifier.weight(1f))
+                MetricCard("With hints", profile.assistedCompletions.toString(), Modifier.weight(1f))
+            }
+        }
     }
 
-    Card(Modifier.fillMaxWidth()) {
+    GridMatesIllustratedFrame(
+            modifier = Modifier.fillMaxWidth(),
+            variant = GridMatesFrameVariant.PANEL
+        ) {
         Column(Modifier.padding(12.dp)) {
             Text("Daily Journal", color = Forest, fontWeight = FontWeight.SemiBold)
             Text(profile.dailyCompletions.toString() + " dated challenges completed · " +
@@ -97,7 +120,10 @@ internal fun SoloRecordsScreen(profile: SoloProfile) {
         }
     }
     if (profile.raceResults.isEmpty()) {
-        Card(Modifier.fillMaxWidth()) {
+        GridMatesIllustratedFrame(
+            modifier = Modifier.fillMaxWidth(),
+            variant = GridMatesFrameVariant.PANEL
+        ) {
             Column(Modifier.padding(14.dp)) {
                 Text("No Versus matches recorded yet.",
                     fontWeight = FontWeight.SemiBold, color = Forest)
@@ -110,7 +136,10 @@ internal fun SoloRecordsScreen(profile: SoloProfile) {
             fontWeight = FontWeight.SemiBold)
         val page = racePage.coerceIn(0, (profile.raceResults.size - 1).coerceAtLeast(0) / 4)
         profile.raceResults.drop(page * 4).take(4).forEach { race ->
-            Card(Modifier.fillMaxWidth()) {
+            GridMatesIllustratedFrame(
+            modifier = Modifier.fillMaxWidth(),
+            variant = GridMatesFrameVariant.PANEL
+        ) {
                 Column(Modifier.padding(12.dp),
                     verticalArrangement = Arrangement.spacedBy(4.dp)) {
                     Row(Modifier.fillMaxWidth(),
@@ -156,7 +185,10 @@ internal fun SoloRecordsScreen(profile: SoloProfile) {
         }
     }
     if (profile.duelResults.isEmpty()) {
-        Card(Modifier.fillMaxWidth()) {
+        GridMatesIllustratedFrame(
+            modifier = Modifier.fillMaxWidth(),
+            variant = GridMatesFrameVariant.PANEL
+        ) {
             Column(Modifier.padding(14.dp)) {
                 Text("No Speed Duels recorded yet.",
                     fontWeight = FontWeight.SemiBold, color = Forest)
@@ -168,7 +200,10 @@ internal fun SoloRecordsScreen(profile: SoloProfile) {
         Text("Recent Speed Duels", color = Forest, fontWeight = FontWeight.SemiBold)
         val page = duelPage.coerceIn(0, (profile.duelResults.size - 1).coerceAtLeast(0) / 4)
         profile.duelResults.drop(page * 4).take(4).forEach { duel ->
-            Card(Modifier.fillMaxWidth()) {
+            GridMatesIllustratedFrame(
+            modifier = Modifier.fillMaxWidth(),
+            variant = GridMatesFrameVariant.PANEL
+        ) {
                 Column(Modifier.padding(12.dp),
                     verticalArrangement = Arrangement.spacedBy(4.dp)) {
                     Row(Modifier.fillMaxWidth(),
@@ -197,7 +232,10 @@ internal fun SoloRecordsScreen(profile: SoloProfile) {
     Text("Recent puzzles", color = Forest,
         style = MaterialTheme.typography.titleLarge, fontWeight = FontWeight.Bold)
     if (profile.results.isEmpty()) {
-        Card(Modifier.fillMaxWidth()) {
+        GridMatesIllustratedFrame(
+            modifier = Modifier.fillMaxWidth(),
+            variant = GridMatesFrameVariant.PANEL
+        ) {
             Column(Modifier.padding(16.dp)) {
                 Text("Your story starts with a puzzle.", fontWeight = FontWeight.SemiBold)
                 Text("Finish a Solo game and you'll see it here.",
@@ -207,7 +245,10 @@ internal fun SoloRecordsScreen(profile: SoloProfile) {
     } else {
         val page = soloPage.coerceIn(0, (profile.results.size - 1).coerceAtLeast(0) / 4)
         for (record in profile.results.drop(page * 4).take(4)) {
-            Card(Modifier.fillMaxWidth()) {
+            GridMatesIllustratedFrame(
+            modifier = Modifier.fillMaxWidth(),
+            variant = GridMatesFrameVariant.PANEL
+        ) {
                 Column(Modifier.padding(14.dp), verticalArrangement = Arrangement.spacedBy(4.dp)) {
                     Row(Modifier.fillMaxWidth(),
                         horizontalArrangement = Arrangement.SpaceBetween) {
@@ -264,10 +305,9 @@ private fun JournalPages(count: Int, page: Int, pageSize: Int, onPage: (Int) -> 
 
 @Composable
 private fun MetricCard(label: String, amount: String, modifier: Modifier = Modifier) {
-    Card(modifier,
-        colors = CardDefaults.cardColors(containerColor = Paper),
-        shape = RoundedCornerShape(16.dp),
-        border = BorderStroke(1.dp, StorybookTokens.panelBorder)
+    GridMatesIllustratedFrame(
+        modifier = modifier.testTag("ws16bt-metric-" + label.lowercase().replace(" ", "-")),
+        variant = GridMatesFrameVariant.PANEL
     ) {
         Column(Modifier.padding(horizontal = 8.dp, vertical = 12.dp),
             verticalArrangement = Arrangement.spacedBy(5.dp)) {

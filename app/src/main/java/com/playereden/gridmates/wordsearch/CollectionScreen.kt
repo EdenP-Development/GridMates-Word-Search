@@ -174,7 +174,8 @@ internal fun CollectionScreen(store: SoloStore) {
     // The selected collection tab must open to its content immediately,
     // not below a full-page profile header. Keep profile/dossier in Portraits.
     if (collectionTab == "Portraits") {
-        PaperPanel(Modifier.fillMaxWidth()) {
+        // Keep player identity and editable name together in the shared frame.
+        GridMatesInfoPanel(Modifier.fillMaxWidth().testTag("ws16bt-collection-profile")) {
             PaperEyebrow("Player profile")
             Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(12.dp),
                 verticalAlignment = Alignment.CenterVertically) {
@@ -291,7 +292,7 @@ internal fun CollectionScreen(store: SoloStore) {
 
         // History/progress is still available, but after the actual gallery.
         // The portrait pager and equip choices come first on a phone.
-        PaperPanel(Modifier.fillMaxWidth()) {
+        GridMatesInfoPanel(Modifier.fillMaxWidth().testTag("ws16bt-collection-progress")) {
             PaperEyebrow("Collection progress")
             Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween,
                 verticalAlignment = Alignment.CenterVertically) {
@@ -441,7 +442,7 @@ private fun PortraitCard(
 
 @Composable
 private fun AchievementCard(item: AchievementProgress) {
-    PaperPanel(Modifier.fillMaxWidth()) {
+    GridMatesInfoPanel(Modifier.fillMaxWidth().testTag("ws16bt-achievement-" + item.achievement.id)) {
         Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(8.dp),
             verticalAlignment = Alignment.CenterVertically) {
             Text(item.title, fontWeight = FontWeight.SemiBold, color = Forest,
