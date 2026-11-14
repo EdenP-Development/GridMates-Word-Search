@@ -40,6 +40,8 @@ class CollectionGalleryPagingAndroidTest {
             }
             compose.onNodeWithText("Your Collection").assertIsDisplayed()
             compose.onNodeWithText("Edit display name").assertExists()
+            compose.onNodeWithTag("ws16bt-collection-profile").assertExists()
+            compose.onNodeWithTag("ws16bt-collection-progress").assertExists()
             compose.onNodeWithText("COLLECTION PROGRESS").assertExists()
             // Gallery navigation must be visible on first entry, without scrolling
             // past profile and lifetime progress cards.
@@ -49,6 +51,7 @@ class CollectionGalleryPagingAndroidTest {
                 .performScrollTo().assertIsDisplayed()
 
             compose.onNodeWithText("Achievements").performScrollTo().performClick()
+            compose.onNodeWithTag("ws16bt-achievement-first_puzzle").assertExists()
             // The pager should be directly visible below the achievements
             // introduction, not buried beneath four long cards.
             compose.onNodeWithTag("achievements-next")
