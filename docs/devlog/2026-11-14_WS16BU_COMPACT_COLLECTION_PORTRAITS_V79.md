@@ -25,3 +25,16 @@ Check exact conclusions, APK integrity/signature and unchanged art before handin
 - Check Profile stats and local display name; verify Fonts, Achievements, Records Solo/Race/Duel unchanged; actual save/reopen and Nearby two-device test still pending.
 - No new image/font assets or changed Library cabinet, gameplay, stored puzzle formats, unlock thresholds or art rights/approval.
 - Keep PR #131 DRAFT, do not uninstall the app, and do not merge or claim production approval from compiled CI.
+
+## Final exact-source GitHub QA / signed APK receipt
+
+Compiled candidate SHA f5069f65244e805f6f821d7a306bdff5215ee3c3. Subsequent documentation-only commits are NOT separate APK builds.
+- Android QA run https://github.com/PlayerEden/GridMates-Word-Search/actions/runs/43646063049: SUCCESS, 76/76 steps.
+- Independent artwork/release QA run https://github.com/PlayerEden/GridMates-Word-Search/actions/runs/43646063039: SUCCESS, 77/77 steps. Both runs used the same compiled source and regression suite, including the updated historical WS16BB guard.
+- Standard signed QA artifact ZIP https://github.com/PlayerEden/GridMates-Word-Search/actions/runs/43646063049/artifacts/14134286557 : SHA256 c59d8f813976bb9159d32e3baf6addedc8154d24fc6076fe2bb2dab39ae4b6c7. Embedded app-debug.apk 30,491,036 bytes, SHA256 f1807a7b14700731a13193e54006cee8a5859a6da2186797650023f26e029f6a.
+- Independent debug art artifact https://github.com/PlayerEden/GridMates-Word-Search/actions/runs/43646063039/artifacts/14134272311 : ZIP SHA256 110f6937cc1e1f7547cbe5457fae67476597c9148e39476c90c6fe403fafcb5a.
+- Downloaded artifact archives passed ZIP integrity checks. Compared the two independently built v79 APKs: 360/360 unpacked entries byte-identical; the outer APK ZIP files may differ due to packing/signature metadata.
+- Compared signed standard v79 with verified v78: 219/219 packaged assets unchanged; only AndroidManifest.xml and classes4.dex bytes differ. No new imagery or production art promoted.
+- Parsed actual Android APK Signature Scheme v2 signer certificates from v78 and v79; identical SHA256 75cc3c896247d71fbd51f7a3ed41f90c8218a8a5a70df8c0f6b494b5cc23d419. Same QA signing configuration; install directly over v78 WITHOUT uninstalling or clearing local data.
+- This verifies build integrity, source checks, reproducible art/release isolation and Android test-source compilation. Android instrumentation tests were not executed on a handset/emulator by these two CI runs; owner must inspect actual portrait density, equip behavior, font scaling, scroll/pager, real save persistence, Fonts/Achievements/Records and other functional gates.
+- PR #131 remains DRAFT, with no merge/release approval.
