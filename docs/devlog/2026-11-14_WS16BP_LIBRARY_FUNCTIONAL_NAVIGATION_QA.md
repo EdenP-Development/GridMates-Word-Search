@@ -45,3 +45,33 @@ Source implementation [`6f0ccaa46840006d13918e81fcb32a767a8ad94b`](https://githu
 5. QA release art and visual design remain pending owner signoff; keep PR #131 DRAFT and preserve rollback v74 artifact.
 
 No claim of device test execution or production release approval is made.
+
+## Owner phone screenshot batch — first-play route (November 14, v75)
+
+Owner supplied **seven sequential real-phone screenshots** in ChatGPT covering Home, Library, Woodland physical-book preview, book details, Page 1 after a found word, a subsequent hint, and Game notices. Screenshots were inspected in the conversation; the image files are **not stored in this GitHub repository**.
+
+### Observed directly (visual only; don't equate to entire end-to-end test pass)
+
+1. **Home:** GridMates Word Search branding, featured Woodland cover, Full Library/Collection, Continue Solo, Daily/Together, Quick Play preview, Custom and My Puzzles all appear in the screenshot without visible overlap. Separate counters on Home: book Woodland `0/3 pages complete`; Solo save `0/16 words` — correct distinct progress concepts.
+2. **Modular Library:** owned Woodland, Space and Garden spines present; green buttons and wood-only bottom pager render after WS16BO; disabled Previous appears visually distinct. Screenshot alone doesn't demonstrate successful 1→2→3 navigation in v75.
+3. **Woodland physical preview:** modal displays the matching cover, `2 chapters · 0 of 3 pages completed`, TEST BOOK designation, Back to shelf and View pages. The working route is *suggested by the next screenshot*, not instrumented.
+4. **Book details:** accessible Woodland book hero; Start solving and chapter 1 Getting Started / Page 1 (12×12 Relaxed) / Page 2 (15×15 Classic) cards shown. Second card is cut at the viewport bottom due to normal scrollable content; no clipping defect established.
+5. **Puzzle playing:** Woodland Page 1 12×12 board, MUSHROOM highlighted vertically, word-list entry checked, count `1 of 12 words found` and `Words · 11 left`; elapsed time progresses between consecutive screenshots from 0m 5s to 0m 10s. This demonstrates in-session state and UI response, **not disk reload yet**.
+6. **Hint feedback:** first hint toast `Hint: look for a 6-letter word.` appears. It is valid first-stage progressive guidance but may feel weak if the user expects an extremely capable Coach; future usability evaluation, not a bug in this pass.
+7. **Game notices:** modal displays both `Hint: look for a 6-letter word.` and `✓ MUSHROOM found!` in expected recency order. In-session notice history is visually functioning.
+
+### Low-risk polish observations for a subsequent dedicated UX pass
+
+- The woodland preview is a relatively tall plain light dialog with substantial empty whitespace; visually less cohesive than the highly detailed immersive wooden cabinet. Preserve keyboard/screen-reader accessible native dialog behavior while considering a tighter book-preview layout.
+- Book details appear functional and legible, but the plain cards/white dialog are a distinct visual style from the bookcase. Don't change unapproved art or core progress/navigation simply to harmonize appearance.
+- The temporary success and hint toast sits over the bottom of the word-list area. It is transient, not a proven interaction blocker. Later consider safer positioning or interaction testing at large text sizes.
+- TEST BOOK is intentionally QA-only and should not appear as editorial production content.
+
+### Remains unverified; next owner test
+
+- **Critical:** exit Page 1, reopen Woodland Page 1, confirm that MUSHROOM remains found, and if possible confirm hint stages persisted; also relaunch the app to verify disk persistence after process restart.
+- **Critical:** finish a page and verify 1/3 completed in book details and Home, then verify Next page and replay behavior.
+- **Navigation:** Page 1 ↔ Woodland details ↔ physical Library, including system Back; tap both sides of bookcase pager, swipe, and see disabled last-page Next. Nine-book return-to-page-two case still needs actual device/emulator execution.
+- **Separate saves:** ensure the Home Continue Solo count (0/16) remains unaffected by book gameplay.
+
+Outcome: **promising early real-phone functional evidence, no observed blocking regression, not full physical QA acceptance.** Keep v75 design and PR #131 DRAFT while the above checks remain open.
