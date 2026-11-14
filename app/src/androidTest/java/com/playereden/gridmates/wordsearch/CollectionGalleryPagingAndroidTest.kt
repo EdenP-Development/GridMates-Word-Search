@@ -38,7 +38,15 @@ class CollectionGalleryPagingAndroidTest {
                     }
                 }
             }
-            compose.onNodeWithText("Your Collection").assertIsDisplayed()
+            compose.onNodeWithText("Earn portraits and fonts by finishing puzzles.", substring = true)
+                .assertIsDisplayed()
+            compose.onNodeWithTag("ws16bu-gallery").assertExists()
+            compose.onNodeWithText("Page 1 of 4").assertExists()
+            compose.onNodeWithTag("ws16bu-portrait-woodland_owl").assertExists()
+            compose.onNodeWithTag("ws16bu-portrait-woodland_fox").assertExists()
+            compose.onNodeWithTag("ws16bu-portrait-woodland_rabbit").assertExists()
+            compose.onNodeWithTag("ws16bu-portrait-woodland_bear").assertDoesNotExist()
+            compose.onNodeWithTag("ws16bu-equip-woodland_fox").assertExists()
             compose.onNodeWithText("Edit display name").assertExists()
             compose.onNodeWithTag("ws16bt-collection-profile").assertExists()
             compose.onNodeWithTag("ws16bt-collection-progress").assertExists()
@@ -47,8 +55,9 @@ class CollectionGalleryPagingAndroidTest {
             // past profile and lifetime progress cards.
             compose.onNodeWithTag("portraits-next")
                 .assertIsDisplayed().assertIsEnabled().performClick()
-            compose.onNodeWithText("Page 2 of", substring = true)
+            compose.onNodeWithText("Page 2 of 4")
                 .performScrollTo().assertIsDisplayed()
+            compose.onNodeWithTag("ws16bu-portrait-woodland_bear").assertExists()
 
             compose.onNodeWithText("Achievements").performScrollTo().performClick()
             compose.onNodeWithTag("ws16bt-achievement-first_puzzle").assertExists()
