@@ -197,7 +197,7 @@ internal fun GridMatesShell(
                 val target = if (page == Page.RECORDS || page == Page.COLLECTION)
                     sectionReturnPageName else Page.PLAY.name
                 Ws15BackHeader(
-                    title = page.label,
+                    title = if (page == Page.COLLECTION) "Your Collection" else page.label,
                     onBack = { pageName = target },
                     backLabel = if (target == Page.PROFILE.name)
                         "Back to Profile" else "Back to Home"
