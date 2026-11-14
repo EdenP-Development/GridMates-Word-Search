@@ -157,6 +157,8 @@ jobs:
         run: python3 -m unittest discover -s tools/asset_pipeline -p 'test_ws16bj_carved_title.py' -v
       - name: Verify WS16BN actual Play-green buttons and lowered bookcase layout
         run: python3 -m unittest discover -s tools/asset_pipeline -p 'test_ws16bn_green_layout.py' -v
+      - name: WS16BR shared asset crosswalk and Home/preview source QA
+        run: python3 -m unittest discover -s tools/asset_pipeline -p 'test_ws16br_asset_cohesion.py' -v
       - name: Verify WS16BM shared GridMates paper controls and palette
         run: python3 -m unittest discover -s tools/asset_pipeline -p 'test_ws16bm_shared_controls.py' -v
       - name: Verify WS16BL cabinet press depth, pager dots and accessibility
