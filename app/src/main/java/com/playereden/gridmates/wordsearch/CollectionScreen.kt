@@ -442,7 +442,7 @@ private fun PortraitCard(
 
 @Composable
 private fun AchievementCard(item: AchievementProgress) {
-    GridMatesInfoPanel(Modifier.fillMaxWidth().testTag("ws16bt-achievement-" + item.achievement.id)) {
+    GridMatesInfoPanel(Modifier.fillMaxWidth().testTag("ws16bt-achievement-" + item.id)) {
         Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(8.dp),
             verticalAlignment = Alignment.CenterVertically) {
             Text(item.title, fontWeight = FontWeight.SemiBold, color = Forest,
