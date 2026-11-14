@@ -33,8 +33,14 @@ import kotlin.math.ceil
  * This is a decorative drawing with no input/semantics. Other GridMates apps
  * can reuse it deliberately, without depending on Word Search or its books.
  */
+/** Opt-in Home richness; ordinary screens retain the quieter series paper. */
+internal enum class GridMatesPaperFinish { QUIET, STORYBOOK_HOME }
+
 @Composable
-internal fun GridMatesParchmentBackground(modifier: Modifier = Modifier) {
+internal fun GridMatesParchmentBackground(
+    modifier: Modifier = Modifier,
+    finish: GridMatesPaperFinish = GridMatesPaperFinish.QUIET
+) {
     val context = LocalContext.current
     val paperTooth = remember(context) {
         runCatching {
@@ -50,9 +56,10 @@ internal fun GridMatesParchmentBackground(modifier: Modifier = Modifier) {
         val h = size.height
         if (w <= 0f || h <= 0f) return@Canvas
         val unit = 1.dp.toPx()
+        val storybookHome = finish == GridMatesPaperFinish.STORYBOOK_HOME
 
-        // Quiet ivory base; tiny tonal changes rather than a painted room.
-        drawRect(Color(0xFFF5F1E7))
+        // Home-only patina; do not force decorative paper behind puzzle grids.
+        drawRect(if (storybookHome) Color(0xFFF7F0E2) else Color(0xFFF5F1E7))
         drawRect(brush = Brush.verticalGradient(listOf(
             Color(0x13FFF8E9), Color(0x00FFFDF5), Color(0x0AE6CB9C)
         )))
@@ -87,6 +94,30 @@ internal fun GridMatesParchmentBackground(modifier: Modifier = Modifier) {
             center = Offset(w*.94f, h*.83f)
         )
 
+        // WS16BR: reuse the existing paper-tooth texture, but give only Home
+        // a warmer watercolor edge and natural, low-contrast pigment blooms.
+        if (storybookHome) {
+            drawRect(brush = Brush.verticalGradient(listOf(
+                Color(0x17A66D31), Color(0x04D6B278), Color(0x13AF7A39)
+            )))
+            for (i in 0 until 28) {
+                val seed = (i * 1103515245) xor 0x6f13a
+                val fx = ((seed ushr 8) and 1023) / 1023f
+                val fy = ((seed ushr 19) and 1023) / 1023f
+                val edgeX = if (i % 2 == 0) w * (.015f + fx * .19f)
+                    else w * (.79f + fx * .195f)
+                val edgeY = h * fy
+                val radius = (8f + ((seed ushr 3) and 15)) * unit
+                drawCircle(
+                    brush = Brush.radialGradient(
+                        listOf(Color(0x0DA67A44), Color.Transparent),
+                        center = Offset(edgeX, edgeY), radius = radius
+                    ),
+                    radius = radius, center = Offset(edgeX, edgeY)
+                )
+            }
+        }
+
         // Deliberately restrained, deterministic flecks: no random flicker,
         // no bitmap resampling, and no seams at unusual aspect ratios.
         val cell = 18f*unit
@@ -102,7 +133,10 @@ internal fun GridMatesParchmentBackground(modifier: Modifier = Modifier) {
                 if (cx < w && cy < h) {
                     drawCircle(
                         color = if ((seed and 1) == 0)
-                            Color(0x0DA27842) else Color(0x11FFFFFF),
+                            (if (storybookHome) Color(0x28A27842)
+                             else Color(0x0DA27842))
+                            else (if (storybookHome) Color(0x1CFFFFFF)
+                             else Color(0x11FFFFFF)),
                         radius = (.29f + (seed and 7)*.08f)*unit,
                         center = Offset(cx,cy)
                     )
@@ -126,11 +160,37 @@ internal fun GridMatesParchmentBackground(modifier: Modifier = Modifier) {
                     val dy = ((seed ushr 3) and 3)*.48f*unit
                     drawLine(
                         color = if ((seed and 1) == 0)
-                            Color(0x14B08C5A) else Color(0x13FFFFFF),
+                            (if (storybookHome) Color(0x34B08C5A)
+                             else Color(0x14B08C5A))
+                            else (if (storybookHome) Color(0x22FFFFFF)
+                             else Color(0x13FFFFFF)),
                         start = Offset(fx,fy),
                         end = Offset((fx+dx).coerceAtMost(w),
                             (fy+dy).coerceAtMost(h)),
                         strokeWidth = .33f*unit
+                    )
+                }
+            }
+        }
+
+        // Home's faint close-up grain stays deterministic and is skipped
+        // everywhere else; no repaint animation or bitmap/network loading.
+        if (storybookHome) {
+            val grainCell = 22f * unit
+            val grainCols = ceil(w / grainCell).toInt().coerceAtMost(120)
+            val grainRows = ceil(h / grainCell).toInt().coerceAtMost(150)
+            for (y in 0..grainRows) for (x in 0..grainCols) {
+                val seed = (x * 92821) xor (y * 68917) xor 0x31A74
+                val cx = (x + ((seed ushr 7) and 255) / 255f) * grainCell
+                val cy = (y + ((seed ushr 17) and 255) / 255f) * grainCell
+                if (cx < w && cy < h && (seed and 3) != 0) {
+                    drawLine(
+                        color = if ((seed and 1) == 0) Color(0x20B38B50)
+                            else Color(0x1AFFFFFF),
+                        start = Offset(cx, cy),
+                        end = Offset((cx + (1.2f + (seed and 7) * .3f) * unit)
+                            .coerceAtMost(w), cy),
+                        strokeWidth = .28f * unit
                     )
                 }
             }

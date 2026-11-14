@@ -18,7 +18,7 @@ import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.runtime.rememberCoroutineScope
 import kotlinx.coroutines.launch
-import androidx.compose.material3.AlertDialog
+import androidx.compose.ui.window.Dialog
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
@@ -236,49 +236,15 @@ internal fun BookcaseBookshelfScreen(
 
         val chosen = selectedBookId?.let { catalog.book(it) }
         if (chosen != null) {
-            val completed = BookProgressRules.completedCount(catalog, progress, chosen.id)
-            val total = catalog.pages(chosen.id).size
-            AlertDialog(
-                onDismissRequest = { selectedBookId = null },
-                modifier = Modifier.testTag("library-pulled-book-dialog"),
-                title = {
-                    Text(chosen.title.removeSuffix(" · TEST BOOK"),
-                        color = Forest, style = MaterialTheme.typography.titleLarge)
-                },
-                text = {
-                    Column(Modifier.fillMaxWidth(),
-                        horizontalAlignment = Alignment.CenterHorizontally,
-                        verticalArrangement = Arrangement.spacedBy(7.dp)) {
-                        BookArt(chosen.theme, BookArtKind.COVER,
-                            Modifier.width(144.dp).height(192.dp)
-                                .testTag("library-pulled-cover-" + chosen.id),
-                            fieldNotes = fieldNotesArt)
-                        Text(chosen.chapters.size.toString() +
-                            (if (chosen.chapters.size == 1) " chapter" else " chapters") +
-                            " · " + completed + " of " + total + " pages completed",
-                            style = MaterialTheme.typography.bodyMedium,
-                            color = Ink, textAlign = TextAlign.Center)
-                        if (chosen.title.endsWith(" · TEST BOOK")) {
-                            Text("TEST BOOK", style = MaterialTheme.typography.labelSmall,
-                                color = Muted)
-                        }
-                    }
-                },
-                confirmButton = {
-                    TextButton(onClick = {
-                        val id = chosen.id
-                        selectedBookId = null
-                        onOpenBook(id)
-                    }, modifier = Modifier.heightIn(min = 48.dp)
-                        .testTag("library-view-pages")) {
-                        Text("View pages")
-                    }
-                },
-                dismissButton = {
-                    TextButton(onClick = { selectedBookId = null },
-                        modifier = Modifier.heightIn(min = 48.dp)) {
-                        Text("Back to shelf")
-                    }
+            BookcaseBookPreviewDialog(
+                book = chosen,
+                completed = BookProgressRules.completedCount(catalog, progress, chosen.id),
+                total = catalog.pages(chosen.id).size,
+                fieldNotesArt = fieldNotesArt,
+                onDismiss = { selectedBookId = null },
+                onOpen = {
+                    selectedBookId = null
+                    onOpenBook(chosen.id)
                 }
             )
         }
@@ -290,6 +256,70 @@ internal fun BookcaseBookshelfScreen(
                 onDismiss = { previewToolsOpen = false },
                 layoutActionLabel = "Try swipe library"
             )
+        }
+    }
+}
+
+/** WS16BR: real native book preview in the existing painted paper frame. */
+@Composable
+private fun BookcaseBookPreviewDialog(
+    book: PuzzleBook, completed: Int, total: Int, fieldNotesArt: Boolean,
+    onDismiss: () -> Unit, onOpen: () -> Unit
+) {
+    Dialog(onDismissRequest = onDismiss) {
+        GridMatesIllustratedFrame(
+            modifier = Modifier.fillMaxWidth().testTag("library-pulled-book-dialog"),
+            variant = GridMatesFrameVariant.PANEL
+        ) {
+            Column(
+                modifier = Modifier.fillMaxWidth().padding(14.dp),
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.spacedBy(8.dp)
+            ) {
+                Text(book.title.removeSuffix(" · TEST BOOK"),
+                    modifier = Modifier.fillMaxWidth(), color = Forest,
+                    fontWeight = FontWeight.SemiBold, textAlign = TextAlign.Center,
+                    style = MaterialTheme.typography.titleLarge)
+                BookArt(book.theme, BookArtKind.COVER,
+                    Modifier.width(128.dp).height(171.dp)
+                        .testTag("library-pulled-cover-" + book.id),
+                    fieldNotes = fieldNotesArt)
+                Text(book.chapters.size.toString() +
+                    (if (book.chapters.size == 1) " chapter" else " chapters") +
+                    " · " + completed + " of " + total + " pages completed",
+                    modifier = Modifier.fillMaxWidth(), color = Ink,
+                    textAlign = TextAlign.Center,
+                    style = MaterialTheme.typography.bodyMedium)
+                if (book.title.endsWith(" · TEST BOOK")) {
+                    Text("TEST BOOK", color = Muted,
+                        style = MaterialTheme.typography.labelSmall)
+                }
+                if (LocalDensity.current.fontScale >= 1.30f) {
+                    Column(Modifier.fillMaxWidth(),
+                        verticalArrangement = Arrangement.spacedBy(2.dp)) {
+                        GridMatesIllustratedPill("View pages", onOpen,
+                            modifier = Modifier.fillMaxWidth()
+                                .testTag("library-view-pages"))
+                        TextButton(onClick = onDismiss,
+                            modifier = Modifier.fillMaxWidth().heightIn(min = 48.dp)) {
+                            Text("Back to shelf", color = Forest)
+                        }
+                    }
+                } else {
+                    Row(Modifier.fillMaxWidth(),
+                        horizontalArrangement = Arrangement.spacedBy(6.dp),
+                        verticalAlignment = Alignment.CenterVertically) {
+                        TextButton(onClick = onDismiss,
+                            modifier = Modifier.weight(1f).heightIn(min = 48.dp)) {
+                            Text("Back to shelf", color = Forest,
+                                style = MaterialTheme.typography.labelLarge)
+                        }
+                        GridMatesIllustratedPill("View pages", onOpen,
+                            modifier = Modifier.weight(1f)
+                                .testTag("library-view-pages"))
+                    }
+                }
+            }
         }
     }
 }

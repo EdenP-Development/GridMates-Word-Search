@@ -110,7 +110,10 @@ internal fun GridMatesShell(
             displayMode == DisplayMode.FULLSCREEN &&
             maxHeight >= 690.dp && maxHeight < 960.dp &&
             LocalDensity.current.fontScale < 1.30f
-        GridMatesParchmentBackground()
+        GridMatesParchmentBackground(
+            finish = if (page == Page.PLAY) GridMatesPaperFinish.STORYBOOK_HOME
+                     else GridMatesPaperFinish.QUIET
+        )
         // WS-16I: purely decorative Home foliage, behind the transparent
         // Scaffold. Neither icons, live copy nor touch regions are obscured.
         if (page == Page.PLAY) Ws16IHomeEdgeDecor(displayMode)
