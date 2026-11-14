@@ -42,6 +42,13 @@ internal fun GridMatesParchmentBackground(
     finish: GridMatesPaperFinish = GridMatesPaperFinish.QUIET
 ) {
     val context = LocalContext.current
+    val homePatina = remember(context) {
+        runCatching {
+            context.assets.open("ws16bs/home-parchment-wash-v1.png").use {
+                BitmapFactory.decodeStream(it)?.asImageBitmap()
+            }
+        }.getOrNull()
+    }
     val paperTooth = remember(context) {
         runCatching {
             context.assets.open("ws16aa/parchment.png").use {
@@ -217,6 +224,31 @@ internal fun GridMatesParchmentBackground(
                     drawImage(image = tile, srcOffset = IntOffset.Zero,
                         srcSize = IntSize(sw, sh), dstOffset = IntOffset(x, y),
                         dstSize = IntSize(dw, dh), alpha = .86f)
+                    x += tilePx
+                }
+                y += tilePx
+            }
+        }
+
+        // WS16BS original independent translucent material; Home only.
+        // Other pages and production releases retain the existing safe fallback.
+        if (storybookHome) homePatina?.let { tile ->
+            val tilePx = (440f * unit).roundToInt().coerceAtLeast(1)
+            val widthPx = w.roundToInt()
+            val heightPx = h.roundToInt()
+            var y = 0
+            while (y < heightPx) {
+                var x = 0
+                while (x < widthPx) {
+                    val dw = minOf(tilePx, widthPx - x)
+                    val dh = minOf(tilePx, heightPx - y)
+                    val sw = ((dw.toFloat() / tilePx) * tile.width)
+                        .roundToInt().coerceIn(1, tile.width)
+                    val sh = ((dh.toFloat() / tilePx) * tile.height)
+                        .roundToInt().coerceIn(1, tile.height)
+                    drawImage(image = tile, srcOffset = IntOffset.Zero,
+                        srcSize = IntSize(sw, sh), dstOffset = IntOffset(x, y),
+                        dstSize = IntSize(dw, dh), alpha = .92f)
                     x += tilePx
                 }
                 y += tilePx

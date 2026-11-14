@@ -2,6 +2,7 @@ package com.playereden.gridmates.wordsearch
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.width
@@ -225,6 +226,24 @@ private fun BookListCard(
     }
 }
 
+/** WS16BS: same progress/page content and callbacks, with a shared art skin. */
+@Composable
+private fun BookDetailCohesionPanel(
+    illustrated: Boolean,
+    modifier: Modifier = Modifier,
+    content: @Composable ColumnScope.() -> Unit
+) {
+    if (illustrated) {
+        GridMatesIllustratedFrame(modifier = modifier,
+            variant = GridMatesFrameVariant.PANEL) {
+            Column(Modifier.fillMaxWidth().padding(16.dp),
+                verticalArrangement = Arrangement.spacedBy(10.dp), content = content)
+        }
+    } else {
+        PaperPanel(modifier = modifier, content = content)
+    }
+}
+
 /**
  * Real native book/chapter/page UI. Do not display a Play action until the
  * host supplies an actual book-puzzle implementation; a missing callback
@@ -326,7 +345,8 @@ internal fun PuzzleBookDetailScreen(
         }
         if (!healthy || book == null) {
             item(key = "book-unavailable") {
-                PaperPanel(Modifier.fillMaxWidth()) {
+                BookDetailCohesionPanel(showPrototypeArt,
+                    Modifier.fillMaxWidth().testTag("book-detail-unavailable-panel")) {
                     Text("This book cannot be opened right now.",
                         color = Forest, style = MaterialTheme.typography.titleMedium,
                         fontWeight = FontWeight.Bold)
@@ -336,7 +356,8 @@ internal fun PuzzleBookDetailScreen(
             }
         } else {
             item(key = "book-progress") {
-                PaperPanel(Modifier.fillMaxWidth()) {
+                BookDetailCohesionPanel(showPrototypeArt,
+                    Modifier.fillMaxWidth().testTag("book-detail-progress-panel")) {
                     Text(
                         if (showPrototypeArt) "Book progress"
                         else book.theme.label + " · Volume " + book.volume,
@@ -416,7 +437,8 @@ internal fun PuzzleBookDetailScreen(
                     val ordinal = pages.indexOfFirst { it.id == page.id } + 1
                     val isComplete = page.id in completed
                     val isCurrent = page.id == next?.id
-                    PaperPanel(Modifier.fillMaxWidth()) {
+                    BookDetailCohesionPanel(showPrototypeArt,
+                        Modifier.fillMaxWidth().testTag("book-detail-page-panel-" + page.id)) {
                         Row(Modifier.fillMaxWidth(),
                             verticalAlignment = Alignment.CenterVertically,
                             horizontalArrangement = Arrangement.spacedBy(8.dp)) {
