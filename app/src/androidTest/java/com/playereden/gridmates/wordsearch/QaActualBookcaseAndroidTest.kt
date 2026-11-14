@@ -5,9 +5,17 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.width
 import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
+import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.test.assertIsNotEnabled
+import androidx.compose.ui.test.assertIsEnabled
 import androidx.compose.ui.test.hasTestTag
 import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.onNodeWithTag
@@ -324,5 +332,53 @@ class QaActualBookcaseAndroidTest {
         compose.onNodeWithTag("ws16bh-spine-" + woodland.id).assertExists()
         compose.onNodeWithTag("ws16bh-spine-" + garden.id).performClick()
         compose.runOnIdle { assertEquals(garden.id, selected) }
+    }
+
+    @Test fun returnFromRealVolumeRestoresPreviousCabinetPage() {
+        // A growing catalog creates real volumes on page two, not just
+        // decorative future cases. Simulate opening the 9th book and Back.
+        val many = (0 until 9).map { i ->
+            fixture(WordTheme.WOODLAND, "volume-$i", 'a')
+        }
+        var chosen: String? = null
+        var observedPage = -1
+        compose.setContent {
+            var shelfPage by remember { mutableIntStateOf(0) }
+            var inBook by remember { mutableStateOf(false) }
+            GridMatesTheme {
+                Box(Modifier.width(360.dp).height(760.dp)) {
+                    if (inBook) {
+                        TextButton(onClick = { inBook = false }) {
+                            Text("Back to Library")
+                        }
+                    } else {
+                        WS16ATModularLibraryScene(
+                            books = many,
+                            onBack = {},
+                            onBookSelected = { id ->
+                                chosen = id
+                                inBook = true
+                            },
+                            onPreviousArt = {},
+                            initialPage = shelfPage,
+                            onPageChanged = { page ->
+                                shelfPage = page
+                                observedPage = page
+                            }
+                        )
+                    }
+                }
+            }
+        }
+        compose.onNodeWithTag("ws16at-next").performClick()
+        compose.waitForIdle()
+        compose.runOnIdle { assertEquals(1, observedPage) }
+        compose.onNodeWithTag("ws16bh-spine-" + many.last().id).performClick()
+        compose.runOnIdle { assertEquals(many.last().id, chosen) }
+        compose.onNodeWithText("Back to Library").performClick()
+        compose.waitForIdle()
+        compose.runOnIdle { assertEquals(1, observedPage) }
+        compose.onNodeWithTag("ws16at-prev").assertIsEnabled()
+        compose.onNodeWithTag("ws16bh-spine-" + many.last().id).assertExists()
     }
 }

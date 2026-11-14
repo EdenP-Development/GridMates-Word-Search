@@ -65,6 +65,9 @@ internal fun BookLibraryFlow(
     // multi-book physical bookcase instead of duplicating the Home showcase.
     // Preview options still allow the older swipe view for QA comparison.
     var horizontalLibrary by remember(catalog) { mutableStateOf(false) }
+    // WS16BP: keep the real bookcase page when a volume opens, then return
+    // to its shelf; never persist a decorative future-book state to a save file.
+    var cabinetPage by remember(catalog) { mutableIntStateOf(0) }
     var focusedBookId by remember(catalog) {
         mutableStateOf(catalog.books.firstOrNull()?.id)
     }
@@ -166,6 +169,8 @@ internal fun BookLibraryFlow(
                     { fieldNotesArt = !fieldNotesArt }
                 } else null,
                 showHorizontalBrowser = horizontalLibrary,
+                initialCabinetPage = cabinetPage,
+                onCabinetPageChanged = { cabinetPage = it },
                 onToggleLayout = if (showPrototypeArt) {
                     { horizontalLibrary = !horizontalLibrary }
                 } else null,

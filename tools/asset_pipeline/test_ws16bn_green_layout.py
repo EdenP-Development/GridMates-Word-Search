@@ -111,5 +111,22 @@ class GreenNavigationTests(unittest.TestCase):
         self.assertIn("qa-signing/wordsearch-qa.p12", gradle)
 
 
+    def test_return_to_previous_shelf_wiring_is_lossless(self):
+        flow = (APP / "BookLibraryFlow.kt").read_text()
+        shelf = (APP / "PuzzleBookshelfScreen.kt").read_text()
+        bookcase = (APP / "BookcaseBookshelfScreen.kt").read_text()
+        scene = (APP / "WS16ATModularLibraryScene.kt").read_text()
+        self.assertIn("var cabinetPage by remember(catalog)", flow)
+        self.assertIn("initialCabinetPage = cabinetPage", flow)
+        self.assertIn("onCabinetPageChanged = { cabinetPage = it }", flow)
+        self.assertIn("initialCabinetPage: Int = 0", shelf)
+        self.assertIn("onCabinetPageChanged = onCabinetPageChanged", shelf)
+        self.assertIn("initialPage = initialCabinetPage", bookcase)
+        self.assertIn("onPageChanged = onCabinetPageChanged", bookcase)
+        self.assertIn("initialPage.coerceIn(0, pages - 1)", scene)
+        self.assertIn("LaunchedEffect(pager.currentPage)", scene)
+        self.assertIn("onPageChanged(pager.currentPage)", scene)
+        self.assertIn("books.drop(page * capacity).take(capacity)", scene)
+
 if __name__ == "__main__":
     unittest.main()

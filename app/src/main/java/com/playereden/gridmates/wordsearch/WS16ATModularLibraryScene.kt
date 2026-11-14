@@ -9,6 +9,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -134,6 +135,8 @@ internal fun WS16ATModularLibraryScene(
     onBack: () -> Unit,
     onBookSelected: (String) -> Unit,
     onPreviousArt: () -> Unit,
+    initialPage: Int = 0,
+    onPageChanged: (Int) -> Unit = {},
     safeContentPadding: PaddingValues = PaddingValues(0.dp),
     modifier: Modifier = Modifier
 ) {
@@ -174,7 +177,13 @@ internal fun WS16ATModularLibraryScene(
         val balancedSparseLayout = !densePortrait && tierCount == 2 &&
             maxHeight >= maxWidth * 1.7f &&
             realPageCount == 1 && books.size in 2..slots
-        val pager = rememberPagerState(pageCount = { pages })
+        // WS16BP: re-enter on the same real shelf after inspecting a volume.
+        // Clamp safely if the book catalog or viewport now offers fewer pages.
+        val pager = rememberPagerState(
+            initialPage = initialPage.coerceIn(0, pages - 1),
+            pageCount = { pages }
+        )
+        LaunchedEffect(pager.currentPage) { onPageChanged(pager.currentPage) }
         val scope = rememberCoroutineScope()
         val top = (maxWidth * (198f / 602f)).coerceAtMost(maxHeight * 0.25f)
         val bottom = (maxWidth * (108f / 602f)).coerceAtMost(maxHeight * 0.15f)

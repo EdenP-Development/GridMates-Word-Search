@@ -65,6 +65,8 @@ internal fun BookcaseBookshelfScreen(
     fieldNotesArt: Boolean,
     onToggleArt: (() -> Unit)?,
     onToggleLayout: (() -> Unit)? = null,
+    initialCabinetPage: Int = 0,
+    onCabinetPageChanged: (Int) -> Unit = {},
     modifier: Modifier = Modifier,
     safeContentPadding: PaddingValues = PaddingValues(0.dp)
 ) {
@@ -100,6 +102,8 @@ internal fun BookcaseBookshelfScreen(
                 onBack = onBack,
                 onBookSelected = { selectedBookId = it },
                 onPreviousArt = { modularPreview = false },
+                initialPage = initialCabinetPage,
+                onPageChanged = onCabinetPageChanged,
                 safeContentPadding = safeContentPadding,
                 modifier = Modifier.fillMaxSize()
             )

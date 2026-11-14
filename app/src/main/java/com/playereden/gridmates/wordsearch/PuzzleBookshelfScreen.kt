@@ -51,6 +51,8 @@ internal fun PuzzleBookshelfScreen(
     fieldNotesArt: Boolean = false,
     onToggleArt: (() -> Unit)? = null,
     showHorizontalBrowser: Boolean = false,
+    initialCabinetPage: Int = 0,
+    onCabinetPageChanged: (Int) -> Unit = {},
     onToggleLayout: (() -> Unit)? = null,
     initialFocusedBookId: String? = null,
     onFocusedBookChanged: (String) -> Unit = {}
@@ -81,6 +83,8 @@ internal fun PuzzleBookshelfScreen(
                 fieldNotesArt = fieldNotesArt,
                 onToggleArt = onToggleArt,
                 onToggleLayout = onToggleLayout,
+                initialCabinetPage = initialCabinetPage,
+                onCabinetPageChanged = onCabinetPageChanged,
                 safeContentPadding = safeContentPadding,
                 modifier = modifier
             )
