@@ -165,6 +165,7 @@ class QaActualBookcaseAndroidTest {
         compose.onNodeWithTag("ws16bc-visible-future-0-3").assertDoesNotExist()
         compose.onNodeWithText("3 books").assertDoesNotExist()
         compose.onNodeWithTag("ws16bk-bookcase-pager").assertExists()
+        compose.onNodeWithTag("ws16bk-pager-rail").assertDoesNotExist()
         compose.onNodeWithTag("ws16bk-page-dots").assertExists()
         compose.onNodeWithTag("ws16at-prev").assertExists().assertIsNotEnabled()
         compose.onNodeWithTag("ws16at-next").assertExists()

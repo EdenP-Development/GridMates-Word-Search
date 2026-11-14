@@ -43,3 +43,16 @@ Do not substitute another broad cabinet redesign, new volume assets, saved-game 
 ## Physical acceptance gate
 
 Owner should inspect new page 1, page 2 and page 3, including title clearance, two shelf contact planes, lowered pager-to-base fit, green button shades matching the Home **Play** control, and opaque-but-dimmed disabled Previous arrow on first page. Hold Back/options/Next to evaluate the already-liked 115ms press animation; test Back/options/Next/Previous, all three active dots, untappable future spines, owned book preview and preserved saved puzzle progress. Only after physical screenshots and feedback consider a further book-depth or cross-screen UI polish pass. Do not promote QA art to production, and keep PR #131 draft until accepted.
+
+
+---
+
+## WS16BO — Owner v73 visual feedback: remove the bottom pager backing (November 14)
+
+**Owner screenshot evidence:** v73 Library showed the forest-green Previous/Next controls and three page indicators inside an oversized wood-and-gold rectangular backing. Owner explicitly rejected the background panel as visually awkward. This is a targeted visual correction, not a redesign of the cabinet, controls, books or shelves.
+
+- **Removed:** visible artwork renderer for `ws16bk/pager_rail.png` and the old brown/gold native fallback rectangle in `WS16BKBookcasePager.kt`. Cabinet wood now shows through behind three page dots.
+- **Preserved:** the 242×62dp placement slot, distinct 54dp green arrow tap targets, 115ms press feedback, visible-but-dimmed disabled Previous, 16dp animated status-only dots, 7-page window, actual HorizontalPager navigation, TalkBack semantics, title/shelf positioning and safe-inset clearance.
+- **Source safeguards:** update WS16BK source test to prohibit reintroducing the painted rail; add an Android Compose assertion that `ws16bk-pager-rail` is absent. Archived source art and manifest stay untouched for reproducible QA; no asset changes, save migrations or release art promotion.
+- **Next QA build:** Android QA v74, `0.9.30-frameless-library-pager-qa`, same package/signature. Must pass Android and independent art/release workflows against the same source SHA before user APK handoff.
+- **Owner acceptance pending:** review page 1 and a future page on the actual phone, especially whether standalone green arrows + dot cluster feel naturally mounted and leave the lower shelf/base clear. Keep PR #131 draft until visually approved.

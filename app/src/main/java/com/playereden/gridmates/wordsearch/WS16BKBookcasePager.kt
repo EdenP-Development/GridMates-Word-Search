@@ -1,27 +1,16 @@
 package com.playereden.gridmates.wordsearch
 
 import android.animation.ValueAnimator
-import android.graphics.BitmapFactory
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.Canvas
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.alpha
-import androidx.compose.ui.geometry.CornerRadius
-import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.StrokeCap
-import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.graphics.drawscope.Stroke
-import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
@@ -29,7 +18,7 @@ import androidx.compose.ui.unit.dp
 
 /**
  * WS16BK — bookcase paging hardware, replacing redundant book-count label.
- * Artwork: source-pinned QA-only walnut/brass rail (native fallback retained).
+ * WS16BO: no extra walnut-and-brass panel; retain native green buttons over cabinet wood.
  * Inputs: the real HorizontalPager; no invented ownership state or fake taps.
  * WS16BL adds short physical feedback to native arrows and status-only dots.
  */
@@ -44,39 +33,15 @@ internal fun WS16BKBookcasePager(
 ) {
     require(pageCount >= 1)
     val selected = currentPage.coerceIn(0, pageCount - 1)
-    val context = LocalContext.current
-    val bitmap = remember(context, styled) {
-        if (!styled) null else runCatching {
-            context.assets.open("ws16bk/pager_rail.png").use {
-                BitmapFactory.decodeStream(it)
-            }
-        }.getOrNull()
-    }
+    // WS16BO: no decorative backplate. The cabinet backboard itself is the
+    // surface behind the green paging buttons and readable page dots.
+    // Keep the same 54dp button targets, pager bounds and page callbacks.
     Box(
         modifier.width(242.dp).height(62.dp)
             .semantics { contentDescription = "Bookcase ${selected + 1} of $pageCount" }
             .testTag("ws16bk-bookcase-pager"),
         contentAlignment = Alignment.Center
     ) {
-        if (bitmap != null) {
-            Image(
-                bitmap = bitmap.asImageBitmap(),
-                contentDescription = null,
-                contentScale = ContentScale.FillBounds,
-                modifier = Modifier.fillMaxSize().testTag("ws16bk-pager-rail")
-            )
-        } else {
-            Canvas(Modifier.fillMaxSize()) {
-                drawRoundRect(Color(0xD33B2214),
-                    cornerRadius = CornerRadius(12.dp.toPx()))
-                drawRoundRect(Color(0xFFCA9C59),
-                    topLeft = Offset(2.dp.toPx(), 2.dp.toPx()),
-                    size = androidx.compose.ui.geometry.Size(
-                        size.width - 4.dp.toPx(), size.height - 4.dp.toPx()),
-                    cornerRadius = CornerRadius(10.dp.toPx()),
-                    style = Stroke(1.5.dp.toPx()))
-            }
-        }
         Row(
             Modifier.fillMaxWidth().padding(horizontal = 7.dp),
             horizontalArrangement = Arrangement.SpaceBetween,

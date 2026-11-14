@@ -90,7 +90,11 @@ class FutureBookcaseTests(unittest.TestCase):
         self.assertIn('testTag("ws16bk-page-dots")',chrome)
         self.assertIn('testTag("ws16bk-bookcase-pager")',chrome)
         self.assertIn("minOf(pageCount, 7)",chrome)
-        self.assertIn("ws16bk/pager_rail.png",chrome)
+        # WS16BO: keep the archived QA art asset reproducible, but do NOT
+        # paint its rectangular background behind the controls anymore.
+        self.assertNotIn("ws16bk/pager_rail.png",chrome)
+        self.assertNotIn('testTag("ws16bk-pager-rail")',chrome)
+        self.assertIn('testTag("ws16bk-page-dots")',chrome)
         self.assertIn("fullPlaceholderShelf: Boolean = false",bay)
         self.assertIn("if (fullPlaceholderShelf && books.isEmpty()) room",bay)
         self.assertIn("onBookSelected(book.id)",bay)
