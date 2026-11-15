@@ -1,0 +1,56 @@
+name: WS17 Candidate Art Library Source QA
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - feature/ws14b-style-anchor-and-art-direction-2026-11-08
+    paths:
+      - 'design/art-library-v2/**'
+      - 'design/asset-registry.json'
+      - '.github/workflows/ws17-art-library-source-qa.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  check-source-library:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - name: Validate 60-image reserve metadata, SHA entries and SVG source
+        run: |
+          python3 - <<'PY'
+          import json
+          import pathlib
+          import xml.etree.ElementTree as ET
+          d=pathlib.Path('design/art-library-v2')
+          ix=json.loads((d/'RESERVE_INDEX.json').read_text())
+          assert ix['sprite_count']==60
+          assert len(ix['sheets'])==7
+          assert sum(s['count'] for s in ix['sheets'])==60
+          ids=[]
+          for family,names in ix['sprites_by_family'].items():
+              assert len(names)==12,f'{family}: wrong candidate count'
+              for name in names: ids.append(f'{family}.{name}')
+          assert len(set(ids))==60
+          for sheet in ix['sheets']:
+              assert len(sheet['sha256'])==64
+              assert all(c in '0123456789abcdef' for c in sheet['sha256'])
+          assert ix['statuses']['production_shipping']=='not_started'
+          assert ix['signed_apk_baseline']['versionCode']==86
+          svg=list((d/'vector-prototypes').glob('*.svg'))
+          assert len(svg)==4,svg
+          for f in svg:
+              r=ET.parse(f).getroot()
+              assert r.tag.endswith('svg')
+              assert r.attrib.get('viewBox')
+              assert not any(tag in f.read_text() for tag in ('<script','<foreignObject','http://','https://'))
+          reg=json.loads(pathlib.Path('design/asset-registry.json').read_text())
+          assert any(a['id']=='ws17_ornamental_visual_reserve_v2'
+              and a['status'].endswith('not_packaged') for a in reg['assets'])
+          assert (d/'STYLE_BIBLE.md').exists()
+          assert (d/'import_visual_library.py').exists()
+          print('PASS: 60 candidate assets indexed, 7 source SHA entries, 4 XML SVG prototypes, zero runtime packaging')
+          PY
