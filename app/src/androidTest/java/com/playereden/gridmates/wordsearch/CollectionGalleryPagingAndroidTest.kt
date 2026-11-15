@@ -69,6 +69,16 @@ class CollectionGalleryPagingAndroidTest {
                 .performScrollTo().assertIsDisplayed()
             compose.onNodeWithText("Fonts").performScrollTo().performClick()
             compose.onNodeWithText("board fonts unlocked", substring = true).assertExists()
+            compose.onNodeWithTag("ws16bv-font-gallery").assertExists()
+            compose.onNodeWithTag("ws16bv-font-atkinson").assertExists()
+            compose.onNodeWithTag("ws16bv-font-status-atkinson").assertExists()
+            compose.onNodeWithTag("ws16bv-font-license-atkinson")
+                .performScrollTo().performClick()
+            compose.onNodeWithText("Readable Print · Open Font License").assertExists()
+            compose.onNodeWithText("Close").performClick()
+            compose.onNodeWithTag("ws16bv-font-plex").assertExists()
+            compose.onNodeWithTag("ws16bv-font-equip-plex").assertDoesNotExist()
+            compose.onNodeWithTag("ws16bv-font-license-plex").assertExists()
 
             compose.runOnIdle {
                 assertEquals(12, WoodlandCollection.progress(store.profile).size)
