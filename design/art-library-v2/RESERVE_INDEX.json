@@ -1,0 +1,155 @@
+{
+  "schema": 1,
+  "release": "WS17-asset-candidates-v1",
+  "created": "2026-11-15",
+  "state": "reference_approved_by_owner_individual_placement_unreviewed",
+  "binary_archive": {
+    "name": "GridMates_Word_Search_Visual_Library_v1.zip",
+    "sha256": "68fac0f6a40c7abbb3b75096692e74f016368218ffb2e8085e60a12f7636966e",
+    "storage": "ChatGPT Library /Game Design/GridMates Word Search/GridMates_Visual_Library_v1.zip",
+    "github_binary_status": "not_committed_external_archive_required"
+  },
+  "sheets": [
+    {
+      "id": "shared_ui",
+      "source_file": "anchors_shared_ui.png",
+      "sha256": "5881af629d10ca97feab06f6e8fb65c02f154c7073c245740d9bb2659be97c96",
+      "count": 12,
+      "kind": "transparent_source_sprite_atlas"
+    },
+    {
+      "id": "theme_badges",
+      "source_file": "anchors_theme_medallions.png",
+      "sha256": "144e3a9d2a240ddd9204188ad1c95e823395df0db4645afc207fe299a1cea232",
+      "count": 12,
+      "kind": "transparent_source_sprite_atlas"
+    },
+    {
+      "id": "library_decor",
+      "source_file": "anchors_library_shelf_decor.png",
+      "sha256": "1a73010afb368a807e57714d50370e642661f18bfa5e57ec42e0a25069cc2bef",
+      "count": 12,
+      "kind": "transparent_source_sprite_atlas"
+    },
+    {
+      "id": "menu_icons",
+      "source_file": "anchors_navigation_icons.png",
+      "sha256": "6900d074e8efd2cd92afba9caf65366171ca721b3a699d4d3feb8392a2f6a14e",
+      "count": 12,
+      "kind": "transparent_source_sprite_atlas"
+    },
+    {
+      "id": "spines_expansion",
+      "source_file": "expansion_book_spines.png",
+      "sha256": "62d9c483b97964a49c08ac33a672eb54e7742cb24e039c9d86e12300e1d9f5ff",
+      "count": 12,
+      "kind": "transparent_source_sprite_atlas"
+    },
+    {
+      "id": "concept_board_a",
+      "source_file": "concept_expansion_reference_a.png",
+      "sha256": "15a1f4c8cdf4979b008edb514f6ed4f552ac4b27b8de36a0bb933cb1823d9449",
+      "count": 0,
+      "kind": "reference_only_with_baked_labels"
+    },
+    {
+      "id": "concept_board_b",
+      "source_file": "concept_expansion_reference_b.png",
+      "sha256": "9ed4f3d0e70ac1dc50c2b56f913ce9ed331e631c2330ea9b19e9fdb2a7c0656f",
+      "count": 0,
+      "kind": "reference_only_with_baked_labels"
+    }
+  ],
+  "sprites_by_family": {
+    "shared_ui": [
+      "hero_parchment_panel",
+      "tall_parchment_panel",
+      "primary_forest_button",
+      "secondary_cream_button",
+      "ribbon_green",
+      "ribbon_cream",
+      "gold_rule",
+      "open_book_divider",
+      "round_laurel_seal",
+      "shield_laurel_seal",
+      "double_leaf_chevrons",
+      "ornate_horizontal_plaque"
+    ],
+    "theme_badges": [
+      "woodland_acorn",
+      "woodland_oak_leaf",
+      "woodland_fox",
+      "woodland_feather",
+      "ocean_shell",
+      "ocean_starfish",
+      "ocean_wave",
+      "ocean_fish",
+      "garden_butterfly",
+      "garden_beetle",
+      "garden_ladybug",
+      "garden_dragonfly"
+    ],
+    "library_decor": [
+      "shelf_header_green",
+      "shelf_header_cream",
+      "shelf_cap_small",
+      "shelf_long_ornate",
+      "shelf_bracket_left",
+      "shelf_bracket_right",
+      "shelf_plank",
+      "bookmark_forest",
+      "small_blank_plaque",
+      "arched_blank_plaque",
+      "corner_leaf_ornament",
+      "open_book_ornament"
+    ],
+    "menu_icons": [
+      "home",
+      "play",
+      "daily_calendar",
+      "library_books",
+      "nearby_play",
+      "records_trophy",
+      "profile_avatar",
+      "collection_album",
+      "gift",
+      "settings",
+      "hint",
+      "back"
+    ],
+    "spines_expansion": [
+      "forest_laurel",
+      "parchment_leaves",
+      "brown_oak",
+      "navy_compass",
+      "olive_acorn",
+      "cream_frame",
+      "slim_ivory",
+      "deep_green_laurel",
+      "olive_vine",
+      "ivory_shell",
+      "brown_star",
+      "navy_moon"
+    ]
+  },
+  "sprite_count": 60,
+  "statuses": {
+    "original_generated": "review_candidate",
+    "individual_sprites": "candidate_not_packaged",
+    "new_visual_language": "candidate_v2_do_not_override_v1",
+    "production_shipping": "not_started"
+  },
+  "forbid": [
+    "baking live text into art",
+    "replacing stable book IDs or reward logic",
+    "inserting art over gesture-sensitive puzzle letters",
+    "claiming concept PNGs were shipped",
+    "marking approved without owner UI acceptance"
+  ],
+  "import_command": "python3 design/art-library-v2/import_visual_library.py /path/to/GridMates_Word_Search_Visual_Library_v1.zip",
+  "signed_apk_baseline": {
+    "versionCode": 86,
+    "source_sha": "3aa7d9f1dbf2281796726cb00cb78d52169318da",
+    "note": "Asset reserve does not affect existing Android package"
+  }
+}
