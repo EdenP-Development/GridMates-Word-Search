@@ -57,41 +57,69 @@ internal fun DailyLandingScreen(
         Column(Modifier.padding(0.dp), verticalArrangement = Arrangement.spacedBy(8.dp)) {
             Text("Today · $today", color = Gold,
                 style = MaterialTheme.typography.labelLarge, fontWeight = FontWeight.Bold)
-            Row(Modifier.fillMaxWidth(),
-                verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                Column(Modifier.weight(1f), verticalArrangement = Arrangement.spacedBy(2.dp)) {
-                    Text(run.theme.label + " · " + run.difficulty.targetCount + " words",
-                        color = Forest, style = MaterialTheme.typography.titleSmall,
-                        fontWeight = FontWeight.SemiBold, maxLines = 2)
-                    Text(when {
-                        existing?.completed == true -> "Completed today"
-                        (existing?.run?.foundIds?.size ?: 0) > 0 ->
-                            existing!!.run.foundIds.size.toString() +
-                                " of " + run.difficulty.targetCount + " found"
-                        else -> "Ready to play"
-                    }, color = Muted, style = MaterialTheme.typography.bodySmall,
-                        maxLines = 2)
+            val progressLabel = when {
+                existing?.completed == true -> "Completed today"
+                (existing?.run?.foundIds?.size ?: 0) > 0 ->
+                    existing!!.run.foundIds.size.toString() +
+                        " of " + run.difficulty.targetCount + " found"
+                else -> "Ready to play"
+            }
+            val actionLabel = when {
+                existing?.completed == true -> "Review"
+                (existing?.run?.foundIds?.size ?: 0) > 0 -> "Continue"
+                else -> "Play today"
+            }
+            if (fontLarge) {
+                // Keep the daily primary action full width and below the
+                // live puzzle description at 150–200% Android text scale.
+                Column(Modifier.fillMaxWidth().testTag("ws16cc-daily-today-stacked"),
+                    verticalArrangement = Arrangement.spacedBy(8.dp)) {
+                    Column(verticalArrangement = Arrangement.spacedBy(2.dp)) {
+                        Text(run.theme.label + " · " + run.difficulty.targetCount + " words",
+                            color = Forest, style = MaterialTheme.typography.titleSmall,
+                            fontWeight = FontWeight.SemiBold)
+                        Text(progressLabel, color = Muted,
+                            style = MaterialTheme.typography.bodySmall)
+                    }
+                    Button(onClick = { onPlay(today) },
+                        modifier = Modifier.fillMaxWidth()) { Text(actionLabel) }
                 }
-                Button(onClick = { onPlay(today) }) {
-                    Text(when {
-                        existing?.completed == true -> "Review"
-                        (existing?.run?.foundIds?.size ?: 0) > 0 -> "Continue"
-                        else -> "Play today"
-                    }, maxLines = 1)
+            } else {
+                Row(Modifier.fillMaxWidth(),
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                    Column(Modifier.weight(1f),
+                        verticalArrangement = Arrangement.spacedBy(2.dp)) {
+                        Text(run.theme.label + " · " + run.difficulty.targetCount + " words",
+                            color = Forest, style = MaterialTheme.typography.titleSmall,
+                            fontWeight = FontWeight.SemiBold, maxLines = 2)
+                        Text(progressLabel, color = Muted,
+                            style = MaterialTheme.typography.bodySmall, maxLines = 2)
+                    }
+                    Button(onClick = { onPlay(today) }) { Text(actionLabel, maxLines = 1) }
                 }
             }
             PaperProgress(existing?.run?.foundIds?.size ?: 0, run.difficulty.targetCount)
         }
     }
 
-    Row(Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = Arrangement.SpaceBetween) {
-        Text("Daily Journal", color = Forest,
-            style = MaterialTheme.typography.titleMedium,
-            fontWeight = FontWeight.Bold)
-        Text("${store.profile.dailyCompletions} completed",
-            color = Muted, style = MaterialTheme.typography.labelMedium)
+    if (fontLarge) {
+        Column(Modifier.fillMaxWidth(), verticalArrangement = Arrangement.spacedBy(2.dp)) {
+            Text("Daily Journal", color = Forest,
+                style = MaterialTheme.typography.titleMedium,
+                fontWeight = FontWeight.Bold)
+            Text("${store.profile.dailyCompletions} completed",
+                color = Muted, style = MaterialTheme.typography.labelMedium)
+        }
+    } else {
+        Row(Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.SpaceBetween) {
+            Text("Daily Journal", color = Forest,
+                style = MaterialTheme.typography.titleMedium,
+                fontWeight = FontWeight.Bold)
+            Text("${store.profile.dailyCompletions} completed",
+                color = Muted, style = MaterialTheme.typography.labelMedium)
+        }
     }
 
     if (past.isEmpty()) {
@@ -101,37 +129,69 @@ internal fun DailyLandingScreen(
         val visible = past.drop(visiblePage * pageSize).take(pageSize)
         Column(Modifier.fillMaxWidth(), verticalArrangement = Arrangement.spacedBy(2.dp)) {
             visible.forEach { entry ->
-                Row(Modifier.fillMaxWidth().padding(vertical = 3.dp),
-                    verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                    Column(Modifier.weight(1f),
-                        verticalArrangement = Arrangement.spacedBy(2.dp)) {
+                val status = (if (entry.completed) "Completed" else "Unfinished") +
+                    " · " + entry.run.foundIds.size + "/" +
+                    entry.run.difficulty.targetCount + " words" +
+                    (if (entry.run.hints.isNotEmpty()) " · Hints used" else "")
+                if (fontLarge) {
+                    Column(Modifier.fillMaxWidth().padding(vertical = 3.dp)
+                        .testTag("ws16cc-daily-history-stacked"),
+                        verticalArrangement = Arrangement.spacedBy(4.dp)) {
                         Text(entry.date, color = Forest,
                             style = MaterialTheme.typography.bodyMedium,
-                            fontWeight = FontWeight.SemiBold, maxLines = 1)
-                        Text((if (entry.completed) "Completed" else "Unfinished") +
-                            " · " + entry.run.foundIds.size + "/" +
-                            entry.run.difficulty.targetCount + " words" +
-                            (if (entry.run.hints.isNotEmpty()) " · Hints used" else ""),
-                            color = Muted, style = MaterialTheme.typography.bodySmall,
-                            maxLines = 2, overflow = TextOverflow.Ellipsis)
+                            fontWeight = FontWeight.SemiBold)
+                        Text(status, color = Muted,
+                            style = MaterialTheme.typography.bodySmall)
+                        TextButton(onClick = { onPlay(entry.date) },
+                            modifier = Modifier.fillMaxWidth()) {
+                            Text(if (entry.completed) "Review" else "Resume")
+                        }
                     }
-                    TextButton(onClick = { onPlay(entry.date) }) {
-                        Text(if (entry.completed) "Review" else "Resume")
+                } else {
+                    Row(Modifier.fillMaxWidth().padding(vertical = 3.dp),
+                        verticalAlignment = Alignment.CenterVertically,
+                        horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                        Column(Modifier.weight(1f),
+                            verticalArrangement = Arrangement.spacedBy(2.dp)) {
+                            Text(entry.date, color = Forest,
+                                style = MaterialTheme.typography.bodyMedium,
+                                fontWeight = FontWeight.SemiBold, maxLines = 1)
+                            Text(status, color = Muted,
+                                style = MaterialTheme.typography.bodySmall,
+                                maxLines = 2, overflow = TextOverflow.Ellipsis)
+                        }
+                        TextButton(onClick = { onPlay(entry.date) }) {
+                            Text(if (entry.completed) "Review" else "Resume")
+                        }
                     }
                 }
                 HorizontalDivider(color = androidx.compose.ui.graphics.Color(0xFFDFE0D6))
             }
         }
         if (totalPages > 1) {
-            Row(Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.SpaceBetween) {
-                TextButton(onClick = { page = visiblePage - 1 },
-                    enabled = visiblePage > 0) { Text("Previous") }
-                Text("Page ${visiblePage + 1} of $totalPages",
-                    color = Muted, style = MaterialTheme.typography.labelMedium)
-                TextButton(onClick = { page = visiblePage + 1 },
-                    enabled = visiblePage < totalPages - 1) { Text("Next") }
+            if (fontLarge) {
+                Column(Modifier.fillMaxWidth(), horizontalAlignment = Alignment.CenterHorizontally,
+                    verticalArrangement = Arrangement.spacedBy(2.dp)) {
+                    Text("Page ${visiblePage + 1} of $totalPages",
+                        color = Muted, style = MaterialTheme.typography.labelMedium)
+                    Row(Modifier.fillMaxWidth(),
+                        horizontalArrangement = Arrangement.SpaceBetween) {
+                        TextButton(onClick = { page = visiblePage - 1 },
+                            enabled = visiblePage > 0) { Text("Previous") }
+                        TextButton(onClick = { page = visiblePage + 1 },
+                            enabled = visiblePage < totalPages - 1) { Text("Next") }
+                    }
+                }
+            } else {
+                Row(Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.SpaceBetween) {
+                    TextButton(onClick = { page = visiblePage - 1 },
+                        enabled = visiblePage > 0) { Text("Previous") }
+                    Text("Page ${visiblePage + 1} of $totalPages",
+                        color = Muted, style = MaterialTheme.typography.labelMedium)
+                    TextButton(onClick = { page = visiblePage + 1 },
+                        enabled = visiblePage < totalPages - 1) { Text("Next") }
+                }
             }
         }
     }
