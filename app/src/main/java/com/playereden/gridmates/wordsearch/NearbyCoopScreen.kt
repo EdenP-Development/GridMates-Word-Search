@@ -27,7 +27,7 @@ import com.playereden.gridmates.wordsearch.core.*
 internal fun NearbyCoopScreen(store: SoloStore, rooms: NearbyRoomViewModel, onBack: () -> Unit) {
     val ctx = LocalContext.current.applicationContext
     // Large text must never hide Race/Duel beyond the edge of a fixed row.
-    val largeText = LocalDensity.current.fontScale >= 1.5f
+    val largeText = shouldStackLobbyActions(LocalDensity.current.fontScale)
     val runtime = remember(rooms) { rooms.runtime(ctx) }
     val state = runtime.state
     var exitPrompt by rememberSaveable { mutableStateOf(false) }
