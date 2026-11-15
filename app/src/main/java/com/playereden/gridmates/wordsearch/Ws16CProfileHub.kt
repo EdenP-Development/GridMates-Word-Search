@@ -103,7 +103,7 @@ internal fun Ws16CProfileHub(
         }
     }
 
-    Text("Your profile", color = Forest,
+    Text("Explore", color = Forest,
         style = MaterialTheme.typography.titleMedium,
         fontWeight = FontWeight.Bold)
     Column(Modifier.fillMaxWidth(), verticalArrangement = Arrangement.spacedBy(8.dp)) {

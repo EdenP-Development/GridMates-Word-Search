@@ -199,9 +199,10 @@ internal fun CollectionScreen(store: SoloStore) {
         Text("Board fonts change puzzle letters only, not GridMates menus. " +
             "The readable starter is always free; earn other styles through achievements.",
             color = Muted, style = MaterialTheme.typography.bodySmall)
-        BoxWithConstraints(Modifier.fillMaxWidth()) {
-            val columns = if (maxWidth < 350.dp ||
-                LocalDensity.current.fontScale >= 1.3f) 1 else 2
+        BoxWithConstraints(Modifier.fillMaxWidth().testTag("ws16bv-font-gallery")) {
+            // Five-letter font samples need real width to remain legible.
+            // A tablet may show two cards; ordinary phones keep one column.
+            val columns = if (maxWidth < 600.dp || fontScale >= 1.3f) 1 else 2
             Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
                 fonts.chunked(columns).forEach { pair ->
                     Row(Modifier.fillMaxWidth(),
@@ -319,34 +320,63 @@ private fun BoardFontCard(
     onEquip: () -> Unit,
     onLicense: () -> Unit
 ) {
-    Card(modifier,
+    // WS16BV: the glyph sample stays large, while status and legal access
+    // no longer take two full-height rows of disabled fake buttons.
+    Card(
+        modifier.testTag("ws16bv-font-" + item.font.id),
         colors = CardDefaults.cardColors(containerColor = Paper),
-        border = BorderStroke(1.dp, if (item.equipped) Forest else Color(0xFFDFE0D6))
+        border = BorderStroke(if (item.equipped) 2.dp else 1.dp,
+            if (item.equipped) Forest else Color(0xFFDFE0D6))
     ) {
-        Column(Modifier.padding(12.dp),
-            verticalArrangement = Arrangement.spacedBy(6.dp)) {
+        Column(
+            modifier = Modifier.fillMaxWidth().padding(10.dp),
+            verticalArrangement = Arrangement.spacedBy(4.dp)
+        ) {
             BoardFontPreview(item.font.id)
-            Text(item.font.label, color = Forest,
-                fontWeight = FontWeight.SemiBold,
-                style = MaterialTheme.typography.bodyMedium,
-                maxLines = 2)
-            Text(when {
-                item.equipped -> "Equipped"
-                item.unlocked -> "Unlocked · Free"
-                else -> "Earn: " + (item.achievementName ?: "Achievement")
-            }, color = Muted, style = MaterialTheme.typography.labelMedium)
-            Text(item.font.description, color = Muted,
-                style = MaterialTheme.typography.bodySmall)
-            TextButton(
-                onClick = onEquip,
-                enabled = item.unlocked && !item.equipped,
-                modifier = Modifier.fillMaxWidth()
-            ) {
-                Text(if (item.equipped) "Selected" else
-                    if (item.unlocked) "Equip" else "Locked")
+            Row(Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.spacedBy(8.dp),
+                verticalAlignment = Alignment.CenterVertically) {
+                Text(item.font.label, color = Forest,
+                    modifier = Modifier.weight(1f),
+                    fontWeight = FontWeight.SemiBold,
+                    style = MaterialTheme.typography.titleSmall,
+                    maxLines = 2, overflow = TextOverflow.Ellipsis)
+                if (item.equipped) {
+                    Text("Equipped", color = Forest,
+                        style = MaterialTheme.typography.labelMedium,
+                        modifier = Modifier.testTag("ws16bv-font-status-" + item.font.id))
+                }
             }
-            TextButton(onClick = onLicense, modifier = Modifier.fillMaxWidth()) {
-                Text("License")
+            Text(
+                if (item.unlocked) item.font.description else
+                    "Unlock: " + (item.achievementName ?: "Achievement") +
+                        " · " + item.font.description,
+                color = Ink, style = MaterialTheme.typography.bodySmall,
+                modifier = Modifier.testTag("ws16bv-font-detail-" + item.font.id)
+            )
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.spacedBy(8.dp),
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                if (item.unlocked && !item.equipped) {
+                    OutlinedButton(onClick = onEquip,
+                        modifier = Modifier.weight(1f).heightIn(min = 48.dp)
+                            .testTag("ws16bv-font-equip-" + item.font.id)) {
+                        Text("Equip")
+                    }
+                } else if (!item.unlocked) {
+                    // A readable state label, not an inert gray button.
+                    Text("Locked", color = Ink,
+                        style = MaterialTheme.typography.labelLarge,
+                        modifier = Modifier.weight(1f)
+                            .testTag("ws16bv-font-status-" + item.font.id))
+                }
+                TextButton(onClick = onLicense,
+                    modifier = Modifier.weight(1f).heightIn(min = 48.dp)
+                        .testTag("ws16bv-font-license-" + item.font.id)) {
+                    Text("License", color = Forest)
+                }
             }
         }
     }
