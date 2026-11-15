@@ -17,6 +17,9 @@ import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.playereden.gridmates.wordsearch.core.*
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.withContext
 
 /**
  * No account, server, or QR step: host on a trusted Wi-Fi, partner selects
@@ -24,7 +27,14 @@ import com.playereden.gridmates.wordsearch.core.*
  * We keep this in an isolated screen so Solo/Daily are unchanged.
  */
 @Composable
-internal fun NearbyCoopScreen(store: SoloStore, rooms: NearbyRoomViewModel, onBack: () -> Unit) {
+internal fun NearbyCoopScreen(
+    store: SoloStore,
+    rooms: NearbyRoomViewModel,
+    onBack: () -> Unit,
+    // A deterministic probe lets actual Android instrumentation exercise
+    // Wi-Fi loss/restoration without needing an external router.
+    hostReadinessProbe: (() -> Boolean)? = null
+) {
     val ctx = LocalContext.current.applicationContext
     // Large text must never hide Race/Duel beyond the edge of a fixed row.
     val largeText = shouldStackLobbyActions(LocalDensity.current.fontScale)
@@ -56,10 +66,23 @@ internal fun NearbyCoopScreen(store: SoloStore, rooms: NearbyRoomViewModel, onBa
     var shareText by rememberSaveable { mutableStateOf<String?>(null) }
     val ownName = store.profile.identity.displayName.trim().ifBlank { "Player" }
     val snapshot = state.snapshot
-    // Read the same local wlan/ap interface requirement as runtime.host().
-    // Not saveable: a new screen must never trust yesterday's Wi-Fi state.
-    var hostNetworkReady by remember(runtime) {
-        mutableStateOf(runtime.hostNetworkAvailable())
+    // Poll only while in the setup lobby. Interface addresses can appear well
+    // after Wi-Fi announces a connection (DHCP), and hotspots do not always
+    // produce normal Wi-Fi connectivity callbacks. This checks the exact
+    // wlan/ap predicate host() uses, not internet access or cellular data.
+    val hostProbe = remember(runtime, hostReadinessProbe) {
+        hostReadinessProbe ?: { runtime.hostNetworkAvailable() }
+    }
+    var hostNetworkReady by remember(runtime) { mutableStateOf(false) }
+    LaunchedEffect(runtime, state.role, hostProbe) {
+        if (state.role == NearbyRole.NONE) {
+            while (true) {
+                hostNetworkReady = withContext(Dispatchers.IO) {
+                    safeHostNetworkAvailable(hostProbe)
+                }
+                delay(2_000L) // Stops when the lobby is disposed or room opens.
+            }
+        }
     }
     val canStartHost = canOfferNearbyHost(hostNetworkReady, state.busy)
 
@@ -158,10 +181,11 @@ internal fun NearbyCoopScreen(store: SoloStore, rooms: NearbyRoomViewModel, onBa
                                 color = Forest, fontWeight = FontWeight.SemiBold,
                                 style = MaterialTheme.typography.bodyMedium)
                             Text("Connect this phone to local Wi-Fi or a hotspot. " +
-                                "Use the same network on both phones.",
+                                "Use the same network on both phones. " +
+                                "This screen checks automatically.",
                                 color = Muted, style = MaterialTheme.typography.bodySmall)
                             TextButton(onClick = {
-                                hostNetworkReady = runtime.hostNetworkAvailable()
+                                hostNetworkReady = safeHostNetworkAvailable(hostProbe)
                             }, enabled = !state.busy,
                                 modifier = Modifier.testTag("ws16ca-host-recheck")) {
                                 Text("Check Wi-Fi again")
@@ -171,7 +195,7 @@ internal fun NearbyCoopScreen(store: SoloStore, rooms: NearbyRoomViewModel, onBa
                     Button(onClick = {
                         // A last-moment refresh prevents stale readiness after
                         // the phone drops Wi-Fi between opening and tapping.
-                        hostNetworkReady = runtime.hostNetworkAvailable()
+                        hostNetworkReady = safeHostNetworkAvailable(hostProbe)
                         if (hostNetworkReady) runtime.host(ownName,
                             WordTheme.valueOf(theme),
                             PuzzleBoardSize.valueOf(board), PuzzleChallenge.valueOf(challenge),
@@ -411,6 +435,10 @@ private fun NearbyMatchChip(
             NearbyMatch.SPEED_DUEL -> "Duel"
         }) })
 }
+
+/** Treat an unreadable or changing interface as unavailable, never as ready. */
+internal fun safeHostNetworkAvailable(check: () -> Boolean): Boolean =
+    runCatching { check() }.getOrDefault(false)
 
 /** Reusable, testable host availability policy; joining is separate. */
 internal fun canOfferNearbyHost(ready: Boolean, busy: Boolean): Boolean =
