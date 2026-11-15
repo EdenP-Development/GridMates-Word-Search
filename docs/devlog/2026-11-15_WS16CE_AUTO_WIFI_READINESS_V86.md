@@ -33,3 +33,9 @@
 - **Fallback:** v85 signed dual-green, whose actual on-owner-phone install is still not confirmed. Do not uninstall or clear user data. PR #131 remains DRAFT; no merge, no production art approval.
 
 **New chat:** Read this pass, `docs/DEVELOPMENT_JOURNAL.md` and live PR #131; finish exact v86 builds, execute real emulator readiness transitions, and record results before the next combined owner phone test.
+
+## CI correction — legacy assertion, no change to gameplay logic
+
+First exact-source v86 QA [Android #43756099283](https://github.com/PlayerEden/GridMates-Word-Search/actions/runs/43756099283) and [art/release #43756099257](https://github.com/PlayerEden/GridMates-Word-Search/actions/runs/43756099257) were both **FAILED before Kotlin compile** at the same pre-existing Python source test `test_ws16ca_nearby_daily.py`. Its single assertion expected the literal old manual-only `hostNetworkReady = runtime.hostNetworkAvailable()` text. The implementation intentionally now goes through `hostProbe` and `safeHostNetworkAvailable` on a cancellable IO polling effect. The exact runtime `hostNetworkAvailable` and authoritative `host()` predicates are unchanged.
+
+The test was updated to assert the new probe binds to the runtime, two safe direct rechecks, background/cancellation behavior and `Dispatchers.IO`/2-second refresh. This is a **source-test correction only**, not a hidden behavioral change. Corrected exact source/test [`f82406e63fbf553ec348b9f252dfb0bc22f59070`](https://github.com/PlayerEden/GridMates-Word-Search/commit/f82406e63fbf553ec348b9f252dfb0bc22f59070). Re-run workflows: [Android #43756258304](https://github.com/PlayerEden/GridMates-Word-Search/actions/runs/43756258304), [independent art #43756258300](https://github.com/PlayerEden/GridMates-Word-Search/actions/runs/43756258300) both **pending at log time**. Earlier failures must not be counted as build proof.
