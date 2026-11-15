@@ -21,7 +21,7 @@ class NearbyDailyCohesionChecks(unittest.TestCase):
         self.assertIn('runtime.host(ownName,',screen)
         self.assertIn('runtime.search()',screen)
         self.assertIn('Text("Join nearby game")',screen)
-        self.assertIn('Text("Join manually instead")',screen)
+        self.assertIn('else "Join manually instead"',screen)
         self.assertIn('runtime.retryInterruptedJoin(ownName)',screen)
         self.assertIn('ready && !busy',screen)
     def test_all_nearby_and_daily_surfaces_share_live_frame(self):
