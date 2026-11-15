@@ -176,6 +176,8 @@ jobs:
         run: python3 -m unittest discover -s tools/asset_pipeline -p 'test_ws16bx_metric_density.py' -v
       - name: WS16BZ continuous Solo word index and short Daily preservation
         run: python3 -m unittest discover -s tools/asset_pipeline -p 'test_ws16bz_solo_words.py' -v
+      - name: WS16CA Nearby prerequisite and Daily shared frame source checks
+        run: python3 -m unittest discover -s tools/asset_pipeline -p 'test_ws16ca_nearby_daily.py' -v
       - name: Verify WS16BM shared GridMates paper controls and palette
         run: python3 -m unittest discover -s tools/asset_pipeline -p 'test_ws16bm_shared_controls.py' -v
       - name: Verify WS16BL cabinet press depth, pager dots and accessibility

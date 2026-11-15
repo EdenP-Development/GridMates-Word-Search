@@ -13,6 +13,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.playereden.gridmates.wordsearch.core.*
@@ -53,6 +54,12 @@ internal fun NearbyCoopScreen(store: SoloStore, rooms: NearbyRoomViewModel, onBa
     var shareText by rememberSaveable { mutableStateOf<String?>(null) }
     val ownName = store.profile.identity.displayName.trim().ifBlank { "Player" }
     val snapshot = state.snapshot
+    // Read the same local wlan/ap interface requirement as runtime.host().
+    // Not saveable: a new screen must never trust yesterday's Wi-Fi state.
+    var hostNetworkReady by remember(runtime) {
+        mutableStateOf(runtime.hostNetworkAvailable())
+    }
+    val canStartHost = canOfferNearbyHost(hostNetworkReady, state.busy)
 
     // Final, host-authoritative snapshots enter their own atomic journal.
     // A Duel's revision lives in the recipient-specific DuelView rather than
@@ -85,17 +92,17 @@ internal fun NearbyCoopScreen(store: SoloStore, rooms: NearbyRoomViewModel, onBa
             color = Muted, style = MaterialTheme.typography.bodyMedium)
 
         if (state.message.isNotBlank()) {
-            Card(Modifier.fillMaxWidth()) {
-                Text(state.message, Modifier.padding(12.dp),
-                    color = Forest, style = MaterialTheme.typography.bodyMedium)
+            GridMatesInfoPanel(Modifier.fillMaxWidth().testTag("ws16ca-nearby-status")) {
+                Text(state.message, color = Forest,
+                    style = MaterialTheme.typography.bodyMedium)
             }
         }
         if (state.busy) LinearProgressIndicator(Modifier.fillMaxWidth())
 
         if (snapshot == null && state.role == NearbyRole.NONE) {
             state.recovery?.let {
-                Card(Modifier.fillMaxWidth()) {
-                    Column(Modifier.padding(16.dp),
+                GridMatesInfoPanel(Modifier.fillMaxWidth()) {
+                    Column(Modifier.padding(2.dp),
                         verticalArrangement = Arrangement.spacedBy(8.dp)) {
                         Text("Resume interrupted join",
                             color = Forest, style = MaterialTheme.typography.titleMedium,
@@ -110,8 +117,8 @@ internal fun NearbyCoopScreen(store: SoloStore, rooms: NearbyRoomViewModel, onBa
                     }
                 }
             }
-            Card(Modifier.fillMaxWidth()) {
-                Column(Modifier.padding(16.dp), verticalArrangement = Arrangement.spacedBy(12.dp)) {
+            GridMatesInfoPanel(Modifier.fillMaxWidth().testTag("ws16ca-nearby-host-panel")) {
+                Column(Modifier.padding(2.dp), verticalArrangement = Arrangement.spacedBy(12.dp)) {
                     Text("Host a nearby game",
                         color = Forest, style = MaterialTheme.typography.titleLarge)
                     Text("Game mode", fontWeight = FontWeight.SemiBold)
@@ -133,11 +140,34 @@ internal fun NearbyCoopScreen(store: SoloStore, rooms: NearbyRoomViewModel, onBa
                         NearbyMatch.SHARED_BOARD_RACE.name -> "Race · First to claim each word scores"
                         else -> "Co-op · Find words together"
                     }, color = Muted, style = MaterialTheme.typography.bodySmall)
+                    if (!hostNetworkReady) {
+                        Column(Modifier.fillMaxWidth()
+                            .testTag("ws16ca-host-wifi-required"),
+                            verticalArrangement = Arrangement.spacedBy(2.dp)) {
+                            Text("Wi-Fi needed to host",
+                                color = Forest, fontWeight = FontWeight.SemiBold,
+                                style = MaterialTheme.typography.bodyMedium)
+                            Text("Connect this phone to local Wi-Fi or a hotspot. " +
+                                "Use the same network on both phones.",
+                                color = Muted, style = MaterialTheme.typography.bodySmall)
+                            TextButton(onClick = {
+                                hostNetworkReady = runtime.hostNetworkAvailable()
+                            }, enabled = !state.busy,
+                                modifier = Modifier.testTag("ws16ca-host-recheck")) {
+                                Text("Check Wi-Fi again")
+                            }
+                        }
+                    }
                     Button(onClick = {
-                        runtime.host(ownName, WordTheme.valueOf(theme),
+                        // A last-moment refresh prevents stale readiness after
+                        // the phone drops Wi-Fi between opening and tapping.
+                        hostNetworkReady = runtime.hostNetworkAvailable()
+                        if (hostNetworkReady) runtime.host(ownName,
+                            WordTheme.valueOf(theme),
                             PuzzleBoardSize.valueOf(board), PuzzleChallenge.valueOf(challenge),
                             NearbyMatch.valueOf(match), preferredBoardLook)
-                    }, enabled = !state.busy, modifier = Modifier.fillMaxWidth()) {
+                    }, enabled = canStartHost,
+                        modifier = Modifier.fillMaxWidth().testTag("ws16ca-host-button")) {
                         Text(when (match) {
                             NearbyMatch.SPEED_DUEL.name -> "Host Speed Duel"
                             NearbyMatch.SHARED_BOARD_RACE.name -> "Host Shared Board Race"
@@ -199,8 +229,8 @@ internal fun NearbyCoopScreen(store: SoloStore, rooms: NearbyRoomViewModel, onBa
 
                 }
             }
-            if (showJoin) Card(Modifier.fillMaxWidth()) {
-                Column(Modifier.padding(12.dp),
+            if (showJoin) GridMatesInfoPanel(Modifier.fillMaxWidth()) {
+                Column(Modifier.padding(0.dp),
                     verticalArrangement = Arrangement.spacedBy(8.dp)) {
                     Text("Nearby games", color = Forest,
                         style = MaterialTheme.typography.titleMedium,
@@ -268,8 +298,8 @@ internal fun NearbyCoopScreen(store: SoloStore, rooms: NearbyRoomViewModel, onBa
                     else "Board appearance · " + CoopBoardLook.safe(preferredBoardLook).label +
                         " (optional)")
             }
-            if (showAppearanceOptions) Card(Modifier.fillMaxWidth()) {
-                Column(Modifier.padding(14.dp),
+            if (showAppearanceOptions) GridMatesInfoPanel(Modifier.fillMaxWidth()) {
+                Column(Modifier.padding(0.dp),
                     verticalArrangement = Arrangement.spacedBy(8.dp)) {
                     Text("Co-op board appearance",
                         color = Forest, fontWeight = FontWeight.SemiBold,
@@ -355,3 +385,7 @@ internal fun NearbyCoopScreen(store: SoloStore, rooms: NearbyRoomViewModel, onBa
             })
     }
 }
+
+/** Reusable, testable host availability policy; joining is separate. */
+internal fun canOfferNearbyHost(ready: Boolean, busy: Boolean): Boolean =
+    ready && !busy

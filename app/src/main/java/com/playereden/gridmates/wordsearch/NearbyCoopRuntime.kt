@@ -305,6 +305,12 @@ internal class NearbyCoopRuntime(context: Context) : AutoCloseable {
             .firstOrNull { it is Inet4Address && it.isSiteLocalAddress && !it.isLoopbackAddress }
     }
 
+    /** Same interface predicate used by host(), without connecting or opening
+     * a socket. Recheck explicitly after connecting to local Wi-Fi/hotspot.
+     * The authoritative host() check still runs in its I/O worker. */
+    internal fun hostNetworkAvailable(): Boolean =
+        runCatching { localWifiIp() != null }.getOrDefault(false)
+
     /** Add private Duel data only for the intended viewer. */
     private fun forSeat(shared: CoopSnapshot, seat: CoopSeat): CoopSnapshot {
         if (shared.match != NearbyMatch.SPEED_DUEL) return shared
