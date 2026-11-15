@@ -9,6 +9,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 
+/** Use the same accessible 150% breakpoint across Daily and Nearby live panels. */
+internal fun shouldStackLobbyActions(fontScale: Float): Boolean = fontScale >= 1.5f
+
 /** WS16BT shared live-data panel: decorative paint only, never a baked card.
  * Reused by Collection today, and available to future secondary screens.
  * The child's native text, click, unlock and progress state is untouched.
