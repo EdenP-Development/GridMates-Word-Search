@@ -40,7 +40,7 @@ internal fun DailyLandingScreen(
     val existing = store.profile.dailyEntries.firstOrNull { it.date == today }
     val past = store.profile.dailyEntries.filter { it.date != today }
         .sortedByDescending { it.date }
-    val fontLarge = LocalDensity.current.fontScale >= 1.5f
+    val fontLarge = shouldStackLobbyActions(LocalDensity.current.fontScale)
     val pageSize = if (fontLarge) 2 else 3
     val totalPages = ((past.size + pageSize - 1) / pageSize).coerceAtLeast(1)
     var page by rememberSaveable { mutableIntStateOf(0) }
