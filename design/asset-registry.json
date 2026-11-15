@@ -64,6 +64,20 @@
       "purpose": "Coordinated Woodland, Ocean, Bugs, Garden, Space theme cards",
       "target_pack": "wordsearch-themes-v1",
       "requirements": "create coherent batches and inspect small mobile-size compositions"
+    },
+    {
+      "id": "ws17_ornamental_visual_reserve_v2",
+      "kind": "versioned_candidate_asset_library",
+      "status": "concept_reference_approved_png_source_external_not_packaged",
+      "purpose": "Reproducible pre-made art for shared cards, 12 theme medallions, 12 decor elements, 12 navigation icons and 12 optional book spines; 60 sprites total",
+      "source": "design/art-library-v2/README.md",
+      "source_index": "design/art-library-v2/RESERVE_INDEX.json",
+      "style_bible": "design/art-library-v2/STYLE_BIBLE.md",
+      "import_script": "design/art-library-v2/import_visual_library.py",
+      "binary_archive_sha256": "68fac0f6a40c7abbb3b75096692e74f016368218ffb2e8085e60a12f7636966e",
+      "binary_source_location": "ChatGPT Library /Game Design/GridMates Word Search/GridMates_Visual_Library_v1.zip",
+      "packaging": "NOT in app source or APK; staged until owner approves screen use",
+      "notes": "Existing art direction v1 remains valid for current app; GitHub contains text documentation and four editable SVG prototypes but not the high-resolution PNG binary archive."
     }
   ],
   "review_process": [
