@@ -51,7 +51,9 @@ class RecordsUXTests(unittest.TestCase):
                   'if (record.assisted) "Assisted" else "No hints"',
                   'DateFormat.getDateTimeInstance'):
             self.assertIn(s,src)
-        self.assertNotIn('horizontalArrangement = Arrangement.SpaceBetween',src)
+        # SpaceBetween is correct in the pager; saved result headers must be
+        # vertically stacked so long translated labels cannot collide.
+        self.assertEqual(src.count('verticalArrangement = Arrangement.spacedBy(2.dp)) {'),3)
         self.assertEqual(src.count('GridMatesIllustratedFrame('),8)
 
 if __name__=="__main__":
