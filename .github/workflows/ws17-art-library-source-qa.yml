@@ -46,7 +46,7 @@ jobs:
               r=ET.parse(f).getroot()
               assert r.tag.endswith('svg')
               assert r.attrib.get('viewBox')
-              assert not any(tag in f.read_text() for tag in ('<script','<foreignObject','http://','https://'))
+              assert not any(tag in f.read_text() for tag in ('<script','<foreignObject','<image','xlink:href'))
           reg=json.loads(pathlib.Path('design/asset-registry.json').read_text())
           assert any(a['id']=='ws17_ornamental_visual_reserve_v2'
               and a['status'].endswith('not_packaged') for a in reg['assets'])
