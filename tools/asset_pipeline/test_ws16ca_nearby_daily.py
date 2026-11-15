@@ -11,7 +11,15 @@ class NearbyDailyCohesionChecks(unittest.TestCase):
         self.assertIn('internal fun hostNetworkAvailable(): Boolean',runtime)
         self.assertIn('runCatching { localWifiIp() != null }',runtime)
         self.assertIn('val wifi = localWifiIp() ?: throw IOException(',runtime)
-        self.assertIn('hostNetworkReady = runtime.hostNetworkAvailable()',screen)
+        # WS16CE updates this existing guarantee: the UI still calls the
+        # runtime's exact wlan/ap predicate, but refreshes automatically
+        # on a cancellable lifecycle-bound IO task.
+        self.assertIn('hostReadinessProbe ?: { runtime.hostNetworkAvailable() }',screen)
+        self.assertIn('hostNetworkReady = safeHostNetworkAvailable(hostProbe)',screen)
+        self.assertIn('withContext(Dispatchers.IO)',screen)
+        self.assertIn('delay(2_000L)',screen)
+        self.assertIn('screenStarted',screen)
+        self.assertIn('if (hostNetworkReady) runtime.host(ownName,',screen)
         self.assertIn('canOfferNearbyHost(hostNetworkReady, state.busy)',screen)
         self.assertIn('enabled = canStartHost,',screen)
         self.assertIn('testTag("ws16ca-host-button")',screen)
