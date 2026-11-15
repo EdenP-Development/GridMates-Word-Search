@@ -3,7 +3,7 @@ import unittest
 from pathlib import Path
 ROOT=Path(__file__).resolve().parents[2]
 APP=ROOT/"app/src/main/java/com/playereden/gridmates/wordsearch"
-CORE=ROOT/"core/src/main/kotlin/com/playereden/gridmates/wordsearch"
+CORE=ROOT/"core/src/main/kotlin/com/playereden/gridmates/wordsearch/core"
 class CompactFontsTests(unittest.TestCase):
     def test_four_fonts_and_license_access_are_not_lost(self):
         src=(APP/"CollectionScreen.kt").read_text()
