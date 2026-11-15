@@ -1,3 +1,5 @@
+> **WS18 direction update (2026-11-15):** The owner confirmed much of the game's existing art was experimental/placeholder and explicitly authorized a cohesive visual **overhaul**, potentially replacing most legacy artwork. Ornamental v2 is no longer limited to small optional decorations. The goal is now the cross-game [GridMates Master Asset System](../master-asset-system/README.md): generic Core components across games, Word Search books/library identity, Theme packs, and an abundant unshipped Reserve. The older paperback-v1 restrictions remain historical prototype documentation, not a prohibition on using ornate gold or improved book/leather artwork. **This does not mean the owner has approved every individual sprite on every screen, or that any new PNG has been shipped.**
+
 # GridMates: Word Search — Ornamental Art Library v2
 
 **Date:** 2026-11-15. **Status:** Owner-liked visual reference and preproduction asset candidates; NOT automatically approved for packaging or screen replacement.
