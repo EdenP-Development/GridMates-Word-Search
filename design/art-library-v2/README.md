@@ -1,3 +1,5 @@
+> **WS18 next direction:** The owner clarified that current visuals are mostly placeholders and a coherent replacement is desired. This candidate pack now feeds the larger [GridMates Master Asset System](../master-asset-system/README.md) (Core / Word Search / Themes / Reserve), not only a collection of little optional embellishments. The high-resolution PNGs remain externally archived, so placement and binary import are separate tasks.
+
 # GridMates: Word Search — Art Library v2 reserve
 
 **Candidate only; no runtime asset substitutions.**
