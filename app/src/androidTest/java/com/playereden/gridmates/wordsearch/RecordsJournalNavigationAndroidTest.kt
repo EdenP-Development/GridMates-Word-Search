@@ -41,7 +41,10 @@ class RecordsJournalNavigationAndroidTest {
                     }
                 }
             }
-            compose.onNodeWithText("Browse your results").assertExists()
+            compose.onNodeWithTag("ws16bw-records-intro").assertExists()
+            compose.onNodeWithTag("ws16bw-tab-solo").assertExists()
+            compose.onNodeWithTag("ws16bw-tab-race").assertExists()
+            compose.onNodeWithTag("ws16bw-tab-duel").assertExists()
             compose.onNodeWithText("Solo").assertExists()
             compose.onNodeWithText("Race").assertIsDisplayed()
             compose.onNodeWithText("Duel").assertIsDisplayed()
@@ -52,9 +55,11 @@ class RecordsJournalNavigationAndroidTest {
             compose.onNodeWithText("Shared Board Race").assertDoesNotExist()
             compose.onNodeWithText("Race").performClick()
             compose.onNodeWithText("Shared Board Race").assertIsDisplayed()
+            compose.onNodeWithTag("ws16bw-race-metrics").assertExists()
             compose.onNodeWithText("Recent puzzles").assertDoesNotExist()
             compose.onNodeWithText("Duel").performClick()
             compose.onNodeWithText("Speed Duel").assertIsDisplayed()
+            compose.onNodeWithTag("ws16bw-duel-metrics").assertExists()
             compose.onNodeWithText("Shared Board Race").assertDoesNotExist()
             compose.onNodeWithText("Solo").performClick()
             compose.onNodeWithText("Recent puzzles").assertExists()
