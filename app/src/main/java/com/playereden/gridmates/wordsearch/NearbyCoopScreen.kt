@@ -26,6 +26,8 @@ import com.playereden.gridmates.wordsearch.core.*
 @Composable
 internal fun NearbyCoopScreen(store: SoloStore, rooms: NearbyRoomViewModel, onBack: () -> Unit) {
     val ctx = LocalContext.current.applicationContext
+    // Large text must never hide Race/Duel beyond the edge of a fixed row.
+    val largeText = LocalDensity.current.fontScale >= 1.5f
     val runtime = remember(rooms) { rooms.runtime(ctx) }
     val state = runtime.state
     var exitPrompt by rememberSaveable { mutableStateOf(false) }
@@ -122,16 +124,24 @@ internal fun NearbyCoopScreen(store: SoloStore, rooms: NearbyRoomViewModel, onBa
                     Text("Host a nearby game",
                         color = Forest, style = MaterialTheme.typography.titleLarge)
                     Text("Game mode", fontWeight = FontWeight.SemiBold)
-                    Row(Modifier.fillMaxWidth(),
-                        horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                        NearbyMatch.entries.forEach { entry ->
-                            FilterChip(selected = match == entry.name,
-                                onClick = { match = entry.name },
-                                label = { Text(when (entry) {
-                                    NearbyMatch.COOP -> "Co-op"
-                                    NearbyMatch.SHARED_BOARD_RACE -> "Race"
-                                    NearbyMatch.SPEED_DUEL -> "Duel"
-                                }) })
+                    if (largeText) {
+                        // At 150–200% system text, each mode gets a complete
+                        // tappable line rather than clipping the third choice.
+                        Column(Modifier.fillMaxWidth()
+                            .testTag("ws16cc-nearby-modes-stacked"),
+                            verticalArrangement = Arrangement.spacedBy(2.dp)) {
+                            NearbyMatch.entries.forEach { entry ->
+                                NearbyMatchChip(entry, match == entry.name,
+                                    { match = entry.name }, Modifier.fillMaxWidth())
+                            }
+                        }
+                    } else {
+                        Row(Modifier.fillMaxWidth().horizontalScroll(rememberScrollState()),
+                            horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                            NearbyMatch.entries.forEach { entry ->
+                                NearbyMatchChip(entry, match == entry.name,
+                                    { match = entry.name })
+                            }
                         }
                     }
 
@@ -384,6 +394,22 @@ internal fun NearbyCoopScreen(store: SoloStore, rooms: NearbyRoomViewModel, onBa
                 TextButton(onClick = { selectedRoom = null }) { Text("Cancel") }
             })
     }
+}
+
+/** Mode choices stay independently accessible at ordinary and 200% font sizes. */
+@Composable
+private fun NearbyMatchChip(
+    entry: NearbyMatch,
+    selected: Boolean,
+    onClick: () -> Unit,
+    modifier: Modifier = Modifier
+) {
+    FilterChip(selected = selected, onClick = onClick, modifier = modifier,
+        label = { Text(when (entry) {
+            NearbyMatch.COOP -> "Co-op"
+            NearbyMatch.SHARED_BOARD_RACE -> "Race"
+            NearbyMatch.SPEED_DUEL -> "Duel"
+        }) })
 }
 
 /** Reusable, testable host availability policy; joining is separate. */
