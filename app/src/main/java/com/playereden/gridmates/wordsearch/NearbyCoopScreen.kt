@@ -1,6 +1,8 @@
 package com.playereden.gridmates.wordsearch
 
 import androidx.activity.compose.BackHandler
+import android.content.Context
+import android.content.ContextWrapper
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.rememberScrollState
@@ -13,10 +15,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
-import androidx.compose.ui.platform.LocalView
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleEventObserver
-import androidx.lifecycle.ViewTreeLifecycleOwner
+import androidx.lifecycle.LifecycleOwner
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
@@ -80,7 +81,10 @@ internal fun NearbyCoopScreen(
     var hostNetworkReady by remember(runtime) { mutableStateOf(false) }
     // The composition survives Home/background transitions on Android. Do
     // not keep sampling the Wi-Fi interface after the host screen is stopped.
-    val lifecycleOwner = ViewTreeLifecycleOwner.get(LocalView.current)
+    val activityContext = LocalContext.current
+    val lifecycleOwner = remember(activityContext) {
+        findNearbyLifecycleOwner(activityContext)
+    }
     var screenStarted by remember(lifecycleOwner) {
         mutableStateOf(lifecycleOwner?.lifecycle?.currentState
             ?.isAtLeast(Lifecycle.State.STARTED) ?: true)
@@ -453,6 +457,17 @@ private fun NearbyMatchChip(
             NearbyMatch.SHARED_BOARD_RACE -> "Race"
             NearbyMatch.SPEED_DUEL -> "Duel"
         }) })
+}
+
+/** Unwrap themed contexts without requiring an extra lifecycle-compose artifact. */
+private fun findNearbyLifecycleOwner(context: Context): LifecycleOwner? {
+    var candidate: Context? = context
+    repeat(8) {
+        val current = candidate ?: return null
+        if (current is LifecycleOwner) return current
+        candidate = (current as? ContextWrapper)?.baseContext
+    }
+    return null
 }
 
 /** Treat an unreadable or changing interface as unavailable, never as ready. */
