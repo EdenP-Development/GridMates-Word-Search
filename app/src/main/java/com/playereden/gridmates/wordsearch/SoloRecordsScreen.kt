@@ -272,22 +272,30 @@ internal fun SoloRecordsScreen(profile: SoloProfile) {
     }
 }
 
-/** Four honest summary metrics; narrow screens and enlarged text stack them
- * rather than squeezing large values and labels into unreadable columns. */
+/** Keep the four Race/Duel summary metrics in a 2x2 grid on normal phones.
+ * The previous <350dp content-width rule stacked even on a normal 320dp
+ * handset after the shell padding. Stack only when two columns cannot fit
+ * comfortably, or at accessibility-scale type.
+ */
+internal fun stackMatchSummaryMetrics(availableWidthDp: Float, fontScale: Float): Boolean =
+    availableWidthDp < 280f || fontScale >= 1.8f
+
 @Composable
 private fun MatchSummaryMetrics(values: List<Pair<String, String>>, mode: String) {
     BoxWithConstraints(Modifier.fillMaxWidth().testTag("ws16bw-" + mode + "-metrics")) {
-        val largeText = LocalDensity.current.fontScale >= 1.4f
-        if (maxWidth < 350.dp || largeText) {
-            Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
+        val stacked = stackMatchSummaryMetrics(maxWidth.value, LocalDensity.current.fontScale)
+        if (stacked) {
+            Column(Modifier.fillMaxWidth().testTag("ws16bx-" + mode + "-stacked"),
+                verticalArrangement = Arrangement.spacedBy(8.dp)) {
                 values.forEach { (label, amount) ->
                     MetricCard(label, amount, Modifier.fillMaxWidth())
                 }
             }
         } else {
             Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
-                values.chunked(2).forEach { pair ->
-                    Row(Modifier.fillMaxWidth(),
+                values.chunked(2).forEachIndexed { index, pair ->
+                    Row(Modifier.fillMaxWidth()
+                        .testTag("ws16bx-" + mode + "-row-" + index),
                         horizontalArrangement = Arrangement.spacedBy(8.dp)) {
                         pair.forEach { (label, amount) ->
                             MetricCard(label, amount, Modifier.weight(1f))

@@ -39,9 +39,8 @@ class RecordsUXTests(unittest.TestCase):
         src=(APP/"SoloRecordsScreen.kt").read_text()
         self.assertIn('private fun MatchSummaryMetrics(values: List<Pair<String, String>>, mode: String)',src)
         self.assertIn('testTag("ws16bw-" + mode + "-metrics")',src)
-        self.assertIn('LocalDensity.current.fontScale >= 1.4f',src)
-        self.assertIn('if (maxWidth < 350.dp || largeText)',src)
-        self.assertIn('values.chunked(2).forEach { pair ->',src)
+        self.assertIn('stackMatchSummaryMetrics(maxWidth.value, LocalDensity.current.fontScale)',src)
+        self.assertIn('values.chunked(2).forEachIndexed { index, pair ->',src)
         for s in ('"Played" to racing.played.toString()',
                   '"Ties" to racing.ties.toString()',
                   '"Words found" to dueling.totalWordsFound.toString()',
