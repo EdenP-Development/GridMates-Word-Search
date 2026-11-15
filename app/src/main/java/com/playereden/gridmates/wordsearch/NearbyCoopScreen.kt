@@ -13,6 +13,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.platform.LocalView
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.LifecycleEventObserver
+import androidx.lifecycle.ViewTreeLifecycleOwner
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
@@ -74,8 +78,23 @@ internal fun NearbyCoopScreen(
         hostReadinessProbe ?: { runtime.hostNetworkAvailable() }
     }
     var hostNetworkReady by remember(runtime) { mutableStateOf(false) }
-    LaunchedEffect(runtime, state.role, hostProbe) {
-        if (state.role == NearbyRole.NONE) {
+    // The composition survives Home/background transitions on Android. Do
+    // not keep sampling the Wi-Fi interface after the host screen is stopped.
+    val lifecycleOwner = ViewTreeLifecycleOwner.get(LocalView.current)
+    var screenStarted by remember(lifecycleOwner) {
+        mutableStateOf(lifecycleOwner?.lifecycle?.currentState
+            ?.isAtLeast(Lifecycle.State.STARTED) ?: true)
+    }
+    DisposableEffect(lifecycleOwner) {
+        val observer = LifecycleEventObserver { _, _ ->
+            screenStarted = lifecycleOwner?.lifecycle?.currentState
+                ?.isAtLeast(Lifecycle.State.STARTED) ?: true
+        }
+        lifecycleOwner?.lifecycle?.addObserver(observer)
+        onDispose { lifecycleOwner?.lifecycle?.removeObserver(observer) }
+    }
+    LaunchedEffect(runtime, state.role, hostProbe, screenStarted) {
+        if (state.role == NearbyRole.NONE && screenStarted) {
             while (true) {
                 hostNetworkReady = withContext(Dispatchers.IO) {
                     safeHostNetworkAvailable(hostProbe)
