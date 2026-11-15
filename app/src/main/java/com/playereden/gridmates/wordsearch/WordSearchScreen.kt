@@ -116,6 +116,11 @@ internal fun gridZoomInstruction(boardCells: Int): String =
     if (boardCells >= 20) "Dense board · use + or pinch"
     else "Trace words · pinch to zoom"
 
+/** WS16BZ: larger Solo games need one continuous, independently scrollable
+ * index. Keep the short Daily word list and Book gameplay contracts intact. */
+internal fun scrollSoloWordIndex(daily: Boolean, targetCount: Int): Boolean =
+    !daily && targetCount >= 12
+
 @Composable
 internal fun WordSearchScreen(
     store: SoloStore,
@@ -160,6 +165,7 @@ internal fun WordSearchScreen(
     val hintsRemaining = WordHintPolicy.remaining(run, daily)
     val usedHintSteps = WordHintPolicy.used(run)
     val finished = WordSearchRules.complete(puzzle, found)
+    val continuousSoloIndex = scrollSoloWordIndex(daily, puzzle.targets.size)
     val hintPaths = puzzle.targets.filter { target ->
         target.id !in found && (run.hints[target.id] ?: 0) >= 3
     }.map { it.positions }
@@ -393,7 +399,8 @@ internal fun WordSearchScreen(
                     WordList(puzzle, found, daily,
                         Modifier.weight(1f).fillMaxSize(),
                         onShowResults = if (finished) { { reviewingCompletedBoard = false } }
-                            else null)
+                            else null,
+                        scrollAll = continuousSoloIndex)
                 }
             } else {
                 Box(Modifier.fillMaxWidth(), contentAlignment = Alignment.Center) {
@@ -409,7 +416,8 @@ internal fun WordSearchScreen(
                 WordList(puzzle, found, daily,
                     Modifier.weight(1f).fillMaxWidth(),
                     onShowResults = if (finished) { { reviewingCompletedBoard = false } }
-                        else null)
+                        else null,
+                    scrollAll = continuousSoloIndex)
             }
         }
     }
@@ -540,7 +548,7 @@ internal fun WordList(
     daily: Boolean,
     modifier: Modifier = Modifier,
     onShowResults: (() -> Unit)? = null,
-    /** Book mode: keep all target words in one scrollable list, not 6 tiny pages. */
+    /** Book mode and larger Solo: one independent scrolling word index, not tiny pages. */
     scrollAll: Boolean = false,
     bookThemeAccent: Boolean = false
 ) {
@@ -607,14 +615,14 @@ internal fun WordList(
             val visiblePage = page.coerceIn(0, pageCount - 1)
             val visibleTargets = targets.drop(visiblePage * perPage).take(perPage)
             val visibleRange = PaperbackWordIndex.visibleRange(targets.size, visiblePage, perPage)
-            // In book mode keep the real word list in a scrollable region below
-            // the board, instead of an awkward 2-words-per-page pager.
-            // Solo/Daily retains its established paging and golden UX.
+            // Book mode and larger Solo games share a real independently
+            // scrollable index; short Daily and legacy small games keep paging.
+            // Board gestures remain on ZoomableWordGrid, never on this list.
             val listScroll = remember(puzzle.id, remainingOnly) { ScrollState(0) }
             Column(
-                Modifier.fillMaxSize().then(
-                    if (scrollAll) Modifier.verticalScroll(listScroll) else Modifier
-                ),
+                Modifier.fillMaxSize()
+                    .then(if (scrollAll) Modifier.testTag("word-list-scrollable") else Modifier)
+                    .then(if (scrollAll) Modifier.verticalScroll(listScroll) else Modifier),
                 verticalArrangement = Arrangement.spacedBy(4.dp)
             ) {
                 if (giantWordList) {
@@ -645,6 +653,7 @@ internal fun WordList(
                                 // Printed book-style square entries, not
                                 // rounded pills which visually trim letters.
                                 Box(Modifier.weight(1f)
+                                    .testTag("word-list-target-" + target.id)
                                     .background(if (solved) FoundMarker.copy(alpha = 0.28f)
                                         else Paper)
                                     .border(1.dp,
