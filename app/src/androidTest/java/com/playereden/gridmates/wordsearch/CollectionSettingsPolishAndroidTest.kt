@@ -64,6 +64,7 @@ class CollectionSettingsPolishAndroidTest {
         compose.onNodeWithTag("achievements-next").performScrollTo()
             .assertIsEnabled().performClick()
         compose.onNodeWithText("Three Chapters").performScrollTo().assertExists()
+        compose.onNodeWithTag("ws31-milestone-label-all_themes").assertExists()
         compose.onNodeWithContentDescription("Back to Profile").performScrollTo().performClick()
         compose.onNodeWithContentDescription("Back to Home").performClick()
         compose.onNodeWithContentDescription("Open menu").performClick()
