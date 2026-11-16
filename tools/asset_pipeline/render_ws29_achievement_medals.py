@@ -12,7 +12,7 @@ import cairosvg
 ROOT = Path(__file__).resolve().parents[2]
 PACK = ROOT / "design/art-library-v2/ws21"
 DEST = ROOT / "app/src/debug/res/drawable-nodpi"
-PALETTES = ("gold", "cream")
+PALETTES = ("gold", "cream", "forest")
 
 def render(output_dir=DEST):
     manifest = json.loads((PACK / "manifest.json").read_text(encoding="utf-8"))
