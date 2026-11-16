@@ -273,8 +273,8 @@ internal fun CollectionScreen(store: SoloStore) {
             subtitle = achievements.count { it.unlocked }.toString() +
                 " of " + achievements.size + " earned"
         )
-        Text("Achievements reflect your saved Solo and Daily progress.",
-            color = Muted, style = MaterialTheme.typography.bodySmall)
+        // Achievement provenance is still visible in the detail cards; give the
+        // actual collectible medals first-screen room instead of duplicating it.
         val orderedAchievements = achievements.sortedWith(
             compareBy<AchievementProgress> { it.unlocked }.thenBy { it.target - it.current })
         val pages = ((orderedAchievements.size + achievementPageSize - 1) /
@@ -619,24 +619,70 @@ private fun PortraitCard(
 
 @Composable
 private fun AchievementCard(item: AchievementProgress) {
+    // WS29 uses WS21 Core's original blank achievement shields (QA/debug) and
+    // live, localized native lettering. Never bake lock state into the art.
     GridMatesInfoPanel(Modifier.fillMaxWidth().testTag("ws16bt-achievement-" + item.id)) {
-        Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(8.dp),
-            verticalAlignment = Alignment.CenterVertically) {
-            Text(item.title, fontWeight = FontWeight.SemiBold, color = Forest,
-                style = MaterialTheme.typography.titleMedium,
-                modifier = Modifier.weight(1f))
-            Text(if (item.unlocked) "Earned" else
-                item.current.toString() + " / " + item.target,
-                color = if (item.unlocked) Forest else Muted,
-                style = MaterialTheme.typography.labelMedium)
+        Row(
+            Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.spacedBy(12.dp),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Ws29AchievementMedal(item.id, item.unlocked)
+            Column(Modifier.weight(1f),
+                verticalArrangement = Arrangement.spacedBy(4.dp)) {
+                Text(item.title, fontWeight = FontWeight.Bold, color = Forest,
+                    style = MaterialTheme.typography.titleMedium)
+                Text(if (item.unlocked) "Earned" else
+                    item.current.toString() + " / " + item.target,
+                    color = if (item.unlocked) Forest else Muted,
+                    style = MaterialTheme.typography.labelLarge)
+                Text(item.description, style = MaterialTheme.typography.bodySmall,
+                    color = Muted)
+            }
         }
-        Text(item.description, style = MaterialTheme.typography.bodyMedium, color = Muted)
         PaperProgress(item.current, item.target)
         if (!item.unlocked) {
             Text((item.target - item.current).coerceAtLeast(0).toString() +
                 " more to earn this achievement",
                 color = Muted, style = MaterialTheme.typography.labelSmall)
         }
+    }
+}
+
+@Composable
+private fun Ws29AchievementMedal(id: String, earned: Boolean) {
+    val context = LocalContext.current
+    // Three blank WS21 SVG masters are reproducibly rendered for QA builds.
+    // A source-free production build still has a native circular fallback.
+    val resource = remember(context, earned) {
+        context.resources.getIdentifier(
+            if (earned) "gm_ws29_achievement_gold" else "gm_ws29_achievement_cream",
+            "drawable", context.packageName)
+    }
+    val motif = when (id) {
+        "one_daily", "seven_dailies" -> "☀"
+        "no_hints", "hard_solo" -> "✦"
+        "all_themes" -> "✿"
+        else -> "★"
+    }
+    Box(Modifier.size(66.dp).testTag("ws29-achievement-medal-" + id),
+        contentAlignment = Alignment.Center) {
+        if (resource != 0) {
+            Image(
+                painter = painterResource(resource),
+                contentDescription = null, contentScale = ContentScale.Fit,
+                modifier = Modifier.fillMaxSize()
+                    .alpha(if (earned) 1f else 0.68f)
+            )
+        } else {
+            Box(Modifier.size(57.dp)
+                .background(
+                    if (earned) Color(0xFFE5C775) else Color(0xFFE5DECE),
+                    RoundedCornerShape(18.dp)))
+        }
+        Text(motif, color = if (earned) Color(0xFF785016) else Color(0xFF7D8678),
+            fontWeight = FontWeight.Bold,
+            style = MaterialTheme.typography.headlineMedium)
     }
 }
 
