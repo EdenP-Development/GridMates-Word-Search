@@ -78,6 +78,23 @@
       "binary_source_location": "ChatGPT Library /Game Design/GridMates Word Search/GridMates_Visual_Library_v1.zip",
       "packaging": "NOT in app source or APK; staged until owner approves screen use",
       "notes": "Existing art direction v1 remains valid for current app; GitHub contains text documentation and four editable SVG prototypes but not the high-resolution PNG binary archive."
+    },
+    {
+      "id": "ws20_ornamental_collection_and_spines",
+      "kind": "versioned_candidate_asset_bank",
+      "status": "concept_reference_approved_png_source_external_not_packaged",
+      "purpose": "88 pre-made transparent UI candidate assets: 16 Core Collection/Profile/Rewards badges and 72 themed Word Search blank spines (24 themes x narrow/regular/collector)",
+      "source": "design/art-library-v2/ws20/README.md",
+      "source_index": "design/art-library-v2/ws20/manifest.json",
+      "build_script": "design/art-library-v2/ws20/build_gridmates_ws20.py",
+      "source_validator": "design/art-library-v2/ws20/validate_ws20.py",
+      "github_svg_sources": "design/art-library-v2/ws20/svg/spines/",
+      "github_editable_svg_count": 72,
+      "external_prepared_png_count": 88,
+      "source_archive": "ChatGPT Library /Game Design/GridMates Word Search/GridMates_Asset_Expansion_WS20_verified.zip",
+      "binary_archive_sha256": "6c508feeb8fcc00b067cdee55f719718664af9d2fe27391ff2cc47297f623498",
+      "packaging": "NOT installed in Android APK; PNG source archive external, SVG vectors committed",
+      "notes": "Two extra generated reference boards have baked text and are NOT runtime sprites. Legacy v86 signed QA remains gameplay fallback. No book/save ID or reward logic changes."
     }
   ],
   "review_process": [
