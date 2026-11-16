@@ -34,7 +34,7 @@ def render(output_dir=DEST):
         cairosvg.svg2png(bytestring=source_bytes,
             write_to=str(result_path), output_width=192, output_height=192)
         rendered_bytes = result_path.read_bytes()
-        if not rendered_bytes.startswith(b"\\x89PNG\\r\\n\\x1a\\n"):
+        if rendered_bytes[:8] != bytes([137, 80, 78, 71, 13, 10, 26, 10]):
             raise ValueError(f"Not a PNG: {result_path}")
         if len(rendered_bytes) < 5000:
             raise ValueError(f"Implausibly small shield output: {result_path}")
