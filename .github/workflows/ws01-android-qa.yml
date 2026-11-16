@@ -181,6 +181,8 @@ jobs:
           python3 -m unittest discover -s tools/asset_pipeline -p 'test_ws29_achievement_medals.py' -v
       - name: WS30 Native non-emoji reward symbols and progress preservation
         run: python3 -m unittest discover -s tools/asset_pipeline -p 'test_ws30_medal_symbols.py' -v
+      - name: WS31 Milestone art provenance and save-safe Solo journal
+        run: python3 -m unittest discover -s tools/asset_pipeline -p 'test_ws31_milestones_saved_puzzles.py' -v
       - name: WS16BU compact gallery/pager and profile readability guards
         run: python3 -m unittest discover -s tools/asset_pipeline -p 'test_ws16bu_compact_gallery.py' -v
       - name: WS16BV compact bundled Fonts and license access guards

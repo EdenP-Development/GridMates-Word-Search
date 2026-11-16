@@ -636,6 +636,12 @@ private fun AchievementCard(item: AchievementProgress) {
             Ws29AchievementMedal(item.id, item.unlocked)
             Column(Modifier.weight(1f),
                 verticalArrangement = Arrangement.spacedBy(4.dp)) {
+                if (item.id in Ws31MilestoneAchievements) {
+                    Text("MILESTONE", color = if (item.unlocked) Forest else Muted,
+                        style = MaterialTheme.typography.labelSmall,
+                        fontWeight = FontWeight.Bold,
+                        modifier = Modifier.testTag("ws31-milestone-label-" + item.id))
+                }
                 Text(item.title, fontWeight = FontWeight.Bold, color = Forest,
                     style = MaterialTheme.typography.titleMedium)
                 Text(if (item.unlocked) "Earned" else
@@ -655,15 +661,23 @@ private fun AchievementCard(item: AchievementProgress) {
     }
 }
 
+// Three existing accomplishments earn a distinct emerald/forest shield when
+// complete. This is presentation only; do not add a new reward or threshold.
+private val Ws31MilestoneAchievements =
+    setOf("twenty_puzzles", "seven_dailies", "all_themes")
+
 @Composable
 private fun Ws29AchievementMedal(id: String, earned: Boolean) {
     val context = LocalContext.current
     // Three blank WS21 SVG masters are reproducibly rendered for QA builds.
     // A source-free production build still has a native circular fallback.
-    val resource = remember(context, earned) {
-        context.resources.getIdentifier(
-            if (earned) "gm_ws29_achievement_gold" else "gm_ws29_achievement_cream",
-            "drawable", context.packageName)
+    val resource = remember(context, id, earned) {
+        val name = when {
+            !earned -> "gm_ws29_achievement_cream"
+            id in Ws31MilestoneAchievements -> "gm_ws29_achievement_forest"
+            else -> "gm_ws29_achievement_gold"
+        }
+        context.resources.getIdentifier(name, "drawable", context.packageName)
     }
     // Native paths avoid system emoji glyphs: Android rendered the *locked*
     // Today Counts sun bright orange while other locked motifs were muted.
@@ -685,7 +699,9 @@ private fun Ws29AchievementMedal(id: String, earned: Boolean) {
         } else {
             Box(Modifier.size(57.dp)
                 .background(
-                    if (earned) Color(0xFFE5C775) else Color(0xFFE5DECE),
+                    if (!earned) Color(0xFFE5DECE)
+                    else if (id in Ws31MilestoneAchievements) Color(0xFF4C7454)
+                    else Color(0xFFE5C775),
                     RoundedCornerShape(18.dp)))
         }
         Ws30AchievementSymbol(motif, earned,

@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.junit4.createComposeRule
+import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
 import androidx.compose.ui.test.performScrollTo
@@ -35,6 +36,10 @@ class MyPuzzlesNavigationAndroidTest {
             }
             rule.onNodeWithText("My Puzzles").assertIsDisplayed().performClick()
             rule.onNodeWithText("PAUSED · 1 / 24").assertExists()
+            rule.onNodeWithTag("ws31-current-solo-card").assertExists()
+            rule.onNodeWithTag("ws31-current-resume").assertExists()
+            rule.onNodeWithTag("ws31-paused-solo-" + pausedId).assertExists()
+            rule.onNodeWithTag("ws31-paused-resume-" + pausedId).assertExists()
             rule.onNodeWithText("Resume").performScrollTo().performClick()
             rule.onNodeWithText("Trace words · pinch to zoom", substring = true)
                 .assertExists()
