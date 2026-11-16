@@ -166,6 +166,10 @@ jobs:
         run: python3 -m unittest discover -s tools/asset_pipeline -p 'test_ws16br_asset_cohesion.py' -v
       - name: WS16BT Collection, Profile and Records cohesion safeguards
         run: python3 -m unittest discover -s tools/asset_pipeline -p 'test_ws16bt_secondary_cohesion.py' -v
+      - name: WS25 Home and Collection source-pinned debug artwork and UI guards
+        run: |
+          python3 tools/asset_pipeline/import_ws25_collection_accent.py
+          python3 -m unittest discover -s tools/asset_pipeline -p 'test_ws25_home_collection.py' -v
       - name: WS16BU compact gallery/pager and profile readability guards
         run: python3 -m unittest discover -s tools/asset_pipeline -p 'test_ws16bu_compact_gallery.py' -v
       - name: WS16BV compact bundled Fonts and license access guards
