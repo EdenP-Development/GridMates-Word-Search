@@ -1,0 +1,1586 @@
+{
+  "schema_version": 1,
+  "pack_id": "gm_ws20_asset_expansion",
+  "created": "2026-11-15",
+  "status": "candidate_not_shipped",
+  "story": "Pre-made reusable Word Search and GridMates Core assets with optional theme overlays.",
+  "source_sheets": [
+    {
+      "file": "source/collection_reward_atlas_alpha.png",
+      "sha256": "2d8b448e9c95138c32b3aef5cb51863dcd34fd504436c84824844f35b7e10ae0",
+      "size_px": [
+        1536,
+        1024
+      ],
+      "alpha": true,
+      "role": "exact_source_sprite_sheet"
+    },
+    {
+      "file": "reference_only/concept_board_1.png",
+      "sha256": "89a341d436ba012ff9e638bfbc8cd0868b5af83e851756408bda6bfc7a01502f",
+      "role": "reference_only_opaque_board_not_sprite"
+    },
+    {
+      "file": "reference_only/concept_board_2.png",
+      "sha256": "743c34c6e756b88db6d3f6cda2e8a22a3381c31ee8057b752eb67c6c6cd0f5c2",
+      "role": "reference_only_opaque_board_not_sprite"
+    }
+  ],
+  "sprites": [
+    {
+      "id": "gm_core_portrait_oval_ribbon",
+      "family": "core_rewards",
+      "path": "sprites/rewards/gm_core_portrait_oval_ribbon.png",
+      "source": "source/collection_reward_atlas_alpha.png",
+      "source_crop_xyxy": [
+        59,
+        10,
+        346,
+        307
+      ],
+      "px": [
+        287,
+        297
+      ],
+      "sha256": "9334229c7c74cc6b87d3e7ea76ca97de6c5fd4575db41e0375de495b68dae707",
+      "alpha": true,
+      "status": "candidate",
+      "use": "Collection/Profile/Achievements/Rewards; native labels and state always required"
+    },
+    {
+      "id": "gm_core_profile_panel_blank",
+      "family": "core_rewards",
+      "path": "sprites/rewards/gm_core_profile_panel_blank.png",
+      "source": "source/collection_reward_atlas_alpha.png",
+      "source_crop_xyxy": [
+        398,
+        42,
+        770,
+        290
+      ],
+      "px": [
+        372,
+        248
+      ],
+      "sha256": "35d56e7a0d5d86314a2bf8480a30cc00e035b3494ca42d2b55470795669f1dc6",
+      "alpha": true,
+      "status": "candidate",
+      "use": "Collection/Profile/Achievements/Rewards; native labels and state always required"
+    },
+    {
+      "id": "gm_core_achievement_shield_blank",
+      "family": "core_rewards",
+      "path": "sprites/rewards/gm_core_achievement_shield_blank.png",
+      "source": "source/collection_reward_atlas_alpha.png",
+      "source_crop_xyxy": [
+        802,
+        6,
+        1071,
+        307
+      ],
+      "px": [
+        269,
+        301
+      ],
+      "sha256": "fb627ea8d850ebfcb816a2c47e0cd192fd1519064d4f770702dd202b9410b7dd",
+      "alpha": true,
+      "status": "candidate",
+      "use": "Collection/Profile/Achievements/Rewards; native labels and state always required"
+    },
+    {
+      "id": "gm_core_award_banner_wide",
+      "family": "core_rewards",
+      "path": "sprites/rewards/gm_core_award_banner_wide.png",
+      "source": "source/collection_reward_atlas_alpha.png",
+      "source_crop_xyxy": [
+        1094,
+        42,
+        1513,
+        271
+      ],
+      "px": [
+        419,
+        229
+      ],
+      "sha256": "5cb47773016fea00f13a4b430df165d9331f6af5c0d3b6f22b9a3d33bd5b88e3",
+      "alpha": true,
+      "status": "candidate",
+      "use": "Collection/Profile/Achievements/Rewards; native labels and state always required"
+    },
+    {
+      "id": "gm_core_locked_gold_seal",
+      "family": "core_rewards",
+      "path": "sprites/rewards/gm_core_locked_gold_seal.png",
+      "source": "source/collection_reward_atlas_alpha.png",
+      "source_crop_xyxy": [
+        63,
+        307,
+        337,
+        571
+      ],
+      "px": [
+        274,
+        264
+      ],
+      "sha256": "42c7bb0afda193a552483d7a5cb7b3f70d39573a435edf8049a9a0411400a979",
+      "alpha": true,
+      "status": "candidate",
+      "use": "Collection/Profile/Achievements/Rewards; native labels and state always required"
+    },
+    {
+      "id": "gm_core_unlocked_gold_seal",
+      "family": "core_rewards",
+      "path": "sprites/rewards/gm_core_unlocked_gold_seal.png",
+      "source": "source/collection_reward_atlas_alpha.png",
+      "source_crop_xyxy": [
+        434,
+        307,
+        708,
+        570
+      ],
+      "px": [
+        274,
+        263
+      ],
+      "sha256": "df19ca0314055978602a0e228b47af1738b876c960d4b8ff0c27cb4eeef81635",
+      "alpha": true,
+      "status": "candidate",
+      "use": "Collection/Profile/Achievements/Rewards; native labels and state always required"
+    },
+    {
+      "id": "gm_core_equipped_check_seal",
+      "family": "core_rewards",
+      "path": "sprites/rewards/gm_core_equipped_check_seal.png",
+      "source": "source/collection_reward_atlas_alpha.png",
+      "source_crop_xyxy": [
+        819,
+        308,
+        1053,
+        570
+      ],
+      "px": [
+        234,
+        262
+      ],
+      "sha256": "ad8fe2713e20ddfdb60d16d1334504d893987c7570a8fa03e0704baf2809f3b7",
+      "alpha": true,
+      "status": "candidate",
+      "use": "Collection/Profile/Achievements/Rewards; native labels and state always required"
+    },
+    {
+      "id": "gm_core_gold_star_wreath",
+      "family": "core_rewards",
+      "path": "sprites/rewards/gm_core_gold_star_wreath.png",
+      "source": "source/collection_reward_atlas_alpha.png",
+      "source_crop_xyxy": [
+        1142,
+        307,
+        1478,
+        546
+      ],
+      "px": [
+        336,
+        239
+      ],
+      "sha256": "93d2c47f3abfbdbff0284521a10c40a5557a0c580446d3e185732b6274c9f1f5",
+      "alpha": true,
+      "status": "candidate",
+      "use": "Collection/Profile/Achievements/Rewards; native labels and state always required"
+    },
+    {
+      "id": "gm_core_reward_sparkle_burst",
+      "family": "core_rewards",
+      "path": "sprites/rewards/gm_core_reward_sparkle_burst.png",
+      "source": "source/collection_reward_atlas_alpha.png",
+      "source_crop_xyxy": [
+        68,
+        574,
+        338,
+        817
+      ],
+      "px": [
+        270,
+        243
+      ],
+      "sha256": "7f34c7dd061b99922cca991931cc50a87683528001ebfe6bc27432465718a081",
+      "alpha": true,
+      "status": "candidate",
+      "use": "Collection/Profile/Achievements/Rewards; native labels and state always required"
+    },
+    {
+      "id": "gm_core_completed_ribbon_seal",
+      "family": "core_rewards",
+      "path": "sprites/rewards/gm_core_completed_ribbon_seal.png",
+      "source": "source/collection_reward_atlas_alpha.png",
+      "source_crop_xyxy": [
+        394,
+        572,
+        756,
+        828
+      ],
+      "px": [
+        362,
+        256
+      ],
+      "sha256": "924c895b7a1e9d5458ffeacbffc37207da62955ab19be4ae2ab7354c66d31880",
+      "alpha": true,
+      "status": "candidate",
+      "use": "Collection/Profile/Achievements/Rewards; native labels and state always required"
+    },
+    {
+      "id": "gm_core_locked_silver_coin",
+      "family": "core_rewards",
+      "path": "sprites/rewards/gm_core_locked_silver_coin.png",
+      "source": "source/collection_reward_atlas_alpha.png",
+      "source_crop_xyxy": [
+        809,
+        575,
+        1063,
+        825
+      ],
+      "px": [
+        254,
+        250
+      ],
+      "sha256": "48291d5f0110b370d436f53ead4fb12911561ba2decdc31da0642744ac32a2b1",
+      "alpha": true,
+      "status": "candidate",
+      "use": "Collection/Profile/Achievements/Rewards; native labels and state always required"
+    },
+    {
+      "id": "gm_core_champion_trophy_medal",
+      "family": "core_rewards",
+      "path": "sprites/rewards/gm_core_champion_trophy_medal.png",
+      "source": "source/collection_reward_atlas_alpha.png",
+      "source_crop_xyxy": [
+        1171,
+        548,
+        1442,
+        837
+      ],
+      "px": [
+        271,
+        289
+      ],
+      "sha256": "9a6901a776c9a2086b6e6c839c20e21aed14a75dd9e97416927f1faba344f586",
+      "alpha": true,
+      "status": "candidate",
+      "use": "Collection/Profile/Achievements/Rewards; native labels and state always required"
+    },
+    {
+      "id": "gm_core_collection_section_plaque",
+      "family": "core_rewards",
+      "path": "sprites/rewards/gm_core_collection_section_plaque.png",
+      "source": "source/collection_reward_atlas_alpha.png",
+      "source_crop_xyxy": [
+        19,
+        819,
+        392,
+        1017
+      ],
+      "px": [
+        373,
+        198
+      ],
+      "sha256": "d81429495f24291671b052155a02886729eae466a8900bbed6626c3d03b9e899",
+      "alpha": true,
+      "status": "candidate",
+      "use": "Collection/Profile/Achievements/Rewards; native labels and state always required"
+    },
+    {
+      "id": "gm_core_button_forest_compact",
+      "family": "core_rewards",
+      "path": "sprites/rewards/gm_core_button_forest_compact.png",
+      "source": "source/collection_reward_atlas_alpha.png",
+      "source_crop_xyxy": [
+        401,
+        869,
+        706,
+        1003
+      ],
+      "px": [
+        305,
+        134
+      ],
+      "sha256": "2747a151ce6a240778e6067331b2ebda1491f3ad15a3398ba216c513680daa29",
+      "alpha": true,
+      "status": "candidate",
+      "use": "Collection/Profile/Achievements/Rewards; native labels and state always required"
+    },
+    {
+      "id": "gm_core_milestone_progress_track",
+      "family": "core_rewards",
+      "path": "sprites/rewards/gm_core_milestone_progress_track.png",
+      "source": "source/collection_reward_atlas_alpha.png",
+      "source_crop_xyxy": [
+        716,
+        839,
+        1094,
+        1014
+      ],
+      "px": [
+        378,
+        175
+      ],
+      "sha256": "74680c31edb88a7c47d9a239639e4cecb849324204777b28470452b3e2224863",
+      "alpha": true,
+      "status": "candidate",
+      "use": "Collection/Profile/Achievements/Rewards; native labels and state always required"
+    },
+    {
+      "id": "gm_core_leaf_star_divider",
+      "family": "core_rewards",
+      "path": "sprites/rewards/gm_core_leaf_star_divider.png",
+      "source": "source/collection_reward_atlas_alpha.png",
+      "source_crop_xyxy": [
+        1111,
+        867,
+        1517,
+        980
+      ],
+      "px": [
+        406,
+        113
+      ],
+      "sha256": "c12b446d405468f5eb25e3119afba8b4170d66dbc941d16ed81b53323b9f5e7c",
+      "alpha": true,
+      "status": "candidate",
+      "use": "Collection/Profile/Achievements/Rewards; native labels and state always required"
+    },
+    {
+      "id": "gm_ws_spine_woodland_regular",
+      "family": "word_search_spines",
+      "path": "sprites/spines/gm_ws_spine_woodland_regular.png",
+      "source": "svg/spines/gm_ws_spine_woodland_regular.svg",
+      "source_sha256": "47ebe796a0558afc6505b4f7c57fd127c4d7d5d348f4cea5a343ab8ca1984e50",
+      "px": [
+        442,
+        1824
+      ],
+      "sha256": "276e8ba1958ad0081f97ba6f08488aa26a68ef644598b81208ac2f1656b92a7f",
+      "alpha": true,
+      "status": "candidate",
+      "theme": "woodland",
+      "width": "regular",
+      "use": "Blank customizable bookshelf spine; title text dynamically rendered in app"
+    },
+    {
+      "id": "gm_ws_spine_woodland_narrow",
+      "family": "word_search_spines",
+      "path": "sprites/spines/gm_ws_spine_woodland_narrow.png",
+      "source": "svg/spines/gm_ws_spine_woodland_narrow.svg",
+      "source_sha256": "d87fbb7a6f2c9f9521704bf892713931f6746591d8102f9e66666674a41bccaf",
+      "px": [
+        288,
+        1824
+      ],
+      "sha256": "9178727ddebcfa67398add36014fb51b1be28ee1ed8eaf3ddccb97408ee0f5e9",
+      "alpha": true,
+      "status": "candidate",
+      "theme": "woodland",
+      "width": "narrow",
+      "use": "Blank customizable bookshelf spine; title text dynamically rendered in app"
+    },
+    {
+      "id": "gm_ws_spine_woodland_collector",
+      "family": "word_search_spines",
+      "path": "sprites/spines/gm_ws_spine_woodland_collector.png",
+      "source": "svg/spines/gm_ws_spine_woodland_collector.svg",
+      "source_sha256": "8beb6e83cc85f9da8e890cdaf02271ac18095646b16ada967ff1e0529e22516e",
+      "px": [
+        288,
+        1824
+      ],
+      "sha256": "4f5f9b43a08b976bf88be3eeacce4e911bb771fe7dac4e5d8df59262f658871e",
+      "alpha": true,
+      "status": "candidate",
+      "theme": "woodland",
+      "width": "collector",
+      "use": "Blank customizable bookshelf spine; title text dynamically rendered in app"
+    },
+    {
+      "id": "gm_ws_spine_ocean_regular",
+      "family": "word_search_spines",
+      "path": "sprites/spines/gm_ws_spine_ocean_regular.png",
+      "source": "svg/spines/gm_ws_spine_ocean_regular.svg",
+      "source_sha256": "b9bd5d20bf2623ca1c31de69bdc4e2b6b64098904466c11e9081ef125a989f29",
+      "px": [
+        442,
+        1824
+      ],
+      "sha256": "bbf6abfd44ac6bb3ee3bb716e3f59695e5871e303eae49bfda6cc4a0e578fb07",
+      "alpha": true,
+      "status": "candidate",
+      "theme": "ocean",
+      "width": "regular",
+      "use": "Blank customizable bookshelf spine; title text dynamically rendered in app"
+    },
+    {
+      "id": "gm_ws_spine_ocean_narrow",
+      "family": "word_search_spines",
+      "path": "sprites/spines/gm_ws_spine_ocean_narrow.png",
+      "source": "svg/spines/gm_ws_spine_ocean_narrow.svg",
+      "source_sha256": "e4f438f58fd224d54c11b4d1ad345b6ca60a311d87d3340ca417b637388a6bcc",
+      "px": [
+        288,
+        1824
+      ],
+      "sha256": "7291ea7fed713e2888446a1c2f8d99e04551a88cb3773144b6cae94fbc54d44b",
+      "alpha": true,
+      "status": "candidate",
+      "theme": "ocean",
+      "width": "narrow",
+      "use": "Blank customizable bookshelf spine; title text dynamically rendered in app"
+    },
+    {
+      "id": "gm_ws_spine_ocean_collector",
+      "family": "word_search_spines",
+      "path": "sprites/spines/gm_ws_spine_ocean_collector.png",
+      "source": "svg/spines/gm_ws_spine_ocean_collector.svg",
+      "source_sha256": "840f54738733f985738dac6df30c087a5007b49970a3454e68d4d201ab812b42",
+      "px": [
+        288,
+        1824
+      ],
+      "sha256": "c689a197f4b45814cf29d0b03dde4a2bb7b2d3d87cb4f672612124ef223aa09f",
+      "alpha": true,
+      "status": "candidate",
+      "theme": "ocean",
+      "width": "collector",
+      "use": "Blank customizable bookshelf spine; title text dynamically rendered in app"
+    },
+    {
+      "id": "gm_ws_spine_bugs_regular",
+      "family": "word_search_spines",
+      "path": "sprites/spines/gm_ws_spine_bugs_regular.png",
+      "source": "svg/spines/gm_ws_spine_bugs_regular.svg",
+      "source_sha256": "1eca65cd2bade92148c3bfaef14db0cb68c2e96893ebfeeaf4b25182b8d1963e",
+      "px": [
+        442,
+        1824
+      ],
+      "sha256": "ba6685526039bb8592b5f0c499b4777b70df5a4b65ee2b2063b50a1f7c4408c0",
+      "alpha": true,
+      "status": "candidate",
+      "theme": "bugs",
+      "width": "regular",
+      "use": "Blank customizable bookshelf spine; title text dynamically rendered in app"
+    },
+    {
+      "id": "gm_ws_spine_bugs_narrow",
+      "family": "word_search_spines",
+      "path": "sprites/spines/gm_ws_spine_bugs_narrow.png",
+      "source": "svg/spines/gm_ws_spine_bugs_narrow.svg",
+      "source_sha256": "1b398c8371410aaba4545f5d6366c7c852bfed58f507a3dc665828554f95645f",
+      "px": [
+        288,
+        1824
+      ],
+      "sha256": "ce93c6021c65fbf03979fec2ef28904ce7a8f786f4d5cb2cd89079857d23ffb8",
+      "alpha": true,
+      "status": "candidate",
+      "theme": "bugs",
+      "width": "narrow",
+      "use": "Blank customizable bookshelf spine; title text dynamically rendered in app"
+    },
+    {
+      "id": "gm_ws_spine_bugs_collector",
+      "family": "word_search_spines",
+      "path": "sprites/spines/gm_ws_spine_bugs_collector.png",
+      "source": "svg/spines/gm_ws_spine_bugs_collector.svg",
+      "source_sha256": "4bcadd5f6cf64bc730231e0219bd36aee972e60473acf388d3417e07f52ba296",
+      "px": [
+        288,
+        1824
+      ],
+      "sha256": "25485d38fb65bebcc05a6f0761d68b74b1d2637edb88f9e56ac09e2fcb5bd069",
+      "alpha": true,
+      "status": "candidate",
+      "theme": "bugs",
+      "width": "collector",
+      "use": "Blank customizable bookshelf spine; title text dynamically rendered in app"
+    },
+    {
+      "id": "gm_ws_spine_garden_regular",
+      "family": "word_search_spines",
+      "path": "sprites/spines/gm_ws_spine_garden_regular.png",
+      "source": "svg/spines/gm_ws_spine_garden_regular.svg",
+      "source_sha256": "5245c0f44428cb01b08215107d5c83a4811cb2592d1a47acb9b3be59b9d253d5",
+      "px": [
+        442,
+        1824
+      ],
+      "sha256": "c4822d6e27ce0f14aa0a4ec7435d953186e1c613e1c809375b0ec0b8b42df584",
+      "alpha": true,
+      "status": "candidate",
+      "theme": "garden",
+      "width": "regular",
+      "use": "Blank customizable bookshelf spine; title text dynamically rendered in app"
+    },
+    {
+      "id": "gm_ws_spine_garden_narrow",
+      "family": "word_search_spines",
+      "path": "sprites/spines/gm_ws_spine_garden_narrow.png",
+      "source": "svg/spines/gm_ws_spine_garden_narrow.svg",
+      "source_sha256": "e431a32d321c11d2b370c3c2807756e2a585eb1a009314424822c2932c19376b",
+      "px": [
+        288,
+        1824
+      ],
+      "sha256": "fc12a968f38fa9e07c2b8a90a1167df58bfce84b8465945703824c3c6d9517a7",
+      "alpha": true,
+      "status": "candidate",
+      "theme": "garden",
+      "width": "narrow",
+      "use": "Blank customizable bookshelf spine; title text dynamically rendered in app"
+    },
+    {
+      "id": "gm_ws_spine_garden_collector",
+      "family": "word_search_spines",
+      "path": "sprites/spines/gm_ws_spine_garden_collector.png",
+      "source": "svg/spines/gm_ws_spine_garden_collector.svg",
+      "source_sha256": "867d56354759b2025ff36c57ec3241d30ee2690667f5b4144e28e614ea63c01f",
+      "px": [
+        288,
+        1824
+      ],
+      "sha256": "8def23c153862fff565b0644c5cdad5a49fcca340a16ad010e79f44a5238d9a7",
+      "alpha": true,
+      "status": "candidate",
+      "theme": "garden",
+      "width": "collector",
+      "use": "Blank customizable bookshelf spine; title text dynamically rendered in app"
+    },
+    {
+      "id": "gm_ws_spine_space_regular",
+      "family": "word_search_spines",
+      "path": "sprites/spines/gm_ws_spine_space_regular.png",
+      "source": "svg/spines/gm_ws_spine_space_regular.svg",
+      "source_sha256": "5149fce7eece4c36d25891358a0dd6ecafd4fe6579cb2491d84948ac27154ead",
+      "px": [
+        442,
+        1824
+      ],
+      "sha256": "3080a41e018cc5e512fb466e08f12463cf6e6a2703c7ab280efa755ed6136eb9",
+      "alpha": true,
+      "status": "candidate",
+      "theme": "space",
+      "width": "regular",
+      "use": "Blank customizable bookshelf spine; title text dynamically rendered in app"
+    },
+    {
+      "id": "gm_ws_spine_space_narrow",
+      "family": "word_search_spines",
+      "path": "sprites/spines/gm_ws_spine_space_narrow.png",
+      "source": "svg/spines/gm_ws_spine_space_narrow.svg",
+      "source_sha256": "4aa5000e32470c5e5b9a51496fed5f2986780f170080759400acbfdfaab27402",
+      "px": [
+        288,
+        1824
+      ],
+      "sha256": "bfb1cf57e11796b0b6b0dc76157eebc2f069be352a6ff49679422b9c879490f0",
+      "alpha": true,
+      "status": "candidate",
+      "theme": "space",
+      "width": "narrow",
+      "use": "Blank customizable bookshelf spine; title text dynamically rendered in app"
+    },
+    {
+      "id": "gm_ws_spine_space_collector",
+      "family": "word_search_spines",
+      "path": "sprites/spines/gm_ws_spine_space_collector.png",
+      "source": "svg/spines/gm_ws_spine_space_collector.svg",
+      "source_sha256": "796733cf95ed02e04e574596fe603b4a690eb1fdc82e0c55b721f0079e5b1d20",
+      "px": [
+        288,
+        1824
+      ],
+      "sha256": "d87466102fefd5ddc9f78601ea271e1f12a070ebbd113dac3d05a931ddd78df5",
+      "alpha": true,
+      "status": "candidate",
+      "theme": "space",
+      "width": "collector",
+      "use": "Blank customizable bookshelf spine; title text dynamically rendered in app"
+    },
+    {
+      "id": "gm_ws_spine_winter_regular",
+      "family": "word_search_spines",
+      "path": "sprites/spines/gm_ws_spine_winter_regular.png",
+      "source": "svg/spines/gm_ws_spine_winter_regular.svg",
+      "source_sha256": "d56e4aa86d12982a8afdbca12ce7c3ccb1ba089d3d00cbb8dc1c8bff7f23dc26",
+      "px": [
+        442,
+        1824
+      ],
+      "sha256": "7e02f61231172cb9913660947c4113d9c7c5612dfcbd51fd016c63c98b990b20",
+      "alpha": true,
+      "status": "candidate",
+      "theme": "winter",
+      "width": "regular",
+      "use": "Blank customizable bookshelf spine; title text dynamically rendered in app"
+    },
+    {
+      "id": "gm_ws_spine_winter_narrow",
+      "family": "word_search_spines",
+      "path": "sprites/spines/gm_ws_spine_winter_narrow.png",
+      "source": "svg/spines/gm_ws_spine_winter_narrow.svg",
+      "source_sha256": "d90bf976f969197718a398123ab111af0d39229aaf6329dc10f42b2ad4133468",
+      "px": [
+        288,
+        1824
+      ],
+      "sha256": "40a126300f563832ff0fe5594ace4d2602a232b537e1dd7500fff5affa84bad3",
+      "alpha": true,
+      "status": "candidate",
+      "theme": "winter",
+      "width": "narrow",
+      "use": "Blank customizable bookshelf spine; title text dynamically rendered in app"
+    },
+    {
+      "id": "gm_ws_spine_winter_collector",
+      "family": "word_search_spines",
+      "path": "sprites/spines/gm_ws_spine_winter_collector.png",
+      "source": "svg/spines/gm_ws_spine_winter_collector.svg",
+      "source_sha256": "5c603e3400ff2e3bb1db9d3aecc731dabdd9d6c49c51940886a7a0dec000a8d4",
+      "px": [
+        288,
+        1824
+      ],
+      "sha256": "c8833a279014f6699da593261aa264d99478db649761fc9a026714cbbb297487",
+      "alpha": true,
+      "status": "candidate",
+      "theme": "winter",
+      "width": "collector",
+      "use": "Blank customizable bookshelf spine; title text dynamically rendered in app"
+    },
+    {
+      "id": "gm_ws_spine_farm_regular",
+      "family": "word_search_spines",
+      "path": "sprites/spines/gm_ws_spine_farm_regular.png",
+      "source": "svg/spines/gm_ws_spine_farm_regular.svg",
+      "source_sha256": "d4bb6c5a3e44d8f94bd9c624c207bba6aa28bf9ed86c7be6b39844f9fdbaea95",
+      "px": [
+        442,
+        1824
+      ],
+      "sha256": "39e5d85c55ee3b1e98d0d729cb08d474bdbddad701e80546b3478582dccf860c",
+      "alpha": true,
+      "status": "candidate",
+      "theme": "farm",
+      "width": "regular",
+      "use": "Blank customizable bookshelf spine; title text dynamically rendered in app"
+    },
+    {
+      "id": "gm_ws_spine_farm_narrow",
+      "family": "word_search_spines",
+      "path": "sprites/spines/gm_ws_spine_farm_narrow.png",
+      "source": "svg/spines/gm_ws_spine_farm_narrow.svg",
+      "source_sha256": "d0bdc717195316a36afef9e93ea5c1e64c82e47cc5ec6aac1cacd994fa45de90",
+      "px": [
+        288,
+        1824
+      ],
+      "sha256": "6a854aa95081aab0474d2713e57e5df6b7fb3e79ddbfbfead97b04df7b0dcc17",
+      "alpha": true,
+      "status": "candidate",
+      "theme": "farm",
+      "width": "narrow",
+      "use": "Blank customizable bookshelf spine; title text dynamically rendered in app"
+    },
+    {
+      "id": "gm_ws_spine_farm_collector",
+      "family": "word_search_spines",
+      "path": "sprites/spines/gm_ws_spine_farm_collector.png",
+      "source": "svg/spines/gm_ws_spine_farm_collector.svg",
+      "source_sha256": "70663b706f49d21b54682477a933bb1f7f516c480a91cb927d347bfdf2189be0",
+      "px": [
+        288,
+        1824
+      ],
+      "sha256": "54b5bbc3a34055e12f4494084738b2d7171741c92b93badcf3a3053b2b697a6c",
+      "alpha": true,
+      "status": "candidate",
+      "theme": "farm",
+      "width": "collector",
+      "use": "Blank customizable bookshelf spine; title text dynamically rendered in app"
+    },
+    {
+      "id": "gm_ws_spine_spooky_regular",
+      "family": "word_search_spines",
+      "path": "sprites/spines/gm_ws_spine_spooky_regular.png",
+      "source": "svg/spines/gm_ws_spine_spooky_regular.svg",
+      "source_sha256": "fd9ededcd5f3436327070f7e5dc4926b5c64ae64a42264975403cb886b492b11",
+      "px": [
+        442,
+        1824
+      ],
+      "sha256": "11e00ce3615f6cbb5fc0c4c66d0a81cc3c1c8ec24539f34b11cdc7cfeee428fb",
+      "alpha": true,
+      "status": "candidate",
+      "theme": "spooky",
+      "width": "regular",
+      "use": "Blank customizable bookshelf spine; title text dynamically rendered in app"
+    },
+    {
+      "id": "gm_ws_spine_spooky_narrow",
+      "family": "word_search_spines",
+      "path": "sprites/spines/gm_ws_spine_spooky_narrow.png",
+      "source": "svg/spines/gm_ws_spine_spooky_narrow.svg",
+      "source_sha256": "f0aa34ef889a54092169bda60400da1e9be08f6b987f3857cd1ed98ae52f2706",
+      "px": [
+        288,
+        1824
+      ],
+      "sha256": "4f705a2c450f469b631cf9e66dec09656c6da86eb48578b7016a3c052f997cc6",
+      "alpha": true,
+      "status": "candidate",
+      "theme": "spooky",
+      "width": "narrow",
+      "use": "Blank customizable bookshelf spine; title text dynamically rendered in app"
+    },
+    {
+      "id": "gm_ws_spine_spooky_collector",
+      "family": "word_search_spines",
+      "path": "sprites/spines/gm_ws_spine_spooky_collector.png",
+      "source": "svg/spines/gm_ws_spine_spooky_collector.svg",
+      "source_sha256": "6deb7587187b33ac5d80f7ca98197f662ca24086d6fd39f8e906c92c7959dd00",
+      "px": [
+        288,
+        1824
+      ],
+      "sha256": "8b4ed6e6e67058c290819aaade554897fc5a6bcdd4a5c4db50c301df64630764",
+      "alpha": true,
+      "status": "candidate",
+      "theme": "spooky",
+      "width": "collector",
+      "use": "Blank customizable bookshelf spine; title text dynamically rendered in app"
+    },
+    {
+      "id": "gm_ws_spine_desert_regular",
+      "family": "word_search_spines",
+      "path": "sprites/spines/gm_ws_spine_desert_regular.png",
+      "source": "svg/spines/gm_ws_spine_desert_regular.svg",
+      "source_sha256": "a6ad5d4b3679332cc3f8842a77826e1721608aad7df48eca5dd69a6288c8ee89",
+      "px": [
+        442,
+        1824
+      ],
+      "sha256": "5b68dc3c3dc6099fbc960620d51ebe6061016fb049f0abb2de3cebea195c5370",
+      "alpha": true,
+      "status": "candidate",
+      "theme": "desert",
+      "width": "regular",
+      "use": "Blank customizable bookshelf spine; title text dynamically rendered in app"
+    },
+    {
+      "id": "gm_ws_spine_desert_narrow",
+      "family": "word_search_spines",
+      "path": "sprites/spines/gm_ws_spine_desert_narrow.png",
+      "source": "svg/spines/gm_ws_spine_desert_narrow.svg",
+      "source_sha256": "2e629e79c0aff7593c22455f49b42a384b197bcf10855a2593c5ff0c14a95351",
+      "px": [
+        288,
+        1824
+      ],
+      "sha256": "6e14f5ede8223b8d1f101e0423ce63b5be652d47869d1c9f9979893eeecbe481",
+      "alpha": true,
+      "status": "candidate",
+      "theme": "desert",
+      "width": "narrow",
+      "use": "Blank customizable bookshelf spine; title text dynamically rendered in app"
+    },
+    {
+      "id": "gm_ws_spine_desert_collector",
+      "family": "word_search_spines",
+      "path": "sprites/spines/gm_ws_spine_desert_collector.png",
+      "source": "svg/spines/gm_ws_spine_desert_collector.svg",
+      "source_sha256": "8a5c29edf0d2c95268e5e0ab3f6f5b7fba258476b7f9854b577dffe862ed96f7",
+      "px": [
+        288,
+        1824
+      ],
+      "sha256": "778797cf42314be5d94c4f225dcdbbf5bad64507b88151d2aa8c929e6c5f9ce5",
+      "alpha": true,
+      "status": "candidate",
+      "theme": "desert",
+      "width": "collector",
+      "use": "Blank customizable bookshelf spine; title text dynamically rendered in app"
+    },
+    {
+      "id": "gm_ws_spine_night_sky_regular",
+      "family": "word_search_spines",
+      "path": "sprites/spines/gm_ws_spine_night_sky_regular.png",
+      "source": "svg/spines/gm_ws_spine_night_sky_regular.svg",
+      "source_sha256": "4c6fe350ea78e4f66297bf7b8cd8ac2509f77f3dacc973dbb039ae44e84f8ac5",
+      "px": [
+        442,
+        1824
+      ],
+      "sha256": "e5429dc55870bc56988a57f7fa39f8eb31c4a57496ee2a51f6dcb6858a30931f",
+      "alpha": true,
+      "status": "candidate",
+      "theme": "night_sky",
+      "width": "regular",
+      "use": "Blank customizable bookshelf spine; title text dynamically rendered in app"
+    },
+    {
+      "id": "gm_ws_spine_night_sky_narrow",
+      "family": "word_search_spines",
+      "path": "sprites/spines/gm_ws_spine_night_sky_narrow.png",
+      "source": "svg/spines/gm_ws_spine_night_sky_narrow.svg",
+      "source_sha256": "8b4ad56b12245a6e268260b0414a710a6ce0b10ee8c6c524299e4dfb5939f90e",
+      "px": [
+        288,
+        1824
+      ],
+      "sha256": "003b944915b3a759bcd96c0c5213b88fed939ea8c431f3a9f31666af0d2650c8",
+      "alpha": true,
+      "status": "candidate",
+      "theme": "night_sky",
+      "width": "narrow",
+      "use": "Blank customizable bookshelf spine; title text dynamically rendered in app"
+    },
+    {
+      "id": "gm_ws_spine_night_sky_collector",
+      "family": "word_search_spines",
+      "path": "sprites/spines/gm_ws_spine_night_sky_collector.png",
+      "source": "svg/spines/gm_ws_spine_night_sky_collector.svg",
+      "source_sha256": "bfa5409859eb7435cf7b1590f36e59938da0c3ef56be7db5417fcff600e118fa",
+      "px": [
+        288,
+        1824
+      ],
+      "sha256": "0bb1211da5f3bf0b23361e5b8387d1b79d27c683dcc1e52e90ccf45016b737bd",
+      "alpha": true,
+      "status": "candidate",
+      "theme": "night_sky",
+      "width": "collector",
+      "use": "Blank customizable bookshelf spine; title text dynamically rendered in app"
+    },
+    {
+      "id": "gm_ws_spine_autumn_regular",
+      "family": "word_search_spines",
+      "path": "sprites/spines/gm_ws_spine_autumn_regular.png",
+      "source": "svg/spines/gm_ws_spine_autumn_regular.svg",
+      "source_sha256": "c214ed5381e61deaf860a022f7f7e9c446ef8c882dc7255ed104616847588069",
+      "px": [
+        442,
+        1824
+      ],
+      "sha256": "740db6a832c9d2f774edacd429386b405c6250816f974356ad5fb0e9bb40fadb",
+      "alpha": true,
+      "status": "candidate",
+      "theme": "autumn",
+      "width": "regular",
+      "use": "Blank customizable bookshelf spine; title text dynamically rendered in app"
+    },
+    {
+      "id": "gm_ws_spine_autumn_narrow",
+      "family": "word_search_spines",
+      "path": "sprites/spines/gm_ws_spine_autumn_narrow.png",
+      "source": "svg/spines/gm_ws_spine_autumn_narrow.svg",
+      "source_sha256": "5370ab2779e7a017f2f787c8ff3e1d4dd5d032fb966158dc192ce34ef31862ee",
+      "px": [
+        288,
+        1824
+      ],
+      "sha256": "981321d90126ef5cce23f390b598370e67798736993e68394f973c2c38f3cf2a",
+      "alpha": true,
+      "status": "candidate",
+      "theme": "autumn",
+      "width": "narrow",
+      "use": "Blank customizable bookshelf spine; title text dynamically rendered in app"
+    },
+    {
+      "id": "gm_ws_spine_autumn_collector",
+      "family": "word_search_spines",
+      "path": "sprites/spines/gm_ws_spine_autumn_collector.png",
+      "source": "svg/spines/gm_ws_spine_autumn_collector.svg",
+      "source_sha256": "876c3ca794fde97216c1ca3a6ea1ff89132b40e6fa3158d8e7ebf9bcb118b1cb",
+      "px": [
+        288,
+        1824
+      ],
+      "sha256": "141b3257700014b4860bdcb9098750830f3097213f43fac151229c099e0cac64",
+      "alpha": true,
+      "status": "candidate",
+      "theme": "autumn",
+      "width": "collector",
+      "use": "Blank customizable bookshelf spine; title text dynamically rendered in app"
+    },
+    {
+      "id": "gm_ws_spine_spring_regular",
+      "family": "word_search_spines",
+      "path": "sprites/spines/gm_ws_spine_spring_regular.png",
+      "source": "svg/spines/gm_ws_spine_spring_regular.svg",
+      "source_sha256": "6a75c6885a40901d1cad465baa9ff44f47da7579deb665bc6b107f183b71099d",
+      "px": [
+        442,
+        1824
+      ],
+      "sha256": "9db98018b6d393e55f272fe0e9f9343379243e8085f2ef1391fc32b2a7615de5",
+      "alpha": true,
+      "status": "candidate",
+      "theme": "spring",
+      "width": "regular",
+      "use": "Blank customizable bookshelf spine; title text dynamically rendered in app"
+    },
+    {
+      "id": "gm_ws_spine_spring_narrow",
+      "family": "word_search_spines",
+      "path": "sprites/spines/gm_ws_spine_spring_narrow.png",
+      "source": "svg/spines/gm_ws_spine_spring_narrow.svg",
+      "source_sha256": "34edf751615931ad104a40d08c8f9e5e9172248d29114f554d09908cc8436bcd",
+      "px": [
+        288,
+        1824
+      ],
+      "sha256": "f27f2b9125d2781776d37acbd50930745f5f0e230c4121e134845daf2d2970ee",
+      "alpha": true,
+      "status": "candidate",
+      "theme": "spring",
+      "width": "narrow",
+      "use": "Blank customizable bookshelf spine; title text dynamically rendered in app"
+    },
+    {
+      "id": "gm_ws_spine_spring_collector",
+      "family": "word_search_spines",
+      "path": "sprites/spines/gm_ws_spine_spring_collector.png",
+      "source": "svg/spines/gm_ws_spine_spring_collector.svg",
+      "source_sha256": "8cb58a9e718a92519c27c7e7e5e618dc71c61443c8535af4214aa553269cb422",
+      "px": [
+        288,
+        1824
+      ],
+      "sha256": "226bd67467eb3212cb861f7c7cd19950b144e746e13e43b79605a65fb538f85a",
+      "alpha": true,
+      "status": "candidate",
+      "theme": "spring",
+      "width": "collector",
+      "use": "Blank customizable bookshelf spine; title text dynamically rendered in app"
+    },
+    {
+      "id": "gm_ws_spine_summer_regular",
+      "family": "word_search_spines",
+      "path": "sprites/spines/gm_ws_spine_summer_regular.png",
+      "source": "svg/spines/gm_ws_spine_summer_regular.svg",
+      "source_sha256": "286f69c078190a5b5bacc851906c309e04bd565730979247ea9675012bb722d9",
+      "px": [
+        442,
+        1824
+      ],
+      "sha256": "66800621db2a0d3d208efaf9f094b4933c9681af4c3feafafb3482fa55faa7ba",
+      "alpha": true,
+      "status": "candidate",
+      "theme": "summer",
+      "width": "regular",
+      "use": "Blank customizable bookshelf spine; title text dynamically rendered in app"
+    },
+    {
+      "id": "gm_ws_spine_summer_narrow",
+      "family": "word_search_spines",
+      "path": "sprites/spines/gm_ws_spine_summer_narrow.png",
+      "source": "svg/spines/gm_ws_spine_summer_narrow.svg",
+      "source_sha256": "90d685114fb84edfd751f8b95f105c7535d5be8f19f3f0e68d75a79caaeee347",
+      "px": [
+        288,
+        1824
+      ],
+      "sha256": "7946158b258a2daf87e2b795afe2c4a6a5d89d7dbc8c542873939d40b27677f6",
+      "alpha": true,
+      "status": "candidate",
+      "theme": "summer",
+      "width": "narrow",
+      "use": "Blank customizable bookshelf spine; title text dynamically rendered in app"
+    },
+    {
+      "id": "gm_ws_spine_summer_collector",
+      "family": "word_search_spines",
+      "path": "sprites/spines/gm_ws_spine_summer_collector.png",
+      "source": "svg/spines/gm_ws_spine_summer_collector.svg",      "source_sha256": "9b8babcd7019107965b9e0581a938bbbd17baf8c590355c618091c832818117c",
+      "px": [
+        288,
+        1824
+      ],
+      "sha256": "97276a9ae34d5b533be879c4f2efcb4681b7ec210170262d6ed4ce2f09254879",
+      "alpha": true,
+      "status": "candidate",
+      "theme": "summer",
+      "width": "collector",
+      "use": "Blank customizable bookshelf spine; title text dynamically rendered in app"
+    },
+    {
+      "id": "gm_ws_spine_mountains_regular",
+      "family": "word_search_spines",
+      "path": "sprites/spines/gm_ws_spine_mountains_regular.png",
+      "source": "svg/spines/gm_ws_spine_mountains_regular.svg",
+      "source_sha256": "622b842abe8ed6bfcbddeadee447924defe87e8ee6480da568d97011456f2189",
+      "px": [
+        442,
+        1824
+      ],
+      "sha256": "536e8fb417fa1a7467c53fe0d4cdacde1e111437db986e1938d23d7f3f0263b6",
+      "alpha": true,
+      "status": "candidate",
+      "theme": "mountains",
+      "width": "regular",
+      "use": "Blank customizable bookshelf spine; title text dynamically rendered in app"
+    },
+    {
+      "id": "gm_ws_spine_mountains_narrow",
+      "family": "word_search_spines",
+      "path": "sprites/spines/gm_ws_spine_mountains_narrow.png",
+      "source": "svg/spines/gm_ws_spine_mountains_narrow.svg",
+      "source_sha256": "645d81caea5851b9a8b66b1a95321a7eb78037a96494fa8251abc6108b209e00",
+      "px": [
+        288,
+        1824
+      ],
+      "sha256": "22da779053c4b2a0c45d76a1e35c7ae878aeecd7d3bfc66c2cbd8bcc2642d8bd",
+      "alpha": true,
+      "status": "candidate",
+      "theme": "mountains",
+      "width": "narrow",
+      "use": "Blank customizable bookshelf spine; title text dynamically rendered in app"
+    },
+    {
+      "id": "gm_ws_spine_mountains_collector",
+      "family": "word_search_spines",
+      "path": "sprites/spines/gm_ws_spine_mountains_collector.png",
+      "source": "svg/spines/gm_ws_spine_mountains_collector.svg",
+      "source_sha256": "8f4d25d919895de343bafb10d2eb50113dcaab0d7a83435c5742c26548c605b7",
+      "px": [
+        288,
+        1824
+      ],
+      "sha256": "45e80eb0883227e60d10f84856a1ceb1a5a1605289b2e23cea4d5656148b6350",
+      "alpha": true,
+      "status": "candidate",
+      "theme": "mountains",
+      "width": "collector",
+      "use": "Blank customizable bookshelf spine; title text dynamically rendered in app"
+    },
+    {
+      "id": "gm_ws_spine_dinosaurs_regular",
+      "family": "word_search_spines",
+      "path": "sprites/spines/gm_ws_spine_dinosaurs_regular.png",
+      "source": "svg/spines/gm_ws_spine_dinosaurs_regular.svg",
+      "source_sha256": "e9617b9a82eb8cd9265acd75fe31f73c511cc0347169e10a2eea352c9dfb6875",
+      "px": [
+        442,
+        1824
+      ],
+      "sha256": "a1e85a17ccda3d13d0e7d9592fe4b8a663e3e100e8ad35896ddc40c7eb655ef8",
+      "alpha": true,
+      "status": "candidate",
+      "theme": "dinosaurs",
+      "width": "regular",
+      "use": "Blank customizable bookshelf spine; title text dynamically rendered in app"
+    },
+    {
+      "id": "gm_ws_spine_dinosaurs_narrow",
+      "family": "word_search_spines",
+      "path": "sprites/spines/gm_ws_spine_dinosaurs_narrow.png",
+      "source": "svg/spines/gm_ws_spine_dinosaurs_narrow.svg",
+      "source_sha256": "e2de0f443d28e33d860261d90442e3e9d53188edab3cf0163c19641e5fb22e2b",
+      "px": [
+        288,
+        1824
+      ],
+      "sha256": "6d2c0cdb322025e5868883a9fa50ad258c395daf60233c5d631b5bf840360a1e",
+      "alpha": true,
+      "status": "candidate",
+      "theme": "dinosaurs",
+      "width": "narrow",
+      "use": "Blank customizable bookshelf spine; title text dynamically rendered in app"
+    },
+    {
+      "id": "gm_ws_spine_dinosaurs_collector",
+      "family": "word_search_spines",
+      "path": "sprites/spines/gm_ws_spine_dinosaurs_collector.png",
+      "source": "svg/spines/gm_ws_spine_dinosaurs_collector.svg",
+      "source_sha256": "53844e9a2a214b212afd0fa16a92fd243aef3310c5b2712f446b209eb7b33b6f",
+      "px": [
+        288,
+        1824
+      ],
+      "sha256": "c8d24f17c0ae3840d742af5b9d9ca917d663a448fee5a1c2e101c0f051fffcc4",
+      "alpha": true,
+      "status": "candidate",
+      "theme": "dinosaurs",
+      "width": "collector",
+      "use": "Blank customizable bookshelf spine; title text dynamically rendered in app"
+    },
+    {
+      "id": "gm_ws_spine_food_regular",
+      "family": "word_search_spines",
+      "path": "sprites/spines/gm_ws_spine_food_regular.png",
+      "source": "svg/spines/gm_ws_spine_food_regular.svg",
+      "source_sha256": "8e71ecfd60cc4cf4d1039f2a5ce364d74783ebcab31dac377c99c4b690598f14",
+      "px": [
+        442,
+        1824
+      ],
+      "sha256": "c18afe3b70c98c42b44338b9fda038b4e45a4f721146f8ff6e4c798e4a5f3b26",
+      "alpha": true,
+      "status": "candidate",
+      "theme": "food",
+      "width": "regular",
+      "use": "Blank customizable bookshelf spine; title text dynamically rendered in app"
+    },
+    {
+      "id": "gm_ws_spine_food_narrow",
+      "family": "word_search_spines",
+      "path": "sprites/spines/gm_ws_spine_food_narrow.png",
+      "source": "svg/spines/gm_ws_spine_food_narrow.svg",
+      "source_sha256": "e191951509e2acf1656209d68c5c720529e82a5228179aeb5b18595c61df124b",
+      "px": [
+        288,
+        1824
+      ],
+      "sha256": "08f751f1ead8833939276414e489b834005cda56c146f4a6d328942562c59305",
+      "alpha": true,
+      "status": "candidate",
+      "theme": "food",
+      "width": "narrow",
+      "use": "Blank customizable bookshelf spine; title text dynamically rendered in app"
+    },
+    {
+      "id": "gm_ws_spine_food_collector",
+      "family": "word_search_spines",
+      "path": "sprites/spines/gm_ws_spine_food_collector.png",
+      "source": "svg/spines/gm_ws_spine_food_collector.svg",
+      "source_sha256": "e1a580c5574eca4599c9f5057c655a7b370876a6bff932cf169a7f3c86428c6f",
+      "px": [
+        288,
+        1824
+      ],
+      "sha256": "8a6d8ee11489383aa06989ef0d9e10e6c4420a8c41929c224882b5f7a0b1720a",
+      "alpha": true,
+      "status": "candidate",
+      "theme": "food",
+      "width": "collector",
+      "use": "Blank customizable bookshelf spine; title text dynamically rendered in app"
+    },
+    {
+      "id": "gm_ws_spine_weather_regular",
+      "family": "word_search_spines",
+      "path": "sprites/spines/gm_ws_spine_weather_regular.png",
+      "source": "svg/spines/gm_ws_spine_weather_regular.svg",
+      "source_sha256": "81a91fdf102437dd2231c77eabadc302ae23bbaa4d0ded8f5bc213b10826e62d",
+      "px": [
+        442,
+        1824
+      ],
+      "sha256": "509397c741e1f0d77a32584addcc3e98ebd41f4e628fb83d4448acf4defb4f0d",
+      "alpha": true,
+      "status": "candidate",
+      "theme": "weather",
+      "width": "regular",
+      "use": "Blank customizable bookshelf spine; title text dynamically rendered in app"
+    },
+    {
+      "id": "gm_ws_spine_weather_narrow",
+      "family": "word_search_spines",
+      "path": "sprites/spines/gm_ws_spine_weather_narrow.png",
+      "source": "svg/spines/gm_ws_spine_weather_narrow.svg",
+      "source_sha256": "4dd29448fe6a15d4d16e9db8ac5e6d76fcdd06bdc3bb6dd60fcaacacf71551f5",
+      "px": [
+        288,
+        1824
+      ],
+      "sha256": "49c6bc1a40439b8bbc15644b558edca3503aaefeb6c642292b21fa50387b8e61",
+      "alpha": true,
+      "status": "candidate",
+      "theme": "weather",
+      "width": "narrow",
+      "use": "Blank customizable bookshelf spine; title text dynamically rendered in app"
+    },
+    {
+      "id": "gm_ws_spine_weather_collector",
+      "family": "word_search_spines",
+      "path": "sprites/spines/gm_ws_spine_weather_collector.png",
+      "source": "svg/spines/gm_ws_spine_weather_collector.svg",
+      "source_sha256": "7b8c23bf5ec1abf96a737913fb9cb8702a4a8381546f02070f9077f0c1ce2b6f",
+      "px": [
+        288,
+        1824
+      ],
+      "sha256": "25093db4a8a38efa606e13f519c9a9a31f72a47b20d71dc5df089c29800f86a2",
+      "alpha": true,
+      "status": "candidate",
+      "theme": "weather",
+      "width": "collector",
+      "use": "Blank customizable bookshelf spine; title text dynamically rendered in app"
+    },
+    {
+      "id": "gm_ws_spine_travel_regular",
+      "family": "word_search_spines",
+      "path": "sprites/spines/gm_ws_spine_travel_regular.png",
+      "source": "svg/spines/gm_ws_spine_travel_regular.svg",
+      "source_sha256": "04c25befde83ff6ee75d1c5e2a3bee5f6d0d7d782d22531ebd34c89f4b011b03",
+      "px": [
+        442,
+        1824
+      ],
+      "sha256": "00708d610215fa3ec6c22f0456cc6e0aa1e33a37728d21ae6df833be32d3e88f",
+      "alpha": true,
+      "status": "candidate",
+      "theme": "travel",
+      "width": "regular",
+      "use": "Blank customizable bookshelf spine; title text dynamically rendered in app"
+    },
+    {
+      "id": "gm_ws_spine_travel_narrow",
+      "family": "word_search_spines",
+      "path": "sprites/spines/gm_ws_spine_travel_narrow.png",
+      "source": "svg/spines/gm_ws_spine_travel_narrow.svg",
+      "source_sha256": "2ec48c27e150eedf3f51627064fd3dd651e1df6142c258f96d8f98d5691bb234",
+      "px": [
+        288,
+        1824
+      ],
+      "sha256": "22150eeff30526c115f5a29a4ffa7644247ccc01abcb4bbfcb0b3a3992a30c9b",
+      "alpha": true,
+      "status": "candidate",
+      "theme": "travel",
+      "width": "narrow",
+      "use": "Blank customizable bookshelf spine; title text dynamically rendered in app"
+    },
+    {
+      "id": "gm_ws_spine_travel_collector",
+      "family": "word_search_spines",
+      "path": "sprites/spines/gm_ws_spine_travel_collector.png",
+      "source": "svg/spines/gm_ws_spine_travel_collector.svg",
+      "source_sha256": "2c8997e1c9b89aa49b68ca1ef4fa1e90d83ca73b3ddae0cc4744dd349f87c9af",
+      "px": [
+        288,
+        1824
+      ],
+      "sha256": "0e7c13ebf487dd41ae4ad1954753142b160a6089d8eebe1c22f1020eae256f0d",
+      "alpha": true,
+      "status": "candidate",
+      "theme": "travel",
+      "width": "collector",
+      "use": "Blank customizable bookshelf spine; title text dynamically rendered in app"
+    },
+    {
+      "id": "gm_ws_spine_music_regular",
+      "family": "word_search_spines",
+      "path": "sprites/spines/gm_ws_spine_music_regular.png",
+      "source": "svg/spines/gm_ws_spine_music_regular.svg",
+      "source_sha256": "24753da658728b4ff2e38e02b84316042b344efdd92729970c319a6a03bdc597",
+      "px": [
+        442,
+        1824
+      ],
+      "sha256": "c7a2bbb92b149037826c0fa0deb028e2e7017a7b9e9cdb9a069776fe4e6fae43",
+      "alpha": true,
+      "status": "candidate",
+      "theme": "music",
+      "width": "regular",
+      "use": "Blank customizable bookshelf spine; title text dynamically rendered in app"
+    },
+    {
+      "id": "gm_ws_spine_music_narrow",
+      "family": "word_search_spines",
+      "path": "sprites/spines/gm_ws_spine_music_narrow.png",
+      "source": "svg/spines/gm_ws_spine_music_narrow.svg",
+      "source_sha256": "20ef0cd0bef921823e24da3bbb84cd0bf21015a17798b6d8306a4f0412271872",
+      "px": [
+        288,
+        1824
+      ],
+      "sha256": "3bacf55d285e7d72dc0c819c894039cef7d0e2a4b02636813925a16fed8cd477",
+      "alpha": true,
+      "status": "candidate",
+      "theme": "music",
+      "width": "narrow",
+      "use": "Blank customizable bookshelf spine; title text dynamically rendered in app"
+    },
+    {
+      "id": "gm_ws_spine_music_collector",
+      "family": "word_search_spines",
+      "path": "sprites/spines/gm_ws_spine_music_collector.png",
+      "source": "svg/spines/gm_ws_spine_music_collector.svg",
+      "source_sha256": "18c06524372f8c2b573cedce74b27b9fda62239674af7177cefbbc253ec0ac10",
+      "px": [
+        288,
+        1824
+      ],
+      "sha256": "afa5b44328c6baeb6c64a3e9cbccded02f271e54829facfcd7bc20aad4133f4e",
+      "alpha": true,
+      "status": "candidate",
+      "theme": "music",
+      "width": "collector",
+      "use": "Blank customizable bookshelf spine; title text dynamically rendered in app"
+    },
+    {
+      "id": "gm_ws_spine_fairy_tales_regular",
+      "family": "word_search_spines",
+      "path": "sprites/spines/gm_ws_spine_fairy_tales_regular.png",
+      "source": "svg/spines/gm_ws_spine_fairy_tales_regular.svg",
+      "source_sha256": "ba843058142f9f63b7b37ae67d99f1ae19aba65cb4934e822714692df06eaae9",
+      "px": [
+        442,
+        1824
+      ],
+      "sha256": "d0936980e29640c78ca7f9257960ab71f9dc4c929ed792b0cf97a521fc82786c",
+      "alpha": true,
+      "status": "candidate",
+      "theme": "fairy_tales",
+      "width": "regular",
+      "use": "Blank customizable bookshelf spine; title text dynamically rendered in app"
+    },
+    {
+      "id": "gm_ws_spine_fairy_tales_narrow",
+      "family": "word_search_spines",
+      "path": "sprites/spines/gm_ws_spine_fairy_tales_narrow.png",
+      "source": "svg/spines/gm_ws_spine_fairy_tales_narrow.svg",
+      "source_sha256": "d26dc3a08ff2ddd44312cc6efd75efab627b1d84601b4c2abf15cb874f99453f",
+      "px": [
+        288,
+        1824
+      ],
+      "sha256": "16d291e1bee064a26702b19603b98871d6f11850103e036975c645772550048d",
+      "alpha": true,
+      "status": "candidate",
+      "theme": "fairy_tales",
+      "width": "narrow",
+      "use": "Blank customizable bookshelf spine; title text dynamically rendered in app"
+    },
+    {
+      "id": "gm_ws_spine_fairy_tales_collector",
+      "family": "word_search_spines",
+      "path": "sprites/spines/gm_ws_spine_fairy_tales_collector.png",
+      "source": "svg/spines/gm_ws_spine_fairy_tales_collector.svg",
+      "source_sha256": "acc018f9fb804632c659a88009756f0422577386e13bc5c3929f2e064962245e",
+      "px": [
+        288,
+        1824
+      ],
+      "sha256": "58eabf9be9fe334fb67319b09de175797f022f93d4ffc6a9c5e2820be9ed3258",
+      "alpha": true,
+      "status": "candidate",
+      "theme": "fairy_tales",
+      "width": "collector",
+      "use": "Blank customizable bookshelf spine; title text dynamically rendered in app"
+    },
+    {
+      "id": "gm_ws_spine_tropical_regular",
+      "family": "word_search_spines",
+      "path": "sprites/spines/gm_ws_spine_tropical_regular.png",
+      "source": "svg/spines/gm_ws_spine_tropical_regular.svg",
+      "source_sha256": "6157fd036f345ca7ff25897a6aceaa8e326d133ff1faee2034ae0cf9e5e19499",
+      "px": [
+        442,
+        1824
+      ],
+      "sha256": "8155f3f0f0c861e7b9a7ba94966cb9672e7a26e0f6c79dc9d2ded274c6b62eee",
+      "alpha": true,
+      "status": "candidate",
+      "theme": "tropical",
+      "width": "regular",
+      "use": "Blank customizable bookshelf spine; title text dynamically rendered in app"
+    },
+    {
+      "id": "gm_ws_spine_tropical_narrow",
+      "family": "word_search_spines",
+      "path": "sprites/spines/gm_ws_spine_tropical_narrow.png",
+      "source": "svg/spines/gm_ws_spine_tropical_narrow.svg",
+      "source_sha256": "0e5d2123000d4ab6078269555e115c3c0cd99f3acc8821d767c410f871563717",
+      "px": [
+        288,
+        1824
+      ],
+      "sha256": "e3b5bc8171ae022965643b4f20eed42613500fdfabcd11fc1e39eb257665f78b",
+      "alpha": true,
+      "status": "candidate",
+      "theme": "tropical",
+      "width": "narrow",
+      "use": "Blank customizable bookshelf spine; title text dynamically rendered in app"
+    },
+    {
+      "id": "gm_ws_spine_tropical_collector",
+      "family": "word_search_spines",
+      "path": "sprites/spines/gm_ws_spine_tropical_collector.png",
+      "source": "svg/spines/gm_ws_spine_tropical_collector.svg",
+      "source_sha256": "ab5c5b7ea5217f5feea49935dca95a334d4df71612f8c0a694eefb50688764d2",
+      "px": [
+        288,
+        1824
+      ],
+      "sha256": "f3f1f0b2ca38245e4a30a86f9034cbf64fbf14f46e5cdb8d9aea338f962f0612",
+      "alpha": true,
+      "status": "candidate",
+      "theme": "tropical",
+      "width": "collector",
+      "use": "Blank customizable bookshelf spine; title text dynamically rendered in app"
+    },
+    {
+      "id": "gm_ws_spine_arctic_regular",
+      "family": "word_search_spines",
+      "path": "sprites/spines/gm_ws_spine_arctic_regular.png",
+      "source": "svg/spines/gm_ws_spine_arctic_regular.svg",
+      "source_sha256": "253542add34fbf453e746c3ffcd1a5c888551841d6be7d6bf97ce4ddbb2af991",
+      "px": [
+        442,
+        1824
+      ],
+      "sha256": "4a8b9bf4e972cebeb8925e2e8203d1cdf9297352545d07efefe70d351595c073",
+      "alpha": true,
+      "status": "candidate",
+      "theme": "arctic",
+      "width": "regular",
+      "use": "Blank customizable bookshelf spine; title text dynamically rendered in app"
+    },
+    {
+      "id": "gm_ws_spine_arctic_narrow",
+      "family": "word_search_spines",
+      "path": "sprites/spines/gm_ws_spine_arctic_narrow.png",
+      "source": "svg/spines/gm_ws_spine_arctic_narrow.svg",
+      "source_sha256": "662c205c2f669c6647eb02098aa99960b6852ff22231d853057dafddaa74d433",
+      "px": [
+        288,
+        1824
+      ],
+      "sha256": "aadbfabb1f9e93fce47e4a7f41bc7d7aa82d0dd5917a391cf879a3a94987581d",
+      "alpha": true,
+      "status": "candidate",
+      "theme": "arctic",
+      "width": "narrow",
+      "use": "Blank customizable bookshelf spine; title text dynamically rendered in app"
+    },
+    {
+      "id": "gm_ws_spine_arctic_collector",
+      "family": "word_search_spines",
+      "path": "sprites/spines/gm_ws_spine_arctic_collector.png",
+      "source": "svg/spines/gm_ws_spine_arctic_collector.svg",
+      "source_sha256": "60f10eb55a566aa25f42d111fbde36547912b7d642d9c4157c163083f0de9ac3",
+      "px": [
+        288,
+        1824
+      ],
+      "sha256": "5b5e0a0959ca27247bb58d3f59b722b98f5e93037a34e6f32b15d09c2d8504a1",
+      "alpha": true,
+      "status": "candidate",
+      "theme": "arctic",
+      "width": "collector",
+      "use": "Blank customizable bookshelf spine; title text dynamically rendered in app"
+    },
+    {
+      "id": "gm_ws_spine_city_regular",
+      "family": "word_search_spines",
+      "path": "sprites/spines/gm_ws_spine_city_regular.png",
+      "source": "svg/spines/gm_ws_spine_city_regular.svg",
+      "source_sha256": "7277c0a966e720c6ef3b04cb752ed6d1d61b9a757f275afec85f17f437e09f4a",
+      "px": [
+        442,
+        1824
+      ],
+      "sha256": "05210053d3e9efe44666c653b777824cb0fb763b100c1c5cc664a19ee287665f",
+      "alpha": true,
+      "status": "candidate",
+      "theme": "city",
+      "width": "regular",
+      "use": "Blank customizable bookshelf spine; title text dynamically rendered in app"
+    },
+    {
+      "id": "gm_ws_spine_city_narrow",
+      "family": "word_search_spines",
+      "path": "sprites/spines/gm_ws_spine_city_narrow.png",
+      "source": "svg/spines/gm_ws_spine_city_narrow.svg",
+      "source_sha256": "dddb63748be4f689cfbe7e995fd25c511c7bfa9113d152244467c76c5ffc6b3f",
+      "px": [
+        288,
+        1824
+      ],
+      "sha256": "b5f4c1490e691ec44c6884e2999d639c98c6e50782064d4e8683c4793bc063ce",
+      "alpha": true,
+      "status": "candidate",
+      "theme": "city",
+      "width": "narrow",
+      "use": "Blank customizable bookshelf spine; title text dynamically rendered in app"
+    },
+    {
+      "id": "gm_ws_spine_city_collector",
+      "family": "word_search_spines",
+      "path": "sprites/spines/gm_ws_spine_city_collector.png",
+      "source": "svg/spines/gm_ws_spine_city_collector.svg",
+      "source_sha256": "889408dbaf449d3f1b06d8695a397a4772f17e864264aa340c032837ee6e02d9",
+      "px": [
+        288,
+        1824
+      ],
+      "sha256": "103b6c4a66b0bb17bc5ee7f3af21d8cafbb9f3b50a8629c09012a65937026abb",
+      "alpha": true,
+      "status": "candidate",
+      "theme": "city",
+      "width": "collector",
+      "use": "Blank customizable bookshelf spine; title text dynamically rendered in app"
+    },
+    {
+      "id": "gm_ws_spine_science_regular",
+      "family": "word_search_spines",
+      "path": "sprites/spines/gm_ws_spine_science_regular.png",
+      "source": "svg/spines/gm_ws_spine_science_regular.svg",
+      "source_sha256": "961fa3ddf3e6b860ade357bf08199cec9adc87ad0689b592cdb22372a48a2df9",
+      "px": [
+        442,
+        1824
+      ],
+      "sha256": "d64cab588a6f8fae916de5212a6cf46736173dff4d88fa42f7eaccbda6700175",
+      "alpha": true,
+      "status": "candidate",
+      "theme": "science",
+      "width": "regular",
+      "use": "Blank customizable bookshelf spine; title text dynamically rendered in app"
+    },
+    {
+      "id": "gm_ws_spine_science_narrow",
+      "family": "word_search_spines",
+      "path": "sprites/spines/gm_ws_spine_science_narrow.png",
+      "source": "svg/spines/gm_ws_spine_science_narrow.svg",
+      "source_sha256": "eb054b4f9c5493ccfd7ca23121dbb5d5ee29b3aefb85ce6b2a7cd0490f8a4b7c",
+      "px": [
+        288,
+        1824
+      ],
+      "sha256": "44f737e766df0e4be9aa7064576f96f2f3459bea642177092049fcd6792787be",
+      "alpha": true,
+      "status": "candidate",
+      "theme": "science",
+      "width": "narrow",
+      "use": "Blank customizable bookshelf spine; title text dynamically rendered in app"
+    },
+    {
+      "id": "gm_ws_spine_science_collector",
+      "family": "word_search_spines",
+      "path": "sprites/spines/gm_ws_spine_science_collector.png",
+      "source": "svg/spines/gm_ws_spine_science_collector.svg",
+      "source_sha256": "40950973c7ae6a4fe20cde7184d2df44771389c22e0ec9ab15a253b7ccad2421",
+      "px": [
+        288,
+        1824
+      ],
+      "sha256": "93e6b0f976b597ec0e874bf38f5b232919b5eaef885810c9d1d8237b50a39f8a",
+      "alpha": true,
+      "status": "candidate",
+      "theme": "science",
+      "width": "collector",
+      "use": "Blank customizable bookshelf spine; title text dynamically rendered in app"
+    }
+  ],
+  "notes": [
+    "No images are installed into Android automatically.",
+    "All dynamic text and gameplay status must remain native and accessible.",
+    "72 book spines use deterministic vector templates; AI generated badges cropped pixel-exact from approved-style sheet.",
+    "Two labeled concept boards are reference-only, not transparent UI sprites."
+  ],
+  "counts": {
+    "collection_reward_sprites": 16,
+    "theme_spine_sprites": 72,
+    "total_candidate_sprites": 88,
+    "themes": 24
+  }
+}
