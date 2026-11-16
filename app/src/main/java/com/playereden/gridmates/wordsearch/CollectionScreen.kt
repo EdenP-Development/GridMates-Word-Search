@@ -178,29 +178,61 @@ internal fun CollectionScreen(store: SoloStore) {
     // The selected collection tab must open to its content immediately,
     // not below a full-page profile header. Keep profile/dossier in Portraits.
     if (collectionTab == "Portraits") {
-        // Small identity/edit control, rather than repeating the large
-        // Profile screen just before the collection itself.
-        GridMatesInfoPanel(Modifier.fillMaxWidth().testTag("ws16bt-collection-profile")) {
-            Row(Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.spacedBy(10.dp),
-                verticalAlignment = Alignment.CenterVertically) {
-                PortraitBadge(equippedId, equippedName, 40)
-                Column(Modifier.weight(1f),
-                    verticalArrangement = Arrangement.spacedBy(2.dp)) {
-                    Text(profile.identity.displayName, color = Forest,
-                        style = MaterialTheme.typography.titleMedium,
-                        fontWeight = FontWeight.SemiBold,
-                        maxLines = 2, overflow = TextOverflow.Ellipsis)
-                    Text(equippedName + " · Equipped portrait", color = Muted,
-                        style = MaterialTheme.typography.bodySmall)
+        // WS27: the profile has its own full dossier. On regular phones,
+        // keep only a short identity/edit strip so the first collectible row
+        // actually appears when opening the Collection screen.
+        GridMatesInfoPanel(Modifier.fillMaxWidth()
+            .testTag("ws16bt-collection-profile")) {
+            val roomy = fontScale < 1.3f
+            if (roomy) {
+                Row(Modifier.fillMaxWidth()
+                    .testTag("ws27-compact-collection-identity"),
+                    horizontalArrangement = Arrangement.spacedBy(7.dp),
+                    verticalAlignment = Alignment.CenterVertically) {
+                    PortraitBadge(equippedId, equippedName, 36)
+                    Column(Modifier.weight(1f),
+                        verticalArrangement = Arrangement.spacedBy(1.dp)) {
+                        Text(profile.identity.displayName, color = Forest,
+                            style = MaterialTheme.typography.titleSmall,
+                            fontWeight = FontWeight.SemiBold,
+                            maxLines = 1, overflow = TextOverflow.Ellipsis)
+                        Text(equippedName + " · Equipped", color = Muted,
+                            style = MaterialTheme.typography.labelSmall,
+                            maxLines = 1, overflow = TextOverflow.Ellipsis)
+                    }
+                    TextButton(onClick = {
+                        draftName = profile.identity.displayName
+                        showNameDialog = true
+                    }, modifier = Modifier.heightIn(min = 48.dp)
+                        .testTag("ws16bu-edit-profile-name")) {
+                        Text("Edit display name", color = Forest,
+                            style = MaterialTheme.typography.labelMedium,
+                            maxLines = 1)
+                    }
                 }
-            }
-            TextButton(onClick = {
-                draftName = profile.identity.displayName
-                showNameDialog = true
-            }, modifier = Modifier.fillMaxWidth().heightIn(min = 48.dp)
-                .testTag("ws16bu-edit-profile-name")) {
-                Text("Edit display name", color = Forest)
+            } else {
+                // Large type remains stacked; preserve an untruncated edit CTA.
+                Row(Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.spacedBy(10.dp),
+                    verticalAlignment = Alignment.CenterVertically) {
+                    PortraitBadge(equippedId, equippedName, 40)
+                    Column(Modifier.weight(1f),
+                        verticalArrangement = Arrangement.spacedBy(2.dp)) {
+                        Text(profile.identity.displayName, color = Forest,
+                            style = MaterialTheme.typography.titleMedium,
+                            fontWeight = FontWeight.SemiBold,
+                            maxLines = 2, overflow = TextOverflow.Ellipsis)
+                        Text(equippedName + " · Equipped portrait", color = Muted,
+                            style = MaterialTheme.typography.bodySmall)
+                    }
+                }
+                TextButton(onClick = {
+                    draftName = profile.identity.displayName
+                    showNameDialog = true
+                }, modifier = Modifier.fillMaxWidth().heightIn(min = 48.dp)
+                    .testTag("ws16bu-edit-profile-name")) {
+                    Text("Edit display name", color = Forest)
+                }
             }
         }
     }
@@ -260,23 +292,21 @@ internal fun CollectionScreen(store: SoloStore) {
             Box(Modifier.weight(1f)) {
                 Ws15SectionHeading(
                     glyph = Ws15SectionGlyph.PORTRAIT,
-                    title = "Woodland companions",
+                    title = "Woodland",
                     subtitle = portraits.count { it.unlocked }.toString() +
-                        " of " + portraits.size + " portraits unlocked"
+                        " of " + portraits.size + " companions unlocked"
                 )
             }
             // Real source-hashed WS22 art, decorative and debug-only.
             if (fontScale < 1.3f) WoodlandCollectionAccent()
         }
-        Text(
-            if (originalImagesAvailable) {
-                "Choose a Woodland companion. More portraits unlock as you play."
-            } else {
-                "Some portrait artwork is unavailable in this build. " +
-                    "Letter badges will appear instead."
-            },
-            color = Muted, style = MaterialTheme.typography.bodySmall
-        )
+        // Repeating explanatory copy above the gallery hid the artwork in v88.
+        // Only show the warning when the original shipped portraits are missing.
+        if (!originalImagesAvailable) {
+            Text("Some portrait artwork is unavailable in this build. " +
+                "Letter badges will appear instead.",
+                color = Muted, style = MaterialTheme.typography.bodySmall)
+        }
         // A single BoxWithConstraints owns BOTH the page size and the card
         // layout. Avoid 4 jumbo rows on a narrow content-width viewport.
         BoxWithConstraints(Modifier.fillMaxWidth().testTag("ws16bu-gallery")) {
