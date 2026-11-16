@@ -91,6 +91,7 @@ def saved_bytes():
 def main():
     require(shell("getprop", "ro.kernel.qemu") == "1", "Expected a disposable Android emulator")
     shell("wm", "dismiss-keyguard")
+    shell("settings", "put", "secure", "immersive_mode_confirmations", "confirmed")
     print(adb("install", "qa-archives/v92/app-debug.apk").decode().strip(), flush=True)
     first_install = package_state(92)
     launch()
