@@ -113,6 +113,27 @@
       "rendering": "Editable SVGs in repo, all candidate PNGs and two reference-only concept boards in external full archive",
       "packaging": "NOT in current Android APK",
       "notes": "Native Android text overlays required for book labels and UI states. 16 new painterly illustrations extracted from near-white RGB sheet; edge cleanup visually reviewed only at contact-sheet scale, further 48–100px approval required."
+    },
+    {
+      "id": "ws22_theme_motifs_and_prestige_frames",
+      "kind": "fully_github_backed_candidate_asset_pack",
+      "status": "candidate_not_packaged",
+      "purpose": "16 painted transparent theme motifs across woodland/ocean/garden/space, plus 24 editable premium badge/portrait/reward frame SVGs (6 forms x bronze/silver/gold/emerald)",
+      "source": "design/art-library-v2/ws22/README.md",
+      "source_index": "design/art-library-v2/ws22/manifest.json",
+      "github_png_sources": "design/art-library-v2/ws22/sprites/motifs/",
+      "github_png_count": 16,
+      "github_svg_sources": "design/art-library-v2/ws22/svg/premium_frames/",
+      "github_svg_count": 24,
+      "github_original_source_shards": "design/art-library-v2/ws22/source_parts/",
+      "source_recovery_script": "design/art-library-v2/ws22/restore_atlas.py",
+      "build_script": "design/art-library-v2/ws22/rebuild_ws22.py",
+      "validator": "design/art-library-v2/ws22/validate_ws22.py",
+      "source_sha256": "9de514db9f09ac9fa09fe5fa5a4b0a3c0a0f98ca9dbda6df8abf6ff3e5e7a70e",
+      "external_full_backup": "ChatGPT Library /Game Design/GridMates Word Search/GridMates_Asset_Expansion_WS22_FULL.zip",
+      "archive_sha256": "cadbfac63005a280dcbeee9ca6ecc4bef13c552308edc2b073c59c47aa12f2c8",
+      "packaging": "Not present in any Android APK; GitHub source is complete and independently reconstructable",
+      "notes": "First art pack with GitHub binary PNGs AND losslessly sharded original master. 16 illustrated sprites still need small-size, edge and owner acceptance checks. Generated status infographic is reference-only and not part of this pack."
     }
   ],
   "review_process": [
