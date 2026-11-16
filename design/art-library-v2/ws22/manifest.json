@@ -1,0 +1,735 @@
+{
+  "schema_version": 1,
+  "pack_id": "gridmates_ws22_theme_motifs_prestige",
+  "date": "2026-11-15",
+  "purpose": "Cross-game reusable motif cutouts and collectible frames; no APK changes",
+  "status": "candidate_only",
+  "counts": {
+    "motif_pngs": 16,
+    "premium_frame_svgs": 24,
+    "total": 40
+  },
+  "source_sheet": {
+    "path": "sources/ws22_master_motifs_alpha.png",
+    "sha256": "9de514db9f09ac9fa09fe5fa5a4b0a3c0a0f98ca9dbda6df8abf6ff3e5e7a70e",
+    "size_px": [
+      1261,
+      1247
+    ]
+  },
+  "edge_notes": "Motif PNG alpha halos were decontaminated by nearest opaque color while keeping alpha coverage; visually review at actual 48-96 px. No live text baked in.",
+  "entries": [
+    {
+      "id": "gm_theme_woodland_badger_motif",
+      "scope": "theme",
+      "family": "woodland",
+      "name": "woodland_badger",
+      "format": "PNG",
+      "status": "candidate_not_packaged",
+      "path": "sprites/motifs/gm_theme_woodland_badger_motif.png",
+      "sha256": "4d59668362702b36f4937abb96cd3180cba3227862ede5af6fc0bda1e970da6e",
+      "size_px": [
+        301,
+        271
+      ],
+      "source_cell": [
+        0,
+        0
+      ],
+      "source_crop_xyxy": [
+        10,
+        41,
+        311,
+        312
+      ],
+      "original_source": "sources/ws22_master_motifs_alpha.png"
+    },
+    {
+      "id": "gm_theme_woodland_robin_motif",
+      "scope": "theme",
+      "family": "woodland",
+      "name": "woodland_robin",
+      "format": "PNG",
+      "status": "candidate_not_packaged",
+      "path": "sprites/motifs/gm_theme_woodland_robin_motif.png",
+      "sha256": "ceb2f4f45a2d36f5215976f9037a22072d5c75b2127a80b512c65f5ec60b596e",
+      "size_px": [
+        305,
+        275
+      ],
+      "source_cell": [
+        0,
+        1
+      ],
+      "source_crop_xyxy": [
+        325,
+        37,
+        630,
+        312
+      ],
+      "original_source": "sources/ws22_master_motifs_alpha.png"
+    },
+    {
+      "id": "gm_theme_woodland_squirrel_motif",
+      "scope": "theme",
+      "family": "woodland",
+      "name": "woodland_squirrel",
+      "format": "PNG",
+      "status": "candidate_not_packaged",
+      "path": "sprites/motifs/gm_theme_woodland_squirrel_motif.png",
+      "sha256": "893c3e51457f32d62141a0c36c596736f7568377d192daba4d48a50cbeb78397",
+      "size_px": [
+        293,
+        280
+      ],
+      "source_cell": [
+        0,
+        2
+      ],
+      "source_crop_xyxy": [
+        640,
+        31,
+        933,
+        311
+      ],
+      "original_source": "sources/ws22_master_motifs_alpha.png"
+    },
+    {
+      "id": "gm_theme_woodland_stag_motif",
+      "scope": "theme",
+      "family": "woodland",
+      "name": "woodland_stag",
+      "format": "PNG",
+      "status": "candidate_not_packaged",
+      "path": "sprites/motifs/gm_theme_woodland_stag_motif.png",
+      "sha256": "0cc4b28dc4889f2108d22c0827cf347a242a0f1fb9a9c190b42b2da192511a4f",
+      "size_px": [
+        307,
+        308
+      ],
+      "source_cell": [
+        0,
+        3
+      ],
+      "source_crop_xyxy": [
+        946,
+        4,
+        1253,
+        312
+      ],
+      "original_source": "sources/ws22_master_motifs_alpha.png"
+    },
+    {
+      "id": "gm_theme_ocean_seahorse_motif",
+      "scope": "theme",
+      "family": "ocean",
+      "name": "ocean_seahorse",
+      "format": "PNG",
+      "status": "candidate_not_packaged",
+      "path": "sprites/motifs/gm_theme_ocean_seahorse_motif.png",
+      "sha256": "514974939d2d75b8c4233ef6e862a518e761e01689ca8392b4bc7dfd62fe9f6f",
+      "size_px": [
+        268,
+        292
+      ],
+      "source_cell": [
+        1,
+        0
+      ],
+      "source_crop_xyxy": [
+        20,
+        315,
+        288,
+        607
+      ],
+      "original_source": "sources/ws22_master_motifs_alpha.png"
+    },
+    {
+      "id": "gm_theme_ocean_jellyfish_motif",
+      "scope": "theme",
+      "family": "ocean",
+      "name": "ocean_jellyfish",
+      "format": "PNG",
+      "status": "candidate_not_packaged",
+      "path": "sprites/motifs/gm_theme_ocean_jellyfish_motif.png",
+      "sha256": "0d0c35758ac3e2b2e7578e4cfa56b6b67a37c1e3a0048322b89b5abc07a9096a",
+      "size_px": [
+        297,
+        289
+      ],
+      "source_cell": [
+        1,
+        1
+      ],
+      "source_crop_xyxy": [
+        321,
+        323,
+        618,
+        612
+      ],
+      "original_source": "sources/ws22_master_motifs_alpha.png"
+    },
+    {
+      "id": "gm_theme_ocean_lighthouse_motif",
+      "scope": "theme",
+      "family": "ocean",
+      "name": "ocean_lighthouse",
+      "format": "PNG",
+      "status": "candidate_not_packaged",
+      "path": "sprites/motifs/gm_theme_ocean_lighthouse_motif.png",
+      "sha256": "0e79efe9bf9deba5ca9b152de69001084aed2380d0407f0894b73becd93f56fc",
+      "size_px": [
+        286,
+        297
+      ],
+      "source_cell": [
+        1,
+        2
+      ],
+      "source_crop_xyxy": [
+        637,
+        314,
+        923,
+        611
+      ],
+      "original_source": "sources/ws22_master_motifs_alpha.png"
+    },
+    {
+      "id": "gm_theme_ocean_pearl_clam_motif",
+      "scope": "theme",
+      "family": "ocean",
+      "name": "ocean_pearl_clam",
+      "format": "PNG",
+      "status": "candidate_not_packaged",
+      "path": "sprites/motifs/gm_theme_ocean_pearl_clam_motif.png",
+      "sha256": "baeadc2c15fa994a6023c01ce752e78e5104742ab48cbf9ca20b539612ac157a",
+      "size_px": [
+        306,
+        254
+      ],
+      "source_cell": [
+        1,
+        3
+      ],
+      "source_crop_xyxy": [
+        946,
+        343,
+        1252,
+        597
+      ],
+      "original_source": "sources/ws22_master_motifs_alpha.png"
+    },
+    {
+      "id": "gm_theme_garden_hummingbird_motif",
+      "scope": "theme",
+      "family": "garden",
+      "name": "garden_hummingbird",
+      "format": "PNG",
+      "status": "candidate_not_packaged",
+      "path": "sprites/motifs/gm_theme_garden_hummingbird_motif.png",
+      "sha256": "492f7d3c056d6244ab307b6fe131d2f2274ef3a184c11d59143e357dae88ba63",
+      "size_px": [
+        307,
+        278
+      ],
+      "source_cell": [
+        2,
+        0
+      ],
+      "source_crop_xyxy": [
+        8,
+        635,
+        315,
+        913
+      ],
+      "original_source": "sources/ws22_master_motifs_alpha.png"
+    },
+    {
+      "id": "gm_theme_garden_watering_can_motif",
+      "scope": "theme",
+      "family": "garden",
+      "name": "garden_watering_can",
+      "format": "PNG",
+      "status": "candidate_not_packaged",
+      "path": "sprites/motifs/gm_theme_garden_watering_can_motif.png",
+      "sha256": "cd2d3cc28a9313faa68c5a0d213a14adb8e8729fbae6a51b0c2ddb7e2485af42",
+      "size_px": [
+        310,
+        264
+      ],
+      "source_cell": [
+        2,
+        1
+      ],
+      "source_crop_xyxy": [
+        320,
+        639,
+        630,
+        903
+      ],
+      "original_source": "sources/ws22_master_motifs_alpha.png"
+    },
+    {
+      "id": "gm_theme_garden_sunflower_motif",
+      "scope": "theme",
+      "family": "garden",
+      "name": "garden_sunflower",
+      "format": "PNG",
+      "status": "candidate_not_packaged",
+      "path": "sprites/motifs/gm_theme_garden_sunflower_motif.png",
+      "sha256": "b1c5bea18ab5538338268b20ad4142216353e74b667b53e462d2c64c29cccb38",
+      "size_px": [
+        294,
+        283
+      ],
+      "source_cell": [
+        2,
+        2
+      ],
+      "source_crop_xyxy": [
+        640,
+        628,
+        934,
+        911
+      ],
+      "original_source": "sources/ws22_master_motifs_alpha.png"
+    },
+    {
+      "id": "gm_theme_garden_mantis_motif",
+      "scope": "theme",
+      "family": "garden",
+      "name": "garden_mantis",
+      "format": "PNG",
+      "status": "candidate_not_packaged",
+      "path": "sprites/motifs/gm_theme_garden_mantis_motif.png",
+      "sha256": "f3a47dff0f18ee3937851bf1485d78ba18e9ee9bb8907addcd3c029737f9c0b7",
+      "size_px": [
+        300,
+        284
+      ],
+      "source_cell": [
+        2,
+        3
+      ],
+      "source_crop_xyxy": [
+        953,
+        626,
+        1253,
+        910
+      ],
+      "original_source": "sources/ws22_master_motifs_alpha.png"
+    },
+    {
+      "id": "gm_theme_space_astronaut_helmet_motif",
+      "scope": "theme",
+      "family": "space",
+      "name": "space_astronaut_helmet",
+      "format": "PNG",
+      "status": "candidate_not_packaged",
+      "path": "sprites/motifs/gm_theme_space_astronaut_helmet_motif.png",
+      "sha256": "5ca31daf01ec0dada9f6f28eaf14c114ac2e1e1e0351ea3967fde3ee857cf574",
+      "size_px": [
+        300,
+        280
+      ],
+      "source_cell": [
+        3,
+        0
+      ],
+      "source_crop_xyxy": [
+        5,
+        935,
+        305,
+        1215
+      ],
+      "original_source": "sources/ws22_master_motifs_alpha.png"
+    },
+    {
+      "id": "gm_theme_space_telescope_motif",
+      "scope": "theme",
+      "family": "space",
+      "name": "space_telescope",
+      "format": "PNG",
+      "status": "candidate_not_packaged",
+      "path": "sprites/motifs/gm_theme_space_telescope_motif.png",
+      "sha256": "ca17f734f425d2948d8111b47864327e1ddb9916788a6e7a81ee42105b07cf90",
+      "size_px": [
+        298,
+        282
+      ],
+      "source_cell": [
+        3,
+        1
+      ],
+      "source_crop_xyxy": [
+        321,
+        935,
+        619,
+        1217
+      ],
+      "original_source": "sources/ws22_master_motifs_alpha.png"
+    },
+    {
+      "id": "gm_theme_space_comet_motif",
+      "scope": "theme",
+      "family": "space",
+      "name": "space_comet",
+      "format": "PNG",
+      "status": "candidate_not_packaged",
+      "path": "sprites/motifs/gm_theme_space_comet_motif.png",
+      "sha256": "0519e10f95e623fa040af281df6fe7bdd0e7b089bb9f4872497d2b734202aa4d",
+      "size_px": [
+        301,
+        254
+      ],
+      "source_cell": [
+        3,
+        2
+      ],
+      "source_crop_xyxy": [
+        632,
+        946,
+        933,
+        1200
+      ],
+      "original_source": "sources/ws22_master_motifs_alpha.png"
+    },
+    {
+      "id": "gm_theme_space_spiral_galaxy_motif",
+      "scope": "theme",
+      "family": "space",
+      "name": "space_spiral_galaxy",
+      "format": "PNG",
+      "status": "candidate_not_packaged",
+      "path": "sprites/motifs/gm_theme_space_spiral_galaxy_motif.png",
+      "sha256": "bb213012d5934d397aa76720003f8163687d2652ca40033585489125ca36b91c",
+      "size_px": [
+        304,
+        277
+      ],
+      "source_cell": [
+        3,
+        3
+      ],
+      "source_crop_xyxy": [
+        948,
+        935,
+        1252,
+        1212
+      ],
+      "original_source": "sources/ws22_master_motifs_alpha.png"
+    },
+    {
+      "id": "gm_core_prestige_round_bronze",
+      "scope": "core",
+      "family": "prestige_frames",
+      "name": "round_bronze",
+      "format": "SVG",
+      "status": "candidate_not_packaged",
+      "path": "svg/premium_frames/gm_core_prestige_round_bronze.svg",
+      "sha256": "944444293b0eb6d3b5caaebb19639ddf41519a96735da2842e3f5d32880a2c36",
+      "variant": "bronze",
+      "master": "round",
+      "source": "procedural scalable vector with exact palette tokens"
+    },
+    {
+      "id": "gm_core_prestige_round_silver",
+      "scope": "core",
+      "family": "prestige_frames",
+      "name": "round_silver",
+      "format": "SVG",
+      "status": "candidate_not_packaged",
+      "path": "svg/premium_frames/gm_core_prestige_round_silver.svg",
+      "sha256": "644a96e243edb57f1b51d2fa7700247d034dbaad9b22b3750d21fb695aaad642",
+      "variant": "silver",
+      "master": "round",
+      "source": "procedural scalable vector with exact palette tokens"
+    },
+    {
+      "id": "gm_core_prestige_round_gold",
+      "scope": "core",
+      "family": "prestige_frames",
+      "name": "round_gold",
+      "format": "SVG",
+      "status": "candidate_not_packaged",
+      "path": "svg/premium_frames/gm_core_prestige_round_gold.svg",
+      "sha256": "6fc169ce24ca83f80d09f43021cb4769fca981548b9a4e8fec78a98a43b5aebc",
+      "variant": "gold",
+      "master": "round",
+      "source": "procedural scalable vector with exact palette tokens"
+    },
+    {
+      "id": "gm_core_prestige_round_emerald",
+      "scope": "core",
+      "family": "prestige_frames",
+      "name": "round_emerald",
+      "format": "SVG",
+      "status": "candidate_not_packaged",
+      "path": "svg/premium_frames/gm_core_prestige_round_emerald.svg",
+      "sha256": "415f5b612a2957fc9a1e716296755c9ac7312018cd8f5d5596525d59d3cce202",
+      "variant": "emerald",
+      "master": "round",
+      "source": "procedural scalable vector with exact palette tokens"
+    },
+    {
+      "id": "gm_core_prestige_shield_bronze",
+      "scope": "core",
+      "family": "prestige_frames",
+      "name": "shield_bronze",
+      "format": "SVG",
+      "status": "candidate_not_packaged",
+      "path": "svg/premium_frames/gm_core_prestige_shield_bronze.svg",
+      "sha256": "81442fa72b0177fada50dfc121a4a4d7046424b42bcded8d5cc42730ba972a3e",
+      "variant": "bronze",
+      "master": "shield",
+      "source": "procedural scalable vector with exact palette tokens"
+    },
+    {
+      "id": "gm_core_prestige_shield_silver",
+      "scope": "core",
+      "family": "prestige_frames",
+      "name": "shield_silver",
+      "format": "SVG",
+      "status": "candidate_not_packaged",
+      "path": "svg/premium_frames/gm_core_prestige_shield_silver.svg",
+      "sha256": "9550bdb2dacdab1b6acb74a8de90fa748700a5dc0f6787b45d9e3db43f1b6def",
+      "variant": "silver",
+      "master": "shield",
+      "source": "procedural scalable vector with exact palette tokens"
+    },
+    {
+      "id": "gm_core_prestige_shield_gold",
+      "scope": "core",
+      "family": "prestige_frames",
+      "name": "shield_gold",
+      "format": "SVG",
+      "status": "candidate_not_packaged",
+      "path": "svg/premium_frames/gm_core_prestige_shield_gold.svg",
+      "sha256": "2171a19439147c5e90db44da42de36210f4fc488c595dc5477f32d2b7d81c23b",
+      "variant": "gold",
+      "master": "shield",
+      "source": "procedural scalable vector with exact palette tokens"
+    },
+    {
+      "id": "gm_core_prestige_shield_emerald",
+      "scope": "core",
+      "family": "prestige_frames",
+      "name": "shield_emerald",
+      "format": "SVG",
+      "status": "candidate_not_packaged",
+      "path": "svg/premium_frames/gm_core_prestige_shield_emerald.svg",
+      "sha256": "b37f7e3d3e95763fb4888cddf50752fd5585294dc3d9b97e751ce882eceac408",
+      "variant": "emerald",
+      "master": "shield",
+      "source": "procedural scalable vector with exact palette tokens"
+    },
+    {
+      "id": "gm_core_prestige_portrait_bronze",
+      "scope": "core",
+      "family": "prestige_frames",
+      "name": "portrait_bronze",
+      "format": "SVG",
+      "status": "candidate_not_packaged",
+      "path": "svg/premium_frames/gm_core_prestige_portrait_bronze.svg",
+      "sha256": "b64bbc80b17ae9230604413e449479756da3a288b8e60f316abc3705553a6438",
+      "variant": "bronze",
+      "master": "portrait",
+      "source": "procedural scalable vector with exact palette tokens"
+    },
+    {
+      "id": "gm_core_prestige_portrait_silver",
+      "scope": "core",
+      "family": "prestige_frames",
+      "name": "portrait_silver",
+      "format": "SVG",
+      "status": "candidate_not_packaged",
+      "path": "svg/premium_frames/gm_core_prestige_portrait_silver.svg",
+      "sha256": "449d7a5744d8ef4c3cb5067495d719410ec986616dd1d3b3e4d39f6bbd9bee5c",
+      "variant": "silver",
+      "master": "portrait",
+      "source": "procedural scalable vector with exact palette tokens"
+    },
+    {
+      "id": "gm_core_prestige_portrait_gold",
+      "scope": "core",
+      "family": "prestige_frames",
+      "name": "portrait_gold",
+      "format": "SVG",
+      "status": "candidate_not_packaged",
+      "path": "svg/premium_frames/gm_core_prestige_portrait_gold.svg",
+      "sha256": "4b8614bc9694095946a4908668358b7168d2f48932de1644fe9fde1b5c4dcd8f",
+      "variant": "gold",
+      "master": "portrait",
+      "source": "procedural scalable vector with exact palette tokens"
+    },
+    {
+      "id": "gm_core_prestige_portrait_emerald",
+      "scope": "core",
+      "family": "prestige_frames",
+      "name": "portrait_emerald",
+      "format": "SVG",
+      "status": "candidate_not_packaged",
+      "path": "svg/premium_frames/gm_core_prestige_portrait_emerald.svg",
+      "sha256": "85293b2861428ad58e0811e2a6613eacac7700d50452c92f31110b225b2f3356",
+      "variant": "emerald",
+      "master": "portrait",
+      "source": "procedural scalable vector with exact palette tokens"
+    },
+    {
+      "id": "gm_core_prestige_ribbon_bronze",
+      "scope": "core",
+      "family": "prestige_frames",
+      "name": "ribbon_bronze",
+      "format": "SVG",
+      "status": "candidate_not_packaged",
+      "path": "svg/premium_frames/gm_core_prestige_ribbon_bronze.svg",
+      "sha256": "9dbd2aef5553c35bd48966b3b426f92a4c3c4509f6d445642d0cf2a317a4adfc",
+      "variant": "bronze",
+      "master": "ribbon",
+      "source": "procedural scalable vector with exact palette tokens"
+    },
+    {
+      "id": "gm_core_prestige_ribbon_silver",
+      "scope": "core",
+      "family": "prestige_frames",
+      "name": "ribbon_silver",
+      "format": "SVG",
+      "status": "candidate_not_packaged",
+      "path": "svg/premium_frames/gm_core_prestige_ribbon_silver.svg",
+      "sha256": "d66634549082aeca3045c252daacf1a1617bad52980d417ae647c44eb000d875",
+      "variant": "silver",
+      "master": "ribbon",
+      "source": "procedural scalable vector with exact palette tokens"
+    },
+    {
+      "id": "gm_core_prestige_ribbon_gold",
+      "scope": "core",
+      "family": "prestige_frames",
+      "name": "ribbon_gold",
+      "format": "SVG",
+      "status": "candidate_not_packaged",
+      "path": "svg/premium_frames/gm_core_prestige_ribbon_gold.svg",
+      "sha256": "f8b4a443b867488285aae662757e9dcc3e776d6fd29dad189c02272b8cf710b0",
+      "variant": "gold",
+      "master": "ribbon",
+      "source": "procedural scalable vector with exact palette tokens"
+    },
+    {
+      "id": "gm_core_prestige_ribbon_emerald",
+      "scope": "core",
+      "family": "prestige_frames",
+      "name": "ribbon_emerald",
+      "format": "SVG",
+      "status": "candidate_not_packaged",
+      "path": "svg/premium_frames/gm_core_prestige_ribbon_emerald.svg",
+      "sha256": "0f9028c1bbdd88ca8211fbca179fbffa387787de29ad2060bc29b21a8b2b98c1",
+      "variant": "emerald",
+      "master": "ribbon",
+      "source": "procedural scalable vector with exact palette tokens"
+    },
+    {
+      "id": "gm_core_prestige_starburst_bronze",
+      "scope": "core",
+      "family": "prestige_frames",
+      "name": "starburst_bronze",
+      "format": "SVG",
+      "status": "candidate_not_packaged",
+      "path": "svg/premium_frames/gm_core_prestige_starburst_bronze.svg",
+      "sha256": "ad4daf8b8ae8729ea658d8639ac587dbf8ed3f022eed2781856755bd2f7246b1",
+      "variant": "bronze",
+      "master": "starburst",
+      "source": "procedural scalable vector with exact palette tokens"
+    },
+    {
+      "id": "gm_core_prestige_starburst_silver",
+      "scope": "core",
+      "family": "prestige_frames",
+      "name": "starburst_silver",
+      "format": "SVG",
+      "status": "candidate_not_packaged",
+      "path": "svg/premium_frames/gm_core_prestige_starburst_silver.svg",
+      "sha256": "3c9270838aeeb823facc11c53ecdd8e166c3a8baced3d8527362c6e878a5998f",
+      "variant": "silver",
+      "master": "starburst",
+      "source": "procedural scalable vector with exact palette tokens"
+    },
+    {
+      "id": "gm_core_prestige_starburst_gold",
+      "scope": "core",
+      "family": "prestige_frames",
+      "name": "starburst_gold",
+      "format": "SVG",
+      "status": "candidate_not_packaged",
+      "path": "svg/premium_frames/gm_core_prestige_starburst_gold.svg",
+      "sha256": "47d53865c11cc6da7ddc85c05ce9bed3957f50b9122a7c0d946e66ab452fce27",
+      "variant": "gold",
+      "master": "starburst",
+      "source": "procedural scalable vector with exact palette tokens"
+    },
+    {
+      "id": "gm_core_prestige_starburst_emerald",
+      "scope": "core",
+      "family": "prestige_frames",
+      "name": "starburst_emerald",
+      "format": "SVG",
+      "status": "candidate_not_packaged",
+      "path": "svg/premium_frames/gm_core_prestige_starburst_emerald.svg",
+      "sha256": "36a0e696016e27b02ac2e9baf8e347e475283d3506518f172a6fcc473b9df55a",
+      "variant": "emerald",
+      "master": "starburst",
+      "source": "procedural scalable vector with exact palette tokens"
+    },
+    {
+      "id": "gm_core_prestige_book_crest_bronze",
+      "scope": "core",
+      "family": "prestige_frames",
+      "name": "book_crest_bronze",
+      "format": "SVG",
+      "status": "candidate_not_packaged",
+      "path": "svg/premium_frames/gm_core_prestige_book_crest_bronze.svg",
+      "sha256": "b997126e1a1f48bb26ca8c195292bef79b3000ed08beb5a6a23fae7cf4495503",
+      "variant": "bronze",
+      "master": "book_crest",
+      "source": "procedural scalable vector with exact palette tokens"
+    },
+    {
+      "id": "gm_core_prestige_book_crest_silver",
+      "scope": "core",
+      "family": "prestige_frames",
+      "name": "book_crest_silver",
+      "format": "SVG",
+      "status": "candidate_not_packaged",
+      "path": "svg/premium_frames/gm_core_prestige_book_crest_silver.svg",
+      "sha256": "536688989dd7e962ee6afb25425878f49a953267c1ec6681f5b35325d38d5ad9",
+      "variant": "silver",
+      "master": "book_crest",
+      "source": "procedural scalable vector with exact palette tokens"
+    },
+    {
+      "id": "gm_core_prestige_book_crest_gold",
+      "scope": "core",
+      "family": "prestige_frames",
+      "name": "book_crest_gold",
+      "format": "SVG",
+      "status": "candidate_not_packaged",
+      "path": "svg/premium_frames/gm_core_prestige_book_crest_gold.svg",
+      "sha256": "143c71e5dc2c16528434c3420caa2e15e52e5caf21c932c70e876861dd32787c",
+      "variant": "gold",
+      "master": "book_crest",
+      "source": "procedural scalable vector with exact palette tokens"
+    },
+    {
+      "id": "gm_core_prestige_book_crest_emerald",
+      "scope": "core",
+      "family": "prestige_frames",
+      "name": "book_crest_emerald",
+      "format": "SVG",
+      "status": "candidate_not_packaged",
+      "path": "svg/premium_frames/gm_core_prestige_book_crest_emerald.svg",
+      "sha256": "52b4fe53835ff0313df1c574e263686b237eb8d41f637039eeaa59434af5f1e9",
+      "variant": "emerald",
+      "master": "book_crest",
+      "source": "procedural scalable vector with exact palette tokens"
+    }
+  ]
+}
