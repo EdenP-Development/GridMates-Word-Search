@@ -95,6 +95,24 @@
       "binary_archive_sha256": "6c508feeb8fcc00b067cdee55f719718664af9d2fe27391ff2cc47297f623498",
       "packaging": "NOT installed in Android APK; PNG source archive external, SVG vectors committed",
       "notes": "Two extra generated reference boards have baked text and are NOT runtime sprites. Legacy v86 signed QA remains gameplay fallback. No book/save ID or reward logic changes."
+    },
+    {
+      "id": "ws21_covers_seasonal_and_core_reserve",
+      "kind": "versioned_candidate_asset_bank",
+      "status": "candidate_not_packaged",
+      "purpose": "136 reusable art candidates: 16 illustrated seasonal/rewards, 72 themed blank covers, 24 medallions and 24 Core UI templates",
+      "source": "design/art-library-v2/ws21/README.md",
+      "source_index": "design/art-library-v2/ws21/manifest.json",
+      "build_script": "design/art-library-v2/ws21/build_gridmates_ws21.py",
+      "source_validator": "design/art-library-v2/ws21/validate_ws21.py",
+      "github_svg_sources": "design/art-library-v2/ws21/svg/",
+      "github_editable_svg_count": 120,
+      "external_candidate_png_count": 136,
+      "external_source_archive": "ChatGPT Library /Game Design/GridMates Word Search/GridMates_Asset_Expansion_WS21_FINAL.zip",
+      "binary_archive_sha256": "4e97d62b26f91b091f4bc08db8f3d37a79578dfe45140b74ba876ebff40f45c8",
+      "rendering": "Editable SVGs in repo, all candidate PNGs and two reference-only concept boards in external full archive",
+      "packaging": "NOT in current Android APK",
+      "notes": "Native Android text overlays required for book labels and UI states. 16 new painterly illustrations extracted from near-white RGB sheet; edge cleanup visually reviewed only at contact-sheet scale, further 48–100px approval required."
     }
   ],
   "review_process": [
