@@ -2,6 +2,7 @@ package com.playereden.gridmates.wordsearch
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.background
 import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.rememberScrollState
@@ -43,6 +44,11 @@ import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.Path
+import androidx.compose.ui.geometry.Offset
+import kotlin.math.PI
+import kotlin.math.cos
+import kotlin.math.sin
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.semantics.selected
@@ -659,11 +665,13 @@ private fun Ws29AchievementMedal(id: String, earned: Boolean) {
             if (earned) "gm_ws29_achievement_gold" else "gm_ws29_achievement_cream",
             "drawable", context.packageName)
     }
+    // Native paths avoid system emoji glyphs: Android rendered the *locked*
+    // Today Counts sun bright orange while other locked motifs were muted.
     val motif = when (id) {
-        "one_daily", "seven_dailies" -> "☀"
-        "no_hints", "hard_solo" -> "✦"
-        "all_themes" -> "✿"
-        else -> "★"
+        "one_daily", "seven_dailies" -> "sun"
+        "no_hints", "hard_solo" -> "sparkle"
+        "all_themes" -> "flower"
+        else -> "star"
     }
     Box(Modifier.size(66.dp).testTag("ws29-achievement-medal-" + id),
         contentAlignment = Alignment.Center) {
@@ -680,9 +688,76 @@ private fun Ws29AchievementMedal(id: String, earned: Boolean) {
                     if (earned) Color(0xFFE5C775) else Color(0xFFE5DECE),
                     RoundedCornerShape(18.dp)))
         }
-        Text(motif, color = if (earned) Color(0xFF785016) else Color(0xFF7D8678),
-            fontWeight = FontWeight.Bold,
-            style = MaterialTheme.typography.headlineMedium)
+        Ws30AchievementSymbol(motif, earned,
+            Modifier.size(28.dp).testTag("ws30-medal-symbol-" + id))
+    }
+}
+
+/**
+ * Consistent four-family medal symbols drawn as original local vectors.
+ * Unlike Unicode emoji, their color and subdued locked state are stable
+ * across Android fonts and devices. No new asset dependencies or rewards.
+ */
+@Composable
+private fun Ws30AchievementSymbol(
+    motif: String,
+    earned: Boolean,
+    modifier: Modifier = Modifier
+) {
+    val ink = if (earned) Color(0xFF875C1C) else Color(0xFF798376)
+    Canvas(modifier) {
+        val c = Offset(size.width / 2f, size.height / 2f)
+        val radius = size.minDimension
+        when (motif) {
+            "sun" -> {
+                drawCircle(ink, radius = radius * .19f, center = c)
+                repeat(8) { i ->
+                    val angle = 2.0 * PI * i / 8.0
+                    val dx = cos(angle).toFloat()
+                    val dy = sin(angle).toFloat()
+                    drawLine(ink,
+                        Offset(c.x + dx * radius * .28f, c.y + dy * radius * .28f),
+                        Offset(c.x + dx * radius * .44f, c.y + dy * radius * .44f),
+                        strokeWidth = radius * .09f)
+                }
+            }
+            "flower" -> {
+                repeat(6) { i ->
+                    val angle = 2.0 * PI * i / 6.0
+                    drawCircle(ink, radius * .125f,
+                        Offset(c.x + cos(angle).toFloat() * radius * .19f,
+                            c.y + sin(angle).toFloat() * radius * .19f))
+                }
+                drawCircle(if (earned) Color(0xFFE6C276) else Color(0xFFE0DED0),
+                    radius * .105f, c)
+            }
+            "sparkle" -> {
+                val p = Path().apply {
+                    moveTo(c.x, c.y - radius * .43f)
+                    lineTo(c.x + radius * .12f, c.y - radius * .12f)
+                    lineTo(c.x + radius * .43f, c.y)
+                    lineTo(c.x + radius * .12f, c.y + radius * .12f)
+                    lineTo(c.x, c.y + radius * .43f)
+                    lineTo(c.x - radius * .12f, c.y + radius * .12f)
+                    lineTo(c.x - radius * .43f, c.y)
+                    lineTo(c.x - radius * .12f, c.y - radius * .12f)
+                    close()
+                }
+                drawPath(p, ink)
+            }
+            else -> {
+                val p = Path()
+                repeat(10) { i ->
+                    val angle = -PI / 2.0 + PI * i / 5.0
+                    val r = if (i % 2 == 0) radius * .45f else radius * .21f
+                    val x = c.x + cos(angle).toFloat() * r
+                    val y = c.y + sin(angle).toFloat() * r
+                    if (i == 0) p.moveTo(x, y) else p.lineTo(x, y)
+                }
+                p.close()
+                drawPath(p, ink)
+            }
+        }
     }
 }
 
