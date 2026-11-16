@@ -68,7 +68,12 @@ internal fun Ws16CProfileHub(
         modifier = Modifier.fillMaxWidth().testTag("ws16c-profile-summary"),
         variant = GridMatesFrameVariant.FEATURE
     ) {
-        Row(Modifier.fillMaxWidth().padding(12.dp),
+        // The illustrated frame uses a BoxScope: direct sibling Row/Column
+        // children overlap at the top-left. One vertical parent is required.
+        Column(Modifier.fillMaxWidth().testTag("ws28-profile-layout"),
+            verticalArrangement = Arrangement.spacedBy(2.dp)) {
+        Row(Modifier.fillMaxWidth().padding(12.dp)
+                .testTag("ws28-profile-identity-row"),
             horizontalArrangement = Arrangement.spacedBy(14.dp),
             verticalAlignment = Alignment.CenterVertically) {
             Box(Modifier.size(76.dp)
@@ -111,7 +116,8 @@ internal fun Ws16CProfileHub(
         // The existing local portrait and achievement progression becomes
         // visible in the dossier without copying or changing saved data.
         Column(Modifier.fillMaxWidth()
-            .padding(start = 13.dp, end = 13.dp, bottom = 13.dp),
+            .padding(start = 13.dp, end = 13.dp, bottom = 13.dp)
+            .testTag("ws28-profile-progress-section"),
             verticalArrangement = Arrangement.spacedBy(6.dp)) {
             Row(Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.SpaceBetween,
@@ -126,6 +132,7 @@ internal fun Ws16CProfileHub(
                 Modifier.testTag("ws26-profile-collection-progress"))
             Text("$earnedAchievements of ${WordSearchAchievements.definitions.size} achievements earned",
                 color = Muted, style = MaterialTheme.typography.bodySmall)
+        }
         }
     }
 
