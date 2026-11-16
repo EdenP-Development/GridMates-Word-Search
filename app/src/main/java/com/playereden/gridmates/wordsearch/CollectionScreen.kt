@@ -688,8 +688,48 @@ private fun Ws29AchievementMedal(id: String, earned: Boolean) {
                     if (earned) Color(0xFFE5C775) else Color(0xFFE5DECE),
                     RoundedCornerShape(18.dp)))
         }
+        // WS31: milestone medals receive a restrained engraved wreath/rim.
+        // Decorative only; earned state still comes exclusively from profile data.
+        if (id in setOf("twenty_puzzles", "seven_dailies", "hard_solo", "all_themes")) {
+            Ws31MilestoneEngraving(
+                earned = earned,
+                modifier = Modifier.size(53.dp)
+                    .testTag("ws31-milestone-engraving-" + id)
+            )
+        }
         Ws30AchievementSymbol(motif, earned,
             Modifier.size(28.dp).testTag("ws30-medal-symbol-" + id))
+    }
+}
+
+/**
+ * Extra hand-engraved detail for the four longer/harder milestones.
+ * Native vectors remain legible on all Android font sets, with no new PNGs,
+ * achievements, unlock rules, storage, or separate reward currency.
+ */
+@Composable
+private fun Ws31MilestoneEngraving(
+    earned: Boolean,
+    modifier: Modifier = Modifier
+) {
+    val ink = if (earned) Color(0xFF956B2C) else Color(0xFF9FA59A)
+    Canvas(modifier) {
+        val c = Offset(size.width / 2f, size.height / 2f)
+        val r = size.minDimension * .47f
+        // Fine dotted laurel around the central motif; enough breathing room
+        // that it does not compete with the approved shield border.
+        repeat(12) { i ->
+            val angle = PI * (i / 11.0 + .5)
+            val dx = cos(angle).toFloat()
+            val dy = sin(angle).toFloat()
+            for (side in listOf(-1f, 1f)) {
+                drawCircle(
+                    color = ink,
+                    radius = size.minDimension * .018f,
+                    center = Offset(c.x + dx * r * side, c.y + dy * r)
+                )
+            }
+        }
     }
 }
 
