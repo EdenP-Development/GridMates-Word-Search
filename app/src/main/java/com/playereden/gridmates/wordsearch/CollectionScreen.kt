@@ -22,7 +22,6 @@ import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.FilterChip
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.OutlinedTextField
@@ -45,6 +44,8 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.semantics.semantics
+import androidx.compose.ui.semantics.selected
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
@@ -149,14 +150,27 @@ internal fun CollectionScreen(store: SoloStore) {
         modifier = Modifier.fillMaxWidth().testTag("ws16bb-collection-heading"),
         color = Muted, style = MaterialTheme.typography.bodyMedium)
 
+    // WS25: real native illustrated tabs; live labels, selection and 48dp
+    // targets stay in Compose rather than being baked into a sprite.
     Row(Modifier.fillMaxWidth().horizontalScroll(rememberScrollState()),
         horizontalArrangement = Arrangement.spacedBy(8.dp)) {
         for (label in listOf("Portraits", "Fonts", "Achievements")) {
-            FilterChip(
-                selected = collectionTab == label,
-                onClick = { collectionTab = label },
-                label = { Text(label) }
-            )
+            val isSelected = collectionTab == label
+            GridMatesIllustratedFrame(
+                modifier = Modifier.heightIn(min = 48.dp)
+                    .testTag("ws25-collection-tab-" + label.lowercase())
+                    .semantics { selected = isSelected },
+                variant = if (isSelected) GridMatesFrameVariant.GREEN_ICON
+                    else GridMatesFrameVariant.MEDIUM,
+                onClick = { collectionTab = label }
+            ) {
+                Box(Modifier.padding(horizontal = 13.dp, vertical = 13.dp),
+                    contentAlignment = Alignment.Center) {
+                    Text(label, color = if (isSelected) Paper else Forest,
+                        fontWeight = if (isSelected) FontWeight.Bold else FontWeight.Medium,
+                        style = MaterialTheme.typography.labelLarge)
+                }
+            }
         }
     }
 
@@ -239,11 +253,20 @@ internal fun CollectionScreen(store: SoloStore) {
         orderedAchievements.drop(current * achievementPageSize).take(achievementPageSize)
             .forEach { item -> AchievementCard(item) }
     } else {
-        Ws15SectionHeading(
-            glyph = Ws15SectionGlyph.PORTRAIT, title = "Woodland companions",
-            subtitle = portraits.count { it.unlocked }.toString() +
-                " of " + portraits.size + " portraits unlocked"
-        )
+        Row(Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.spacedBy(10.dp),
+            verticalAlignment = Alignment.CenterVertically) {
+            Box(Modifier.weight(1f)) {
+                Ws15SectionHeading(
+                    glyph = Ws15SectionGlyph.PORTRAIT,
+                    title = "Woodland companions",
+                    subtitle = portraits.count { it.unlocked }.toString() +
+                        " of " + portraits.size + " portraits unlocked"
+                )
+            }
+            // Real source-hashed WS22 art, decorative and debug-only.
+            if (fontScale < 1.3f) WoodlandCollectionAccent()
+        }
         Text(
             if (originalImagesAvailable) {
                 "Choose a Woodland companion. More portraits unlock as you play."
@@ -324,7 +347,9 @@ private fun BoardFontCard(
     // no longer take two full-height rows of disabled fake buttons.
     Card(
         modifier.testTag("ws16bv-font-" + item.font.id),
-        colors = CardDefaults.cardColors(containerColor = Paper),
+        shape = RoundedCornerShape(16.dp),
+        elevation = CardDefaults.cardElevation(defaultElevation = 2.dp),
+        colors = CardDefaults.cardColors(containerColor = StorybookTokens.warmPaper),
         border = BorderStroke(if (item.equipped) 2.dp else 1.dp,
             if (item.equipped) Forest else Color(0xFFDFE0D6))
     ) {
@@ -382,6 +407,24 @@ private fun BoardFontCard(
     }
 }
 
+/** Source-pinned WS22 motif: debug art is optional; release has a native fallback. */
+@Composable
+private fun WoodlandCollectionAccent() {
+    val context = LocalContext.current
+    val resource = remember(context) {
+        context.resources.getIdentifier(
+            "gm_ws25_collection_robin", "drawable", context.packageName)
+    }
+    if (resource != 0) {
+        Image(
+            painter = painterResource(resource),
+            contentDescription = null,
+            contentScale = ContentScale.Fit,
+            modifier = Modifier.size(58.dp).testTag("ws25-collection-robin")
+        )
+    }
+}
+
 @Composable
 private fun PortraitBadge(
     id: String, label: String, sizeDp: Int, unlocked: Boolean = true
@@ -436,7 +479,9 @@ private fun PortraitCard(
     // Compact illustrated collection row: portrait left, real metadata right.
     // Preserve the equipped border, unlock progress, and true equip action.
     Card(modifier.testTag("ws16bu-portrait-" + item.portrait.id),
-        colors = CardDefaults.cardColors(containerColor = Paper),
+        shape = RoundedCornerShape(16.dp),
+        elevation = CardDefaults.cardElevation(defaultElevation = 2.dp),
+        colors = CardDefaults.cardColors(containerColor = StorybookTokens.warmPaper),
         border = BorderStroke(if (item.equipped) 2.dp else 1.dp,
             if (item.equipped) Forest else Color(0xFFDFE0D6))
     ) {
