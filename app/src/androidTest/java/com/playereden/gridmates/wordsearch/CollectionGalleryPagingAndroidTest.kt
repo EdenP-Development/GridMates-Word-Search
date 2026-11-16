@@ -49,6 +49,7 @@ class CollectionGalleryPagingAndroidTest {
             compose.onNodeWithTag("ws16bu-equip-woodland_fox").assertExists()
             compose.onNodeWithText("Edit display name").assertExists()
             compose.onNodeWithTag("ws16bt-collection-profile").assertExists()
+            compose.onNodeWithTag("ws27-compact-collection-identity").assertExists()
             compose.onNodeWithTag("ws16bt-collection-progress").assertExists()
             compose.onNodeWithText("COLLECTION PROGRESS").assertExists()
             // Gallery navigation must be visible on first entry, without scrolling
