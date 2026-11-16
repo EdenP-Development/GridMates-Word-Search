@@ -48,6 +48,7 @@ import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.semantics.selected
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.playereden.gridmates.wordsearch.core.AchievementProgress
 import com.playereden.gridmates.wordsearch.core.BoardFontCollection
@@ -279,7 +280,7 @@ internal fun CollectionScreen(store: SoloStore) {
         // A single BoxWithConstraints owns BOTH the page size and the card
         // layout. Avoid 4 jumbo rows on a narrow content-width viewport.
         BoxWithConstraints(Modifier.fillMaxWidth().testTag("ws16bu-gallery")) {
-            val columns = if (maxWidth < 520.dp || fontScale >= 1.3f) 1 else 2
+            val columns = if (maxWidth < 320.dp || fontScale >= 1.3f) 1 else 2
             val portraitPageSize = if (columns == 1) 3 else 4
             val portraitPages = ((portraits.size + portraitPageSize - 1) /
                 portraitPageSize).coerceAtLeast(1)
@@ -292,12 +293,15 @@ internal fun CollectionScreen(store: SoloStore) {
                         Row(Modifier.fillMaxWidth(),
                             horizontalArrangement = Arrangement.spacedBy(8.dp)) {
                             group.forEach { item ->
-                                PortraitCard(
-                                    item,
-                                    WoodlandCollection.remaining(profile, item.portrait.id) ?: 0,
-                                    Modifier.weight(1f),
-                                    onEquip = { store.equipPortrait(item.portrait.id) }
-                                )
+                                val remaining = WoodlandCollection.remaining(
+                                    profile, item.portrait.id) ?: 0
+                                if (columns == 2) {
+                                    PortraitTile(item, remaining, Modifier.weight(1f),
+                                        onEquip = { store.equipPortrait(item.portrait.id) })
+                                } else {
+                                    PortraitCard(item, remaining, Modifier.weight(1f),
+                                        onEquip = { store.equipPortrait(item.portrait.id) })
+                                }
                             }
                             if (group.size < columns) Box(Modifier.weight(1f))
                         }
@@ -468,6 +472,68 @@ private fun PortraitMonogram(label: String, sizeDp: Int) {
 
 private val ColorForestPale = androidx.compose.ui.graphics.Color(0xFFD9E7D9)
 private val ColorGoldPale = androidx.compose.ui.graphics.Color(0xFFF3E3C3)
+
+/**
+ * WS26 gallery view for ordinary phone text size: the artwork is the hero.
+ * Locked progress, equip actions and original stable portrait IDs are live.
+ * Narrow phones / enlarged font scale continue to use PortraitCard below.
+ */
+@Composable
+private fun PortraitTile(
+    item: PortraitProgress,
+    remaining: Int,
+    modifier: Modifier,
+    onEquip: () -> Unit
+) {
+    Card(
+        modifier.testTag("ws16bu-portrait-" + item.portrait.id),
+        shape = RoundedCornerShape(18.dp),
+        colors = CardDefaults.cardColors(
+            containerColor = StorybookTokens.warmPaper),
+        border = BorderStroke(if (item.equipped) 2.dp else 1.dp,
+            if (item.equipped) Forest else StorybookTokens.antiqueGold),
+        elevation = CardDefaults.cardElevation(defaultElevation = 2.dp)
+    ) {
+        Column(
+            Modifier.fillMaxWidth().padding(horizontal = 8.dp, vertical = 10.dp)
+                .testTag("ws26-portrait-tile-content"),
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.spacedBy(5.dp)
+        ) {
+            PortraitBadge(item.portrait.id, item.portrait.label, 68, item.unlocked)
+            Text(item.portrait.label,
+                color = Forest, fontWeight = FontWeight.Bold,
+                style = MaterialTheme.typography.titleSmall,
+                maxLines = 1, overflow = TextOverflow.Ellipsis,
+                textAlign = TextAlign.Center)
+            Text(when {
+                item.equipped -> "Your portrait"
+                item.unlocked -> "Unlocked"
+                else -> "$remaining puzzles to unlock"
+            }, color = Muted, style = MaterialTheme.typography.labelSmall,
+                maxLines = 2, textAlign = TextAlign.Center)
+            if (!item.unlocked && item.portrait.requiredCompletions > 0) {
+                val earned = (item.portrait.requiredCompletions - remaining).coerceAtLeast(0)
+                PaperProgress(earned, item.portrait.requiredCompletions)
+            }
+            // A tappable 48dp CTA only exists when this reward is earned.
+            if (item.unlocked && !item.equipped) {
+                OutlinedButton(onClick = onEquip,
+                    modifier = Modifier.fillMaxWidth().heightIn(min = 48.dp)
+                        .testTag("ws16bu-equip-" + item.portrait.id)) {
+                    Text("Equip")
+                }
+            } else {
+                Box(Modifier.fillMaxWidth().heightIn(min = 48.dp),
+                    contentAlignment = Alignment.Center) {
+                    Text(if (item.equipped) "Equipped" else "Locked",
+                        color = if (item.equipped) Forest else Muted,
+                        style = MaterialTheme.typography.labelMedium)
+                }
+            }
+        }
+    }
+}
 
 @Composable
 private fun PortraitCard(
