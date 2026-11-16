@@ -128,6 +128,10 @@ internal fun Ws16HomeScreen(
                 overflow = TextOverflow.Ellipsis,
                 textAlign = TextAlign.Center,
                 modifier = Modifier.fillMaxWidth().testTag("ws16-selected-book"))
+            // Dynamic chapter completion; no painted-in progress or fabricated count.
+            PaperProgress(count, pages,
+                Modifier.padding(horizontal = 34.dp)
+                    .testTag("ws25-home-book-progress"))
         }
     } else {
         // A production build without editorially approved books must never
