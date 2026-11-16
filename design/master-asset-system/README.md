@@ -1,4 +1,4 @@
-# GridMates Master Asset System (WS18, 2026-11-15)
+**Latest candidate artwork — WS21:** [136 candidate illustrations/covers/medallions/Core templates and 120 editable GitHub SVGs](../art-library-v2/ws21/README.md), source-verified by [GitHub QA #43793231439](https://github.com/PlayerEden/GridMates-Word-Search/actions/runs/43793231439); original PNGs archived separately, not packaged in the app.\n\n# GridMates Master Asset System (WS18, 2026-11-15)
 
 This is the working cross-game asset architecture, established after the owner clarified that most early Word Search visuals were exploratory **placeholders** and visual overhaul is permitted. Favor a coherent future GridMates family over protecting old one-off artwork. The reserve should be expansive; **the shipped asset payload stays curated**.
 
