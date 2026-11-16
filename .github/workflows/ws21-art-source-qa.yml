@@ -1,0 +1,22 @@
+name: WS21 Extended Core and Theme Art Source QA
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - feature/ws14b-style-anchor-and-art-direction-2026-11-08
+    paths:
+      - 'design/art-library-v2/ws21/**'
+      - '.github/workflows/ws21-art-source-qa.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  source-only-qa:
+    runs-on: ubuntu-latest
+    timeout-minutes: 6
+    steps:
+      - uses: actions/checkout@v4
+      - name: Verify actual 120 editable vector sources and 136 candidate asset records
+        run: python3 design/art-library-v2/ws21/validate_ws21.py
