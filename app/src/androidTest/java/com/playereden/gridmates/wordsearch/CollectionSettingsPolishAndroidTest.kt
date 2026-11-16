@@ -53,6 +53,7 @@ class CollectionSettingsPolishAndroidTest {
         compose.onNodeWithText("First Page").performScrollTo().assertExists()
         compose.onNodeWithTag("ws29-achievement-medal-first_puzzle").assertExists()
         compose.onNodeWithTag("ws30-medal-symbol-first_puzzle").assertExists()
+        compose.onNodeWithTag("ws31-milestone-engraving-twenty_puzzles").assertExists()
         compose.onNodeWithText("Complete your first puzzle.").assertExists()
         capture("ws05h-achievements.png")
     }
