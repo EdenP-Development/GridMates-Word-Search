@@ -8,7 +8,7 @@ class CompactCollectionTests(unittest.TestCase):
         src=(APP/"CollectionScreen.kt").read_text()
         self.assertNotIn("LocalConfiguration.current.screenWidthDp",src)
         self.assertIn('BoxWithConstraints(Modifier.fillMaxWidth().testTag("ws16bu-gallery"))',src)
-        self.assertIn("val columns = if (maxWidth < 520.dp || fontScale >= 1.3f) 1 else 2",src)
+        self.assertIn("val columns = if (maxWidth < 320.dp || fontScale >= 1.3f) 1 else 2",src)
         self.assertIn("val portraitPageSize = if (columns == 1) 3 else 4",src)
         self.assertIn("val portraitPages = ((portraits.size + portraitPageSize - 1) /",src)
         self.assertIn("portraits.drop(current * portraitPageSize).take(portraitPageSize)",src)
