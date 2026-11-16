@@ -41,7 +41,6 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.testTag
-import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -79,10 +78,9 @@ internal fun CollectionScreen(store: SoloStore) {
     var collectionTab by rememberSaveable { mutableStateOf("Portraits") }
     var portraitPage by rememberSaveable { mutableIntStateOf(0) }
     var achievementPage by rememberSaveable { mutableIntStateOf(0) }
-    val compactGallery = LocalConfiguration.current.screenWidthDp < 350 ||
-        LocalDensity.current.fontScale >= 1.3f
-    val portraitPageSize = if (compactGallery) 2 else 4
-    val achievementPageSize = if (compactGallery) 2 else 4
+    // Page capacity must be based on actual *content* width, not screen width.
+    val fontScale = LocalDensity.current.fontScale
+    val achievementPageSize = if (fontScale >= 1.3f) 2 else 4
     var licenseFontId by rememberSaveable { mutableStateOf<String?>(null) }
     val completed = WoodlandCollection.completedCount(profile)
     val nextPortrait = portraits.firstOrNull { !it.unlocked }?.portrait
@@ -145,11 +143,11 @@ internal fun CollectionScreen(store: SoloStore) {
         )
     }
 
-    StorybookHeading(
-        eyebrow = "Your profile & rewards",
-        title = "Your Collection",
-        subtitle = "Collect more portraits and fonts as you finish puzzles. Everything is free."
-    )
+    // The shell already titles this screen "Your Collection". A small
+    // introduction saves space for actual portraits, fonts, and achievements.
+    Text("Earn portraits and fonts by finishing puzzles. Everything is free.",
+        modifier = Modifier.fillMaxWidth().testTag("ws16bb-collection-heading"),
+        color = Muted, style = MaterialTheme.typography.bodyMedium)
 
     Row(Modifier.fillMaxWidth().horizontalScroll(rememberScrollState()),
         horizontalArrangement = Arrangement.spacedBy(8.dp)) {
@@ -165,40 +163,46 @@ internal fun CollectionScreen(store: SoloStore) {
     // The selected collection tab must open to its content immediately,
     // not below a full-page profile header. Keep profile/dossier in Portraits.
     if (collectionTab == "Portraits") {
-        PaperPanel(Modifier.fillMaxWidth()) {
-            PaperEyebrow("Player profile")
-            Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(12.dp),
+        // Small identity/edit control, rather than repeating the large
+        // Profile screen just before the collection itself.
+        GridMatesInfoPanel(Modifier.fillMaxWidth().testTag("ws16bt-collection-profile")) {
+            Row(Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.spacedBy(10.dp),
                 verticalAlignment = Alignment.CenterVertically) {
-                PortraitBadge(equippedId, equippedName, 48)
-                Column(Modifier.weight(1f), verticalArrangement = Arrangement.spacedBy(4.dp)) {
+                PortraitBadge(equippedId, equippedName, 40)
+                Column(Modifier.weight(1f),
+                    verticalArrangement = Arrangement.spacedBy(2.dp)) {
                     Text(profile.identity.displayName, color = Forest,
-                        style = MaterialTheme.typography.titleLarge,
-                        fontWeight = FontWeight.Bold,
+                        style = MaterialTheme.typography.titleMedium,
+                        fontWeight = FontWeight.SemiBold,
                         maxLines = 2, overflow = TextOverflow.Ellipsis)
-                    Text(equippedName + " · Current portrait", color = Muted,
-                        style = MaterialTheme.typography.bodyMedium)
+                    Text(equippedName + " · Equipped portrait", color = Muted,
+                        style = MaterialTheme.typography.bodySmall)
                 }
             }
-            OutlinedButton(onClick = {
+            TextButton(onClick = {
                 draftName = profile.identity.displayName
                 showNameDialog = true
-            }, modifier = Modifier.fillMaxWidth()) { Text("Edit display name") }
+            }, modifier = Modifier.fillMaxWidth().heightIn(min = 48.dp)
+                .testTag("ws16bu-edit-profile-name")) {
+                Text("Edit display name", color = Forest)
+            }
         }
-
-
-
     }
 
     if (collectionTab == "Fonts") {
-        Text(fonts.count { it.unlocked }.toString() + " / " +
-            fonts.size + " board fonts unlocked",
-            color = Forest, style = MaterialTheme.typography.titleMedium)
-        Text("All styles are free. Earn fonts through achievements, then equip " +
-            "one to change your puzzle letters. The readable default is always available.",
+        Ws15SectionHeading(
+            glyph = Ws15SectionGlyph.TYPEFACE, title = "Board fonts",
+            subtitle = fonts.count { it.unlocked }.toString() + " of " +
+                fonts.size + " unlocked"
+        )
+        Text("Board fonts change puzzle letters only, not GridMates menus. " +
+            "The readable starter is always free; earn other styles through achievements.",
             color = Muted, style = MaterialTheme.typography.bodySmall)
-        BoxWithConstraints(Modifier.fillMaxWidth()) {
-            val columns = if (maxWidth < 350.dp ||
-                LocalDensity.current.fontScale >= 1.3f) 1 else 2
+        BoxWithConstraints(Modifier.fillMaxWidth().testTag("ws16bv-font-gallery")) {
+            // Five-letter font samples need real width to remain legible.
+            // A tablet may show two cards; ordinary phones keep one column.
+            val columns = if (maxWidth < 600.dp || fontScale >= 1.3f) 1 else 2
             Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
                 fonts.chunked(columns).forEach { pair ->
                     Row(Modifier.fillMaxWidth(),
@@ -217,9 +221,11 @@ internal fun CollectionScreen(store: SoloStore) {
             "Tap License to read the full copyright and redistribution terms.",
             color = Muted, style = MaterialTheme.typography.bodySmall)
     } else if (collectionTab == "Achievements") {
-        Text(achievements.count { it.unlocked }.toString() +
-            " / " + achievements.size + " achievements",
-            color = Forest, style = MaterialTheme.typography.titleMedium)
+        Ws15SectionHeading(
+            glyph = Ws15SectionGlyph.AWARD, title = "Achievements",
+            subtitle = achievements.count { it.unlocked }.toString() +
+                " of " + achievements.size + " earned"
+        )
         Text("Achievements reflect your saved Solo and Daily progress.",
             color = Muted, style = MaterialTheme.typography.bodySmall)
         val orderedAchievements = achievements.sortedWith(
@@ -233,9 +239,11 @@ internal fun CollectionScreen(store: SoloStore) {
         orderedAchievements.drop(current * achievementPageSize).take(achievementPageSize)
             .forEach { item -> AchievementCard(item) }
     } else {
-        Text(portraits.count { it.unlocked }.toString() +
-            " / " + portraits.size + " Woodland portraits available",
-            color = Forest, style = MaterialTheme.typography.titleMedium)
+        Ws15SectionHeading(
+            glyph = Ws15SectionGlyph.PORTRAIT, title = "Woodland companions",
+            subtitle = portraits.count { it.unlocked }.toString() +
+                " of " + portraits.size + " portraits unlocked"
+        )
         Text(
             if (originalImagesAvailable) {
                 "Choose a Woodland companion. More portraits unlock as you play."
@@ -245,39 +253,40 @@ internal fun CollectionScreen(store: SoloStore) {
             },
             color = Muted, style = MaterialTheme.typography.bodySmall
         )
-        val portraitPages = ((portraits.size + portraitPageSize - 1) /
-            portraitPageSize).coerceAtLeast(1)
-        CollectionPager(portraitPage.coerceIn(0, portraitPages - 1),
-            portraitPages, id = "portraits", onChange = { portraitPage = it })
-        BoxWithConstraints(Modifier.fillMaxWidth()) {
-            val columns = if (maxWidth < 350.dp ||
-                LocalDensity.current.fontScale >= 1.3f) 1 else 2
+        // A single BoxWithConstraints owns BOTH the page size and the card
+        // layout. Avoid 4 jumbo rows on a narrow content-width viewport.
+        BoxWithConstraints(Modifier.fillMaxWidth().testTag("ws16bu-gallery")) {
+            val columns = if (maxWidth < 520.dp || fontScale >= 1.3f) 1 else 2
+            val portraitPageSize = if (columns == 1) 3 else 4
+            val portraitPages = ((portraits.size + portraitPageSize - 1) /
+                portraitPageSize).coerceAtLeast(1)
+            val current = portraitPage.coerceIn(0, portraitPages - 1)
             Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
-                val current = portraitPage.coerceIn(0, ((portraits.size + portraitPageSize - 1) / portraitPageSize - 1).coerceAtLeast(0))
+                CollectionPager(current, portraitPages, id = "portraits",
+                    onChange = { portraitPage = it })
                 portraits.drop(current * portraitPageSize).take(portraitPageSize)
-                    .chunked(columns).forEach { pair ->
-                    Row(Modifier.fillMaxWidth(),
-                        horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                        pair.forEach { item ->
-                            PortraitCard(
-                                item,
-                                WoodlandCollection.remaining(profile, item.portrait.id) ?: 0,
-                                Modifier.weight(1f),
-                                onEquip = { store.equipPortrait(item.portrait.id) }
-                            )
+                    .chunked(columns).forEach { group ->
+                        Row(Modifier.fillMaxWidth(),
+                            horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                            group.forEach { item ->
+                                PortraitCard(
+                                    item,
+                                    WoodlandCollection.remaining(profile, item.portrait.id) ?: 0,
+                                    Modifier.weight(1f),
+                                    onEquip = { store.equipPortrait(item.portrait.id) }
+                                )
+                            }
+                            if (group.size < columns) Box(Modifier.weight(1f))
                         }
-                        if (pair.size < columns) Box(Modifier.weight(1f))
                     }
-                }
             }
         }
-        Text("Unlocks depend on completed Solo and Daily puzzles. " +
-            "No random purchases, streak deadlines or paid portraits.",
+        Text("New companions unlock through completed Solo and Daily puzzles.",
             color = Muted, style = MaterialTheme.typography.bodySmall)
 
         // History/progress is still available, but after the actual gallery.
         // The portrait pager and equip choices come first on a phone.
-        PaperPanel(Modifier.fillMaxWidth()) {
+        GridMatesInfoPanel(Modifier.fillMaxWidth().testTag("ws16bt-collection-progress")) {
             PaperEyebrow("Collection progress")
             Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween,
                 verticalAlignment = Alignment.CenterVertically) {
@@ -311,34 +320,63 @@ private fun BoardFontCard(
     onEquip: () -> Unit,
     onLicense: () -> Unit
 ) {
-    Card(modifier,
+    // WS16BV: the glyph sample stays large, while status and legal access
+    // no longer take two full-height rows of disabled fake buttons.
+    Card(
+        modifier.testTag("ws16bv-font-" + item.font.id),
         colors = CardDefaults.cardColors(containerColor = Paper),
-        border = BorderStroke(1.dp, if (item.equipped) Forest else Color(0xFFDFE0D6))
+        border = BorderStroke(if (item.equipped) 2.dp else 1.dp,
+            if (item.equipped) Forest else Color(0xFFDFE0D6))
     ) {
-        Column(Modifier.padding(12.dp),
-            verticalArrangement = Arrangement.spacedBy(6.dp)) {
+        Column(
+            modifier = Modifier.fillMaxWidth().padding(10.dp),
+            verticalArrangement = Arrangement.spacedBy(4.dp)
+        ) {
             BoardFontPreview(item.font.id)
-            Text(item.font.label, color = Forest,
-                fontWeight = FontWeight.SemiBold,
-                style = MaterialTheme.typography.bodyMedium,
-                maxLines = 2)
-            Text(when {
-                item.equipped -> "Equipped"
-                item.unlocked -> "Unlocked · Free"
-                else -> "Earn: " + (item.achievementName ?: "Achievement")
-            }, color = Muted, style = MaterialTheme.typography.labelMedium)
-            Text(item.font.description, color = Muted,
-                style = MaterialTheme.typography.bodySmall)
-            TextButton(
-                onClick = onEquip,
-                enabled = item.unlocked && !item.equipped,
-                modifier = Modifier.fillMaxWidth()
-            ) {
-                Text(if (item.equipped) "Selected" else
-                    if (item.unlocked) "Equip" else "Locked")
+            Row(Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.spacedBy(8.dp),
+                verticalAlignment = Alignment.CenterVertically) {
+                Text(item.font.label, color = Forest,
+                    modifier = Modifier.weight(1f),
+                    fontWeight = FontWeight.SemiBold,
+                    style = MaterialTheme.typography.titleSmall,
+                    maxLines = 2, overflow = TextOverflow.Ellipsis)
+                if (item.equipped) {
+                    Text("Equipped", color = Forest,
+                        style = MaterialTheme.typography.labelMedium,
+                        modifier = Modifier.testTag("ws16bv-font-status-" + item.font.id))
+                }
             }
-            TextButton(onClick = onLicense, modifier = Modifier.fillMaxWidth()) {
-                Text("License")
+            Text(
+                if (item.unlocked) item.font.description else
+                    "Unlock: " + (item.achievementName ?: "Achievement") +
+                        " · " + item.font.description,
+                color = Ink, style = MaterialTheme.typography.bodySmall,
+                modifier = Modifier.testTag("ws16bv-font-detail-" + item.font.id)
+            )
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.spacedBy(8.dp),
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                if (item.unlocked && !item.equipped) {
+                    OutlinedButton(onClick = onEquip,
+                        modifier = Modifier.weight(1f).heightIn(min = 48.dp)
+                            .testTag("ws16bv-font-equip-" + item.font.id)) {
+                        Text("Equip")
+                    }
+                } else if (!item.unlocked) {
+                    // A readable state label, not an inert gray button.
+                    Text("Locked", color = Ink,
+                        style = MaterialTheme.typography.labelLarge,
+                        modifier = Modifier.weight(1f)
+                            .testTag("ws16bv-font-status-" + item.font.id))
+                }
+                TextButton(onClick = onLicense,
+                    modifier = Modifier.weight(1f).heightIn(min = 48.dp)
+                        .testTag("ws16bv-font-license-" + item.font.id)) {
+                    Text("License", color = Forest)
+                }
             }
         }
     }
@@ -395,39 +433,52 @@ private fun PortraitCard(
     modifier: Modifier,
     onEquip: () -> Unit
 ) {
-    Card(modifier,
+    // Compact illustrated collection row: portrait left, real metadata right.
+    // Preserve the equipped border, unlock progress, and true equip action.
+    Card(modifier.testTag("ws16bu-portrait-" + item.portrait.id),
         colors = CardDefaults.cardColors(containerColor = Paper),
-        border = BorderStroke(1.dp, if (item.equipped) Forest else Color(0xFFDFE0D6))
+        border = BorderStroke(if (item.equipped) 2.dp else 1.dp,
+            if (item.equipped) Forest else Color(0xFFDFE0D6))
     ) {
-        Column(Modifier.padding(12.dp), verticalArrangement = Arrangement.spacedBy(7.dp),
-            horizontalAlignment = Alignment.CenterHorizontally) {
-            PortraitBadge(item.portrait.id, item.portrait.label, 54, item.unlocked)
-            Text(item.portrait.label, color = Forest, fontWeight = FontWeight.SemiBold,
-                maxLines = 1, overflow = TextOverflow.Ellipsis)
-            Text(
-                when {
-                    item.equipped -> "Equipped"
-                    item.unlocked -> "Unlocked"
-                    else -> remaining.toString() + " more " +
-                        (if (remaining == 1) "puzzle" else "puzzles") + " to unlock"
-                },
-                color = Muted, style = MaterialTheme.typography.labelMedium,
-                maxLines = 2, overflow = TextOverflow.Ellipsis
-            )
+        Column(Modifier.fillMaxWidth().padding(10.dp),
+            verticalArrangement = Arrangement.spacedBy(5.dp)) {
+            Row(Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.spacedBy(12.dp),
+                verticalAlignment = Alignment.CenterVertically) {
+                PortraitBadge(item.portrait.id, item.portrait.label, 54, item.unlocked)
+                Column(Modifier.weight(1f),
+                    verticalArrangement = Arrangement.spacedBy(3.dp)) {
+                    Text(item.portrait.label, color = Forest,
+                        fontWeight = FontWeight.SemiBold,
+                        style = MaterialTheme.typography.titleMedium,
+                        maxLines = 2, overflow = TextOverflow.Ellipsis)
+                    Text(when {
+                        item.equipped -> "Equipped"
+                        item.unlocked -> "Unlocked · Ready to equip"
+                        else -> remaining.toString() + " more " +
+                            (if (remaining == 1) "puzzle" else "puzzles") + " to unlock"
+                    }, color = Ink, style = MaterialTheme.typography.bodySmall)
+                }
+            }
             if (!item.unlocked && item.portrait.requiredCompletions > 0) {
                 val completed = (item.portrait.requiredCompletions - remaining).coerceAtLeast(0)
                 PaperProgress(completed, item.portrait.requiredCompletions)
             }
-            TextButton(onClick = onEquip, enabled = item.unlocked && !item.equipped) {
-                Text(if (item.equipped) "Selected" else if (item.unlocked) "Equip" else "Locked")
+            if (item.unlocked && !item.equipped) {
+                OutlinedButton(onClick = onEquip,
+                    modifier = Modifier.fillMaxWidth().heightIn(min = 48.dp)
+                        .testTag("ws16bu-equip-" + item.portrait.id)) {
+                    Text("Equip")
+                }
             }
+            // Equipped and Locked are informational, not faded disabled buttons.
         }
     }
 }
 
 @Composable
 private fun AchievementCard(item: AchievementProgress) {
-    PaperPanel(Modifier.fillMaxWidth()) {
+    GridMatesInfoPanel(Modifier.fillMaxWidth().testTag("ws16bt-achievement-" + item.id)) {
         Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(8.dp),
             verticalAlignment = Alignment.CenterVertically) {
             Text(item.title, fontWeight = FontWeight.SemiBold, color = Forest,

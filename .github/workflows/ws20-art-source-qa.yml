@@ -1,0 +1,22 @@
+name: WS20 Editable Theme Spine Source QA
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - feature/ws14b-style-anchor-and-art-direction-2026-11-08
+    paths:
+      - 'design/art-library-v2/ws20/**'
+      - '.github/workflows/ws20-art-source-qa.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  verify-preproduction-art:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - name: Validate 72 real SVG sources, 24 themes and all 88 catalog records
+        run: python3 design/art-library-v2/ws20/validate_ws20.py

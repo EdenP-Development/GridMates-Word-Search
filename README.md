@@ -1,5 +1,11 @@
 # GridMates: Word Search
 
+> **CURRENT DEVELOPMENT / DESIGN AUDIT (Nov 14, 2026):** [Whole-repo asset and visual-cohesion findings](docs/audits/2026-11-14_WHOLE_REPO_ASSET_AND_VISUAL_COHESION_AUDIT.md) and [v75 functional/phone QA](docs/devlog/2026-11-14_WS16BP_LIBRARY_FUNCTIONAL_NAVIGATION_QA.md). Active code is on [draft PR #131](https://github.com/PlayerEden/GridMates-Word-Search/pull/131), **not `main`**. Latest dual-green Android/art QA build is [v75](https://github.com/PlayerEden/GridMates-Word-Search/actions/runs/43635464423/artifacts/14129808202); release art approval, full phone QA and app integration remain open. Read older statuses below as historical.
+
+> **New-chat continuity:** [Development Journal — chronological who/what/why/build records](docs/DEVELOPMENT_JOURNAL.md) · [Latest WS-14C handoff](docs/WS14_ACTIVE_HANDOFF_2026-11-09.md). A dated entry is required for **each development pass and build**. The illustrated APK is available through the [GitHub Actions artwork artifact](https://github.com/PlayerEden/GridMates-Word-Search/actions/runs/42576785170/artifacts/13656070327); download its ZIP and extract `app-debug.apk` when an in-chat file link fails. Physical-device QA remains open.
+
+> **WS-14 artwork pipeline and current new-chat handoff (Nov 9, 2026):** [Reproducible PNG creation → GitHub binary upload → Android import/playtest guide](docs/ASSET_CREATION_GITHUB_INTEGRATION_PLAYBOOK.md) · [Active WS-14 new-chat checkpoint](docs/WS14_ACTIVE_HANDOFF_2026-11-09.md). Six real book covers/spines were imported into the debug APK and verified absent from release on [art-workflow run #42576785170](https://github.com/PlayerEden/GridMates-Word-Search/actions/runs/42576785170); [Android QA #42576785096](https://github.com/PlayerEden/GridMates-Word-Search/actions/runs/42576785096) also passed. **Owner physical-device art review and release rights are still pending.** Older milestones below are historical, not the current WS-14 handoff.
+
 *Good puzzles. Good company.*
 
 GridMates: Word Search is a standalone, offline-first native Android word-search game in the GridMates puzzle family. It emphasizes comfortable, paperback-inspired puzzles and easy nearby play with someone on the same Wi-Fi.

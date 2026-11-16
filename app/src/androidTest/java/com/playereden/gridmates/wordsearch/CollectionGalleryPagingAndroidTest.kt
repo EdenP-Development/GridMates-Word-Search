@@ -38,17 +38,29 @@ class CollectionGalleryPagingAndroidTest {
                     }
                 }
             }
-            compose.onNodeWithText("Your Collection").assertIsDisplayed()
+            compose.onNodeWithText("Earn portraits and fonts by finishing puzzles.", substring = true)
+                .assertIsDisplayed()
+            compose.onNodeWithTag("ws16bu-gallery").assertExists()
+            compose.onNodeWithText("Page 1 of 4").assertExists()
+            compose.onNodeWithTag("ws16bu-portrait-woodland_owl").assertExists()
+            compose.onNodeWithTag("ws16bu-portrait-woodland_fox").assertExists()
+            compose.onNodeWithTag("ws16bu-portrait-woodland_rabbit").assertExists()
+            compose.onNodeWithTag("ws16bu-portrait-woodland_bear").assertDoesNotExist()
+            compose.onNodeWithTag("ws16bu-equip-woodland_fox").assertExists()
             compose.onNodeWithText("Edit display name").assertExists()
+            compose.onNodeWithTag("ws16bt-collection-profile").assertExists()
+            compose.onNodeWithTag("ws16bt-collection-progress").assertExists()
             compose.onNodeWithText("COLLECTION PROGRESS").assertExists()
             // Gallery navigation must be visible on first entry, without scrolling
             // past profile and lifetime progress cards.
             compose.onNodeWithTag("portraits-next")
                 .assertIsDisplayed().assertIsEnabled().performClick()
-            compose.onNodeWithText("Page 2 of", substring = true)
+            compose.onNodeWithText("Page 2 of 4")
                 .performScrollTo().assertIsDisplayed()
+            compose.onNodeWithTag("ws16bu-portrait-woodland_bear").assertExists()
 
             compose.onNodeWithText("Achievements").performScrollTo().performClick()
+            compose.onNodeWithTag("ws16bt-achievement-first_puzzle").assertExists()
             // The pager should be directly visible below the achievements
             // introduction, not buried beneath four long cards.
             compose.onNodeWithTag("achievements-next")
@@ -57,6 +69,16 @@ class CollectionGalleryPagingAndroidTest {
                 .performScrollTo().assertIsDisplayed()
             compose.onNodeWithText("Fonts").performScrollTo().performClick()
             compose.onNodeWithText("board fonts unlocked", substring = true).assertExists()
+            compose.onNodeWithTag("ws16bv-font-gallery").assertExists()
+            compose.onNodeWithTag("ws16bv-font-atkinson").assertExists()
+            compose.onNodeWithTag("ws16bv-font-status-atkinson").assertExists()
+            compose.onNodeWithTag("ws16bv-font-license-atkinson")
+                .performScrollTo().performClick()
+            compose.onNodeWithText("Readable Print · Open Font License").assertExists()
+            compose.onNodeWithText("Close").performClick()
+            compose.onNodeWithTag("ws16bv-font-plex").assertExists()
+            compose.onNodeWithTag("ws16bv-font-equip-plex").assertDoesNotExist()
+            compose.onNodeWithTag("ws16bv-font-license-plex").assertExists()
 
             compose.runOnIdle {
                 assertEquals(12, WoodlandCollection.progress(store.profile).size)

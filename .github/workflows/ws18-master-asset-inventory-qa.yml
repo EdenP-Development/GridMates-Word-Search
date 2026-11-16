@@ -1,0 +1,47 @@
+name: WS18 Master Asset Inventory Metadata QA and CSV Exports
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - feature/ws14b-style-anchor-and-art-direction-2026-11-08
+    paths:
+      - 'design/master-asset-system/**'
+      - '.github/workflows/ws18-master-asset-inventory-qa.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  inventory-metadata:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - name: Validate unique IDs, 29 theme templates, 60 WS17 sources and status claims
+        run: python3 design/master-asset-system/inventory_validator.py
+      - name: Produce reviewer-friendly full and targeted CSV inventories
+        run: |
+          mkdir -p inventory-csv
+          python3 design/master-asset-system/inventory_validator.py --csv inventory-csv/GRIDMATES_ALL_2142.csv
+          python3 design/master-asset-system/inventory_validator.py --scope core --priority P0 --csv inventory-csv/CORE_FOUNDATIONS_P0.csv
+          python3 design/master-asset-system/inventory_validator.py --scope theme --priority P1 --csv inventory-csv/FIRST_THEMES_P1.csv
+          python3 design/master-asset-system/inventory_validator.py --status candidate --csv inventory-csv/WS17_60_PREPARED_CANDIDATES.csv
+          python3 - <<'PY'
+          import csv
+          from pathlib import Path
+          folder=Path('inventory-csv')
+          expected=2142
+          with (folder/'GRIDMATES_ALL_2142.csv').open(newline='',encoding='utf-8') as f:
+              assert sum(1 for _ in csv.DictReader(f))==expected
+          with (folder/'WS17_60_PREPARED_CANDIDATES.csv').open(newline='',encoding='utf-8') as f:
+              assert sum(1 for _ in csv.DictReader(f))==60
+          print('PASS: full 2142-row CSV plus filtered production shortlists')
+          PY
+      - name: Publish planning inventory exports, not Android art
+        uses: actions/upload-artifact@v4
+        with:
+          name: GridMates-WS18-Master-Asset-Inventory-CSV
+          path: inventory-csv/
+          retention-days: 30
+          if-no-files-found: error

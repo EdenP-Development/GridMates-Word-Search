@@ -2,6 +2,7 @@ package com.playereden.gridmates.wordsearch
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.width
@@ -10,6 +11,8 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.testTag
+import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.Alignment
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -44,27 +47,53 @@ internal fun PuzzleBookshelfScreen(
     onBack: () -> Unit,
     onOpenBook: (String) -> Unit,
     modifier: Modifier = Modifier,
+    safeContentPadding: PaddingValues = PaddingValues(0.dp),
     showPrototypeArt: Boolean = false,
     fieldNotesArt: Boolean = false,
-    onToggleArt: (() -> Unit)? = null
+    onToggleArt: (() -> Unit)? = null,
+    showHorizontalBrowser: Boolean = false,
+    initialCabinetPage: Int = 0,
+    onCabinetPageChanged: (Int) -> Unit = {},
+    onToggleLayout: (() -> Unit)? = null,
+    initialFocusedBookId: String? = null,
+    onFocusedBookChanged: (String) -> Unit = {}
 ) {
     val healthy = isBookStateReadable(catalog, progress)
     // The approved catalog, save rules and error screens stay identical.
     // Only the QA visual browse surface becomes an actual physical bookcase.
     if (showPrototypeArt && healthy && catalog.books.isNotEmpty()) {
-        BookcaseBookshelfScreen(
-            catalog = catalog,
-            progress = progress,
-            onBack = onBack,
-            onOpenBook = onOpenBook,
-            fieldNotesArt = fieldNotesArt,
-            onToggleArt = onToggleArt,
-            modifier = modifier
-        )
+        if (showHorizontalBrowser) {
+            HorizontalBookBrowserScreen(
+                catalog = catalog,
+                progress = progress,
+                onBack = onBack,
+                onOpenBook = onOpenBook,
+                fieldNotesArt = fieldNotesArt,
+                onToggleArt = onToggleArt,
+                onToggleLayout = onToggleLayout,
+                initialFocusedBookId = initialFocusedBookId,
+                onFocusedBookChanged = onFocusedBookChanged,
+                modifier = modifier.padding(safeContentPadding)
+            )
+        } else {
+            BookcaseBookshelfScreen(
+                catalog = catalog,
+                progress = progress,
+                onBack = onBack,
+                onOpenBook = onOpenBook,
+                fieldNotesArt = fieldNotesArt,
+                onToggleArt = onToggleArt,
+                onToggleLayout = onToggleLayout,
+                initialCabinetPage = initialCabinetPage,
+                onCabinetPageChanged = onCabinetPageChanged,
+                safeContentPadding = safeContentPadding,
+                modifier = modifier
+            )
+        }
         return
     }
     LazyColumn(
-        modifier = modifier,
+        modifier = modifier.padding(safeContentPadding),
         contentPadding = PaddingValues(horizontal = 18.dp, vertical = 20.dp),
         verticalArrangement = Arrangement.spacedBy(14.dp)
     ) {
@@ -74,7 +103,7 @@ internal fun PuzzleBookshelfScreen(
                     Text("Back to Play")
                 }
                 PaperEyebrow("GridMates · Word Search")
-                Text("Puzzle Books", color = Forest,
+                Text("Your Library", color = Forest,
                     style = MaterialTheme.typography.headlineMedium,
                     fontWeight = FontWeight.Bold)
                 if (showPrototypeArt) {
@@ -197,6 +226,24 @@ private fun BookListCard(
     }
 }
 
+/** WS16BS: same progress/page content and callbacks, with a shared art skin. */
+@Composable
+private fun BookDetailCohesionPanel(
+    illustrated: Boolean,
+    modifier: Modifier = Modifier,
+    content: @Composable ColumnScope.() -> Unit
+) {
+    if (illustrated) {
+        GridMatesIllustratedFrame(modifier = modifier,
+            variant = GridMatesFrameVariant.PANEL) {
+            Column(Modifier.fillMaxWidth().padding(16.dp),
+                verticalArrangement = Arrangement.spacedBy(10.dp), content = content)
+        }
+    } else {
+        PaperPanel(modifier = modifier, content = content)
+    }
+}
+
 /**
  * Real native book/chapter/page UI. Do not display a Play action until the
  * host supplies an actual book-puzzle implementation; a missing callback
@@ -226,15 +273,17 @@ internal fun PuzzleBookDetailScreen(
 
     LazyColumn(
         modifier = modifier.testTag("book-detail-list"),
-        contentPadding = PaddingValues(horizontal = 18.dp, vertical = 20.dp),
-        verticalArrangement = Arrangement.spacedBy(12.dp)
+        contentPadding = PaddingValues(horizontal = 18.dp, vertical = 12.dp),
+        verticalArrangement = Arrangement.spacedBy(10.dp)
     ) {
         item(key = "book-heading") {
-            Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
-                TextButton(onClick = onBack, modifier = Modifier.heightIn(min = 48.dp)) {
-                    Text("Back to Puzzle Books")
-                }
-                PaperEyebrow("GridMates · Puzzle Book")
+            Column(verticalArrangement = Arrangement.spacedBy(10.dp)) {
+                Ws15BackHeader(
+                    title = "Your Library",
+                    subtitle = "Book details",
+                    onBack = onBack,
+                    backLabel = "Back to Your Library"
+                )
                 if (showPrototypeArt && book != null) {
                     // After picking a volume from a shelf it appears as a
                     // large, readable physical object, not a giant text card.
@@ -243,18 +292,12 @@ internal fun PuzzleBookDetailScreen(
                         horizontalArrangement = Arrangement.spacedBy(10.dp),
                         verticalAlignment = Alignment.CenterVertically
                     ) {
-                        Row(
-                            horizontalArrangement = Arrangement.spacedBy(2.dp),
-                            verticalAlignment = Alignment.Bottom
-                        ) {
-                            BookArt(book.theme, BookArtKind.COVER,
-                                Modifier.width(104.dp).height(139.dp)
-                                    .testTag("book-detail-cover-" + book.id),
-                                fieldNotes = fieldNotesArt)
-                            BookArt(book.theme, BookArtKind.SPINE,
-                                Modifier.width(12.dp).height(116.dp),
-                                fieldNotes = fieldNotesArt)
-                        }
+                        // One coherent book silhouette: cover already has a
+                        // left binding; never draw a separate tiny spine.
+                        BookArt(book.theme, BookArtKind.COVER,
+                            Modifier.width(112.dp).height(150.dp)
+                                .testTag("book-detail-cover-" + book.id),
+                            fieldNotes = fieldNotesArt)
                         Column(Modifier.weight(1f),
                             verticalArrangement = Arrangement.spacedBy(5.dp)) {
                             Text(book.title.removeSuffix(" · TEST BOOK"),
@@ -267,14 +310,11 @@ internal fun PuzzleBookDetailScreen(
                                 style = MaterialTheme.typography.bodyMedium,
                                 color = Muted
                             )
-                            if (book.title.endsWith(" · TEST BOOK")) {
-                                Text("TEST BOOK",
-                                    style = MaterialTheme.typography.labelSmall,
-                                    color = Muted)
-                            }
+                            // QA status stays visible at the library entry, not
+                            // stamped repeatedly on the illustrated detail hero.
                             BookArt(book.theme, BookArtKind.EMBLEM,
                                 Modifier.size(40.dp).testTag("book-emblem-" + book.id),
-                                fieldNotes = fieldNotesArt)
+                                fieldNotes = fieldNotesArt, pageAccentCandidate = true)
                         }
                     }
                 } else {
@@ -305,7 +345,8 @@ internal fun PuzzleBookDetailScreen(
         }
         if (!healthy || book == null) {
             item(key = "book-unavailable") {
-                PaperPanel(Modifier.fillMaxWidth()) {
+                BookDetailCohesionPanel(showPrototypeArt,
+                    Modifier.fillMaxWidth().testTag("book-detail-unavailable-panel")) {
                     Text("This book cannot be opened right now.",
                         color = Forest, style = MaterialTheme.typography.titleMedium,
                         fontWeight = FontWeight.Bold)
@@ -315,9 +356,13 @@ internal fun PuzzleBookDetailScreen(
             }
         } else {
             item(key = "book-progress") {
-                PaperPanel(Modifier.fillMaxWidth()) {
-                    Text(book.theme.label + " · Volume " + book.volume,
-                        color = Muted, style = MaterialTheme.typography.bodyMedium)
+                BookDetailCohesionPanel(showPrototypeArt,
+                    Modifier.fillMaxWidth().testTag("book-detail-progress-panel")) {
+                    Text(
+                        if (showPrototypeArt) "Book progress"
+                        else book.theme.label + " · Volume " + book.volume,
+                        color = Muted, style = MaterialTheme.typography.bodyMedium
+                    )
                     Row(Modifier.fillMaxWidth(),
                         verticalAlignment = Alignment.CenterVertically,
                         horizontalArrangement = Arrangement.spacedBy(8.dp)) {
@@ -339,7 +384,7 @@ internal fun PuzzleBookDetailScreen(
                             onClick = { onPlayPage(bookId, next.id) },
                             modifier = Modifier.fillMaxWidth().heightIn(min = 48.dp)
                         ) {
-                            Text(if (completed.isEmpty()) "Start reading" else "Continue reading")
+                            Text(if (completed.isEmpty()) "Start solving" else "Continue solving")
                         }
                     } else {
                         Text("Book pages will be playable after content approval.",
@@ -357,19 +402,33 @@ internal fun PuzzleBookDetailScreen(
                             horizontalArrangement = Arrangement.spacedBy(10.dp),
                             verticalAlignment = Alignment.CenterVertically) {
                             if (showPrototypeArt) {
-                                BookArt(book.theme, BookArtKind.CHAPTER,
-                                    Modifier.size(44.dp).testTag("book-chapter-" + chapter.id), fieldNotes = fieldNotesArt)
+                                BookArt(book.theme, BookArtKind.EMBLEM,
+                                    Modifier.size(36.dp).testTag("book-chapter-" + chapter.id),
+                                    fieldNotes = fieldNotesArt, pageAccentCandidate = true)
                             }
-                            Column {
-                                PaperEyebrow("Chapter " + (index + 1))
-                                Text(chapter.title,
-                                    style = MaterialTheme.typography.titleLarge,
-                                    color = Forest, fontWeight = FontWeight.Bold)
+                            Column(Modifier.weight(1f)) {
+                                val chapterDone = chapter.pages.count { it.id in completed }
+                                PaperEyebrow(
+                                    if (showPrototypeArt)
+                                        "Chapter " + (index + 1) + " · " +
+                                            chapterDone + "/" + chapter.pages.size + " pages"
+                                    else "Chapter " + (index + 1)
+                                )
+                                Text(
+                                    if (showPrototypeArt) chapter.title.removeSuffix(" · TEST")
+                                    else chapter.title,
+                                    style = if (showPrototypeArt)
+                                        MaterialTheme.typography.titleMedium
+                                    else MaterialTheme.typography.titleLarge,
+                                    color = Forest, fontWeight = FontWeight.Bold
+                                )
                             }
                         }
-                        Text(chapter.pages.count { it.id in completed }.toString() +
-                            " of " + chapter.pages.size + " pages completed",
-                            color = Muted, style = MaterialTheme.typography.bodyMedium)
+                        if (!showPrototypeArt) {
+                            Text(chapter.pages.count { it.id in completed }.toString() +
+                                " of " + chapter.pages.size + " pages completed",
+                                color = Muted, style = MaterialTheme.typography.bodyMedium)
+                        }
                     }
                 }
                 items(chapter.pages, key = { "page:" + it.id }) { page ->
@@ -378,13 +437,15 @@ internal fun PuzzleBookDetailScreen(
                     val ordinal = pages.indexOfFirst { it.id == page.id } + 1
                     val isComplete = page.id in completed
                     val isCurrent = page.id == next?.id
-                    PaperPanel(Modifier.fillMaxWidth()) {
+                    BookDetailCohesionPanel(showPrototypeArt,
+                        Modifier.fillMaxWidth().testTag("book-detail-page-panel-" + page.id)) {
                         Row(Modifier.fillMaxWidth(),
                             verticalAlignment = Alignment.CenterVertically,
                             horizontalArrangement = Arrangement.spacedBy(8.dp)) {
                             if (showPrototypeArt && bookmark == page.id && !isComplete) {
                                 BookArt(book.theme, BookArtKind.BOOKMARK,
-                                    Modifier.width(23.dp).height(66.dp).testTag("book-bookmark-" + page.id), fieldNotes = fieldNotesArt)
+                                    Modifier.width(17.dp).height(48.dp)
+                                        .testTag("book-bookmark-" + page.id), fieldNotes = fieldNotesArt)
                             }
                             if (showPrototypeArt && isComplete) {
                                 BookArt(book.theme, BookArtKind.COMPLETION,
@@ -417,28 +478,41 @@ internal fun PuzzleBookDetailScreen(
                                         Button(
                                             onClick = { onPlayPage(bookId, page.id) },
                                             modifier = Modifier.weight(0.44f).heightIn(min = 48.dp)
-                                        ) { Text("Play page $ordinal") }
+                                                .semantics { contentDescription = "Play page $ordinal" }
+                                        ) { Text("Play", maxLines = 1) }
                                         OutlinedButton(
                                             onClick = { onBookmarkPage(bookId, page.id) },
                                             enabled = bookmark != page.id,
                                             modifier = Modifier.weight(0.56f).heightIn(min = 48.dp)
+                                                .semantics {
+                                                    contentDescription = if (bookmark == page.id)
+                                                        "Bookmark saved for page $ordinal"
+                                                    else "Bookmark page $ordinal"
+                                                }
                                         ) {
-                                            Text(if (bookmark == page.id) "Bookmark saved"
-                                                else "Bookmark page $ordinal")
+                                            Text(if (bookmark == page.id) "Saved" else "Bookmark",
+                                                maxLines = 1)
                                         }
                                     }
                                 } else {
                                     Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
-                                        Button(onClick = { onPlayPage(bookId, page.id) },
+                                        Button(
+                                            onClick = { onPlayPage(bookId, page.id) },
                                             modifier = Modifier.fillMaxWidth().heightIn(min = 48.dp)
-                                        ) { Text("Play page $ordinal") }
+                                                .semantics { contentDescription = "Play page $ordinal" }
+                                        ) { Text("Play", maxLines = 1) }
                                         OutlinedButton(
                                             onClick = { onBookmarkPage(bookId, page.id) },
                                             enabled = bookmark != page.id,
                                             modifier = Modifier.fillMaxWidth().heightIn(min = 48.dp)
+                                                .semantics {
+                                                    contentDescription = if (bookmark == page.id)
+                                                        "Bookmark saved for page $ordinal"
+                                                    else "Bookmark page $ordinal"
+                                                }
                                         ) {
-                                            Text(if (bookmark == page.id) "Bookmark saved"
-                                                else "Bookmark page $ordinal")
+                                            Text(if (bookmark == page.id) "Saved" else "Bookmark",
+                                                maxLines = 1)
                                         }
                                     }
                                 }

@@ -107,6 +107,20 @@ private val PartnerMarker = Color(0xFF91B7DF)
 private val ActiveMarker = Color(0xFFE4B957)
 private val GridRule = Color(0xFFD8DFD2)
 
+/** Make the first zoom tap helpful on dense boards; the puzzle grid
+ * and its word-selection coordinate math stay entirely unchanged. */
+internal fun gridZoomTapIncrement(boardCells: Int): Float =
+    if (boardCells >= 20) 0.5f else 0.25f
+
+internal fun gridZoomInstruction(boardCells: Int): String =
+    if (boardCells >= 20) "Dense board · use + or pinch"
+    else "Trace words · pinch to zoom"
+
+/** WS16BZ: larger Solo games need one continuous, independently scrollable
+ * index. Keep the short Daily word list and Book gameplay contracts intact. */
+internal fun scrollSoloWordIndex(daily: Boolean, targetCount: Int): Boolean =
+    !daily && targetCount >= 12
+
 @Composable
 internal fun WordSearchScreen(
     store: SoloStore,
@@ -151,6 +165,7 @@ internal fun WordSearchScreen(
     val hintsRemaining = WordHintPolicy.remaining(run, daily)
     val usedHintSteps = WordHintPolicy.used(run)
     val finished = WordSearchRules.complete(puzzle, found)
+    val continuousSoloIndex = scrollSoloWordIndex(daily, puzzle.targets.size)
     val hintPaths = puzzle.targets.filter { target ->
         target.id !in found && (run.hints[target.id] ?: 0) >= 3
     }.map { it.positions }
@@ -384,7 +399,8 @@ internal fun WordSearchScreen(
                     WordList(puzzle, found, daily,
                         Modifier.weight(1f).fillMaxSize(),
                         onShowResults = if (finished) { { reviewingCompletedBoard = false } }
-                            else null)
+                            else null,
+                        scrollAll = continuousSoloIndex)
                 }
             } else {
                 Box(Modifier.fillMaxWidth(), contentAlignment = Alignment.Center) {
@@ -400,7 +416,8 @@ internal fun WordSearchScreen(
                 WordList(puzzle, found, daily,
                     Modifier.weight(1f).fillMaxWidth(),
                     onShowResults = if (finished) { { reviewingCompletedBoard = false } }
-                        else null)
+                        else null,
+                    scrollAll = continuousSoloIndex)
             }
         }
     }
@@ -531,8 +548,9 @@ internal fun WordList(
     daily: Boolean,
     modifier: Modifier = Modifier,
     onShowResults: (() -> Unit)? = null,
-    /** Book mode: keep all target words in one scrollable list, not 6 tiny pages. */
-    scrollAll: Boolean = false
+    /** Book mode and larger Solo: one independent scrolling word index, not tiny pages. */
+    scrollAll: Boolean = false,
+    bookThemeAccent: Boolean = false
 ) {
     var remainingOnly by remember(puzzle.id) { mutableStateOf(false) }
     var page by remember(puzzle.id, remainingOnly) { mutableStateOf(0) }
@@ -549,15 +567,33 @@ internal fun WordList(
         Row(Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.SpaceBetween,
             verticalAlignment = Alignment.CenterVertically) {
-            Text("Words to find · " + (puzzle.targets.size - found.size) + " left",
-                style = MaterialTheme.typography.titleSmall,
-                fontWeight = FontWeight.Bold, color = Forest)
-            if (onShowResults != null) {
-                TextButton(onClick = onShowResults) { Text("Results") }
+            if (scrollAll && bookThemeAccent) {
+                Row(Modifier.weight(1f),
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.spacedBy(5.dp)) {
+                    BookArt(puzzle.theme, BookArtKind.EMBLEM, Modifier.size(27.dp),
+                        pageAccentCandidate = true)
+                    Text("Words · " + (puzzle.targets.size - found.size) + " left",
+                        style = MaterialTheme.typography.titleSmall,
+                        maxLines = 1, fontWeight = FontWeight.Bold, color = Forest)
+                }
+                if (onShowResults != null) {
+                    TextButton(onClick = onShowResults) { Text("Results") }
+                } else {
+                    BookPageCompactFilterButton(remainingOnly,
+                        onClick = { remainingOnly = !remainingOnly })
+                }
             } else {
-                FilterChip(selected = remainingOnly,
-                    onClick = { remainingOnly = !remainingOnly },
-                    label = { Text("Remaining") })
+                Text("Words to find · " + (puzzle.targets.size - found.size) + " left",
+                    style = MaterialTheme.typography.titleSmall,
+                    fontWeight = FontWeight.Bold, color = Forest)
+                if (onShowResults != null) {
+                    TextButton(onClick = onShowResults) { Text("Results") }
+                } else {
+                    FilterChip(selected = remainingOnly,
+                        onClick = { remainingOnly = !remainingOnly },
+                        label = { Text("Remaining") })
+                }
             }
         }
         BoxWithConstraints(Modifier.weight(1f).fillMaxWidth()) {
@@ -579,14 +615,14 @@ internal fun WordList(
             val visiblePage = page.coerceIn(0, pageCount - 1)
             val visibleTargets = targets.drop(visiblePage * perPage).take(perPage)
             val visibleRange = PaperbackWordIndex.visibleRange(targets.size, visiblePage, perPage)
-            // In book mode keep the real word list in a scrollable region below
-            // the board, instead of an awkward 2-words-per-page pager.
-            // Solo/Daily retains its established paging and golden UX.
+            // Book mode and larger Solo games share a real independently
+            // scrollable index; short Daily and legacy small games keep paging.
+            // Board gestures remain on ZoomableWordGrid, never on this list.
             val listScroll = remember(puzzle.id, remainingOnly) { ScrollState(0) }
             Column(
-                Modifier.fillMaxSize().then(
-                    if (scrollAll) Modifier.verticalScroll(listScroll) else Modifier
-                ),
+                Modifier.fillMaxSize()
+                    .then(if (scrollAll) Modifier.testTag("word-list-scrollable") else Modifier)
+                    .then(if (scrollAll) Modifier.verticalScroll(listScroll) else Modifier),
                 verticalArrangement = Arrangement.spacedBy(4.dp)
             ) {
                 if (giantWordList) {
@@ -617,6 +653,7 @@ internal fun WordList(
                                 // Printed book-style square entries, not
                                 // rounded pills which visually trim letters.
                                 Box(Modifier.weight(1f)
+                                    .testTag("word-list-target-" + target.id)
                                     .background(if (solved) FoundMarker.copy(alpha = 0.28f)
                                         else Paper)
                                     .border(1.dp,
@@ -722,7 +759,11 @@ internal fun ZoomableWordGrid(
     onModeChanged: (Boolean) -> Unit = {},
     boardLookId: String = "classic",
     bookmark: LargeBoardBookmark? = null,
-    onBookmark: (LargeBoardBookmark) -> Unit = {}
+    onBookmark: (LargeBoardBookmark) -> Unit = {},
+    /** Compact book pages use the native on-demand puzzle tool console. */
+    compactControls: Boolean = false,
+    zoomConsoleVisible: Boolean = false,
+    onDismissZoomConsole: () -> Unit = {}
 ) {
     // Allocate a truly square board using the height actually available AFTER
     // the toolbar. A requested 320dp square previously got squeezed to a shorter
@@ -731,7 +772,7 @@ internal fun ZoomableWordGrid(
     val largeBoard = puzzle.size >= 25
     BoxWithConstraints(Modifier.width(viewport)) {
         // Large boards get one extra map/position line below the toolbar.
-        val toolbarSpace = if (largeBoard) 94.dp else 56.dp
+        val toolbarSpace = if (compactControls) 0.dp else if (largeBoard) 94.dp else 56.dp
         val side = if (maxHeight == Dp.Infinity) viewport
             else minOf(viewport, (maxHeight - toolbarSpace).coerceAtLeast(96.dp))
         val sidePx = with(LocalDensity.current) { side.toPx() }
@@ -754,12 +795,70 @@ internal fun ZoomableWordGrid(
         val currentZoom = if (largeBoard) largeTransform.zoom else transform.zoom
         var multiTouch by remember(puzzle.id) { mutableStateOf(false) }
 
+        fun zoomOut() {
+            if (largeBoard) {
+                largeTransform = largeTransform.zoomed(largeTransform.zoom - 0.75f, sidePx)
+                rememberView()
+            } else {
+                transform = transform.zoomed(
+                    transform.zoom - gridZoomTapIncrement(puzzle.size), sidePx)
+            }
+        }
+        fun zoomIn() {
+            if (largeBoard) {
+                largeTransform = largeTransform.zoomed(largeTransform.zoom + 0.75f, sidePx)
+                rememberView()
+            } else {
+                transform = transform.zoomed(
+                    transform.zoom + gridZoomTapIncrement(puzzle.size), sidePx)
+            }
+        }
+        fun fitBoard() {
+            if (largeBoard) {
+                largeTransform = LargeBoardViewport()
+                rememberView()
+            } else transform = BoardViewportTransform(1f)
+        }
+        if (compactControls && zoomConsoleVisible) {
+            AlertDialog(
+                onDismissRequest = onDismissZoomConsole,
+                title = { Text("Puzzle tools", color = Forest) },
+                text = {
+                    Column(verticalArrangement = Arrangement.spacedBy(10.dp)) {
+                        Text("Drag a word to find it. Pinch the board to zoom.",
+                            style = MaterialTheme.typography.bodyMedium, color = Ink)
+                        Row(Modifier.fillMaxWidth(),
+                            horizontalArrangement = Arrangement.SpaceEvenly) {
+                            TextButton(onClick = { zoomOut() }, enabled = currentZoom > 1f,
+                                modifier = Modifier.heightIn(min = 48.dp)) { Text("− Zoom") }
+                            TextButton(onClick = { fitBoard() },
+                                modifier = Modifier.heightIn(min = 48.dp)) { Text("Fit") }
+                            TextButton(onClick = { zoomIn() },
+                                enabled = currentZoom <
+                                    (if (largeBoard) LargeBoardViewport.MAX_ZOOM else 2.5f),
+                                modifier = Modifier.heightIn(min = 48.dp)) { Text("+ Zoom") }
+                        }
+                        TextButton(onClick = {
+                            onDismissZoomConsole()
+                            preciseOpen = true
+                        }, modifier = Modifier.fillMaxWidth().heightIn(min = 48.dp)) {
+                            Text("Select by row and column")
+                        }
+                    }
+                },
+                confirmButton = {
+                    TextButton(onClick = onDismissZoomConsole) { Text("Done") }
+                }
+            )
+        }
+
         Column(Modifier.width(viewport),
             verticalArrangement = Arrangement.spacedBy(2.dp)) {
+            if (!compactControls) {
             Row(Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.SpaceBetween,
                 verticalAlignment = Alignment.CenterVertically) {
-                Text("Trace words · pinch to zoom",
+                Text(gridZoomInstruction(puzzle.size),
                     modifier = Modifier.weight(1f),
                     style = MaterialTheme.typography.labelSmall,
                     color = Muted, maxLines = 2)
@@ -769,41 +868,22 @@ internal fun ZoomableWordGrid(
                         contentDescription = "Select a word without dragging"
                     }
                 ) { Text("Select", maxLines = 1) }
-                IconButton(onClick = {
-                    if (largeBoard) {
-                        largeTransform = largeTransform.zoomed(
-                            largeTransform.zoom - 0.75f, sidePx)
-                        rememberView()
-                    } else {
-                        transform = transform.zoomed(transform.zoom - 0.25f, sidePx)
-                    }
-                }, enabled = currentZoom > 1f,
+                IconButton(onClick = { zoomOut() }, enabled = currentZoom > 1f,
                     modifier = Modifier.size(48.dp).semantics {
                         contentDescription = "Zoom out"
                     }) { Text("−", style = MaterialTheme.typography.titleMedium) }
-                IconButton(onClick = {
-                    if (largeBoard) {
-                        largeTransform = LargeBoardViewport()
-                        rememberView()
-                    } else transform = BoardViewportTransform(1f)
-                }, modifier = Modifier.size(48.dp).semantics {
+                IconButton(onClick = { fitBoard() },
+                    modifier = Modifier.size(48.dp).semantics {
                     contentDescription = "Fit entire puzzle board"
                 }) { Text("Fit") }
-                IconButton(onClick = {
-                    if (largeBoard) {
-                        largeTransform = largeTransform.zoomed(
-                            largeTransform.zoom + 0.75f, sidePx)
-                        rememberView()
-                    } else {
-                        transform = transform.zoomed(transform.zoom + 0.25f, sidePx)
-                    }
-                }, enabled = currentZoom <
+                IconButton(onClick = { zoomIn() }, enabled = currentZoom <
                     (if (largeBoard) LargeBoardViewport.MAX_ZOOM else 2.5f),
                     modifier = Modifier.size(48.dp).semantics {
                         contentDescription = "Zoom in"
                     }) { Text("+", style = MaterialTheme.typography.titleMedium) }
             }
-            if (largeBoard) {
+            }
+            if (largeBoard && !compactControls) {
                 // The map is a navigation aid, not a partition of the puzzle.
                 // Moving via the map does not touch any found-word state.
                 val rows = largeTransform.visibleRows(sidePx, puzzle.size)

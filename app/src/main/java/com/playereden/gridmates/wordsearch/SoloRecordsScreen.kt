@@ -2,12 +2,12 @@ package com.playereden.gridmates.wordsearch
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Card
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.FilterChip
 import androidx.compose.material3.TextButton
@@ -20,6 +20,8 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.playereden.gridmates.wordsearch.core.SoloProfile
@@ -29,9 +31,10 @@ import java.util.Date
 
 @Composable
 internal fun SoloRecordsScreen(profile: SoloProfile) {
-    Text("Your puzzle journal", color = Forest,
-        style = MaterialTheme.typography.headlineMedium, fontWeight = FontWeight.Bold)
-    Text("Your puzzle and match history stays on this device.",
+    // WS16BW: the shell already provides the Records page title. Use a short
+    // description here so Solo/Race/Duel are discoverable above the fold.
+    Text("Your Solo puzzles and nearby match results stay on this device.",
+        modifier = Modifier.fillMaxWidth().testTag("ws16bw-records-intro"),
         color = Muted, style = MaterialTheme.typography.bodyMedium)
 
     var journalTab by rememberSaveable { mutableStateOf("Solo") }
@@ -39,12 +42,11 @@ internal fun SoloRecordsScreen(profile: SoloProfile) {
     var racePage by rememberSaveable { mutableIntStateOf(0) }
     var duelPage by rememberSaveable { mutableIntStateOf(0) }
 
-    Text("Browse your results", color = Forest,
-        style = MaterialTheme.typography.titleMedium, fontWeight = FontWeight.Bold)
     Row(Modifier.fillMaxWidth().horizontalScroll(rememberScrollState()),
         horizontalArrangement = Arrangement.spacedBy(8.dp)) {
         listOf("Solo", "Race", "Duel").forEach { section ->
             FilterChip(selected = journalTab == section,
+                modifier = Modifier.testTag("ws16bw-tab-" + section.lowercase()),
                 onClick = { journalTab = section },
                 label = { Text(section) })
         }
@@ -53,13 +55,37 @@ internal fun SoloRecordsScreen(profile: SoloProfile) {
     // above Race/Duel makes the selected match history inaccessible without
     // scrolling past unrelated statistics on compact screens.
     if (journalTab == "Solo") {
-    Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-        MetricCard("Completed", profile.completions.toString(), Modifier.weight(1f))
-        MetricCard("Words found", profile.totalWords.toString(), Modifier.weight(1f))
-        MetricCard("With hints", profile.assistedCompletions.toString(), Modifier.weight(1f))
+    // WS16BT: three compressed metrics on a narrow phone truncate labels.
+    // Keep all values visible and readable at larger system font scales.
+    BoxWithConstraints(Modifier.fillMaxWidth().testTag("ws16bt-solo-metrics")) {
+        val fontScale = LocalDensity.current.fontScale
+        if (fontScale >= 1.8f) {
+            Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
+                MetricCard("Completed", profile.completions.toString(), Modifier.fillMaxWidth())
+                MetricCard("Words found", profile.totalWords.toString(), Modifier.fillMaxWidth())
+                MetricCard("With hints", profile.assistedCompletions.toString(), Modifier.fillMaxWidth())
+            }
+        } else if (maxWidth < 350.dp || fontScale >= 1.3f) {
+            Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
+                Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                    MetricCard("Completed", profile.completions.toString(), Modifier.weight(1f))
+                    MetricCard("Words found", profile.totalWords.toString(), Modifier.weight(1f))
+                }
+                MetricCard("With hints", profile.assistedCompletions.toString(), Modifier.fillMaxWidth())
+            }
+        } else {
+            Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                MetricCard("Completed", profile.completions.toString(), Modifier.weight(1f))
+                MetricCard("Words found", profile.totalWords.toString(), Modifier.weight(1f))
+                MetricCard("With hints", profile.assistedCompletions.toString(), Modifier.weight(1f))
+            }
+        }
     }
 
-    Card(Modifier.fillMaxWidth()) {
+    GridMatesIllustratedFrame(
+            modifier = Modifier.fillMaxWidth(),
+            variant = GridMatesFrameVariant.PANEL
+        ) {
         Column(Modifier.padding(12.dp)) {
             Text("Daily Journal", color = Forest, fontWeight = FontWeight.SemiBold)
             Text(profile.dailyCompletions.toString() + " dated challenges completed · " +
@@ -80,18 +106,18 @@ internal fun SoloRecordsScreen(profile: SoloProfile) {
     Text("Shared Board Race results saved locally. Co-op isn't counted as a win or loss.",
         color = Muted, style = MaterialTheme.typography.bodySmall)
     val racing = profile.raceSummary
-    Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
-        Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-            MetricCard("Played", racing.played.toString(), Modifier.weight(1f))
-            MetricCard("Wins", racing.wins.toString(), Modifier.weight(1f))
-        }
-        Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-            MetricCard("Losses", racing.losses.toString(), Modifier.weight(1f))
-            MetricCard("Ties", racing.ties.toString(), Modifier.weight(1f))
-        }
-    }
+    MatchSummaryMetrics(
+        listOf("Played" to racing.played.toString(),
+            "Wins" to racing.wins.toString(),
+            "Losses" to racing.losses.toString(),
+            "Ties" to racing.ties.toString()),
+        "race"
+    )
     if (profile.raceResults.isEmpty()) {
-        Card(Modifier.fillMaxWidth()) {
+        GridMatesIllustratedFrame(
+            modifier = Modifier.fillMaxWidth(),
+            variant = GridMatesFrameVariant.PANEL
+        ) {
             Column(Modifier.padding(14.dp)) {
                 Text("No Versus matches recorded yet.",
                     fontWeight = FontWeight.SemiBold, color = Forest)
@@ -104,18 +130,21 @@ internal fun SoloRecordsScreen(profile: SoloProfile) {
             fontWeight = FontWeight.SemiBold)
         val page = racePage.coerceIn(0, (profile.raceResults.size - 1).coerceAtLeast(0) / 4)
         profile.raceResults.drop(page * 4).take(4).forEach { race ->
-            Card(Modifier.fillMaxWidth()) {
+            GridMatesIllustratedFrame(
+            modifier = Modifier.fillMaxWidth(),
+            variant = GridMatesFrameVariant.PANEL
+        ) {
                 Column(Modifier.padding(12.dp),
                     verticalArrangement = Arrangement.spacedBy(4.dp)) {
-                    Row(Modifier.fillMaxWidth(),
-                        horizontalArrangement = Arrangement.SpaceBetween) {
+                    Column(Modifier.fillMaxWidth(),
+                        verticalArrangement = Arrangement.spacedBy(2.dp)) {
                         Text(when (race.outcome) {
                             RaceOutcome.WIN -> "Victory"
                             RaceOutcome.LOSS -> "Defeat"
                             RaceOutcome.TIE -> "Tie"
                         }, color = Forest, fontWeight = FontWeight.Bold)
                         Text("You ${race.ownWords} · Partner ${race.partnerWords}",
-                            color = Forest, fontWeight = FontWeight.SemiBold)
+                            color = Ink, style = MaterialTheme.typography.bodyMedium)
                     }
                     Text(race.theme.label + " · " + race.board.cells +
                         "×" + race.board.cells + " · " + race.challenge.label,
@@ -139,18 +168,18 @@ internal fun SoloRecordsScreen(profile: SoloProfile) {
         "These results are not mixed with Shared Board Race.",
         color = Muted, style = MaterialTheme.typography.bodySmall)
     val dueling = profile.duelSummary
-    Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
-        Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-            MetricCard("Played", dueling.played.toString(), Modifier.weight(1f))
-            MetricCard("Wins", dueling.wins.toString(), Modifier.weight(1f))
-        }
-        Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-            MetricCard("Losses", dueling.losses.toString(), Modifier.weight(1f))
-            MetricCard("Words found", dueling.totalWordsFound.toString(), Modifier.weight(1f))
-        }
-    }
+    MatchSummaryMetrics(
+        listOf("Played" to dueling.played.toString(),
+            "Wins" to dueling.wins.toString(),
+            "Losses" to dueling.losses.toString(),
+            "Words found" to dueling.totalWordsFound.toString()),
+        "duel"
+    )
     if (profile.duelResults.isEmpty()) {
-        Card(Modifier.fillMaxWidth()) {
+        GridMatesIllustratedFrame(
+            modifier = Modifier.fillMaxWidth(),
+            variant = GridMatesFrameVariant.PANEL
+        ) {
             Column(Modifier.padding(14.dp)) {
                 Text("No Speed Duels recorded yet.",
                     fontWeight = FontWeight.SemiBold, color = Forest)
@@ -162,15 +191,18 @@ internal fun SoloRecordsScreen(profile: SoloProfile) {
         Text("Recent Speed Duels", color = Forest, fontWeight = FontWeight.SemiBold)
         val page = duelPage.coerceIn(0, (profile.duelResults.size - 1).coerceAtLeast(0) / 4)
         profile.duelResults.drop(page * 4).take(4).forEach { duel ->
-            Card(Modifier.fillMaxWidth()) {
+            GridMatesIllustratedFrame(
+            modifier = Modifier.fillMaxWidth(),
+            variant = GridMatesFrameVariant.PANEL
+        ) {
                 Column(Modifier.padding(12.dp),
                     verticalArrangement = Arrangement.spacedBy(4.dp)) {
-                    Row(Modifier.fillMaxWidth(),
-                        horizontalArrangement = Arrangement.SpaceBetween) {
+                    Column(Modifier.fillMaxWidth(),
+                        verticalArrangement = Arrangement.spacedBy(2.dp)) {
                         Text(if (duel.won) "Victory" else "Defeat",
                             color = Forest, fontWeight = FontWeight.Bold)
                         Text("You " + duel.ownWords + " · Partner " + duel.partnerWords,
-                            color = Forest, fontWeight = FontWeight.SemiBold)
+                            color = Ink, style = MaterialTheme.typography.bodyMedium)
                     }
                     Text(duel.theme.label + " · " + duel.board.cells +
                         "×" + duel.board.cells + " · " + duel.challenge.label,
@@ -191,7 +223,10 @@ internal fun SoloRecordsScreen(profile: SoloProfile) {
     Text("Recent puzzles", color = Forest,
         style = MaterialTheme.typography.titleLarge, fontWeight = FontWeight.Bold)
     if (profile.results.isEmpty()) {
-        Card(Modifier.fillMaxWidth()) {
+        GridMatesIllustratedFrame(
+            modifier = Modifier.fillMaxWidth(),
+            variant = GridMatesFrameVariant.PANEL
+        ) {
             Column(Modifier.padding(16.dp)) {
                 Text("Your story starts with a puzzle.", fontWeight = FontWeight.SemiBold)
                 Text("Finish a Solo game and you'll see it here.",
@@ -201,12 +236,15 @@ internal fun SoloRecordsScreen(profile: SoloProfile) {
     } else {
         val page = soloPage.coerceIn(0, (profile.results.size - 1).coerceAtLeast(0) / 4)
         for (record in profile.results.drop(page * 4).take(4)) {
-            Card(Modifier.fillMaxWidth()) {
+            GridMatesIllustratedFrame(
+            modifier = Modifier.fillMaxWidth(),
+            variant = GridMatesFrameVariant.PANEL
+        ) {
                 Column(Modifier.padding(14.dp), verticalArrangement = Arrangement.spacedBy(4.dp)) {
-                    Row(Modifier.fillMaxWidth(),
-                        horizontalArrangement = Arrangement.SpaceBetween) {
+                    Column(Modifier.fillMaxWidth(),
+                        verticalArrangement = Arrangement.spacedBy(2.dp)) {
                         Text(record.theme.label + " · " +
-                            (record.boardSize?.let { it.cells.toString() + "×" + it.cells } ?: 
+                            (record.boardSize?.let { it.cells.toString() + "×" + it.cells } ?:
                                 (record.difficulty.gridSize.toString() + "×" +
                                     record.difficulty.gridSize)) +
                             " · " + (record.challenge?.label ?: record.difficulty.label),
@@ -234,6 +272,41 @@ internal fun SoloRecordsScreen(profile: SoloProfile) {
     }
 }
 
+/** Keep the four Race/Duel summary metrics in a 2x2 grid on normal phones.
+ * The previous <350dp content-width rule stacked even on a normal 320dp
+ * handset after the shell padding. Stack only when two columns cannot fit
+ * comfortably, or at accessibility-scale type.
+ */
+internal fun stackMatchSummaryMetrics(availableWidthDp: Float, fontScale: Float): Boolean =
+    availableWidthDp < 280f || fontScale >= 1.8f
+
+@Composable
+private fun MatchSummaryMetrics(values: List<Pair<String, String>>, mode: String) {
+    BoxWithConstraints(Modifier.fillMaxWidth().testTag("ws16bw-" + mode + "-metrics")) {
+        val stacked = stackMatchSummaryMetrics(maxWidth.value, LocalDensity.current.fontScale)
+        if (stacked) {
+            Column(Modifier.fillMaxWidth().testTag("ws16bx-" + mode + "-stacked"),
+                verticalArrangement = Arrangement.spacedBy(8.dp)) {
+                values.forEach { (label, amount) ->
+                    MetricCard(label, amount, Modifier.fillMaxWidth())
+                }
+            }
+        } else {
+            Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
+                values.chunked(2).forEachIndexed { index, pair ->
+                    Row(Modifier.fillMaxWidth()
+                        .testTag("ws16bx-" + mode + "-row-" + index),
+                        horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                        pair.forEach { (label, amount) ->
+                            MetricCard(label, amount, Modifier.weight(1f))
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
 /** Pure page math; every saved record remains reachable by the pager. */
 internal fun journalPageCount(count: Int, pageSize: Int): Int =
     ((count.coerceAtLeast(0) + pageSize - 1) / pageSize).coerceAtLeast(1)
@@ -258,7 +331,10 @@ private fun JournalPages(count: Int, page: Int, pageSize: Int, onPage: (Int) -> 
 
 @Composable
 private fun MetricCard(label: String, amount: String, modifier: Modifier = Modifier) {
-    Card(modifier) {
+    GridMatesIllustratedFrame(
+        modifier = modifier.testTag("ws16bt-metric-" + label.lowercase().replace(" ", "-")),
+        variant = GridMatesFrameVariant.PANEL
+    ) {
         Column(Modifier.padding(horizontal = 8.dp, vertical = 12.dp),
             verticalArrangement = Arrangement.spacedBy(5.dp)) {
             Text(amount, style = MaterialTheme.typography.titleLarge,
