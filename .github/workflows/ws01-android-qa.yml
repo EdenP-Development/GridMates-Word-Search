@@ -173,6 +173,8 @@ jobs:
         run: python3 -m unittest discover -s tools/asset_pipeline -p 'test_ws26_gallery_profile.py' -v
       - name: WS27 phone collection density and large text safety QA
         run: python3 -m unittest discover -s tools/asset_pipeline -p 'test_ws27_collection_density.py' -v
+      - name: WS28 Profile vertical-stack overlap regression guard
+        run: python3 -m unittest discover -s tools/asset_pipeline -p 'test_ws28_profile_overlap.py' -v
       - name: WS16BU compact gallery/pager and profile readability guards
         run: python3 -m unittest discover -s tools/asset_pipeline -p 'test_ws16bu_compact_gallery.py' -v
       - name: WS16BV compact bundled Fonts and license access guards
