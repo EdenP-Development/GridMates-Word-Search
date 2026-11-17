@@ -74,17 +74,7 @@ jobs:
           ram-size: 1536M
           disable-animations: true
           emulator-options: -no-window -gpu swiftshader_indirect -no-snapshot -noaudio -no-boot-anim
-          script: |
-            bash -e -o pipefail -c '
-              mkdir -p qa-layout-report
-              adb install qa-baseline/app-debug.apk
-              adb install -t app/build/outputs/apk/androidTest/debug/app-debug-androidTest.apk
-              test_class=com.playereden.gridmates.wordsearch.QaActualBookcaseAndroidTest
-              adb shell am instrument -w -r -e class "$test_class#packedCaseShowsAllThreeBooksAndSceneryAtLargeText,$test_class#packedCaseSwipesToMorePlayableBooks" \
-                com.playereden.gridmates.wordsearch.qa.test/androidx.test.runner.AndroidJUnitRunner \
-                | tee qa-layout-report/instrumentation.txt
-              grep -Eq "^OK \(2 tests\)" qa-layout-report/instrumentation.txt
-            '
+          script: bash .github/scripts/ws33-packed-library-layout.sh
       - name: Save targeted layout results
         if: always()
         uses: actions/upload-artifact@v4
