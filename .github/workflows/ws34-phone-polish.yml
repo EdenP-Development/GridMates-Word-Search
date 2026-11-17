@@ -5,6 +5,7 @@ on:
     paths:
       - .github/workflows/ws34-phone-polish.yml
       - .github/scripts/ws34_phone_polish.py
+  workflow_dispatch:
 
 permissions:
   contents: read
