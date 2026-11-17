@@ -1,0 +1,95 @@
+name: WS33 v95 packed Library layout QA
+on:
+  push:
+    branches: [qa/ws33-library-layout-2026-11-16]
+    paths: [.github/workflows/ws33-packed-library-layout.yml]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  actions: read
+
+jobs:
+  library-layout:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+      - name: Fetch the signed v95 APK from the Woodland run
+        uses: actions/download-artifact@v4
+        with:
+          name: GridMates-WordSearch-Android-QA
+          run-id: 43999350042
+          github-token: ${{ github.token }}
+          path: qa-baseline
+      - name: Verify the exact v95 APK
+        run: echo 'd64fdad8ff65ec9b0e7bf28df52362f168da1de7358fbccb847e3ef99fbe096c  qa-baseline/app-debug.apk' | sha256sum --check
+      - uses: actions/checkout@v4
+        with:
+          repository: PlayerEden/SudokuTogether
+          ref: 975e31a1e8cbfebad1fbbc7602b3340c357da7ef
+          path: _approved_sudoku
+          persist-credentials: false
+      - uses: actions/checkout@v4
+        with:
+          repository: google/fonts
+          ref: 24ddc1f324cac5d9f5aedca126d298f56e3f1640
+          path: _approved_fonts
+          persist-credentials: false
+          filter: blob:none
+          sparse-checkout: |
+            ofl/atkinsonhyperlegible
+            ofl/ibmplexmono
+            ofl/dmmono
+            ofl/patrickhand
+            ofl/literata
+      - name: Import the resources needed by the test build
+        run: |
+          python3 -m pip install --disable-pip-version-check --user fonttools==4.59.2 Pillow==12.3.0 CairoSVG==2.8.2
+          python3 scripts/import_woodland_portraits.py --source _approved_sudoku
+          python3 scripts/import_font_library.py --source _approved_fonts
+      - uses: actions/setup-java@v5
+        with:
+          distribution: temurin
+          java-version: '17'
+      - name: Install verified Gradle 8.11.1
+        run: bash tools/ci/install_pinned_gradle.sh
+      - uses: gradle/actions/setup-gradle@v4
+      - name: Prepare instrumentation and free runner memory before boot
+        run: |
+          SDKMANAGER="$(command -v sdkmanager || find "$ANDROID_HOME/cmdline-tools" -name sdkmanager -type f -print -quit)"
+          "$SDKMANAGER" "platforms;android-35" "build-tools;35.0.0"
+          gradle --no-daemon --max-workers=2 -Pkotlin.compiler.execution.strategy=in-process :app:assembleDebugAndroidTest
+          gradle --stop
+          echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=static_node"' | sudo tee /etc/udev/rules.d/99-kvm4all.rules
+          sudo udevadm control --reload-rules
+          sudo udevadm trigger --name-match=kvm
+      - name: Test 200% text and swipe paging on the already-built v95
+        uses: reactivecircus/android-emulator-runner@v2
+        with:
+          api-level: 35
+          target: google_apis
+          arch: x86_64
+          profile: pixel_4
+          ram-size: 1536M
+          disable-animations: true
+          emulator-options: -no-window -gpu swiftshader_indirect -no-snapshot -noaudio -no-boot-anim
+          script: |
+            bash -e -o pipefail -c '
+              mkdir -p qa-layout-report
+              adb install qa-baseline/app-debug.apk
+              adb install -t app/build/outputs/apk/androidTest/debug/app-debug-androidTest.apk
+              test_class=com.playereden.gridmates.wordsearch.QaActualBookcaseAndroidTest
+              adb shell am instrument -w -r -e class "$test_class#packedCaseShowsAllThreeBooksAndSceneryAtLargeText,$test_class#packedCaseSwipesToMorePlayableBooks" \
+                com.playereden.gridmates.wordsearch.qa.test/androidx.test.runner.AndroidJUnitRunner \
+                | tee qa-layout-report/instrumentation.txt
+              grep -Eq "^OK \(2 tests\)" qa-layout-report/instrumentation.txt
+            '
+      - name: Save targeted layout results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: GridMates-WS33-V95-Packed-Library-Layout
+          path: qa-layout-report/
+          retention-days: 3
+          if-no-files-found: ignore
