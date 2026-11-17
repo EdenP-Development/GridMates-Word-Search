@@ -1,0 +1,65 @@
+name: WS35 v97 to v98 Library artwork comparison
+on:
+  push:
+    branches: [qa/ws35-library-art-2026-11-17]
+    paths:
+      - .github/workflows/ws35-library-art-review.yml
+      - .github/scripts/ws35_library_art_review.py
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  actions: read
+
+concurrency:
+  group: ws35-library-art-review
+  cancel-in-progress: true
+
+jobs:
+  library-art:
+    runs-on: ubuntu-latest
+    timeout-minutes: 16
+    steps:
+      - uses: actions/checkout@v4
+      - name: Fetch the signed v97 comparison build
+        uses: actions/download-artifact@v4
+        with:
+          name: GridMates-WordSearch-Android-QA
+          run-id: 44120147813
+          github-token: ${{ github.token }}
+          path: qa-baseline
+      - name: Fetch the signed v98 Library build
+        uses: actions/download-artifact@v4
+        with:
+          name: GridMates-WordSearch-Android-QA
+          run-id: 44136465891
+          github-token: ${{ github.token }}
+          path: qa-candidate
+      - name: Verify the two exact signed packages
+        run: |
+          echo '311cd5d5879912bc6062a744490a947d93ee17a235ef64075f8ea2d8bb5aa156  qa-baseline/app-debug.apk' | sha256sum --check
+          echo '06d9f7686017153e52725e3f94cb96531de0577b623d5119841a3017bcbbdefb  qa-candidate/app-debug.apk' | sha256sum --check
+      - name: Enable KVM
+        run: |
+          echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=static_node"' | sudo tee /etc/udev/rules.d/99-kvm4all.rules
+          sudo udevadm control --reload-rules
+          sudo udevadm trigger --name-match=kvm
+      - name: Check both signed Library screens on Android 15
+        uses: reactivecircus/android-emulator-runner@v2
+        with:
+          api-level: 35
+          target: google_apis
+          arch: x86_64
+          profile: pixel_4
+          ram-size: 1536M
+          disable-animations: true
+          emulator-options: -no-window -gpu swiftshader_indirect -no-snapshot -noaudio -no-boot-anim
+          script: python3 .github/scripts/ws35_library_art_review.py
+      - name: Save the before and after Android screens
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: GridMates-WS35-v98-Library-Art-Review
+          path: qa-cabinet-report/
+          retention-days: 14
+          if-no-files-found: ignore
