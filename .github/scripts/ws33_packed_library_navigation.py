@@ -34,6 +34,11 @@ def await_nodes(*labels):
     for _ in range(5):
         try:
             latest = tree()
+            launcher_alert = find(latest, "Pixel Launcher isn't responding")
+            if launcher_alert is not None:
+                tap(find(latest, "Close app"))
+                adb("shell", "am", "start", "-W", "-n", ACTIVITY, timeout=40)
+                continue
             if all(find(latest, label) is not None for label in labels):
                 return latest
         except (subprocess.SubprocessError, ElementTree.ParseError):
@@ -54,6 +59,8 @@ def start_at(width, height):
     adb("shell", "am", "force-stop", PACKAGE)
     adb("shell", "wm", "size", f"{width}x{height}")
     adb("shell", "wm", "density", "320")
+    assert f"Override size: {width}x{height}".encode() in adb("shell", "wm", "size")
+    assert b"Override density: 320" in adb("shell", "wm", "density")
     adb("shell", "am", "start", "-W", "-n", ACTIVITY, timeout=40)
 
 
@@ -79,9 +86,12 @@ def capture(name):
 
 EVIDENCE.mkdir(exist_ok=True)
 try:
+    assert adb("shell", "getprop", "ro.kernel.qemu").strip() == b"1"
     adb("install", "qa-baseline/app-debug.apk", timeout=90)
+    adb("shell", "wm", "dismiss-keyguard")
     adb("shell", "settings", "put", "secure", "immersive_mode_confirmations", "confirmed")
     adb("shell", "settings", "put", "system", "font_scale", "2.0")
+    assert adb("shell", "settings", "get", "system", "font_scale").strip() == b"2.0"
 
     start_at(640, 1440)
     open_library(1440)

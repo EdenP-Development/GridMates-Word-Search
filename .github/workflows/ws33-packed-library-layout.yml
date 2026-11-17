@@ -2,7 +2,9 @@ name: WS33 v95 packed Library layout QA
 on:
   push:
     branches: [qa/ws33-library-layout-2026-11-16]
-    paths: [.github/workflows/ws33-packed-library-layout.yml]
+    paths:
+      - .github/workflows/ws33-packed-library-layout.yml
+      - .github/scripts/ws33_packed_library_navigation.py
   workflow_dispatch:
 
 permissions:
