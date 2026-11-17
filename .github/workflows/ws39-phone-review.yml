@@ -1,0 +1,58 @@
+name: WS39 native Quick Play and install-over review
+on:
+  push:
+    branches: [qa/ws39-phone-review-2026-11-17]
+    paths:
+      - .github/workflows/ws39-phone-review.yml
+      - .github/scripts/ws39_phone_review.py
+permissions:
+  contents: read
+  actions: read
+jobs:
+  phone-review:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+      - name: Fetch signed v101 comparison build
+        uses: actions/download-artifact@v4
+        with:
+          name: GridMates-WordSearch-Android-QA
+          run-id: 44181424897
+          github-token: ${{ github.token }}
+          path: qa-baseline
+      - name: Fetch exact signed v102 build
+        uses: actions/download-artifact@v4
+        with:
+          name: GridMates-WordSearch-Android-QA
+          run-id: 44192668122
+          github-token: ${{ github.token }}
+          path: qa-candidate
+      - name: Verify both APK hashes
+        run: |
+          echo '2824444742e1b93129a8eb2d711075bd697c34065303b8e469e03f087f87853e  qa-baseline/app-debug.apk' | sha256sum --check
+          echo '3468befffa01b5e6b1f098389d775519274d95557ce00eac9d8b8514e9335d37  qa-candidate/app-debug.apk' | sha256sum --check
+      - name: Enable KVM
+        run: |
+          echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=static_node"' | sudo tee /etc/udev/rules.d/99-kvm4all.rules
+          sudo udevadm control --reload-rules
+          sudo udevadm trigger --name-match=kvm
+      - name: Exercise actual Android navigation and install-over
+        uses: reactivecircus/android-emulator-runner@v2
+        with:
+          api-level: 35
+          target: google_apis
+          arch: x86_64
+          profile: pixel_4
+          ram-size: 1536M
+          disable-animations: true
+          emulator-options: -no-window -gpu swiftshader_indirect -no-snapshot -noaudio -no-boot-anim
+          script: python3 .github/scripts/ws39_phone_review.py
+      - name: Save native review evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: GridMates-WS39-Native-Review
+          path: qa-phone-report/
+          retention-days: 30
+          if-no-files-found: warn
