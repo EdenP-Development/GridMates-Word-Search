@@ -1,3 +1,23 @@
+# Active development handoff — WS32 illustrated My Puzzles
+
+[The WS32 visual pass and QA receipt](devlog/2026-11-16_WS32_ILLUSTRATED_MY_PUZZLES.md) covers the first Library and save-continuity change. The [draft PR #142](https://github.com/PlayerEden/GridMates-Word-Search/pull/142) is based on the verified #139 branch. Its tested runtime is `bbbee51bacc8ad6242fd4291cbc70e1d7689bc97` and the QA version code is 94.
+
+Both v93 upgrade paths passed on Android 15 at normal and large text sizes. [Emulator screens](https://github.com/PlayerEden/GridMates-Word-Search/actions/runs/43989770069/artifacts/14288015670) · [Exact v94 QA ZIP](https://github.com/PlayerEden/GridMates-Word-Search/actions/runs/43987637538/artifacts/14286536417).
+
+Work next on proving one book's open, pause, restart, resume, and finish flow, followed by portable book progress. Woodland is the suggested first book because we have a pilot, cover and shelf artwork, and matching motifs. Review the playable content and release art separately before the owner approves publication.
+
+## Earlier checkpoint
+
+# Active development handoff — WS31 v93
+
+**Current development · WS31 / v93.** Start from [draft PR #139](https://github.com/PlayerEden/GridMates-Word-Search/pull/139) at `77eb131ffd23fe60622bb0b76a87249d807884e9`. [Read the baseline audit and WS32 plan](devlog/2026-11-16_WS31_BASELINE_AUDIT_AND_WS32_PLAN.md) and [download the verified v93 QA ZIP](https://github.com/PlayerEden/GridMates-Word-Search/actions/runs/43963840406/artifacts/14274644351). This snapshot starts the Library and save-continuity milestone. The earlier entries below are historical.
+
+[Audit draft #141](https://github.com/PlayerEden/GridMates-Word-Search/pull/141) records the Android, archive, artwork, and save-upgrade evidence. Start the next feature branch from #139. Port only the illustrated My Puzzles change and its tests from [alternate v93 draft #138](https://github.com/PlayerEden/GridMates-Word-Search/pull/138). Use a fresh QA version code and validate archived installs from both v93 branches for the WS32 candidate.
+
+The last earlier signed fallback is [v92 #137](https://github.com/PlayerEden/GridMates-Word-Search/pull/137). Owner device and two-phone tests remain open. Preserve the installed app and data when updating.
+
+## Historical artwork and development notes
+
 ## LATEST WS22 — 16 source PNGs + 24 editable prestige SVGs ACTUALLY BACKED UP IN GITHUB (Nov 15, 2026)
 
 [Complete cross-chat handoff/backup status](devlog/2026-11-15_WS22_FULLY_BACKED_THEME_MOTIFS.md), [all WS22 source + 16 full PNGs](../design/art-library-v2/ws22/README.md). User wants abundant future GridMates art and asked about Github continuity. WS22 produced **16 illustrated transparent motif PNGs** (Woodland: badger/robin/squirrel/stag, Ocean: seahorse/jellyfish/lighthouse/pearl clam, Garden: hummingbird/watering can/sunflower/mantis, Space: astronaut helmet/telescope/comet/galaxy) + **24 editable blank shared prestige SVG frames** (round/shield/portrait/ribbon/starburst/book crest × bronze/silver/gold/emerald). **Unlike WS17–WS21, all new WS22 PNGs are committed as real GitHub binary files**, all 24 SVG source files in repo, and original 3.49MB transparent source PNG recoverable **byte-for-byte** from 7 git binary shards in `design/art-library-v2/ws22/source_parts/` using `restore_atlas.py`. [WS22 GitHub full content QA #43795880694](https://github.com/PlayerEden/GridMates-Word-Search/actions/runs/43795880694) **SUCCESS**, hashes reassembled source + actual 16 PNGs + actual 24 SVGs. Archive `GridMates_Asset_Expansion_WS22.zip` 6,316,370 bytes SHA256 `cadbfac63005a280dcbeee9ca6ecc4bef13c552308edc2b073c59c47aa12f2c8`, independently rebuilt exact digest, backup ChatGPT Library `/Game Design/GridMates Word Search/GridMates_Asset_Expansion_WS22_FULL.zip`. **IMPORTANT:** WS17/WS19/WS20/WS21 high-res original PNGs are still in their Library backups, not wholly in GitHub; their metadata and hundreds of editable SVG files are GitHub backed. Owner may open new chat and refer to this handoff. Status infographic created in chat is a text-bearing design reference only, NOT a verified status document or runtime sprite. [Draft PR #131](https://github.com/PlayerEden/GridMates-Word-Search/pull/131) still DRAFT and unmerged; Android baseline v86 signed QA, no new APK or owner UI acceptance, no Sudoku code edit. **Next:** backfill older packs' binaries to GitHub via verified git blobs/shards, OR continue Winter/Farm/Desert/Spooky motif art with similar full-binary archival; eventually actual 320dp visual A/B and selective Android integration. Older handoff sections below historical.
