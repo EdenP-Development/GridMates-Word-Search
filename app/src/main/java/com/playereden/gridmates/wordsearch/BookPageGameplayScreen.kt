@@ -255,7 +255,6 @@ internal fun BookPageGameplayScreen(
 
     BoxWithConstraints(
         Modifier.fillMaxSize()
-            .background(if (showPrototypeArt) bookPageThemePaperTint(book.theme) else Cream)
             .padding(horizontal = 12.dp, vertical = 6.dp)
     ) {
         // Resolve once in this BoxWithConstraints scope: nested Row scopes cannot

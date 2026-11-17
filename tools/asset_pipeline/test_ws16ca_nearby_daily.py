@@ -28,7 +28,7 @@ class NearbyDailyCohesionChecks(unittest.TestCase):
         self.assertIn('Text("Wi-Fi needed to host"',screen)
         self.assertIn('runtime.host(ownName,',screen)
         self.assertIn('runtime.search()',screen)
-        self.assertIn('Text("Join nearby game")',screen)
+        self.assertIn('PuzzleTextAction("Join nearby game",',screen)
         self.assertIn('else "Join manually instead"',screen)
         self.assertIn('runtime.retryInterruptedJoin(ownName)',screen)
         self.assertIn('ready && !busy',screen)

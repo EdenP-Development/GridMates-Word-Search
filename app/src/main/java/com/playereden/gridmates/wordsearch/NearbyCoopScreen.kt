@@ -19,6 +19,8 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleEventObserver
 import androidx.lifecycle.LifecycleOwner
 import androidx.compose.ui.platform.testTag
+import androidx.compose.ui.semantics.selected
+import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.playereden.gridmates.wordsearch.core.*
@@ -132,10 +134,9 @@ internal fun NearbyCoopScreen(
     Column(Modifier.fillMaxSize().imePadding().verticalScroll(rememberScrollState())
         .padding(horizontal = 18.dp, vertical = 16.dp),
         verticalArrangement = Arrangement.spacedBy(12.dp)) {
-        TextButton(onClick = requestExit) { Text("← Back to Play") }
-        PaperEyebrow("GridMates · Nearby Play")
-        Text("Play Together", style = MaterialTheme.typography.headlineMedium,
-            fontWeight = FontWeight.Bold, color = Forest)
+        PuzzleTitleBar(title = "Play Together", leading = {
+            PuzzleTextAction("← Back to Play", onClick = requestExit)
+        })
         Text("Host a game or join a friend on the same Wi-Fi.",
             color = Muted, style = MaterialTheme.typography.bodyMedium)
 
@@ -158,10 +159,9 @@ internal fun NearbyCoopScreen(
                         Text("Your phone saved its room credential. Retry the same " +
                             "host without starting over.",
                             style = MaterialTheme.typography.bodySmall, color = Muted)
-                        Button(onClick = { runtime.retryInterruptedJoin(ownName) },
-                            enabled = !state.busy, modifier = Modifier.fillMaxWidth()) {
-                            Text("Retry joining this game")
-                        }
+                        GridMatesIllustratedPill("Retry joining this game",
+                            onClick = { runtime.retryInterruptedJoin(ownName) },
+                            enabled = !state.busy, modifier = Modifier.fillMaxWidth())
                     }
                 }
             }
@@ -169,7 +169,9 @@ internal fun NearbyCoopScreen(
                 Column(Modifier.padding(2.dp), verticalArrangement = Arrangement.spacedBy(12.dp)) {
                     Text("Host a nearby game",
                         color = Forest, style = MaterialTheme.typography.titleLarge)
-                    Text("Game mode", fontWeight = FontWeight.SemiBold)
+                    Text("Game mode", color = Forest,
+                        style = MaterialTheme.typography.labelLarge,
+                        fontWeight = FontWeight.SemiBold)
                     if (largeText) {
                         // At 150–200% system text, each mode gets a complete
                         // tappable line rather than clipping the third choice.
@@ -215,28 +217,26 @@ internal fun NearbyCoopScreen(
                             }
                         }
                     }
-                    Button(onClick = {
-                        // A last-moment refresh prevents stale readiness after
-                        // the phone drops Wi-Fi between opening and tapping.
-                        hostNetworkReady = safeHostNetworkAvailable(hostProbe)
-                        if (hostNetworkReady) runtime.host(ownName,
-                            WordTheme.valueOf(theme),
-                            PuzzleBoardSize.valueOf(board), PuzzleChallenge.valueOf(challenge),
-                            NearbyMatch.valueOf(match), preferredBoardLook)
-                    }, enabled = canStartHost,
-                        modifier = Modifier.fillMaxWidth().testTag("ws16ca-host-button")) {
-                        Text(when (match) {
+                    GridMatesIllustratedPill(
+                        label = when (match) {
                             NearbyMatch.SPEED_DUEL.name -> "Host Speed Duel"
                             NearbyMatch.SHARED_BOARD_RACE.name -> "Host Shared Board Race"
                             else -> "Host Co-op game"
-                        })
-                    }
-                    OutlinedButton(onClick = {
-                        showJoin = true
-                        runtime.search()
-                    }, enabled = !state.busy, modifier = Modifier.fillMaxWidth()) {
-                        Text("Join nearby game")
-                    }
+                        },
+                        onClick = {
+                            // Refresh the interface before starting the room.
+                            hostNetworkReady = safeHostNetworkAvailable(hostProbe)
+                            if (hostNetworkReady) runtime.host(ownName,
+                                WordTheme.valueOf(theme),
+                                PuzzleBoardSize.valueOf(board), PuzzleChallenge.valueOf(challenge),
+                                NearbyMatch.valueOf(match), preferredBoardLook)
+                        }, enabled = canStartHost,
+                        modifier = Modifier.fillMaxWidth().testTag("ws16ca-host-button"))
+                    PuzzleTextAction("Join nearby game",
+                        onClick = {
+                            showJoin = true
+                            runtime.search()
+                        }, enabled = !state.busy, modifier = Modifier.fillMaxWidth())
                     TextButton(onClick = { showHostOptions = !showHostOptions },
                         modifier = Modifier.fillMaxWidth()) {
                         Text(if (showHostOptions) "Hide puzzle & room options"
@@ -451,12 +451,15 @@ private fun NearbyMatchChip(
     onClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
-    FilterChip(selected = selected, onClick = onClick, modifier = modifier,
-        label = { Text(when (entry) {
+    PuzzleTextAction(
+        label = when (entry) {
             NearbyMatch.COOP -> "Co-op"
             NearbyMatch.SHARED_BOARD_RACE -> "Race"
             NearbyMatch.SPEED_DUEL -> "Duel"
-        }) })
+        },
+        onClick = onClick, primary = selected,
+        modifier = modifier.semantics { this.selected = selected }
+    )
 }
 
 /** Unwrap themed contexts without requiring an extra lifecycle-compose artifact. */
