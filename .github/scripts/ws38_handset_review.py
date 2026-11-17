@@ -134,7 +134,10 @@ def select_cover(title):
         if neighbor is not None:
             tap(neighbor)
         else:
-            start=find(root,'Play Woodland') or find(root,'Play Space') or find(root,'Play Garden')
+            start=next((node for node in root.iter('node')
+                        if node.get('content-desc') in
+                        ('Play Woodland','Play Space','Play Garden')),None)
+            assert start is not None, 'Home should expose its selected book'
             left,top,right,bottom=bounds(start)
             adb('shell','input','swipe',str(right-12),str((top+bottom)//2),
                 str(left+12),str((top+bottom)//2),'450')
