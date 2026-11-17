@@ -1,0 +1,100 @@
+{
+  "schema_version": 1,
+  "source_repository": "PlayerEden/GridMates-Word-Search",
+  "source_prs": [
+    86,
+    88,
+    89
+  ],
+  "source_commit": "fb023af6c31323961760439ff1f62b0226ec57a2",
+  "restored_on": "2026-11-17",
+  "scope": "Authoring and research only; no Android ingestion or word approval",
+  "files": [
+    {
+      "path": "data/lexicon/intake/esdb_us_2026_02_25.json",
+      "git_blob_sha1": "dfc23c9512c735aecc252da2f50e6c535ebb4571",
+      "size_bytes": 1484
+    },
+    {
+      "path": "data/lexicon/intake/v4_three_theme_research_seed_suggestions.csv",
+      "git_blob_sha1": "b6483a69bbd526f35b93e265ee9dc3893ca96960",
+      "size_bytes": 64161
+    },
+    {
+      "path": "data/lexicon/licenses/ESDB_SCOWL_COPYRIGHT_2026_02_25.txt",
+      "git_blob_sha1": "562ec7df17753481162f2b993e2dbd47cea77b2f",
+      "size_bytes": 4863
+    },
+    {
+      "path": "data/lexicon/sources.json",
+      "git_blob_sha1": "3f879b1004e3bfa8b244c19faf2902f8ead7321f",
+      "size_bytes": 1457
+    },
+    {
+      "path": "data/lexicon/topics.json",
+      "git_blob_sha1": "e969860d35894f2dab0032a0dc4d39820c6f329a",
+      "size_bytes": 6883
+    },
+    {
+      "path": "data/lexicon/word_topics_candidate.csv",
+      "git_blob_sha1": "356e1a0cb89cb6161ab9c40139426a14d93240ce",
+      "size_bytes": 8323
+    },
+    {
+      "path": "data/lexicon/words_candidate.csv",
+      "git_blob_sha1": "016ee78d19341c84d90eef8dfcf27cd575df8314",
+      "size_bytes": 5490
+    },
+    {
+      "path": "docs/WS10A_LEXICON_FOUNDATION_QA_2026-11-08.md",
+      "git_blob_sha1": "75b016f49ec9a104deda3154787808db73ad51fd",
+      "size_bytes": 2818
+    },
+    {
+      "path": "docs/WS10B1_PINNED_SOURCE_INTAKE_QA_2026-11-08.md",
+      "git_blob_sha1": "51fef9d8507a629d3224f0276002e12d7d468b03",
+      "size_bytes": 4725
+    },
+    {
+      "path": "docs/WS10B2_THREE_THEME_REVIEW_QA_2026-11-08.md",
+      "git_blob_sha1": "1c1a9d5f61dc9497a158989c82869f34f5948350",
+      "size_bytes": 3595
+    },
+    {
+      "path": "docs/WS10_TEN_THOUSAND_WORD_LEXICON_ROADMAP_2026-11-08.md",
+      "git_blob_sha1": "6a1a8b515127da492fbee100925d8d3e77fe1001",
+      "size_bytes": 10488
+    },
+    {
+      "path": "tools/lexicon/import_esdb_quarantine.py",
+      "git_blob_sha1": "198307eaf0a24047557ff18894b08a6004830c1c",
+      "size_bytes": 9104
+    },
+    {
+      "path": "tools/lexicon/prepare_theme_review.py",
+      "git_blob_sha1": "250738b19264c63a15c580b0ba789884d3db3ac2",
+      "size_bytes": 7102
+    },
+    {
+      "path": "tools/lexicon/test_import_esdb_quarantine.py",
+      "git_blob_sha1": "fec8a1df61a686f591736916c9aee8731f9e1239",
+      "size_bytes": 5638
+    },
+    {
+      "path": "tools/lexicon/test_prepare_theme_review.py",
+      "git_blob_sha1": "f6dc82b076ad3b6720d3f68a558d43fc068d510c",
+      "size_bytes": 5328
+    },
+    {
+      "path": "tools/lexicon/test_validate.py",
+      "git_blob_sha1": "7ff15cc13fb28da721cb70afa9476ffc9364b391",
+      "size_bytes": 6640
+    },
+    {
+      "path": "tools/lexicon/validate.py",
+      "git_blob_sha1": "e7d1b244a299b16cf40f44f52e10a344a1501817",
+      "size_bytes": 9432
+    }
+  ],
+  "legacy_workflows_replaced_by": ".github/workflows/ws40-recovered-plans-lexicon.yml"
+}

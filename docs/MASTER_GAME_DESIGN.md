@@ -1,3 +1,5 @@
+> **Current implementation and priorities:** [Current Product Roadmap](CURRENT_PRODUCT_ROADMAP.md). This master remains the design reference; dated historical statuses below do not supersede the live handoff or later owner decisions.
+
 # GridMates: Word Search — Master Game Design Document
 
 **Version:** Living master design — WS-07 owner-playtest research addendum, November 7, 2026  

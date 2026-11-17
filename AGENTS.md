@@ -4,6 +4,7 @@ This is **GridMates: Word Search**, a separate offline-first Android puzzle game
 
 ## Always read before working
 
+- **docs/CURRENT_PRODUCT_ROADMAP.md** — reconciled current work and the WS40 GitHub recovery audit; read it before reviving old plans.
 - **docs/START_HERE.md** — general coding/gameplay continuity (some old blocks are historical; compare with live GitHub).
 - **docs/WS14_ACTIVE_HANDOFF_2026-11-09.md** — current visual-project checkpoint and how to restart in a new chat.
 - **docs/ASSET_CREATION_GITHUB_INTEGRATION_PLAYBOOK.md** — reproducible image production, binary GitHub upload, import, QA and approval gates.
@@ -20,7 +21,7 @@ Inspect the live repo HEAD, draft PRs and GitHub Actions first. The WS-14 snapsh
 3. **Don't mutate pinned V1 art silently.** New artwork gets versioned asset IDs, source paths, manifest entries, checks and visual review.
 4. **QA vs release separation is mandatory.** The six WS-14 book covers/spines from the pinned sheet were verified **in the debug APK, absent from the release APK**. Do not mark generated content as rights-cleared or owner release-approved from a successful test.
 5. Keep the original 12 Woodland profile icons and unlock/equip IDs intact. Preserve Solo/Daily, Nearby, book catalog/pages and all existing save data.
-6. CI success is different from real handset QA. Keep v56 as the last owner-verified physical fallback until the owner confirms a later one. Do not merge draft stacks or remove app data automatically.
+6. CI success is different from real handset QA. Use the owner-reviewed visual baseline and tested APK fallback recorded in the latest active handoff; historical v56 status is not the current fallback. Do not merge draft stacks or remove app data automatically.
 
 ## Required: log EVERY development pass and EVERY APK build
 

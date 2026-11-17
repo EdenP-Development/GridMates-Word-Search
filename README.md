@@ -1,5 +1,35 @@
 # GridMates: Word Search
 
+An offline-first Android puzzle game with illustrated puzzle books, Solo/Custom,
+Daily, nearby Co-op, Shared Board Race and Speed Duel.
+
+**Current playable QA is v102 / WS39**, with fresh themed Quick Play and complete
+book backup/restore. [Download the tested QA artifact](https://github.com/PlayerEden/GridMates-Word-Search/actions/runs/44192668122/artifacts/14377072810).
+[Build and Android receipt](docs/devlog/2026-11-17_WS39_REPLAY_AND_BOOK_BACKUPS.md).
+
+Current development lives on the cumulative draft feature branch, not `main`.
+The WS40 pass recovers the missing word-library branch and reconciles old plans.
+It changes authoring/tools/docs and does not produce another APK.
+
+- [Current product roadmap](docs/CURRENT_PRODUCT_ROADMAP.md)
+- [Start here for development](docs/START_HERE.md)
+- [Active handoff](docs/WS14_ACTIVE_HANDOFF_2026-11-09.md)
+- [Development journal](docs/DEVELOPMENT_JOURNAL.md)
+- [GitHub recovery audit](docs/audits/2026-11-17_WS40_GITHUB_PLAN_RECOVERY.md)
+- [Word-library authoring](data/lexicon/README.md)
+- [Master game design](docs/MASTER_GAME_DESIGN.md)
+
+The next content milestone is reviewed immutable packs and the complete mixed
+Quick Play loop, followed by real book catalog growth. Two-phone physical
+acceptance and release gates remain open. Keep the twelve original Woodland
+portraits, stable saves/signing and the shared warm-paper/green/gold identity.
+The separate GridMates: Sudoku app is not modified by this project.
+
+<details>
+<summary>Historical checkpoints before WS40 — reference only</summary>
+
+# GridMates: Word Search
+
 > **CURRENT DEVELOPMENT / DESIGN AUDIT (Nov 14, 2026):** [Whole-repo asset and visual-cohesion findings](docs/audits/2026-11-14_WHOLE_REPO_ASSET_AND_VISUAL_COHESION_AUDIT.md) and [v75 functional/phone QA](docs/devlog/2026-11-14_WS16BP_LIBRARY_FUNCTIONAL_NAVIGATION_QA.md). Active code is on [draft PR #131](https://github.com/PlayerEden/GridMates-Word-Search/pull/131), **not `main`**. Latest dual-green Android/art QA build is [v75](https://github.com/PlayerEden/GridMates-Word-Search/actions/runs/43635464423/artifacts/14129808202); release art approval, full phone QA and app integration remain open. Read older statuses below as historical.
 
 > **New-chat continuity:** [Development Journal — chronological who/what/why/build records](docs/DEVELOPMENT_JOURNAL.md) · [Latest WS-14C handoff](docs/WS14_ACTIVE_HANDOFF_2026-11-09.md). A dated entry is required for **each development pass and build**. The illustrated APK is available through the [GitHub Actions artwork artifact](https://github.com/PlayerEden/GridMates-Word-Search/actions/runs/42576785170/artifacts/13656070327); download its ZIP and extract `app-debug.apk` when an in-chat file link fails. Physical-device QA remains open.
@@ -42,3 +72,6 @@ GridMates: Word Search is a standalone, offline-first native Android word-search
 **Installing safely:** Stable-signed WS-05J v0.5.9 from PR #41 and later builds (including WS-06D v0.7.1) can normally update over the top to v0.7.4. The **actual v0.7.3→v0.7.4 path passed Android emulator QA**. Old ephemeral-signed v0.5.8 and the separate PR #40 screenshot v0.5.9 APK may require **Export backup → verify JSON → uninstall Word Search QA only → install v0.7.4 → Restore backup**. Never uninstall or clear app storage without verifying a backup. Read the [full QA receipt](docs/WS06G_BUILD_QA_2026-11-07.md).
 
 **Sister project:** [GridMates: Sudoku](https://github.com/PlayerEden/SudokuTogether). Word Search has its own package, saves, engine, LAN mode namespace, signing and repository.
+
+
+</details>

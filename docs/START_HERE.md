@@ -1,3 +1,41 @@
+# Start here — GridMates: Word Search
+
+Read [the current product roadmap](CURRENT_PRODUCT_ROADMAP.md), the top of the
+[active handoff](WS14_ACTIVE_HANDOFF_2026-11-09.md), the
+[development journal](DEVELOPMENT_JOURNAL.md) and its latest dated pass before
+making changes. Inspect live GitHub PR heads and CI rather than using `main` or
+an old APK banner as the current source.
+
+**Latest playable build is v102 / WS39.** [Source, signed APK and Android
+checks](devlog/2026-11-17_WS39_REPLAY_AND_BOOK_BACKUPS.md). WS40 is an authoring/
+plan recovery pass and does not rebuild or change the installed app.
+
+The [WS40 audit](audits/2026-11-17_WS40_GITHUB_PLAN_RECOVERY.md) recovered the
+separate WS10 canonical lexicon, pinned candidate intake and review tools.
+The old 10,000-word objective remains a long-term content goal. Neither 36,213
+quarantined roots nor 532 proposal rows are approved game vocabulary.
+
+Next complete a reviewed editorial batch and immutable pack export, then add a
+new pack-aware generator/save path and the full mixed Quick Play size/Play
+Another loop. Current Quick Play is one-theme 12×12. Regular books remain
+12/15/20; 25/30 are optional Solo and larger Marathon boards remain research.
+
+For artwork, also read the
+[production playbook](ASSET_CREATION_GITHUB_INTEGRATION_PLAYBOOK.md),
+[visual identity plan](WS14_FULL_APP_VISUAL_IDENTITY_AND_UI_PRODUCTION_ROADMAP_2026-11-08.md),
+[style bible](../design/visual-system/WS14_VISUAL_STYLE_BIBLE_AND_SPRITE_ASSET_CONTRACT_2026-11-08.md)
+and [shared identity/motion contract](GRIDMATES_SHARED_VISUAL_IDENTITY_AND_MOTION_2026-11-09.md).
+Preserve the matched cover/spine families and original portraits. Art and
+production content promotion remain separate from a green debug build.
+
+Every development pass gets a dated log and current handoff update. Record
+exact tested source, CI, artifact/checksum if any, what actually ran, limitations,
+fallback and one next task. Do not merge the draft stack, clear player data, or
+claim physical two-phone acceptance from loopback/emulator tests.
+
+<details>
+<summary>Historical checkpoints before WS40 — reference only</summary>
+
 # START HERE — GridMates: Word Search
 
 > **Latest confirmed v76 APK (Nov 14):** WS16BR [full exact-source receipt](devlog/2026-11-14_WS16BR_HOME_PAPER_AND_BOOK_PREVIEW_IMPLEMENTATION.md), [Android QA 72/72](https://github.com/PlayerEden/GridMates-Word-Search/actions/runs/43638723383) and [independent artwork/release 73/73](https://github.com/PlayerEden/GridMates-Word-Search/actions/runs/43638723286); [GitHub APK ZIP](https://github.com/PlayerEden/GridMates-Word-Search/actions/runs/43638723383/artifacts/14130648141). No bookcase art changes, safe same-signer install-over from v75; owner visual and actual saved-game/device acceptance still open, PR #131 DRAFT. Older “current APK” references below are historical.
@@ -92,3 +130,6 @@ WS-06G added a **small, entirely free Co-op board appearance preview catalog** a
 ### WS-07F Records UI verification and next UX handoff
 
 [Full source-matched 92/92 pass](WS07F_RECORDS_BUILD_QA_2026-11-07.md) on `85ee1c05a8d3f34c8486282ac74fb58b64e29927`, with saved-progress upgrade PASS. The planned Collection paging follow-up is isolated in [draft PR #61](https://github.com/PlayerEden/GridMates-Word-Search/pull/61); treat the code37 branch as **UNVERIFIED** until separate full Android QA. Original roadmap durability/performance and beta gates remain incomplete. Don't ask the owner to test on phones until they volunteer readiness.
+
+
+</details>
