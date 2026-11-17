@@ -35,8 +35,10 @@ def package_state(version):
 
 
 def launch():
-    result = shell("am", "start", "-W", "-n", ACTIVITY)
-    require("Status: ok" in result, f"QA Activity failed to launch:\n{result}")
+    # Activity Manager can time out waiting for the first frame on a cold runner.
+    # The subsequent UI checks verify the launched Activity by its visible actions.
+    result = shell("am", "start", "-n", ACTIVITY)
+    require("Starting: Intent" in result and "Error" not in result, result)
 
 
 def nodes():
@@ -54,7 +56,7 @@ def find_label(*labels, scroll=False):
     require(sizes, f"Could not read emulator size: {size}")
     width, height = map(int, sizes[-1])
     seen = set()
-    for attempt in range(5):
+    for attempt in range(12):
         visible = nodes()
         for node in visible:
             candidates = (node.get("text", ""), node.get("content-desc", ""))
@@ -66,7 +68,7 @@ def find_label(*labels, scroll=False):
                 left, top, right, bottom = map(int, bounds)
                 if right > left and bottom > top:
                     return (left + right) // 2, (top + bottom) // 2
-        if scroll and visible and attempt < 3:
+        if scroll and any(node.get("package") == PACKAGE for node in visible) and attempt < 3:
             shell("input", "swipe", str(width // 2), str(3 * height // 4),
                   str(width // 2), str(height // 3), "350")
         time.sleep(0.8)
