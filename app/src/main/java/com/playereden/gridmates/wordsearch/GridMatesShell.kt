@@ -16,6 +16,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
@@ -459,19 +460,25 @@ private fun SavedSoloScreen(
             }
         )
     }
-    PaperEyebrow("Solo · Puzzle Library")
-    Text("My Puzzles", style = MaterialTheme.typography.headlineSmall,
-        color = Forest, fontWeight = FontWeight.Bold)
-    Text("Switch games anytime. An unfinished puzzle keeps its found words, " +
-        "hints and time when you leave it.",
-        color = Muted, style = MaterialTheme.typography.bodyMedium)
+    Ws15SectionHeading(
+        glyph = Ws15SectionGlyph.JOURNAL,
+        title = "My Puzzles"
+    )
+    Text(
+        "Unfinished Solo puzzles keep your found words, hints and time.",
+        color = Muted, style = MaterialTheme.typography.bodyMedium
+    )
     store.warning?.let {
         Text(it, color = Gold, style = MaterialTheme.typography.bodySmall)
     }
-    Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-        TextButton(onClick = onBack) { Text("Back to Play") }
+    Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(10.dp),
+        verticalAlignment = androidx.compose.ui.Alignment.CenterVertically) {
+        TextButton(onClick = onBack,
+            modifier = Modifier.heightIn(min = 48.dp)) { Text("Back to Play") }
         Spacer(Modifier.weight(1f))
-        Button(onClick = onNewSolo) { Text("New Solo") }
+        GridMatesIllustratedPill(
+            label = "New Solo", onClick = onNewSolo,
+            modifier = Modifier.testTag("ws31-new-solo"))
     }
 
     @Composable
@@ -487,32 +494,67 @@ private fun SavedSoloScreen(
         PaperProgress(run.foundIds.size, puzzle.targets.size)
     }
 
-    PaperPanel(Modifier.fillMaxWidth()) {
-        PaperEyebrow("Currently playing")
-        PuzzleSummary(active)
-        Button(onClick = { onResume(active.puzzleId) },
-            modifier = Modifier.fillMaxWidth().height(48.dp)) {
-            Text(if (com.playereden.gridmates.wordsearch.core.SoloSessionLibrary.finished(active))
-                "Review current puzzle" else "Continue current puzzle")
+    // Illustrated frames are BoxScope-based: nest *all* content in one Column
+    // to avoid the profile-card overlap that was corrected in WS28.
+    GridMatesIllustratedFrame(
+        modifier = Modifier.fillMaxWidth().testTag("ws31-current-solo-card"),
+        variant = GridMatesFrameVariant.FEATURE
+    ) {
+        Column(Modifier.fillMaxWidth().padding(15.dp),
+            verticalArrangement = Arrangement.spacedBy(10.dp)) {
+            Ws15SectionHeading(
+                glyph = Ws15SectionGlyph.JOURNAL,
+                title = "Currently playing"
+            )
+            PuzzleSummary(active)
+            GridMatesIllustratedPill(
+                label = if (com.playereden.gridmates.wordsearch.core.SoloSessionLibrary.finished(active))
+                    "Review current puzzle" else "Continue current puzzle",
+                onClick = { onResume(active.puzzleId) },
+                modifier = Modifier.fillMaxWidth().testTag("ws31-current-resume")
+            )
         }
     }
 
     PaperEyebrow("Paused · ${paused.size} / ${com.playereden.gridmates.wordsearch.core.SoloSessionLibrary.MAX_PAUSED}")
     if (paused.isEmpty()) {
-        Text("No paused games yet. Starting another Solo puzzle saves your current " +
-            "unfinished board here.", color = Muted,
-            style = MaterialTheme.typography.bodyMedium)
+        GridMatesIllustratedFrame(
+            modifier = Modifier.fillMaxWidth().testTag("ws31-empty-paused"),
+            variant = GridMatesFrameVariant.MEDIUM
+        ) {
+            Column(Modifier.fillMaxWidth().padding(15.dp),
+                verticalArrangement = Arrangement.spacedBy(8.dp)) {
+                Ws15SectionHeading(
+                    glyph = Ws15SectionGlyph.JOURNAL,
+                    title = "No paused puzzles yet"
+                )
+                Text("Starting another Solo puzzle saves your current unfinished board here.",
+                    color = Muted, style = MaterialTheme.typography.bodySmall)
+            }
+        }
     }
     paused.forEach { run ->
-        PaperPanel(Modifier.fillMaxWidth()) {
-            PuzzleSummary(run)
-            Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                Button(onClick = { onResume(run.puzzleId) },
-                    modifier = Modifier.weight(1f).height(48.dp)) {
-                    Text("Resume")
-                }
-                TextButton(onClick = { removeId = run.puzzleId }) {
-                    Text("Remove")
+        GridMatesIllustratedFrame(
+            modifier = Modifier.fillMaxWidth()
+                .testTag("ws31-paused-solo-" + run.puzzleId),
+            variant = GridMatesFrameVariant.MEDIUM
+        ) {
+            Column(Modifier.fillMaxWidth().padding(15.dp),
+                verticalArrangement = Arrangement.spacedBy(10.dp)) {
+                PuzzleSummary(run)
+                Row(Modifier.fillMaxWidth(),
+                    verticalAlignment = androidx.compose.ui.Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.spacedBy(10.dp)) {
+                    GridMatesIllustratedPill(
+                        label = "Resume", onClick = { onResume(run.puzzleId) },
+                        modifier = Modifier.weight(1f)
+                            .testTag("ws31-paused-resume-" + run.puzzleId)
+                    )
+                    TextButton(onClick = { removeId = run.puzzleId },
+                        modifier = Modifier.heightIn(min = 48.dp)
+                            .testTag("ws31-paused-remove-" + run.puzzleId)) {
+                        Text("Remove")
+                    }
                 }
             }
         }
