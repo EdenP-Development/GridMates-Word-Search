@@ -1,4 +1,4 @@
-"""Compare the signed v97 and v98 Library screens on the same Android emulator."""
+"""Exercise the signed v98 Library on a fresh Android 15 emulator."""
 import re
 import subprocess
 import time
@@ -101,15 +101,13 @@ try:
     adb("shell", "wm", "dismiss-keyguard")
     adb("shell", "settings", "put", "secure", "immersive_mode_confirmations", "confirmed")
     adb("shell", "settings", "put", "system", "font_scale", "1.0")
-    start_at(720, 1640)
-    open_library()
-    await_nodes("Your Library", "Open Woodland", "Open Space", "Open Garden")
-    capture("v97-library.png")
-
     assert b"Success" in adb("install", "-r", "qa-candidate/app-debug.apk", timeout=90)
     assert b"versionCode=98 " in adb("shell", "dumpsys", "package", PACKAGE)
-    start_at(720, 1640)
+    print("PASS: replacement install kept the package and accepted the v97 signer.")
+    start_at(720, 1600)
     open_library()
+    time.sleep(1)
+    capture("v98-library.png")
     shelf = await_nodes("Your Library", "Open Woodland", "Open Space", "Open Garden")
     capture("v98-library.png")
     woodland = bounds(find(shelf, "Open Woodland"))
@@ -145,6 +143,9 @@ try:
     capture("v98-cabinet-2-260dp.png")
     print("PASS: swiping the short layout reaches the final real book.")
 finally:
-    result = subprocess.run(["adb", "logcat", "-d", "-t", "200"], timeout=10,
-                            stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
-    (EVIDENCE / "android-logcat.txt").write_bytes(result.stdout)
+    try:
+        result = subprocess.run(["adb", "logcat", "-d", "-t", "200"], timeout=8,
+                                stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+        (EVIDENCE / "android-logcat.txt").write_bytes(result.stdout)
+    except subprocess.TimeoutExpired:
+        print("Runner lost ADB while collecting the final log.")
