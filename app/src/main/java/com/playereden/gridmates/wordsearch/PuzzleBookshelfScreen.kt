@@ -259,7 +259,8 @@ internal fun PuzzleBookDetailScreen(
     onBookmarkPage: ((bookId: String, pageId: String) -> Unit)? = null,
     modifier: Modifier = Modifier,
     showPrototypeArt: Boolean = false,
-    fieldNotesArt: Boolean = false
+    fieldNotesArt: Boolean = false,
+    startedPageIds: Set<String> = emptySet()
 ) {
     val healthy = isBookStateReadable(catalog, progress)
     val book = catalog.book(bookId)
@@ -267,7 +268,7 @@ internal fun PuzzleBookDetailScreen(
     val completed = if (healthy && book != null)
         progress.volumes[bookId]?.completedPageIds.orEmpty() else emptySet()
     val next = if (healthy && book != null)
-        BookProgressRules.continuePage(catalog, progress, bookId) else null
+        BookProgressRules.continuePage(catalog, progress, bookId, startedPageIds) else null
     val bookmark = if (healthy && book != null)
         progress.volumes[bookId]?.bookmarkedPageId else null
 
@@ -383,8 +384,13 @@ internal fun PuzzleBookDetailScreen(
                         Button(
                             onClick = { onPlayPage(bookId, next.id) },
                             modifier = Modifier.fillMaxWidth().heightIn(min = 48.dp)
+                                    .testTag("book-continue")
                         ) {
-                            Text(if (completed.isEmpty()) "Start solving" else "Continue solving")
+                            Text(when {
+                                next.id in startedPageIds -> "Resume page " + (pages.indexOf(next) + 1)
+                                completed.isEmpty() -> "Start solving"
+                                else -> "Continue solving"
+                            })
                         }
                     } else {
                         Text("Book pages will be playable after content approval.",
@@ -437,6 +443,8 @@ internal fun PuzzleBookDetailScreen(
                     val ordinal = pages.indexOfFirst { it.id == page.id } + 1
                     val isComplete = page.id in completed
                     val isCurrent = page.id == next?.id
+                    val inProgress = !isComplete && page.id in startedPageIds
+                    val action = if (inProgress) "Resume" else "Play"
                     BookDetailCohesionPanel(showPrototypeArt,
                         Modifier.fillMaxWidth().testTag("book-detail-page-panel-" + page.id)) {
                         Row(Modifier.fillMaxWidth(),
@@ -452,9 +460,12 @@ internal fun PuzzleBookDetailScreen(
                                     Modifier.size(43.dp).testTag("book-page-complete-" + page.id), fieldNotes = fieldNotesArt)
                             }
                             Column(Modifier.weight(1f)) {
-                                Text("Page " + ordinal +
-                                    if (isComplete) " · Completed" else if (isCurrent)
-                                        " · Next page" else " · Not started",
+                                Text("Page " + ordinal + when {
+                                    isComplete -> " · Completed"
+                                    inProgress -> " · In progress"
+                                    isCurrent -> " · Next page"
+                                    else -> " · Not started"
+                                },
                                     color = Forest,
                                     style = MaterialTheme.typography.titleMedium,
                                     fontWeight = FontWeight.SemiBold)
@@ -478,8 +489,8 @@ internal fun PuzzleBookDetailScreen(
                                         Button(
                                             onClick = { onPlayPage(bookId, page.id) },
                                             modifier = Modifier.weight(0.44f).heightIn(min = 48.dp)
-                                                .semantics { contentDescription = "Play page $ordinal" }
-                                        ) { Text("Play", maxLines = 1) }
+                                                .semantics { contentDescription = "$action page $ordinal" }
+                                        ) { Text(action, maxLines = 1) }
                                         OutlinedButton(
                                             onClick = { onBookmarkPage(bookId, page.id) },
                                             enabled = bookmark != page.id,
@@ -499,8 +510,8 @@ internal fun PuzzleBookDetailScreen(
                                         Button(
                                             onClick = { onPlayPage(bookId, page.id) },
                                             modifier = Modifier.fillMaxWidth().heightIn(min = 48.dp)
-                                                .semantics { contentDescription = "Play page $ordinal" }
-                                        ) { Text("Play", maxLines = 1) }
+                                                .semantics { contentDescription = "$action page $ordinal" }
+                                        ) { Text(action, maxLines = 1) }
                                         OutlinedButton(
                                             onClick = { onBookmarkPage(bookId, page.id) },
                                             enabled = bookmark != page.id,
@@ -522,7 +533,7 @@ internal fun PuzzleBookDetailScreen(
                                 Button(onClick = { onPlayPage(bookId, page.id) },
                                     modifier = Modifier.fillMaxWidth().heightIn(min = 48.dp)) {
                                     Text(if (isComplete) "Replay page $ordinal"
-                                        else "Play page $ordinal")
+                                        else "$action page $ordinal")
                                 }
                             }
                             if (!isComplete && onBookmarkPage != null) {

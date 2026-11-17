@@ -49,7 +49,7 @@ class MotionDepthTests(unittest.TestCase):
     def test_book_top_gap_and_subdued_decorative_spines(self):
         scene = (APP/"WS16ATModularLibraryScene.kt").read_text()
         blank = (APP/"WS16BIUnletteredBlankSpine.kt").read_text()
-        self.assertIn("top = (top - 88.dp).coerceAtLeast(12.dp)", scene)
+        self.assertIn("val titleTop = (top - 88.dp).coerceAtLeast(12.dp)", scene)
         self.assertIn("alpha(0.75f)", blank)
         self.assertIn("clearAndSetSemantics {}", blank)
         self.assertNotIn(".clickable(", blank)

@@ -77,7 +77,7 @@ class FutureBookcaseTests(unittest.TestCase):
         blank=(APP/"WS16BIUnletteredBlankSpine.kt").read_text()
         bay=(APP/"WS16BHDenseSpineBay.kt").read_text()
         self.assertIn("val realPageCount = maxOf(1,",src)
-        self.assertIn("val futureBookcaseCount = if (densePortrait) 2 else 0",src)
+        self.assertIn("val futureBookcaseCount = if (densePortrait && !packedCatalog) 2 else 0",src)
         self.assertIn("val pages = realPageCount + futureBookcaseCount",src)
         self.assertIn("val isFutureBookcase = densePortrait && page >= realPageCount",src)
         self.assertIn("books.drop(page * capacity).take(capacity)",src)

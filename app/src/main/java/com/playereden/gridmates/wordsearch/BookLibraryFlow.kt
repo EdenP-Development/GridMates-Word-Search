@@ -14,6 +14,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
@@ -45,16 +46,18 @@ internal fun BookLibraryFlow(
     val directFromHome = initialBook != null
     // Reuse published book and local progress validation; a fully solved book
     // enters details for replay/page choice instead of silently resetting.
-    val initialPage = remember(catalog, initialBook, progressStore) {
+    val initialPage = remember(catalog, initialBook, progressStore, sessionStore) {
         initialBook?.takeUnless { progressStore.blocked || sessionStore.blocked }
             ?.let { book ->
                 runCatching {
-                    BookProgressRules.continuePage(catalog, progressStore.progress, book)
+                    BookProgressRules.continuePage(
+                        catalog, progressStore.progress, book, sessionStore.startedPageIds(book)
+                    )
                 }.getOrNull()?.id
             }
     }
-    var bookId by remember(catalog, initialBook) { mutableStateOf(initialBook) }
-    var pageId by remember(catalog, initialBook) { mutableStateOf(initialPage) }
+    var bookId by rememberSaveable(initialBook) { mutableStateOf(initialBook) }
+    var pageId by rememberSaveable(initialBook) { mutableStateOf(initialPage) }
     var update by remember(catalog) { mutableIntStateOf(0) }
     var feedback by remember(catalog) { mutableStateOf<String?>(null) }
     // QA-only in-memory style choice: does NOT affect book progress or saves.
@@ -67,7 +70,7 @@ internal fun BookLibraryFlow(
     var horizontalLibrary by remember(catalog) { mutableStateOf(false) }
     // WS16BP: keep the real bookcase page when a volume opens, then return
     // to its shelf; never persist a decorative future-book state to a save file.
-    var cabinetPage by remember(catalog) { mutableIntStateOf(0) }
+    var cabinetPage by rememberSaveable { mutableIntStateOf(0) }
     var focusedBookId by remember(catalog) {
         mutableStateOf(catalog.books.firstOrNull()?.id)
     }
@@ -123,6 +126,9 @@ internal fun BookLibraryFlow(
                 if (directFromHome) onExit() else bookId = null
             }
             val currentBook = requireNotNull(bookId)
+            val startedPageIds = remember(currentBook, update) {
+                sessionStore.startedPageIds(currentBook)
+            }
             Column(Modifier.fillMaxSize().padding(safeContentPadding)) {
                 if (feedback != null) {
                     Text(feedback.orEmpty(), modifier = Modifier.padding(12.dp))
@@ -154,7 +160,8 @@ internal fun BookLibraryFlow(
                     },
                     modifier = Modifier.weight(1f),
                     showPrototypeArt = showPrototypeArt,
-                    fieldNotesArt = fieldNotesArt
+                    fieldNotesArt = fieldNotesArt,
+                    startedPageIds = startedPageIds
                 )
             }
         }

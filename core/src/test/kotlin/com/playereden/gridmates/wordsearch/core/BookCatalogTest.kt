@@ -190,6 +190,24 @@ class BookCatalogTest {
         assertNull(BookProgressRules.continuePage(catalog, saved, id))
     }
 
+    @Test fun continuePrefersStartedPagesAndKeepsThePlayersBookmark() {
+        val (catalog, _) = fixture()
+        val bookId = "woodland-volume-one"
+        val progress = BookLibraryProgress()
+        val started = setOf("woodland-page-two")
+        assertEquals(
+            "woodland-page-two",
+            BookProgressRules.continuePage(catalog, progress, bookId, started)?.id
+        )
+        val bookmarked = BookProgressRules.bookmark(
+            catalog, progress, bookId, "woodland-page-three"
+        )
+        assertEquals(
+            "woodland-page-three",
+            BookProgressRules.continuePage(catalog, bookmarked, bookId, started)?.id
+        )
+    }
+
     @Test fun bookmarksAndRecoveryNeverForgetOrReassignPages() {
         val (catalog, puzzles) = fixture()
         val id = "woodland-volume-one"

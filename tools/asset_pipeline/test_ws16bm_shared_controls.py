@@ -75,7 +75,7 @@ class SharedControlsTests(unittest.TestCase):
         for part in (
             "val pages = realPageCount + futureBookcaseCount",
             "WS16BHDenseSpineBay(",
-            "Ws16BIMountedCabinetShelf()",
+            "Ws16BIMountedCabinetShelf(colorFilter = woodFilter)",
             "fullPlaceholderShelf = isFutureBookcase",
             "onBookSelected = onBookSelected",
             "books.drop(page * capacity).take(capacity)",

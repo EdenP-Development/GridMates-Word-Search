@@ -56,12 +56,12 @@ class GreenNavigationTests(unittest.TestCase):
         scene = (APP / "WS16ATModularLibraryScene.kt").read_text()
         self.assertIn("val stageDrop = if (densePortrait) 18.dp else 0.dp", scene)
         self.assertIn("22.dp.coerceAtMost((bottom - 32.dp).coerceAtLeast(0.dp))", scene)
-        self.assertIn("val stageTop = top + stageDrop", scene)
+        self.assertIn("top + stageDrop, safeContentPadding.calculateTopPadding() + titleTop + titleHeight", scene)
         self.assertIn("val stageBottom = bottom - pagerDrop", scene)
         self.assertIn("val available = (maxHeight - stageTop - stageBottom)", scene)
         self.assertIn("top = stageTop, bottom = stageBottom)", scene)
         self.assertIn("bottom = (bottom - pagerDrop - 12.dp).coerceAtLeast(12.dp)", scene)
-        self.assertIn("val pagerBayHeight = shelfOverhang + pagerGap + pagerRailBudget", scene)
+        self.assertIn("if (showPager || !packedCatalog) pagerGap + pagerRailBudget else 0.dp", scene)
         self.assertIn("WS16BKBookcasePager(", scene)
         for width, height in (
             (320, 570), (320, 680), (360, 640), (360, 760),
@@ -93,7 +93,7 @@ class GreenNavigationTests(unittest.TestCase):
             "fullPlaceholderShelf = isFutureBookcase",
             "onBookSelected = onBookSelected",
             "WS16BHDenseSpineBay(",
-            "Ws16BIMountedCabinetShelf()",
+            "Ws16BIMountedCabinetShelf(colorFilter = woodFilter)",
             'testTag("ws16at-library-title")',
             "showDecorativeBlanks = true",
         ):
@@ -116,7 +116,7 @@ class GreenNavigationTests(unittest.TestCase):
         shelf = (APP / "PuzzleBookshelfScreen.kt").read_text()
         bookcase = (APP / "BookcaseBookshelfScreen.kt").read_text()
         scene = (APP / "WS16ATModularLibraryScene.kt").read_text()
-        self.assertIn("var cabinetPage by remember(catalog)", flow)
+        self.assertIn("var cabinetPage by rememberSaveable", flow)
         self.assertIn("initialCabinetPage = cabinetPage", flow)
         self.assertIn("onCabinetPageChanged = { cabinetPage = it }", flow)
         self.assertIn("initialCabinetPage: Int = 0", shelf)

@@ -8,6 +8,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.asImageBitmap
+import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.testTag
@@ -23,7 +24,9 @@ import androidx.compose.ui.unit.dp
  * use a 1172x250 source for a cleaner bevel and hardware on phones.
  */
 @Composable
-internal fun Ws16BIMountedCabinetShelf(modifier: Modifier = Modifier) {
+internal fun Ws16BIMountedCabinetShelf(
+    modifier: Modifier = Modifier, colorFilter: ColorFilter? = null
+) {
     val context = LocalContext.current
     val image = remember(context) {
         runCatching {
@@ -43,6 +46,7 @@ internal fun Ws16BIMountedCabinetShelf(modifier: Modifier = Modifier) {
             bitmap = image.asImageBitmap(),
             contentDescription = null,
             contentScale = ContentScale.FillBounds,
+            colorFilter = colorFilter,
             modifier = Modifier.fillMaxWidth().height(paintedHeight)
                 .offset(y = paintedHeight - 42.dp)
         )

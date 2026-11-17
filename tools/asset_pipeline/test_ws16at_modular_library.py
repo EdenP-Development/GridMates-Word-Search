@@ -42,13 +42,13 @@ class ModularLibraryTests(unittest.TestCase):
         self.assertIn("top = stageTop, bottom = stageBottom)",code)
         self.assertIn(".coerceAtMost(maxHeight * 0.25f)",code)
         self.assertIn(".coerceAtMost(maxHeight * 0.15f)",code)
-        self.assertLess(code.index("WS16ATCabinetLayers(foreground = false, modifier = Modifier.fillMaxSize())"),
+        self.assertLess(code.index("WS16ATCabinetLayers(foreground = false"),
                         code.index("HorizontalPager("))
         self.assertLess(code.index("HorizontalPager("),
-                        code.index("WS16ATCabinetLayers(foreground = true, modifier = Modifier.fillMaxSize())"))
-        self.assertLess(code.index("WS16ATCabinetLayers(foreground = true, modifier = Modifier.fillMaxSize())"),
+                        code.index("WS16ATCabinetLayers(foreground = true"))
+        self.assertLess(code.index("WS16ATCabinetLayers(foreground = true"),
                         code.index('label = "Your Library"'))
-        self.assertIn("Ws16BIMountedCabinetShelf()",code)
+        self.assertIn("Ws16BIMountedCabinetShelf(colorFilter = woodFilter)",code)
         self.assertIn("Ws16EStorybookShelf()",code)
         self.assertIn("val shelfContactDepth = 42.dp",code)
         self.assertIn("futureTreatment = true",code)
@@ -83,8 +83,8 @@ class ModularLibraryTests(unittest.TestCase):
     def test_ws16bc_shelf_anchored_count_and_future_separation(self):
         scene = (APP / "WS16ATModularLibraryScene.kt").read_text()
         spines = (APP / "WS16AMInteractiveBookcaseScene.kt").read_text()
-        self.assertIn("val shelfOverhang = if (cabinetPortrait)", scene)
-        self.assertIn("val pagerBayHeight = shelfOverhang + pagerGap + pagerRailBudget", scene)
+        self.assertIn("val shelfOverhang = if (cabinetPortrait || packedCatalog)", scene)
+        self.assertIn("if (showPager || !packedCatalog) pagerGap + pagerRailBudget else 0.dp", scene)
         self.assertIn('testTag("ws16bk-navigation-bay")', scene)
         self.assertIn("showFutureVolumes = false", scene)
         self.assertIn("val densePortrait = cabinetPortrait", scene)
@@ -92,7 +92,7 @@ class ModularLibraryTests(unittest.TestCase):
         self.assertIn("densePortrait && maxHeight >= 960.dp && books.size > slots -> 3", scene)
         self.assertIn("val capacity = slots * tierCount", scene)
         self.assertIn("List(tierCount) { shelfTierSpace / tierCount }", scene)
-        self.assertIn("val balancedSparseLayout = !densePortrait && tierCount == 2", scene)
+        self.assertIn("val balancedSparseLayout = !usePackedRows && tierCount == 2", scene)
         self.assertIn("WS16BHDenseSpineBay(", scene)
         self.assertIn("slots = if (balancedSparseLayout) shelfBooks.size else slots", scene)
         self.assertIn("slot = if (balancedSparseLayout) 60.dp else hitSlot", scene)
