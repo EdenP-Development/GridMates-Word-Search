@@ -53,6 +53,31 @@ matches do not approve display, theme or familiarity.
 
 ## What still applies / what moved on
 
+### References also recovered from `main`
+
+Seven research/reference documents were present only on default `main`, absent
+from the active source tree. Restored exact bytes and recorded original blob
+hashes in [the research recovery ledger](ws40-main-research-recovery.json):
+the [genre design study](../WORD_SEARCH_GENRE_MASTER_RESEARCH_2026-11-08.md),
+[word-library inventory](../WORD_LIBRARY_STATUS_2026-11-08.md),
+[competitor UX study](../COMPETITOR_WORD_SEARCH_UX_RESEARCH_2026-11-06.md),
+[Spanish plan](../MULTILINGUAL_SPANISH_RESEARCH_AND_DEV_PLAN.md),
+[parity-first plan](../PARITY_FIRST_QUALITY_PLAN.md),
+[font intake research](../FONT_LIBRARY_LICENSE_RESEARCH_2026-11-06.md), and
+[artifact retention note](../CI_ACTIONS_ARTIFACT_RETENTION.md).
+
+These are dated historical research, not fresh verification of external claims,
+licenses, policies or artifact lifetimes. Their "current" version numbers and
+statuses do not override this roadmap. No cleanup workflow, font candidates or
+obsolete asset schema was enabled. Use the active build's actual retention and
+save a milestone before its artifact expires.
+
+The still-useful gameplay work is measuring word-set overlap over repeated
+boards, subtopic/length variety, direction distribution, crossings and target
+coverage across regions. It complements the existing solvability/claim tests.
+Familiarity remains editorial rather than a measured corpus score. Keep the
+global lexicon separate from per-puzzle substring/palindrome compatibility.
+
 | Plan or issue | Assessment against current code | Disposition |
 | --- | --- | --- |
 | [#18](https://github.com/PlayerEden/GridMates-Word-Search/issues/18), [#87](https://github.com/PlayerEden/GridMates-Word-Search/issues/87), WS10 | Bulk content and canonical IDs were real prior work but absent from the cumulative tree | Recover now, then editorial batches and a new content engine |

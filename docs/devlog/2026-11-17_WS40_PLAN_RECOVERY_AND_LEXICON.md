@@ -49,6 +49,11 @@
   depth, book-to-profile rewards and physical two-phone acceptance. Classified
   future themes, languages, Marathon, extra portraits/economy and old visual
   alternatives without automatically enabling them.
+- Restored seven exact-hash historical research references that existed only on
+  `main`, including the Spanish/parity, word-inventory, genre/competitor, font
+  intake and artifact-retention documents. Recorded their source in a separate
+  recovery ledger. No old cleanup workflow or font import was enabled. Added
+  the still-relevant consecutive-play freshness/layout benchmarks to the roadmap.
 
 ## Build and QA receipt
 

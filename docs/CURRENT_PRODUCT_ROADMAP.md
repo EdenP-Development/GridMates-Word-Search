@@ -29,6 +29,7 @@ The latest cumulative source is on its development branch, not `main`.
 | --- | --- | --- |
 | Next | **Large curated word library** | Recover WS10's separate authoring branch, then review 100–250-word batches. Long-term target remains **10,000 distinct approved playable words over 30-plus topics**. Current APK V2 pools have 36 words/theme and V3 has 81/81/79. Candidate/source counts do not count as shipped content. |
 | Next | **Immutable packs and new content engine** | WS40 adds an approved-only snapshot exporter. Next needs actual reviewed content plus an offline loader/versioned generator, stable pack IDs and hashes, frozen fixtures, portable saves and content-compatible LAN messages. Preserve V1/V2/V3 and old Daily boards. |
+| With new packs | **Consecutive-play quality benchmarks** | Recover the genre research's word-set overlap, subtopic/length mix, direction balance, crossings and target-region coverage checks across many consecutive seeds. The v102 solvability audit does not by itself prove long-term vocabulary freshness. Measure distributions and poor outliers before tuning quotas. |
 | Then | **Complete mixed Quick Play** | Recover WS16B/WS17's intended Small 12×12 / Medium 15×15 / Large 20×20 selector, mixed-theme plus general vocabulary, and same-size Play Another. Medium is recommended. v102's usable short themed mode is a partial implementation of that broader design. |
 | Then | **Publishable book catalog** | Replace the tiny test-only catalog with reviewed fixed pages, chapters and meaningful volume length. Add books from data and matched art, never fake playable future volumes. Maintain regular book sizes at 12/15/20. |
 | Before public book release | **Book rewards/profile policy** | Current book completion writes its separate journal. Portrait unlocks count Solo + Daily. Define and test an idempotent book-to-profile reward path before promising that book pages earn those cosmetics. Do not silently alter old unlock IDs or grant QA-test rewards. |
@@ -45,6 +46,7 @@ The latest cumulative source is on its development branch, not `main`.
 | 40×40/50×50, later 75/100 Marathon | Preserve the isolated placement/quality lab. Optional future R&D after content supply, readable navigation, performance and save safety. Do not add giant sizes to regular books or enable them from an old "next" note. |
 | Spanish / more languages | Keep the existing language plan. Locale-specific normalization, alphabets, display, saves and LAN need an explicit version. English A–Z data is not a Spanish implementation. |
 | Ocean/Bugs portraits | Coordinated art ideas still make sense, but the parity-first plan deferred them behind core content and multiplayer acceptance. Keep the original twelve Woodland portraits. |
+| More board fonts | Keep the current bundled, achievement-earned fonts. The recovered font research is a future intake shortlist, not approval to import or sell those fonts. Paid board-font unlocks are not the current design. |
 | Co-op split word lists | Future optional mode after ordinary Co-op is accepted. Needs hidden-list and hint/accessibility privacy rules. |
 | Stamps, weekly/daily gifts, rotating store, shared wallet | Open design choices, not a committed economy. Existing fixed achievements/fonts remain the useful baseline. No grind or attendance requirement is implied. |
 | Ads / one-time Remove Ads | Later launch/business work after a clean beta. No implementation or store-policy readiness is implied by current QA. |
@@ -65,6 +67,10 @@ The latest cumulative source is on its development branch, not `main`.
   reason to roll back the current matched bindings or regenerate approved art.
 - An open historical issue or unmerged draft is not proof that its feature is
   absent from the cumulative QA app. Check current code and linked receipts.
+- Older word-library documents sometimes express per-puzzle conflicts as global
+  exclusions or propose a single theme per word. WS10's later model separates
+  global words from many-to-many assignments. Keep substring/palindrome handling
+  specific to the new generator's physical-path rules.
 
 ## Next exact implementation
 
