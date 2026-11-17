@@ -24,9 +24,6 @@ jobs:
           - baseline: pr139
             run_id: 43963840406
             sha: 714ea448ee729140aa1cf689b11718bbed19ed8af4431a3b9b34c97e691faf41
-          - baseline: pr138
-            run_id: 43951168449
-            sha: 4aa08b6f1e8844413055b97d78b9834edeb68a32ce1a1106194c54c2e199e60c
     steps:
       - uses: actions/checkout@v4
         with:

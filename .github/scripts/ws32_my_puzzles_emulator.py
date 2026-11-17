@@ -22,8 +22,15 @@ from ws31_archived_apk_upgrade import (
 
 
 def open_journal():
-    find_label("My Puzzles", "Open menu", scroll=True)
-    if any(node.get("content-desc") == "Open menu" for node in nodes()):
+    launcher_alert = "Pixel Launcher isn't responding"
+    find_label("My Puzzles", "Open menu", launcher_alert, scroll=True)
+    visible = nodes()
+    if any(node.get("text") == launcher_alert for node in visible):
+        tap("Close app")
+        launch()
+        find_label("My Puzzles", "Open menu", scroll=True)
+        visible = nodes()
+    if any(node.get("content-desc") == "Open menu" for node in visible):
         tap("Open menu")
     tap("My Puzzles")
 
