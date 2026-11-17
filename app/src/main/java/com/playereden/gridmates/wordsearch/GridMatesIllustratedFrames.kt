@@ -81,7 +81,7 @@ internal fun GridMatesIllustratedPill(
         variant = GridMatesFrameVariant.PRIMARY_PILL,
         onClick = onClick, enabled = enabled
     ) {
-        Box(Modifier.padding(horizontal = 19.dp, vertical = 11.dp),
+        Box(Modifier.align(Alignment.Center).padding(horizontal = 19.dp, vertical = 11.dp),
             contentAlignment = Alignment.Center) {
             Text(label, color = Color(0xFFFFF8E8),
                 style = MaterialTheme.typography.titleSmall,

@@ -5,7 +5,6 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Button
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -47,9 +46,9 @@ internal fun DailyLandingScreen(
     val visiblePage = page.coerceIn(0, totalPages - 1)
 
     Column(Modifier.fillMaxWidth(), verticalArrangement = Arrangement.spacedBy(6.dp)) {
-    PaperEyebrow("Your daily puzzle")
-    Text("Daily Word Search", color = Forest,
-        style = MaterialTheme.typography.headlineSmall, fontWeight = FontWeight.Bold)
+    PuzzleTitleBar(title = "Daily Word Search", leading = {
+        PuzzleTextAction("Back to Play", onClick = onBack)
+    })
     Text("A fresh offline puzzle each day. No deadline or sign-in.",
         color = Muted, style = MaterialTheme.typography.bodySmall)
 
@@ -81,8 +80,8 @@ internal fun DailyLandingScreen(
                         Text(progressLabel, color = Muted,
                             style = MaterialTheme.typography.bodySmall)
                     }
-                    Button(onClick = { onPlay(today) },
-                        modifier = Modifier.fillMaxWidth()) { Text(actionLabel) }
+                    GridMatesIllustratedPill(actionLabel, onClick = { onPlay(today) },
+                        modifier = Modifier.fillMaxWidth())
                 }
             } else {
                 Row(Modifier.fillMaxWidth(),
@@ -96,7 +95,7 @@ internal fun DailyLandingScreen(
                         Text(progressLabel, color = Muted,
                             style = MaterialTheme.typography.bodySmall, maxLines = 2)
                     }
-                    Button(onClick = { onPlay(today) }) { Text(actionLabel, maxLines = 1) }
+                    GridMatesIllustratedPill(actionLabel, onClick = { onPlay(today) })
                 }
             }
             PaperProgress(existing?.run?.foundIds?.size ?: 0, run.difficulty.targetCount)
@@ -195,6 +194,5 @@ internal fun DailyLandingScreen(
             }
         }
     }
-    TextButton(onClick = onBack) { Text("Back to Play") }
     }
 }

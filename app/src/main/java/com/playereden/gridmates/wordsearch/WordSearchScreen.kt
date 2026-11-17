@@ -5,6 +5,7 @@ import androidx.compose.foundation.ScrollState
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.gestures.awaitEachGesture
 import androidx.compose.foundation.gestures.awaitFirstDown
 import androidx.compose.foundation.gestures.calculateCentroid
@@ -22,16 +23,14 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.AlertDialog
-import androidx.compose.material3.Button
-import androidx.compose.material3.Card
 import androidx.compose.material3.HorizontalDivider
-import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.FilterChip
@@ -125,7 +124,8 @@ internal fun WordSearchScreen(
     onBack: () -> Unit,
     onRecords: () -> Unit,
     /** A route to separate pre-game setup; never changes a puzzle in-game. */
-    onNewPuzzle: (() -> Unit)? = null
+    onNewPuzzle: (() -> Unit)? = null,
+    showBookArt: Boolean = false
 ) {
     val dailyEntry = if (daily) store.selectedDaily else null
     val run = if (daily) dailyEntry?.run else store.profile.active
@@ -154,6 +154,7 @@ internal fun WordSearchScreen(
     var feelOpen by rememberSaveable { mutableStateOf(false) }
     var cluesOpen by rememberSaveable { mutableStateOf(false) }
     var optionsOpen by rememberSaveable { mutableStateOf(false) }
+    var toolsOpen by rememberSaveable { mutableStateOf(false) }
     var reviewingCompletedBoard by remember(puzzle.id) { mutableStateOf(false) }
     val hapticsEnabled = store.hapticsEnabled
     val soundEnabled = store.soundEnabled
@@ -206,11 +207,7 @@ internal fun WordSearchScreen(
             onDismiss = { cluesOpen = false })
     }
 
-    // All screen sizes share the same two-row HUD. The separate word panel
-    // consumes remaining measured space rather than being pushed offscreen.
-    // Keep a real paperback margin around the puzzle rather than pressing
-    // its outer letters against the phone bezel. Dimensions remain based on
-    // the square content viewport, not the unpadded screen.
+    // Measure against the paperback margins and leave room for the word list.
     val pageMargin = PaperbackPageLayout.sideMarginDp(
         LocalConfiguration.current.screenWidthDp
     ).dp
@@ -218,7 +215,9 @@ internal fun WordSearchScreen(
         horizontal = pageMargin, vertical = 5.dp
     )) {
         val landscape = maxWidth > maxHeight * 1.25f
-        val compactHud = maxWidth < 360.dp || LocalDensity.current.fontScale >= 1.5f
+        val enlarged = LocalDensity.current.fontScale >= 1.5f
+        val compactHud = maxWidth < 360.dp || enlarged
+        val compactTools = enlarged || maxWidth < 238.dp || maxHeight < 500.dp
         val boardViewport = if (landscape) {
             minOf(maxHeight - when {
                     compactHud -> 248.dp
@@ -227,11 +226,12 @@ internal fun WordSearchScreen(
                 }, maxWidth * 0.51f).coerceAtLeast(106.dp)
         } else {
             minOf(maxWidth, maxHeight * when {
-                    compactHud -> 0.40f
-                    finished && !reviewingCompletedBoard -> 0.43f
-                    else -> 0.54f
+                    enlarged -> 0.36f
+                    compactHud -> 0.46f
+                    else -> 0.51f
                 })
-                .coerceAtLeast(145.dp)
+                .coerceAtLeast(130.dp)
+                .coerceAtMost(maxWidth)
         }
 
         val select: (GridPoint, GridPoint) -> Unit = { start, end ->
@@ -255,29 +255,27 @@ internal fun WordSearchScreen(
             }
         }
 
-        Column(Modifier.fillMaxSize(), verticalArrangement = Arrangement.spacedBy(2.dp)) {
-            // Compact/high-font screens must not pack the timer, count and
-            // full hint button into one overflowing horizontal row.
-            Row(Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.SpaceBetween,
-                verticalAlignment = Alignment.CenterVertically) {
-                TextButton(onClick = { store.flush(); onBack() }) { Text("Home") }
-                Column(Modifier.weight(1f).padding(horizontal = 5.dp),
-                    verticalArrangement = Arrangement.spacedBy(0.dp)) {
-                    Text(theme.label, style = MaterialTheme.typography.titleSmall,
-                        color = Forest, fontWeight = FontWeight.Bold,
-                        maxLines = 1, overflow = TextOverflow.Ellipsis)
-                    if (!compactHud) {
-                        Text((if (daily) "Daily · " else "") +
-                            sizeLabel + " · " + challengeLabel,
-                            style = MaterialTheme.typography.labelSmall, color = Muted,
-                            maxLines = 1, overflow = TextOverflow.Ellipsis)
-                    }
+        Column(Modifier.fillMaxSize(), verticalArrangement = Arrangement.spacedBy(4.dp)) {
+            PuzzleTitleBar(
+                title = if (daily) "Daily Puzzle" else theme.label,
+                compact = true,
+                subtitle = (if (daily) theme.label + " · " else "") +
+                    sizeLabel + " · " + challengeLabel,
+                leading = {
+                    PuzzleTextAction(if (daily) "Daily" else "Home",
+                        onClick = { store.flush(); onBack() })
                 }
+            ) {
                 Box {
-                    TextButton(onClick = { optionsOpen = true }) { Text("Options") }
+                    PuzzleTextAction("Options", onClick = { optionsOpen = true })
                     DropdownMenu(expanded = optionsOpen,
                         onDismissRequest = { optionsOpen = false }) {
+                        if (compactTools && (!finished || reviewingCompletedBoard)) {
+                            DropdownMenuItem(text = { Text("Puzzle tools") }, onClick = {
+                                optionsOpen = false
+                                toolsOpen = true
+                            })
+                        }
                         if (!daily && onNewPuzzle != null) {
                             // Return to pre-game setup without replacing the
                             // current saved board until Start is confirmed.
@@ -303,68 +301,46 @@ internal fun WordSearchScreen(
                     }
                 }
             }
-            if (compactHud) {
-                Text((if (daily) "Daily · " else "") + sizeLabel + " · " + challengeLabel,
-                    style = MaterialTheme.typography.labelSmall, color = Muted,
-                    maxLines = 2)
-            }
             val timeLabel = (run.elapsedSeconds / 60L).toString() + ":" +
                 (run.elapsedSeconds % 60L).toString().padStart(2, '0')
-            val hintAction: @Composable () -> Unit = {
-                TextButton(onClick = {
-                    if (hintsRemaining == 0 && usedHintSteps > 0) {
-                        cluesOpen = true
-                    } else {
-                    val (next, target) = if (daily) store.dailyHint() else {
-                        val (updated, word) = store.hint()
-                        updated to word
-                    }
-                    status = if (target == null || next == null) "All words found!" else {
-                        when (next.hints[target.id] ?: 0) {
-                            1 -> "Try " + target.word + " near row " +
-                                (target.positions.first().row + 1) + "."
-                            2 -> target.word + " starts at row " +
-                                (target.positions.first().row + 1) + ", col " +
-                                (target.positions.first().col + 1) + "."
-                            else -> "Follow the faint gold guide for " + target.word + "."
-                        }
-                    }
-                    }
-                }, enabled = !finished && (hintsRemaining > 0 || usedHintSteps > 0),
-                    modifier = Modifier.semantics {
-                        contentDescription = if (hintsRemaining == 0 && usedHintSteps > 0)
-                            "Review your saved clues. No hints spent."
-                        else "Hint. $hintsRemaining of " +
-                            WordHintPolicy.allowance(run, daily) + " left for this puzzle."
-                    }
+            if (!finished || reviewingCompletedBoard) {
+                val reviewingClues = hintsRemaining == 0 && usedHintSteps > 0
+                PuzzleProgressPanel(
+                    label = "${found.size} / ${puzzle.targets.size} found",
+                    detail = "Elapsed $timeLabel",
+                    found = found.size,
+                    total = puzzle.targets.size
                 ) {
-                    Text(if (hintsRemaining == 0 && usedHintSteps > 0)
-                        "Review clues" else "Hint ($hintsRemaining)")
+                    PuzzleTextAction(
+                        label = if (reviewingClues) "Review clues" else "Hint ($hintsRemaining)",
+                        primary = true,
+                        enabled = !finished && (hintsRemaining > 0 || usedHintSteps > 0),
+                        modifier = Modifier.widthIn(max = 130.dp).semantics {
+                            contentDescription = if (reviewingClues)
+                                "Review your saved clues. No hints spent."
+                            else "Hint. $hintsRemaining of " +
+                                WordHintPolicy.allowance(run, daily) + " left for this puzzle."
+                        },
+                        onClick = {
+                            if (reviewingClues) {
+                                cluesOpen = true
+                            } else {
+                                val (next, target) = if (daily) store.dailyHint() else store.hint()
+                                status = if (target == null || next == null) "All words found!" else {
+                                    when (next.hints[target.id] ?: 0) {
+                                        1 -> "Try " + target.word + " near row " +
+                                            (target.positions.first().row + 1) + "."
+                                        2 -> target.word + " starts at row " +
+                                            (target.positions.first().row + 1) + ", col " +
+                                            (target.positions.first().col + 1) + "."
+                                        else -> "Follow the faint gold guide for " + target.word + "."
+                                    }
+                                }
+                            }
+                        }
+                    )
                 }
             }
-            if (compactHud) {
-                Row(Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.SpaceBetween) {
-                    Text(found.size.toString() + " / " + puzzle.targets.size + " found",
-                        style = MaterialTheme.typography.titleSmall,
-                        color = Forest, fontWeight = FontWeight.SemiBold)
-                    hintAction()
-                }
-                Text("Elapsed " + timeLabel, color = Muted,
-                    style = MaterialTheme.typography.labelSmall)
-            } else {
-                Row(Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.SpaceBetween,
-                    verticalAlignment = Alignment.CenterVertically) {
-                    Text(found.size.toString() + " / " + puzzle.targets.size + " found",
-                        style = MaterialTheme.typography.titleSmall,
-                        color = Forest, fontWeight = FontWeight.SemiBold)
-                    Text(timeLabel, color = Muted,
-                        style = MaterialTheme.typography.bodyMedium)
-                    hintAction()
-                }
-            }
-            PaperProgress(found.size, puzzle.targets.size)
 
             // A finished puzzle should open its journal first, not bury
             // Play another / Share below a large (zoomed) board.
@@ -377,6 +353,7 @@ internal fun WordSearchScreen(
                     onRecords = { store.flush(); onRecords() },
                     onHome = { store.flush(); onBack() },
                     onAnother = if (daily) null else onNewPuzzle,
+                    showBookArt = showBookArt,
                     modifier = Modifier.weight(1f).fillMaxWidth()
                 )
             } else if (landscape) {
@@ -390,8 +367,11 @@ internal fun WordSearchScreen(
                             onBookmark = { if (!daily) store.saveLargeBoardBookmark(it) },
                             onModeChanged = { moving ->
                                 status = PuzzleModeHelp.selected(moving)
-                            })
-                        PuzzleStatus(status, compact = true)
+                            },
+                            compactControls = compactTools,
+                            zoomConsoleVisible = toolsOpen,
+                            onDismissZoomConsole = { toolsOpen = false })
+                        if (!enlarged) PuzzleStatus(status, compact = true)
                     }
                     WordList(puzzle, found, daily,
                         Modifier.weight(1f).fillMaxSize(),
@@ -407,15 +387,27 @@ internal fun WordSearchScreen(
                         onBookmark = { if (!daily) store.saveLargeBoardBookmark(it) },
                         onModeChanged = { moving ->
                             status = PuzzleModeHelp.selected(moving)
-                        })
+                        },
+                        compactControls = compactTools,
+                        zoomConsoleVisible = toolsOpen,
+                        onDismissZoomConsole = { toolsOpen = false })
                 }
-                PuzzleStatus(status, compact = false)
+                if (!enlarged) PuzzleStatus(status, compact = false)
                 WordList(puzzle, found, daily,
                     Modifier.weight(1f).fillMaxWidth(),
                     onShowResults = if (finished) { { reviewingCompletedBoard = false } }
                         else null,
                     scrollAll = continuousSoloIndex)
             }
+        }
+        if (enlarged && (!finished || reviewingCompletedBoard) &&
+            status != PuzzleModeHelp.opening(puzzle.size) &&
+            status != "Keep going — the next word is waiting.") {
+            BookPageNoticeOverlay(status,
+                Modifier.align(Alignment.BottomCenter).padding(bottom = 8.dp)
+                    .clickable(onClickLabel = "Dismiss message") {
+                        status = PuzzleModeHelp.opening(puzzle.size)
+                    })
         }
     }
 }
@@ -455,6 +447,7 @@ private fun CompletionPanel(
     onRecords: () -> Unit,
     onHome: () -> Unit,
     onAnother: (() -> Unit)?,
+    showBookArt: Boolean,
     modifier: Modifier = Modifier
 ) {
     var shareText by remember(puzzle.id) { mutableStateOf<String?>(null) }
@@ -464,14 +457,22 @@ private fun CompletionPanel(
 
     Column(modifier.verticalScroll(rememberScrollState()),
         verticalArrangement = Arrangement.spacedBy(10.dp)) {
-        PaperPanel(Modifier.fillMaxWidth()) {
-            PaperEyebrow(if (daily) "Daily journal · Completed"
-                else "Puzzle journal · Completed")
-            Text(if (daily) "Daily complete!" else "Puzzle complete!",
-                style = MaterialTheme.typography.headlineMedium,
-                color = Forest, fontWeight = FontWeight.Bold)
-            Text("Every word is found. Nicely done.",
-                color = Muted, style = MaterialTheme.typography.bodyMedium)
+        GridMatesInfoPanel(Modifier.fillMaxWidth()) {
+            Row(Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.spacedBy(12.dp)) {
+                Column(Modifier.weight(1f), verticalArrangement = Arrangement.spacedBy(5.dp)) {
+                    PaperEyebrow(if (daily) "Daily journal" else "Puzzle journal")
+                    Text(if (daily) "Daily complete!" else "Puzzle complete!",
+                        style = MaterialTheme.typography.headlineMedium,
+                        color = Forest, fontWeight = FontWeight.Bold)
+                    Text("${puzzle.targets.size} / ${puzzle.targets.size} found",
+                        color = Muted, style = MaterialTheme.typography.bodyMedium)
+                }
+                if (showBookArt && LocalDensity.current.fontScale < 1.3f) {
+                    BookArt(puzzle.theme, BookArtKind.COVER,
+                        Modifier.width(74.dp).height(98.dp), fieldNotes = true)
+                }
+            }
             Text(puzzle.theme.label + " · " + puzzle.size + "×" + puzzle.size +
                 " · " + (run.challenge?.label ?: run.difficulty.label),
                 color = Gold, style = MaterialTheme.typography.labelLarge)
@@ -479,7 +480,6 @@ private fun CompletionPanel(
             HorizontalDivider(color = GridRule)
             Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(5.dp)) {
                 listOf(
-                    "Words" to (puzzle.targets.size.toString() + "/" + puzzle.targets.size),
                     "Time" to time,
                     "Hints" to usedHints.toString()
                 ).forEach { (label, amount) ->
@@ -507,29 +507,23 @@ private fun CompletionPanel(
         }
 
         if (onAnother != null) {
-            Button(onClick = onAnother,
-                modifier = Modifier.fillMaxWidth().height(48.dp)) {
-                Text("Play another puzzle")
-            }
+            GridMatesIllustratedPill("Play another puzzle", onClick = onAnother,
+                modifier = Modifier.fillMaxWidth())
         }
 
-        OutlinedButton(onClick = {
+        PuzzleTextAction("Share results", onClick = {
             shareText = PuzzleResultShare.text(puzzle, run, completedSeconds, daily)
-        }, modifier = Modifier.fillMaxWidth().height(48.dp)) {
-            Text("Share results")
-        }
+        }, modifier = Modifier.fillMaxWidth())
 
-        OutlinedButton(onClick = onReview,
-            modifier = Modifier.fillMaxWidth().height(48.dp)) {
-            Text("Review completed board")
-        }
+        PuzzleTextAction("Review completed board", onClick = onReview,
+            modifier = Modifier.fillMaxWidth())
         Row(Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.spacedBy(8.dp)) {
             TextButton(onClick = onRecords, modifier = Modifier.weight(1f)) {
                 Text("Records")
             }
             TextButton(onClick = onHome, modifier = Modifier.weight(1f)) {
-                Text("Home")
+                Text(if (daily) "Daily journal" else "Home")
             }
         }
     }
@@ -582,10 +576,15 @@ internal fun WordList(
                 }
             } else {
                 Text("Words to find · " + (puzzle.targets.size - found.size) + " left",
+                    modifier = Modifier.weight(1f).padding(end = 4.dp),
                     style = MaterialTheme.typography.titleSmall,
-                    fontWeight = FontWeight.Bold, color = Forest)
+                    fontWeight = FontWeight.Bold, color = Forest,
+                    maxLines = 2, overflow = TextOverflow.Ellipsis)
                 if (onShowResults != null) {
                     TextButton(onClick = onShowResults) { Text("Results") }
+                } else if (LocalDensity.current.fontScale >= 1.5f) {
+                    BookPageCompactFilterButton(remainingOnly,
+                        onClick = { remainingOnly = !remainingOnly })
                 } else {
                     FilterChip(selected = remainingOnly,
                         onClick = { remainingOnly = !remainingOnly },
@@ -615,7 +614,7 @@ internal fun WordList(
             // Book mode and larger Solo games share a real independently
             // scrollable index; short Daily and legacy small games keep paging.
             // Board gestures remain on ZoomableWordGrid, never on this list.
-            val listScroll = remember(puzzle.id, remainingOnly) { ScrollState(0) }
+            val listScroll = remember(puzzle.id, remainingOnly, visiblePage) { ScrollState(0) }
             val scrollModifier = if (scrollAll) {
                 Modifier.testTag("word-list-scrollable")
                     .drawWithContent {
@@ -638,7 +637,7 @@ internal fun WordList(
                     }
                     .verticalScroll(listScroll)
                     .padding(end = 8.dp)
-            } else Modifier
+            } else Modifier.verticalScroll(listScroll)
             Column(
                 Modifier.fillMaxSize().then(scrollModifier),
                 verticalArrangement = Arrangement.spacedBy(4.dp)
@@ -668,14 +667,13 @@ internal fun WordList(
                             horizontalArrangement = Arrangement.spacedBy(6.dp)) {
                             pair.forEach { target ->
                                 val solved = target.id in found
-                                // Printed book-style square entries, not
-                                // rounded pills which visually trim letters.
+                                val shape = RoundedCornerShape(6.dp)
                                 Box(Modifier.weight(1f)
                                     .testTag("word-list-target-" + target.id)
                                     .background(if (solved) FoundMarker.copy(alpha = 0.28f)
-                                        else Paper)
+                                        else Paper, shape)
                                     .border(1.dp,
-                                        if (solved) Color(0xFFC5D9C8) else GridRule)
+                                        if (solved) Color(0xFFC5D9C8) else GridRule, shape)
                                     .padding(horizontal = 8.dp, vertical = 5.dp)
                                 ) {
                                     Text((if (solved) "✓ " else "○ ") + target.word,
@@ -811,6 +809,9 @@ internal fun ZoomableWordGrid(
         }
         var regionOpen by remember(puzzle.id) { mutableStateOf(false) }
         val currentZoom = if (largeBoard) largeTransform.zoom else transform.zoom
+        val canZoomOut = currentZoom > 1f
+        val canZoomIn = currentZoom <
+            (if (largeBoard) LargeBoardViewport.MAX_ZOOM else 2.5f)
         var multiTouch by remember(puzzle.id) { mutableStateOf(false) }
 
         fun zoomOut() {
@@ -847,20 +848,30 @@ internal fun ZoomableWordGrid(
                             style = MaterialTheme.typography.bodyMedium, color = Ink)
                         Row(Modifier.fillMaxWidth(),
                             horizontalArrangement = Arrangement.SpaceEvenly) {
-                            TextButton(onClick = { zoomOut() }, enabled = currentZoom > 1f,
-                                modifier = Modifier.heightIn(min = 48.dp)) { Text("− Zoom") }
-                            TextButton(onClick = { fitBoard() },
-                                modifier = Modifier.heightIn(min = 48.dp)) { Text("Fit") }
-                            TextButton(onClick = { zoomIn() },
-                                enabled = currentZoom <
-                                    (if (largeBoard) LargeBoardViewport.MAX_ZOOM else 2.5f),
-                                modifier = Modifier.heightIn(min = 48.dp)) { Text("+ Zoom") }
+                            IconButton(onClick = { zoomOut() }, enabled = canZoomOut,
+                                modifier = Modifier.semantics { contentDescription = "Zoom out" }) {
+                                Text("−", style = MaterialTheme.typography.titleMedium)
+                            }
+                            TextButton(onClick = { fitBoard() }) { Text("Fit") }
+                            IconButton(onClick = { zoomIn() }, enabled = canZoomIn,
+                                modifier = Modifier.semantics { contentDescription = "Zoom in" }) {
+                                Text("+", style = MaterialTheme.typography.titleMedium)
+                            }
                         }
                         TextButton(onClick = {
                             onDismissZoomConsole()
                             preciseOpen = true
                         }, modifier = Modifier.fillMaxWidth().heightIn(min = 48.dp)) {
                             Text("Select by row and column")
+                        }
+                        if (largeBoard) {
+                            TextButton(onClick = {
+                                onDismissZoomConsole()
+                                regionOpen = true
+                            }, modifier = Modifier.fillMaxWidth().heightIn(min = 48.dp)
+                                .semantics { contentDescription = "Open board region map" }) {
+                                Text("Board map")
+                            }
                         }
                     }
                 },
@@ -873,29 +884,32 @@ internal fun ZoomableWordGrid(
         Column(Modifier.width(viewport),
             verticalArrangement = Arrangement.spacedBy(2.dp)) {
             if (!compactControls) {
-            Row(Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.SpaceBetween,
-                verticalAlignment = Alignment.CenterVertically) {
-                TextButton(
-                    onClick = { preciseOpen = true },
-                    modifier = Modifier.semantics {
-                        contentDescription = "Select a word without dragging"
+                Row(Modifier.fillMaxWidth().puzzlePaper().horizontalScroll(rememberScrollState()),
+                    horizontalArrangement = Arrangement.SpaceBetween,
+                    verticalAlignment = Alignment.CenterVertically) {
+                    TextButton(
+                        onClick = { preciseOpen = true },
+                        modifier = Modifier.semantics {
+                            contentDescription = "Select a word without dragging"
+                        }
+                    ) { Text("Select", color = Forest, maxLines = 1) }
+                    IconButton(onClick = { zoomOut() }, enabled = canZoomOut,
+                        modifier = Modifier.semantics { contentDescription = "Zoom out" }) {
+                        Text("−", color = if (canZoomOut) Forest else Muted.copy(alpha = 0.45f),
+                            style = MaterialTheme.typography.titleMedium)
                     }
-                ) { Text("Select", maxLines = 1) }
-                IconButton(onClick = { zoomOut() }, enabled = currentZoom > 1f,
-                    modifier = Modifier.size(48.dp).semantics {
-                        contentDescription = "Zoom out"
-                    }) { Text("−", style = MaterialTheme.typography.titleMedium) }
-                IconButton(onClick = { fitBoard() },
-                    modifier = Modifier.size(48.dp).semantics {
-                    contentDescription = "Fit entire puzzle board"
-                }) { Text("Fit") }
-                IconButton(onClick = { zoomIn() }, enabled = currentZoom <
-                    (if (largeBoard) LargeBoardViewport.MAX_ZOOM else 2.5f),
-                    modifier = Modifier.size(48.dp).semantics {
-                        contentDescription = "Zoom in"
-                    }) { Text("+", style = MaterialTheme.typography.titleMedium) }
-            }
+                    IconButton(onClick = { fitBoard() },
+                        modifier = Modifier.semantics {
+                            contentDescription = "Fit entire puzzle board"
+                        }) {
+                        Text("Fit", color = Forest, style = MaterialTheme.typography.labelLarge)
+                    }
+                    IconButton(onClick = { zoomIn() }, enabled = canZoomIn,
+                        modifier = Modifier.semantics { contentDescription = "Zoom in" }) {
+                        Text("+", color = if (canZoomIn) Forest else Muted.copy(alpha = 0.45f),
+                            style = MaterialTheme.typography.titleMedium)
+                    }
+                }
             }
             if (largeBoard && !compactControls) {
                 // The map is a navigation aid, not a partition of the puzzle.

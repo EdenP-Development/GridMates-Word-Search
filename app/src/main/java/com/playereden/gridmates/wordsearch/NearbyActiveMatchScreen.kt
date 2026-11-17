@@ -45,6 +45,22 @@ internal fun NearbyActiveMatchScreen(
     val canPlay = connected && started && !snapshot.finished
     val partner = if (state.role == NearbyRole.HOST)
         state.guestName.ifBlank { "Friend" } else state.hostName.ifBlank { "Friend" }
+    val partnerCount = duel?.opponentCount ?: partnerFound.size
+    val matchTitle = when (snapshot.match) {
+        NearbyMatch.COOP -> "Play Together"
+        NearbyMatch.SHARED_BOARD_RACE -> "Shared Race"
+        NearbyMatch.SPEED_DUEL -> "Speed Duel"
+    }
+    val outcome = when (snapshot.match) {
+        NearbyMatch.COOP -> "Solved together ✓"
+        NearbyMatch.SHARED_BOARD_RACE -> when (snapshot.raceStanding?.winner) {
+            seat -> "You win!"
+            null -> "Tie game"
+            else -> "$partner wins"
+        }
+        NearbyMatch.SPEED_DUEL -> if (duel?.winner == seat)
+            "You win!" else "$partner wins"
+    }
 
     var wordSheet by remember(snapshot.roomId) { mutableStateOf(false) }
     var chatSheet by remember(snapshot.roomId) { mutableStateOf(false) }
@@ -61,75 +77,42 @@ internal fun NearbyActiveMatchScreen(
         }
     }
 
-    // Very small fixed header: room metadata, chat and comparisons are sheets.
+    // Room metadata, chat and comparisons open without resizing the board.
     Column(Modifier.fillMaxSize().imePadding()
         .padding(horizontal = 12.dp, vertical = 2.dp),
         verticalArrangement = Arrangement.spacedBy(4.dp)) {
-        Row(Modifier.fillMaxWidth(),
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.spacedBy(5.dp)) {
-            TextButton(onClick = onBack) { Text("← Back") }
-            Column(Modifier.weight(1f)) {
-                Text(when (snapshot.match) {
-                    NearbyMatch.COOP -> "Play Together"
-                    NearbyMatch.SHARED_BOARD_RACE -> "Shared Race"
-                    NearbyMatch.SPEED_DUEL -> "Speed Duel"
-                }, color = Forest, fontWeight = FontWeight.Bold,
-                    style = MaterialTheme.typography.titleMedium,
-                    maxLines = 1, overflow = TextOverflow.Ellipsis)
-                Text(if (connected) "● $partner connected"
-                    else "○ Waiting for $partner",
-                    color = Muted, style = MaterialTheme.typography.labelSmall,
-                    maxLines = 1, overflow = TextOverflow.Ellipsis)
-            }
-            TextButton(onClick = { roomSheet = true }) { Text("Info") }
+        PuzzleTitleBar(
+            title = matchTitle,
+            compact = true,
+            subtitle = if (connected) "$partner connected" else "Waiting for $partner",
+            leading = { PuzzleTextAction("Back", onClick = onBack) }
+        ) {
+            PuzzleTextAction("Info", onClick = { roomSheet = true })
         }
-        Row(Modifier.fillMaxWidth(),
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.SpaceBetween) {
-            Column(Modifier.weight(1f)) {
-                Text(if (duel == null)
-                    "${allFound.size} / ${puzzle.targets.size} found"
-                    else "${ownFound.size} / ${puzzle.targets.size} found",
-                    color = Forest, fontWeight = FontWeight.Bold,
-                    style = MaterialTheme.typography.titleMedium)
-                Text(if (snapshot.match == NearbyMatch.COOP)
-                    "You ${ownFound.size} · $partner ${partnerFound.size}"
-                    else "You ${ownFound.size} · $partner ${duel?.opponentCount ?: partnerFound.size}",
-                    color = Muted, style = MaterialTheme.typography.bodySmall,
-                    maxLines = 1)
-            }
+        PuzzleProgressPanel(
+            label = "${allFound.size} / ${puzzle.targets.size} found",
+            detail = "You ${ownFound.size} · $partner $partnerCount",
+            found = allFound.size,
+            total = puzzle.targets.size
+        ) {
             if (duel != null && !duel.started) {
-                Button(onClick = runtime::readySpeedDuel,
-                    enabled = connected && !duel.ownReady) {
-                    Text(if (duel.ownReady) "Waiting…" else "Ready")
-                }
+                PuzzleTextAction(if (duel.ownReady) "Waiting…" else "Ready",
+                    onClick = runtime::readySpeedDuel,
+                    enabled = connected && !duel.ownReady, primary = true)
             } else if (snapshot.finished) {
-                Text(when (snapshot.match) {
-                    NearbyMatch.COOP -> "Solved together ✓"
-                    NearbyMatch.SHARED_BOARD_RACE -> when (snapshot.raceStanding?.winner) {
-                        seat -> "You win!"
-                        null -> "Tie game"
-                        else -> "$partner wins"
-                    }
-                    NearbyMatch.SPEED_DUEL ->
-                        if (duel?.winner == seat) "You win!" else "$partner wins"
-                }, color = Forest, fontWeight = FontWeight.Bold,
-                    maxLines = 2, style = MaterialTheme.typography.bodyMedium)
+                Text(outcome, Modifier.widthIn(max = 104.dp), color = Forest,
+                    fontWeight = FontWeight.Bold, maxLines = 2,
+                    overflow = TextOverflow.Ellipsis, style = MaterialTheme.typography.bodySmall)
             } else {
                 Text(spec.board.cells.toString() + "×" + spec.board.cells,
-                    color = Muted, style = MaterialTheme.typography.bodySmall)
+                    color = Muted, style = MaterialTheme.typography.labelSmall)
             }
         }
-        PaperProgress(if (duel != null) ownFound.size else snapshot.foundIds.size,
-            puzzle.targets.size)
 
         if (state.disconnected) {
-            Button(onClick = {
-                runtime.reconnect(store.profile.identity.displayName)
-            }, enabled = !state.busy, modifier = Modifier.fillMaxWidth()) {
-                Text("Reconnect to game")
-            }
+            GridMatesIllustratedPill("Reconnect to game",
+                onClick = { runtime.reconnect(store.profile.identity.displayName) },
+                enabled = !state.busy, modifier = Modifier.fillMaxWidth())
         }
         store.warning?.let { warning ->
             Text("Save warning: " + warning, color = Gold,
@@ -187,11 +170,9 @@ internal fun NearbyActiveMatchScreen(
             Row(Modifier.fillMaxWidth(),
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.SpaceBetween) {
-                Text("Words · ${remaining.size} left", color = Forest,
+                Text("Words · ${remaining.size} left", Modifier.weight(1f), color = Forest,
                     fontWeight = FontWeight.SemiBold)
-                TextButton(onClick = { wordSheet = true }) {
-                    Text("See all ${puzzle.targets.size}")
-                }
+                PuzzleTextAction("See all ${puzzle.targets.size}", onClick = { wordSheet = true })
             }
             val peek = remaining.take(4).map { it.word }
             Text(if (peek.isEmpty()) "All words found!"

@@ -174,7 +174,8 @@ internal fun GridMatesShell(
                         pageName = Page.RECORDS.name
                     },
                     onNewPuzzle = if (page == Page.DAILY_PUZZLE) null
-                        else { { openSoloSetup(Page.PUZZLE) } }
+                        else { { openSoloSetup(Page.PUZZLE) } },
+                    showBookArt = qa.enabled
                 )
             }
         } else if (page == Page.COLLECTION) {

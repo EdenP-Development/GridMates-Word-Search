@@ -2,24 +2,19 @@ package com.playereden.gridmates.wordsearch
 
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.layout.size
-import androidx.compose.material3.IconButton
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.StrokeCap
 import androidx.compose.ui.platform.testTag
-import androidx.compose.ui.semantics.contentDescription
-import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.unit.dp
 
 /** Compact native back arrow with a full 48dp touch target and clear TalkBack name. */
 @Composable
 internal fun BookPageBackButton(onBack: () -> Unit, modifier: Modifier = Modifier) {
-    IconButton(
-        onClick = onBack,
-        modifier = modifier.size(48.dp)
-            .semantics { contentDescription = "Back to book" }
-            .testTag("ws14k-back-to-book")
+    PuzzleIconAction(
+        label = "Back to book", onClick = onBack,
+        modifier = modifier.testTag("ws14k-back-to-book")
     ) {
         Canvas(Modifier.size(24.dp)) {
             val w = size.width
