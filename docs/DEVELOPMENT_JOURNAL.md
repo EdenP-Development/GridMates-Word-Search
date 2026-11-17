@@ -1,3 +1,5 @@
+**WS34 Android screenshot polish (November 17).** [Verified v97 build and handoff](devlog/2026-11-17_WS34_PHONE_SCREENSHOT_POLISH.md) · [draft PR #145](https://github.com/PlayerEden/GridMates-Word-Search/pull/145). Collection keeps Back and its tabs visible, the Solo word list gains a scrollbar, and the puzzle instructions have room below the board.
+
 **WS33 large-text layout (November 16).** [v96 heading and Home menu](devlog/2026-11-16_WS33B_LIBRARY_LARGE_TEXT.md). Android screenshots at 200% text prompted a wider cabinet title with measured shelf clearance and a scrollable Home menu.
 
 **WS33 packed Library (November 16).** [Woodland playthrough and signed v95 receipt](devlog/2026-11-16_WS33_PACKED_LIBRARY.md) · [draft PR #144](https://github.com/PlayerEden/GridMates-Word-Search/pull/144). Woodland resumed after an app restart and all three completed pages persisted through another restart. The packed cabinet reuses the v94 artwork. Portable book backups are next.

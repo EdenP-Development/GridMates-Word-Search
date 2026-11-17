@@ -1,4 +1,12 @@
-# Active development handoff — WS33 packed Library and large text
+# Active development handoff — WS34 Android screenshot polish
+
+The [v97 screenshot polish receipt](devlog/2026-11-17_WS34_PHONE_SCREENSHOT_POLISH.md) records the installed Android checks and the comparison of the two APK builds. The [signed QA build](https://github.com/PlayerEden/GridMates-Word-Search/actions/runs/44120147813/artifacts/14345181818) was tested at `e89855264e85ef4a1486a1b3060a893a7301b45c` in [draft PR #145](https://github.com/PlayerEden/GridMates-Word-Search/pull/145), stacked on #144. The Android and artwork checks passed. v97 retains the signing certificate installed by v96.
+
+The [Android 15 emulator check](https://github.com/PlayerEden/GridMates-Word-Search/actions/runs/44122930889) confirmed install-over from v96, the fixed Collection controls, the Rabbit wording, and independent Solo word-list scrolling. The [emulator screenshots](https://github.com/PlayerEden/GridMates-Word-Search/actions/runs/44122930889/artifacts/14345947593) show the two-column layout and word list at both scroll positions. v97 is ready for handset review.
+
+Continue with portable backups for completed book pages, bookmarks, and unfinished pages. Use the [signed v96 QA build](https://github.com/PlayerEden/GridMates-Word-Search/actions/runs/44026675539/artifacts/14304230230) as the comparison fallback. The Library uses the QA catalog.
+
+## Earlier v96 packed Library and large text
 
 The [v96 layout and build receipt](devlog/2026-11-16_WS33B_LIBRARY_LARGE_TEXT.md) follows the [v95 Woodland playthrough](devlog/2026-11-16_WS33_PACKED_LIBRARY.md). Continue from [draft PR #144](https://github.com/PlayerEden/GridMates-Word-Search/pull/144). The [signed v96 QA APK](https://github.com/PlayerEden/GridMates-Word-Search/actions/runs/44026675539/artifacts/14304230230) was built at `05c23755d6f697fb2856f64b3e5c81d2a6637032`. The cabinet heading uses the full safe width at larger text sizes, and the Home menu scrolls on short screens. The v96 receipt links the Android results. [v95 comparison build](https://github.com/PlayerEden/GridMates-Word-Search/actions/runs/43999350042/artifacts/14291891401).
 
