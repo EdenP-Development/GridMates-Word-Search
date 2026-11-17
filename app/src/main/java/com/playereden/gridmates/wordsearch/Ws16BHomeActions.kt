@@ -36,7 +36,8 @@ internal fun Ws16BHomeActions(
     onNearby: () -> Unit,
     onCustom: () -> Unit,
     onMyPuzzles: () -> Unit,
-    showQuickPlayPreview: Boolean,
+    showQuickPlay: Boolean,
+    onQuickPlay: () -> Unit,
     compactHome: Boolean = false
 ) {
     BoxWithConstraints(Modifier.fillMaxWidth()) {
@@ -57,16 +58,15 @@ internal fun Ws16BHomeActions(
         }
     }
 
-    // WS-17 needs its own mixed lexicon, deterministic generator and safe saves.
-    // Reserve a real-sized asset slot in QA only, never a fake playable button.
-    if (showQuickPlayPreview) {
+    if (showQuickPlay) {
         GridMatesIllustratedFrame(
             modifier = Modifier.fillMaxWidth()
                 .qaTrackBounds("Quick Play")
-                .testTag("ws16b-quick-play-preview")
+                .testTag("ws39-quick-play")
                 .semantics { contentDescription =
-                    "Quick Play. Mixed-word mode in development, not playable yet" },
-            variant = GridMatesFrameVariant.FEATURE
+                    "Quick Play. Start a fresh 12 by 12 themed puzzle" },
+            variant = GridMatesFrameVariant.FEATURE,
+            onClick = onQuickPlay
         ) {
             Row(Modifier.fillMaxWidth()
                 .heightIn(min = if (compactHome) 58.dp else 64.dp)
@@ -83,7 +83,7 @@ internal fun Ws16BHomeActions(
                     Text("Quick Play", color = Forest,
                         style = MaterialTheme.typography.titleSmall,
                         fontWeight = FontWeight.SemiBold)
-                    Text("Mixed-word boards · coming soon",
+                    Text("Fresh themed puzzles · 12×12",
                         color = Muted.copy(alpha = .86f),
                         style = MaterialTheme.typography.labelMedium)
                 }

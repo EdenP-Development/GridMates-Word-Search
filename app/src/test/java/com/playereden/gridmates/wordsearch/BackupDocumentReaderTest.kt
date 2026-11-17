@@ -32,6 +32,12 @@ class BackupDocumentReaderTest {
         }.isFailure)
     }
 
+    @Test fun malformedUtf8IsRejectedInsteadOfChangingSavedText() {
+        assertTrue(runCatching {
+            BackupDocumentReader.readUtf8(ByteArrayInputStream(byteArrayOf(0xC3.toByte(), 0x28)))
+        }.isFailure)
+    }
+
     private class CountingStream(private val length: Int) : InputStream() {
         var consumed = 0
             private set

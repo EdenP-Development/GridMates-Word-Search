@@ -32,7 +32,6 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import com.playereden.gridmates.wordsearch.core.SoloProfile
 import com.playereden.gridmates.wordsearch.core.WoodlandCollection
 
 /**
@@ -42,13 +41,18 @@ import com.playereden.gridmates.wordsearch.core.WoodlandCollection
 @Composable
 internal fun SoloSettingsScreen(
     store: SoloStore,
+    backups: GameBackupManager? = null,
     onPreviewArtwork: (() -> Unit)? = null,
     displayMode: DisplayMode = DisplayMode.STANDARD,
     onDisplayModeChange: (DisplayMode) -> Unit = {}
 ) {
     val context = LocalContext.current
     var message by rememberSaveable { mutableStateOf("") }
-    var pendingImport by remember { mutableStateOf<SoloProfile?>(null) }
+    // Shell supplies the whole-game coordinator and startup recovery gate.
+    val backupManager = remember(backups, store, context) {
+        backups ?: GameBackupManager(context, store, books = { null })
+    }
+    var pendingImport by remember { mutableStateOf<GameBackupPreview?>(null) }
 
     val export = rememberLauncherForActivityResult(
         ActivityResultContracts.CreateDocument("application/json")
@@ -56,7 +60,7 @@ internal fun SoloSettingsScreen(
         if (uri != null) {
             try {
                 val stream = requireNotNull(context.contentResolver.openOutputStream(uri))
-                stream.use { it.write(store.exportBackup().toByteArray(Charsets.UTF_8)) }
+                stream.use { it.write(backupManager.exportBackup().toByteArray(Charsets.UTF_8)) }
                 message = "Backup exported to your chosen location."
             } catch (ex: Exception) {
                 message = "Could not export backup. Please try another folder."
@@ -70,7 +74,7 @@ internal fun SoloSettingsScreen(
             try {
                 val raw = BackupDocumentReader.readUtf8(
                     requireNotNull(context.contentResolver.openInputStream(uri)))
-                pendingImport = store.previewBackup(raw)
+                pendingImport = backupManager.previewBackup(raw)
                 message = ""
             } catch (ex: Exception) {
                 message = "This is not a supported GridMates: Word Search backup."
@@ -79,7 +83,8 @@ internal fun SoloSettingsScreen(
     }
 
     if (pendingImport != null) {
-        val preview = requireNotNull(pendingImport)
+        val backup = requireNotNull(pendingImport)
+        val preview = backup.profile
         val portrait = WoodlandCollection.portraits.firstOrNull {
             it.id == preview.identity.portraitId
         }?.label ?: "Woodland portrait"
@@ -107,6 +112,11 @@ internal fun SoloSettingsScreen(
                     Text(preview.duelResults.size.toString() +
                         " completed Speed Duel results.",
                         color = Muted)
+                    Text(if (backup.includesBooks)
+                        "${backup.completedPages} completed book pages · " +
+                            "${backup.savedPages} saved book pages. Bookmarks, words, hints and time are included."
+                        else "This older or Solo-only backup has no book pages. " +
+                            "Your current book progress will be kept.", color = Muted)
                     Text("Restoring replaces your current Word Search profile, " +
                         "puzzle and records on this phone. Export the current " +
                         "progress first if you want a copy.",
@@ -115,9 +125,9 @@ internal fun SoloSettingsScreen(
             },
             confirmButton = {
                 TextButton(onClick = {
-                    message = if (store.restoreBackup(preview))
-                        "Backup restored. Your profile, puzzle and records were updated."
-                    else "Could not restore. Your previous data is protected."
+                    message = if (backupManager.restoreBackup(backup.raw))
+                        "Backup restored. Your saved progress is ready."
+                    else backupManager.message
                     pendingImport = null
                 }) { Text("Restore backup") }
             },
@@ -174,9 +184,9 @@ internal fun SoloSettingsScreen(
                 }
             }
         }
-        Text("Export includes Solo, Daily, completed Race and Speed Duel results, " +
-            "and profile/collections. Restore asks before replacing progress. " +
-            "Older backups without a Duel journal restore with zero Duel results.",
+        Text("Export includes Solo and Quick Play, Daily, completed Race and Duel results, " +
+            "your profile and collections, plus available book progress and unfinished pages. " +
+            "Restore asks before replacing progress. Older Solo backups keep your current books.",
             color = Muted, style = MaterialTheme.typography.bodySmall)
         Text("Before reinstalling, export a backup and verify the file. " +
             "If Android reports a signing conflict, uninstalling removes " +

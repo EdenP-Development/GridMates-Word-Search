@@ -2,6 +2,8 @@ package com.playereden.gridmates.wordsearch
 
 import java.io.ByteArrayOutputStream
 import java.io.InputStream
+import java.nio.ByteBuffer
+import java.nio.charset.CodingErrorAction
 
 /**
  * The document picker can return an arbitrary stream, including an enormous
@@ -9,7 +11,7 @@ import java.io.InputStream
  * BEFORE allocating/decoding text, not after InputStream.readText().
  */
 internal object BackupDocumentReader {
-    const val MAX_BYTES = 2_000_000
+    const val MAX_BYTES = 8_000_000
 
     fun readUtf8(source: InputStream): String = source.use { input ->
         val output = ByteArrayOutputStream(32 * 1024)
@@ -23,15 +25,18 @@ internal object BackupDocumentReader {
             if (read == 0) {
                 val single = input.read()
                 if (single == -1) break
-                require(used < MAX_BYTES) { "Backup file exceeds 2 MB" }
+                require(used < MAX_BYTES) { "Backup file exceeds 8 MB" }
                 output.write(single)
                 used++
             } else {
-                require(read <= MAX_BYTES - used) { "Backup file exceeds 2 MB" }
+                require(read <= MAX_BYTES - used) { "Backup file exceeds 8 MB" }
                 output.write(buffer, 0, read)
                 used += read
             }
         }
-        output.toString(Charsets.UTF_8.name())
+        Charsets.UTF_8.newDecoder()
+            .onMalformedInput(CodingErrorAction.REPORT)
+            .onUnmappableCharacter(CodingErrorAction.REPORT)
+            .decode(ByteBuffer.wrap(output.toByteArray())).toString()
     }
 }

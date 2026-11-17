@@ -128,6 +128,7 @@ internal class SoloStore(
     }
 
     private var blocked = false
+    val readableForRestore: Boolean get() = !blocked
     private var inForeground = false
     fun setForeground(value: Boolean) {
         inForeground = value
@@ -444,6 +445,14 @@ internal class SoloStore(
     /** Parse and validate without modifying existing progress. */
     fun previewBackup(raw: String): SoloProfile = decode(raw)
 
+    /** Restore the portable board-font choice only after its profile is committed. */
+    fun restoreBoardFontSelection(id: String): Boolean {
+        if (blocked || !BoardFontCollection.allowed(profile, id)) return false
+        if (!fontPrefs.edit().putString("selected_id", id).commit()) return false
+        selectedBoardFontId = id
+        return true
+    }
+
     /**
      * Only invoke following an explicit confirmation screen.
      * A failed write does not intentionally discard the old atomic backup.
@@ -648,6 +657,13 @@ internal class SoloStore(
             .putString("challenge", challenge.name)
             .apply()
         return true
+    }
+
+    fun startQuickPlay(): Boolean {
+        // Persist through normal Solo so resume, hints, rewards and backup agree.
+        val choices = WordTheme.entries.filter { it != profile.active.theme }
+        val theme = choices[kotlin.random.Random.nextInt(choices.size)]
+        return chooseSolo(theme, PuzzleBoardSize.BOOK_SHORT, PuzzleChallenge.CLASSIC)
     }
 
     /** Existing callers of the V2 API remain supported for legacy book sizes. */

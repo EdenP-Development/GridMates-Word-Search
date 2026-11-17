@@ -26,6 +26,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.semantics.liveRegion
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -60,10 +61,11 @@ internal fun Ws16HomeScreen(
     onNewSolo: () -> Unit,
     onDaily: () -> Unit,
     onNearby: () -> Unit,
-    showQuickPlayPreview: Boolean = false,
+    showQuickPlay: Boolean = false,
     displayMode: DisplayMode = DisplayMode.FULLSCREEN,
     onDisplayModeChange: (DisplayMode) -> Unit = {},
-    compactHome: Boolean = false
+    compactHome: Boolean = false,
+    onQuickPlay: () -> Unit = onNewSolo
 ) {
     var menuOpen by remember { mutableStateOf(false) }
     val books = catalog?.books.orEmpty()
@@ -198,9 +200,15 @@ internal fun Ws16HomeScreen(
         onNearby = onNearby,
         onCustom = onNewSolo,
         onMyPuzzles = onMyPuzzles,
-        showQuickPlayPreview = showQuickPlayPreview,
+        showQuickPlay = showQuickPlay,
+        onQuickPlay = onQuickPlay,
         compactHome = compactHome
     )
+    store.warning?.let { warning ->
+        Text(warning, color = Gold, modifier = Modifier.fillMaxWidth()
+            .semantics { liveRegion = androidx.compose.ui.semantics.LiveRegionMode.Polite },
+            style = MaterialTheme.typography.bodyMedium)
+    }
 
     if (menuOpen) {
         Ws16BCompactMenu(

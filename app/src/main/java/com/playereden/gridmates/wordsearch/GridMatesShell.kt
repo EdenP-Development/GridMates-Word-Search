@@ -4,6 +4,7 @@ import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.ScrollState
 import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.asPaddingValues
 import androidx.compose.foundation.layout.safeDrawing
 import androidx.compose.foundation.layout.safeGestures
 import androidx.compose.foundation.layout.Arrangement
@@ -72,6 +73,27 @@ internal fun GridMatesShell(
     val context = LocalContext.current
     val defaultQaRuntime = remember(context) { QaBookshelfRuntime(context) }
     val qa = qaBookshelf ?: defaultQaRuntime
+    val backups = remember(soloStore, qa) {
+        GameBackupManager(context, soloStore, books = {
+            if (!qa.enabled) null else BookBackupStores(qa.catalog,
+                requireNotNull(qa.progressStore), requireNotNull(qa.sessionStore))
+        })
+    }
+    if (backups.needsRecovery) {
+        BackHandler { /* Finish the multi-file restore before allowing play. */ }
+        Box(Modifier.fillMaxSize()) {
+            GridMatesParchmentBackground(finish = GridMatesPaperFinish.QUIET)
+            Column(Modifier.fillMaxSize().padding(WindowInsets.safeDrawing.asPaddingValues())
+                .verticalScroll(rememberScrollState()).padding(24.dp),
+                verticalArrangement = Arrangement.spacedBy(16.dp)) {
+                Text("Finish restoring progress", color = Forest,
+                    style = MaterialTheme.typography.headlineMedium)
+                Text(backups.message, color = Muted)
+                Button(onClick = { backups.retryRestore() }) { Text("Retry restore") }
+            }
+        }
+        return
+    }
     var devOverlay by remember(context) { mutableStateOf(GridMatesDevTools.load(context)) }
     var pageName by rememberSaveable { mutableStateOf(Page.PLAY.name) }
     var homeFocusedBookId by rememberSaveable { mutableStateOf<String?>(null) }
@@ -265,9 +287,12 @@ internal fun GridMatesShell(
                         onSolo = { pageName = Page.PUZZLE.name },
                         onMyPuzzles = { pageName = Page.MY_PUZZLES.name },
                         onNewSolo = { openSoloSetup(Page.PLAY) },
+                        onQuickPlay = {
+                            if (soloStore.startQuickPlay()) pageName = Page.PUZZLE.name
+                        },
                         onDaily = { pageName = Page.DAILY.name },
                         onNearby = { pageName = Page.NEARBY.name },
-                        showQuickPlayPreview = qa.enabled,
+                        showQuickPlay = true,
                         displayMode = displayMode,
                         onDisplayModeChange = onDisplayModeChange,
                         compactHome = compactHome
@@ -295,6 +320,7 @@ internal fun GridMatesShell(
                 Page.SETTINGS -> {
                     SoloSettingsScreen(
                         soloStore,
+                        backups = backups,
                         onPreviewArtwork = if (qa.enabled) {
                             { pageName = Page.ART_LAB.name }
                         } else null,
