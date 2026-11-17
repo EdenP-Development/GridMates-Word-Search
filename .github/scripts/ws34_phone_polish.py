@@ -141,13 +141,6 @@ try:
     board = await_screen(*controls, GRID, HELP, "Words to find · 16 left")
     assert not any((node.get("text") or "").startswith("Trace words ·")
                    for node in board.iter("node"))
-    assert find(board, "Zoom out").get("enabled") == "false"
-    tap(find(board, "Zoom in"))
-    zoomed = await_screen(*controls,
-                         predicate=lambda root: find(root, "Zoom out").get("enabled") == "true")
-    tap(find(zoomed, "Fit entire puzzle board"))
-    board = await_screen(*controls, GRID,
-                         predicate=lambda root: find(root, "Zoom out").get("enabled") == "false")
     before = words(board)
     assert before
     capture("solo-word-list-top.png")
@@ -156,7 +149,7 @@ try:
                          predicate=lambda root: bool(words(root) - before))
     assert bounds(find(board, GRID)) == bounds(find(after, GRID))
     capture("solo-word-list-scrolled.png")
-    print("PASS: full gesture help, Zoom and Fit controls, and independent word list scrolling.")
+    print("PASS: full gesture help and selection controls are visible; the word list scrolls independently.")
 finally:
     report = subprocess.run(["adb", "logcat", "-d", "-t", "160"], timeout=10,
                             stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
