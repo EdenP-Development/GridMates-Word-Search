@@ -57,13 +57,10 @@ class CabinetRefinementTests(unittest.TestCase):
         self.assertIn("variant = GridMatesFrameVariant.MEDIUM",profile)
         for tag in ("ws16c-profile-collection","ws16c-profile-records","ws16c-profile-my-puzzles"):
             self.assertIn(tag,profile)
-        # WS16BU moved the repeated large "Your Collection" heading into
-        # the shell's single page title. Decorative cards still use a native
-        # reusable PANEL through GridMatesInfoPanel, not baked UI artwork.
-        shell=(APP/"GridMatesShell.kt").read_text()
+        # Collection uses the shared Back header and reusable panel artwork.
         panel=(APP/"GridMatesInfoPanel.kt").read_text()
         self.assertIn("ws16bb-collection-heading",collection)
-        self.assertIn('title = if (page == Page.COLLECTION) "Your Collection" else page.label',shell)
+        self.assertIn('Ws15BackHeader(\n            title = "Your Collection"',collection)
         self.assertIn("GridMatesInfoPanel(",collection)
         self.assertIn("variant = GridMatesFrameVariant.PANEL",panel)
         self.assertNotIn("StorybookHeading(",collection)

@@ -177,6 +177,15 @@ internal fun GridMatesShell(
                         else { { openSoloSetup(Page.PUZZLE) } }
                 )
             }
+        } else if (page == Page.COLLECTION) {
+            CollectionScreen(
+                store = soloStore,
+                onBack = { pageName = sectionReturnPageName },
+                backLabel = if (sectionReturnPageName == Page.PROFILE.name)
+                    "Back to Profile" else "Back to Home",
+                modifier = Modifier.padding(contentPadding)
+                    .padding(horizontal = 18.dp, vertical = 12.dp)
+            )
         } else Column(
             modifier = Modifier
                 .fillMaxSize()
@@ -193,12 +202,11 @@ internal fun GridMatesShell(
                 else -> 16.dp
             })
         ) {
-            if (page == Page.RECORDS || page == Page.COLLECTION ||
-                page == Page.SETTINGS) {
-                val target = if (page == Page.RECORDS || page == Page.COLLECTION)
+            if (page == Page.RECORDS || page == Page.SETTINGS) {
+                val target = if (page == Page.RECORDS)
                     sectionReturnPageName else Page.PLAY.name
                 Ws15BackHeader(
-                    title = if (page == Page.COLLECTION) "Your Collection" else page.label,
+                    title = page.label,
                     onBack = { pageName = target },
                     backLabel = if (target == Page.PROFILE.name)
                         "Back to Profile" else "Back to Home"
@@ -274,7 +282,8 @@ internal fun GridMatesShell(
                 Page.SOLO_SETUP -> SoloSetupScreen(soloStore,
                     onBack = { pageName = soloSetupReturnPage },
                     onStarted = { pageName = Page.PUZZLE.name })
-                Page.PUZZLE, Page.DAILY_PUZZLE, Page.NEARBY, Page.BOOKS_QA, Page.ART_LAB -> Unit
+                Page.PUZZLE, Page.DAILY_PUZZLE, Page.NEARBY, Page.BOOKS_QA,
+                Page.ART_LAB, Page.COLLECTION -> Unit
                 Page.DAILY -> DailyLandingScreen(soloStore,
                     onPlay = { date ->
                         soloStore.openDaily(date)
@@ -282,7 +291,6 @@ internal fun GridMatesShell(
                     },
                     onBack = { pageName = Page.PLAY.name })
                 Page.RECORDS -> SoloRecordsScreen(soloStore.profile)
-                Page.COLLECTION -> CollectionScreen(soloStore)
                 Page.SETTINGS -> {
                     SoloSettingsScreen(
                         soloStore,

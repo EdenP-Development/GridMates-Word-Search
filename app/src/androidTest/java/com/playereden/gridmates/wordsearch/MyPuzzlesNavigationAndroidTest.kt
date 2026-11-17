@@ -42,8 +42,7 @@ class MyPuzzlesNavigationAndroidTest {
             rule.onNodeWithTag("ws31-paused-solo-" + pausedId).assertExists()
             rule.onNodeWithTag("ws31-paused-resume-" + pausedId).assertExists()
             rule.onNodeWithText("Resume").performScrollTo().performClick()
-            rule.onNodeWithText("Trace words · pinch to zoom", substring = true)
-                .assertExists()
+            rule.onNodeWithTag("word-grid-touch-area").assertExists()
             assertEquals(pausedId, store.profile.active.puzzleId)
             assertEquals(1, store.profile.pausedSolo.size)
         } finally {
