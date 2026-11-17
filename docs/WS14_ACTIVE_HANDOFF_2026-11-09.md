@@ -1,4 +1,12 @@
-# Active development handoff — WS34 Android screenshot polish
+# Active development handoff — WS35 Library binding depth
+
+The [v98 artwork and build receipt](devlog/2026-11-17_WS35_LIBRARY_BINDING_DEPTH.md) records the six new bindings, cabinet lighting, and Library layout. The [signed v98 QA APK](https://github.com/PlayerEden/GridMates-Word-Search/actions/runs/44136465891/artifacts/14352522134) was built at `8e8c15f11295d382ccb770838891eb766336aa79` in [draft PR #146](https://github.com/PlayerEden/GridMates-Word-Search/pull/146), stacked on #145. The Android build and artwork and release-isolation checks passed.
+
+Android accepted the update over v97 in [the v98 device run](https://github.com/PlayerEden/GridMates-Word-Search/actions/runs/44138223788). The emulator stopped responding during the Library capture. Full on-screen Library review, tapping Garden, and compact pager checks are pending. [Device retry evidence](https://github.com/PlayerEden/GridMates-Word-Search/actions/runs/44139001057).
+
+The [v97 APK](https://github.com/PlayerEden/GridMates-Word-Search/actions/runs/44120147813/artifacts/14345181818) is the signed comparison build. Continue with portable backups for completed book pages, bookmarks, and unfinished pages. The Library uses the QA catalog.
+
+## Earlier v97 Android screenshot polish
 
 The [v97 screenshot polish receipt](devlog/2026-11-17_WS34_PHONE_SCREENSHOT_POLISH.md) records the installed Android checks and the comparison of the two APK builds. The [signed QA build](https://github.com/PlayerEden/GridMates-Word-Search/actions/runs/44120147813/artifacts/14345181818) was tested at `e89855264e85ef4a1486a1b3060a893a7301b45c` in [draft PR #145](https://github.com/PlayerEden/GridMates-Word-Search/pull/145), stacked on #144. The Android and artwork checks passed. v97 retains the signing certificate installed by v96.
 
