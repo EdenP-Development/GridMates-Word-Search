@@ -29,12 +29,20 @@ sheets. The intake release, archive checksum and exact notice are pinned in
 `intake/esdb_us_2026_02_25.json` and `licenses/`. External source rights remain
 distinct from permission to inspect/review candidates.
 
-After real editorial decisions are signed in both CSVs and the topic is active,
-an immutable content snapshot can be produced:
+Keep the recovered root CSVs/registry as the exact historical test fixture.
+Create a new versioned authoring directory for editorial work, copying the four
+schema files (`words_candidate.csv`, `word_topics_candidate.csv`, `topics.json`,
+`sources.json`) and extending their existing stable IDs. Pass that directory to
+the validator/exporter with `--data-dir`, and add it to CI when introduced. This
+preserves the recovery proof and the old negative-test fixture without blocking
+new vocabulary or real approvals.
+
+After real editorial decisions are signed in both working CSVs and the topic is
+active, an immutable content snapshot can be produced:
 
 ```bash
 python3 tools/lexicon/export_snapshot.py \
-  --data-dir data/lexicon --pack-id en-woodland-v1 \
+  --data-dir data/lexicon/authoring/en-v1 --pack-id en-woodland-v1 \
   --topics woodland --output-dir /tmp/gridmates-reviewed-packs
 ```
 

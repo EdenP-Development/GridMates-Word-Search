@@ -68,8 +68,9 @@ The latest cumulative source is on its development branch, not `main`.
 
 ## Next exact implementation
 
-Complete the first reviewed content batch from the recovered Woodland/Space/
-Garden sheets and a general vocabulary source, export immutable packs, and
+Create a versioned authoring directory from the recovered schemas, keeping the
+exact recovery fixture intact. Complete the first reviewed content batch from
+the Woodland/Space/Garden sheets and a general vocabulary source, export packs, and
 implement the new pack-aware mixed generator/save path. Then add the compact
 three-size Quick Play chooser and Play Another loop. Run saved-board goldens,
 novelty/solvability/length-tier tests, backup/upgrade tests and actual Android

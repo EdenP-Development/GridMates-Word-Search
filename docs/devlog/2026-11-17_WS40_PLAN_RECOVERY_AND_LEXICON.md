@@ -1,7 +1,8 @@
 # 2026-11-17 — WS40 GitHub plan recovery and word-library authoring
 
-> **Quick status:** LOCAL CHECKS PASSED; GitHub CI pending. No APK build requested
-> by this pass because Android code/assets and active word pools are unchanged.
+> **Quick status:** PASSED LOCAL AND GITHUB QA. All 26 authoring tests and the
+> exact-source intake/review reproduction passed. No APK is built because Android
+> code/assets and active word pools are unchanged.
 
 ## Who, what, where, why
 
@@ -56,9 +57,12 @@
 - **Local executed:** 26/26 Python authoring/snapshot tests, exact original
   hashes for all 17 recovered files, canonical catalog validation (zero approved
   new-pipeline words), workflow syntax and patch whitespace checks.
-- **GitHub source/PR/run/artifact:** pending. The new workflow will reproduce
-  36,213 pinned-source candidates, 532 themed review rows and 31 holds and prove
-  draft data cannot export as a playable snapshot.
+- **Tested source:** `71e37d9d61816bc8135afa60fdaa1d8c3624de23`, [draft PR #151](https://github.com/PlayerEden/GridMates-Word-Search/pull/151), stacked on #150. Later receipt/readme changes are documentation only.
+- **GitHub CI:** [run 44198852876](https://github.com/PlayerEden/GridMates-Word-Search/actions/runs/44198852876) **SUCCESS**, all eleven job steps successful. The explicit log reports 26 tests passing, all 17 recovered source hashes matching, and exact pinned source archive verification.
+- **Reproduced content:** 36,213 unreviewed source candidates, Woodland 185 / Space 183 / Garden 164 review rows (532 total), 31 holds, and 0 automatically approved words/assignments. 176 proposals are flagged for no direct spelling-root match; that flag is not a rejection or approval.
+- **Expected negative check:** exporting the unchanged proposed/unreviewed root catalog failed before creating an output directory. The CI step verifying that rejection passed.
+- **Review artifact:** [14380421759](https://github.com/PlayerEden/GridMates-Word-Search/actions/runs/44198852876/artifacts/14380421759), `GridMates-WS40-Recovered-Lexicon-Review`, 455,686-byte ZIP, SHA-256 `c155610a2b901aaafe5a74ea3ed477dde48f8a4c289ebcedbe35024cc6668c11`. Downloaded ZIP digest/CRC and its actual queue report verified.
+- Root recovered files remain an exact historical negative-test fixture. Next editorial work goes into a new versioned authoring directory with the same schemas/stable IDs, passed explicitly via `--data-dir`, rather than editing the pinned recovery fixture.
 - **Failures corrected:** the first recovery transfer exceeded the process
   argument-size limit before any write. Recovery was split into bounded batches
   and all original blob hashes then matched. No application build was retried.
@@ -71,7 +75,7 @@
   current plan and historical context are separated and traceable.
 - No new theme, approved word pack, mixed generator or production catalog is
   claimed in this pass.
-- **Next exact task:** review the first 100–250-word editorial batch from the
+- **Next exact task:** create `data/lexicon/authoring/en-v1` from the four schema/data files, retaining stable IDs and the pinned root fixture. Review the first 100–250-word editorial batch from the
   recovered theme sheets plus general vocabulary, export immutable packs, then
   implement a new pack-aware generator/save identity and full mixed Quick Play.
   Keep old puzzle reconstruction and Daily stable. Catalog growth and an
