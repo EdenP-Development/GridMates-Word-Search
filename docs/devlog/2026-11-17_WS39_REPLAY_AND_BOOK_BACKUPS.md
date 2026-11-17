@@ -1,7 +1,9 @@
 # 2026-11-17 — WS39 replayability and book backups
 
-> **Quick status:** BUILD PENDING. Android unit, generator audit, lint and actual
-> emulator tests have not yet completed. No owner handset verification claimed.
+> **Quick status:** PASSED AUTOMATED. Core/app tests, lint, independent package
+> verification and all ten actual Android emulator tests passed. Owner handset
+> review is pending. Separate native navigation, screenshot and install-over
+> checks also passed using the exact signed APK.
 
 ## Who, what, where, why
 
@@ -49,7 +51,15 @@
 ## Build and QA receipt
 
 - Version code 102, version name `0.9.58-ws39-qa`.
-- Source SHA, PR, run IDs, artifacts and package hash are pending final build.
+- Tested source [`8ce68b0d0564ce11c30c0b18dcb208d7b9a1b6f4`](https://github.com/PlayerEden/GridMates-Word-Search/commit/8ce68b0d0564ce11c30c0b18dcb208d7b9a1b6f4), [draft PR #150](https://github.com/PlayerEden/GridMates-Word-Search/pull/150), stacked on #149.
+- [Standard Android QA run 44192668122](https://github.com/PlayerEden/GridMates-Word-Search/actions/runs/44192668122) **SUCCESS**, 94 successful steps and three intentionally skipped WS33-only steps. Core/app unit tests, lint, instrumentation compilation, signed APK checks and the targeted emulator all ran.
+- [Independent build/art/release-isolation run 44192668153](https://github.com/PlayerEden/GridMates-Word-Search/actions/runs/44192668153) **SUCCESS**.
+- [Signed artifact 14377072810](https://github.com/PlayerEden/GridMates-Word-Search/actions/runs/44192668122/artifacts/14377072810): 34,141,854-byte APK, SHA-256 `3468befffa01b5e6b1f098389d775519274d95557ce00eac9d8b8514e9335d37`.
+- Actual binary manifest package `com.playereden.gridmates.wordsearch.qa`, code 102, name `0.9.58-ws39-qa`. Extracted v2 signing certificate SHA-256 `75cc3c896247d71fbd51f7a3ed41f90c8218a8a5a70df8c0f6b494b5cc23d419`, matching v101. CI separately verified signatures.
+- All 372 extracted package entries agree with the independently built APK. All 228 asset entries are byte-for-byte unchanged from v101. ZIP CRC and outer artifact ZIP digests passed.
+- Core audit covers 315 generated boards. Vocabulary reachability sweep covers 256 seeds per challenge/theme; 16 short layouts per theme are distinct. Frozen generator golden tests also ran.
+- [Actual Android evidence 14377802333](https://github.com/PlayerEden/GridMates-Word-Search/actions/runs/44192668122/artifacts/14377802333) contains `OK (10 tests)` in 27.15 seconds on API35. Six backup tests cover complete roundtrip, old Solo import, two levels of checksum rejection, interrupted writes at three checkpoints, a real IO obstruction and retry, absent catalogs and protected unreadable files. Two Quick Play store tests cover reopens, awards, archiving and 24-game capacity. The Home routing test and existing real 20×20 pointer-drag/hint persistence test also passed.
+- The instrumentation screenshots were covered by Android's initial fullscreen notice and are not accepted as visual evidence. A QA-only runner now reuses the exact signed v102 APK, suppresses/dismisses that notice and captures real native Home → Quick Play → Settings navigation. It also installs v102 over v101 and checks old Solo save bytes. [Native run 44194406102](https://github.com/PlayerEden/GridMates-Word-Search/actions/runs/44194406102), QA source `ef7c9f9228ea2826fd1a4afbe1373abd02111f35`, **SUCCESS**. [Native evidence artifact 14376884803](https://github.com/PlayerEden/GridMates-Word-Search/actions/runs/44194406102/artifacts/14376884803) contains clean Home, generated Garden puzzle and backup Settings captures, plus the passed receipt. v102 installed over v101 and preserved the prior Solo JSON byte-for-byte. Native taps reached the square 12×12 board and both backup actions at 360dp, 100% font. No APK rebuild was performed.
 - Local checks completed: clean patch whitespace, shell syntax, workflow YAML,
   direct vocabulary counts and uniqueness from source.
 - Android instrumentation is configured for this feature branch only, to avoid
@@ -59,7 +69,6 @@
 
 ## Outcome and follow-through
 
-- Implementation complete locally; build and actual Android evidence pending.
+- Quick Play, complete book backup/restore and the word-library/mechanics audit are implemented and passed the checks above.
 - Future themes and larger/mixed word packs are planned, not included in WS39.
-- Next exact action is inspect CI/core sweep and ten Android tests, fix observed
-  failures, verify the signed package and deliver v102 with the final receipt.
+- Next exact development action is implement immutable expanded English word packs and a versioned mixed Quick Play option before adding new themed books. Owner can review the v102 install-over, Quick Play and backup/restore on a handset. Future Fall/Jungle/Winter/Summer/Castle books should follow the content and matched-art contract linked above.

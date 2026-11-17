@@ -47,7 +47,9 @@ challenges and seven seeds, including zero and large positive seeds. It checks
 reverse selection, duplicate claims, invalid selections, forward-only Relaxed
 placement, and all-target completion. A separate 256-seed vocabulary sweep checks
 that every V2/V3 entry is reachable, plus 16 distinct short layouts per theme.
-The build receipt records whether these tests actually passed.
+Both audit tests passed in the WS39 Android QA build. The
+[build receipt](devlog/2026-11-17_WS39_REPLAY_AND_BOOK_BACKUPS.md) links the exact
+source, build, signed APK and actual Android tests.
 
 ## Next content version
 
@@ -59,7 +61,8 @@ The next implementation should use explicit immutable pack IDs such as
 `en-woodland-v1` and `en-fall-v1`, a versioned generator, and portable saves that
 include that pack ID. Persist pack identity and seed before displaying a board.
 Route old saves to their existing generators. Avoid using an enum's ordinal as
-the identity of new content.
+the identity of new content. Daily expansion needs an explicit date/content-version
+boundary so historical Daily puzzles and their results remain unchanged.
 
 Each pack should have a reviewed display name, normalized search token, stable
 entry ID, familiarity tier and suitable board sizes. Keep friendly phrases in
@@ -75,7 +78,10 @@ its own immutable version and theme-aware presentation rather than combining
 old enum pools at runtime and silently changing saved layouts. Every size and
 challenge must pass generation, uniqueness, reverse-claim, timing, hints,
 completion, restore and bounded-generation checks. Broader vocabulary and
-mixed packs are the next development milestone after WS39.
+mixed packs are the next development milestone after WS39. A later player-entered
+word list needs a bounded, portable pack definition in its save and backup, so
+it can reproduce the same puzzle on another phone. Custom currently means
+choosing the built-in theme, size and challenge.
 
 ## Visual families for future books
 
