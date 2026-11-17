@@ -1,3 +1,7 @@
+# Active development handoff — WS39 replay and book backups
+
+[Current pass](devlog/2026-11-17_WS39_REPLAY_AND_BOOK_BACKUPS.md) implements Quick Play and complete book backup/restore on branch `feature/ws39-replay-and-book-backups-2026-11-17`, stacked on PR #149. Version 102 is building. Do not claim Android or owner verification yet. The next action is inspect core and Android CI, complete the ten targeted emulator tests, verify the signed artifact and update this receipt. [Content and theme roadmap](WORD_LIBRARY_AND_THEME_EXPANSION_2026-11-17.md). Immediate fallback is the signed v101 below, with v100 as the owner screenshot baseline.
+
 # Active development handoff — WS38 handset visual fixes
 
 The owner's v100 screenshots establish a handset visual baseline for the shared controls and matching books. [Draft PR #149](https://github.com/PlayerEden/GridMates-Word-Search/pull/149) fixes long Garden labels, the Space page's cool flat background, rectangular Home cover press feedback, and Together setup styling. The [v101 receipt](devlog/2026-11-17_WS38_HANDSET_VISUAL_FIXES.md) records the implementation and the comparison build.

@@ -69,12 +69,12 @@ class Ws16CarouselHomeAndroidTest {
             .performScrollTo().assertHasClickAction()
         compose.onNodeWithTag("ws16-resume-solo", useUnmergedTree = true).assertExists()
     }
-    @Test fun asymmetricAssetsAndQuickPlayPlaceholderHaveHonestRouting() {
+    @Test fun asymmetricAssetsAndQuickPlayHaveHonestRouting() {
         compose.onNodeWithTag("ws16-action-daily").performScrollTo().assertExists()
         compose.onNodeWithText("Daily Puzzle").assertExists()
         compose.onNodeWithTag("ws16-action-together").performScrollTo().assertExists()
         compose.onNodeWithText("Together").assertExists()
-        compose.onNodeWithTag("ws16b-quick-play-preview").performScrollTo().assertExists()
+        compose.onNodeWithTag("ws39-quick-play").performScrollTo().assertHasClickAction()
         compose.onNodeWithText("Custom").assertExists()
         compose.onNodeWithContentDescription("Open menu").performClick()
         compose.onNodeWithTag("ws16b-compact-menu").assertExists()
@@ -102,8 +102,8 @@ class Ws16CarouselHomeAndroidTest {
             .performScrollTo().assertExists()
         compose.onNodeWithContentDescription("Open Together on local Wi-Fi")
             .performScrollTo().assertExists()
-        compose.onNodeWithTag("ws16b-quick-play-preview").performScrollTo().assertExists()
-        compose.onNodeWithText("Mixed-word boards · coming soon").assertExists()
+        compose.onNodeWithTag("ws39-quick-play").performScrollTo().assertHasClickAction()
+        compose.onNodeWithText("Fresh themed puzzles · 12×12").assertExists()
         compose.onNodeWithTag("ws16-new-solo").performScrollTo().assertExists()
         compose.onNodeWithTag("ws16-my-puzzles").assertExists()
     }

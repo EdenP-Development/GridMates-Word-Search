@@ -80,6 +80,16 @@ internal class BookPageSessionStore(
         .filter { it.bookId == bookId }
         .mapTo(mutableSetOf()) { it.pageId }
 
+    fun exportForManualBackup(): ByteArray? =
+        if (blocked) null else BookPageSessionCodec.encode(catalog, current)
+
+    fun importManualBackup(bytes: ByteArray): Boolean {
+        if (blocked) return false
+        return try {
+            commit(BookPageSessionCodec.decode(catalog, bytes))
+        } catch (_: IllegalArgumentException) { false }
+    }
+
     fun claim(
         bookId: String, pageId: String, start: GridPoint, end: GridPoint
     ): WordClaim {

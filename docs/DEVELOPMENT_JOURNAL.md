@@ -1,3 +1,5 @@
+**WS39 replayability and book backups (November 17, building).** [Pass receipt](devlog/2026-11-17_WS39_REPLAY_AND_BOOK_BACKUPS.md) records playable Quick Play, portable book journals and the word-library/mechanics audit. Source and Android evidence are pending.
+
 **WS38 handset visual fixes (November 17).** [v101 changes and build receipt](devlog/2026-11-17_WS38_HANDSET_VISUAL_FIXES.md) · [draft PR #149](https://github.com/PlayerEden/GridMates-Word-Search/pull/149). Long targets receive enough width, book pages share the warm paper, Home cover presses scale the book, and Together setup uses the illustrated controls.
 
 **WS37 puzzle flow visual cohesion (November 17).** [v100 layout and build receipt](devlog/2026-11-17_WS37_VISUAL_COHESION.md) · [draft PR #148](https://github.com/PlayerEden/GridMates-Word-Search/pull/148). The puzzle screens share illustrated controls with Home, the board has more room, and the completion journal uses the matching book art.
