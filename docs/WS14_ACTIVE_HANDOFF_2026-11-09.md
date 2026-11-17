@@ -1,4 +1,12 @@
-# Active development handoff — WS35 Library binding depth
+# Active development handoff — WS36 matching covers and bindings
+
+The [v99 matching art receipt](devlog/2026-11-17_WS36_MATCHED_BOOK_BINDINGS.md) records each source-matched pair and its [draft PR #147](https://github.com/PlayerEden/GridMates-Word-Search/pull/147), stacked on #146. The owner reviewed v98 on a handset and liked the rounded spines. The cover edge now shares the spine art across the Home carousel, cover browser, and book previews.
+
+The [signed v99 QA APK](https://github.com/PlayerEden/GridMates-Word-Search/actions/runs/44142826177/artifacts/14354454242) was built at `faa55580f69e5cef36716db6b14c9712cbc79c24`. [Android build checks](https://github.com/PlayerEden/GridMates-Word-Search/actions/runs/44142826177) and [independent artwork and release-isolation checks](https://github.com/PlayerEden/GridMates-Word-Search/actions/runs/44142826053) passed. Both packages contain the same three verified cover and spine pairs. The v99 handset check is pending.
+
+The [signed v98 build](https://github.com/PlayerEden/GridMates-Word-Search/actions/runs/44136465891/artifacts/14352522134) is the handset-reviewed comparison build. Continue with portable backup and restore for completed book pages, bookmarks, and unfinished pages.
+
+## Earlier v98 Library binding depth
 
 The [v98 artwork and build receipt](devlog/2026-11-17_WS35_LIBRARY_BINDING_DEPTH.md) records the six new bindings, cabinet lighting, and Library layout. The [signed v98 QA APK](https://github.com/PlayerEden/GridMates-Word-Search/actions/runs/44136465891/artifacts/14352522134) was built at `8e8c15f11295d382ccb770838891eb766336aa79` in [draft PR #146](https://github.com/PlayerEden/GridMates-Word-Search/pull/146), stacked on #145. The Android build and artwork and release-isolation checks passed.
 
