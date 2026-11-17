@@ -3,16 +3,23 @@ package com.playereden.gridmates.wordsearch
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.width
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.semantics.SemanticsActions
 import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performScrollTo
+import androidx.compose.ui.test.performSemanticsAction
+import androidx.compose.ui.text.TextLayoutResult
+import androidx.compose.ui.unit.Density
 import androidx.compose.ui.unit.dp
 import androidx.test.platform.app.InstrumentationRegistry
 import com.playereden.gridmates.wordsearch.core.*
 import org.junit.Assert.assertEquals
+import org.junit.Assert.assertTrue
 import org.junit.Rule
 import org.junit.Test
 import java.io.File
@@ -20,6 +27,37 @@ import java.io.File
 /** Real layout checks; compiled by CI, executed on device/emulator separately. */
 class ContinuousSoloWordIndexAndroidTest {
     @get:Rule val compose = createComposeRule()
+
+    @Test fun longGardenTargetsKeepTheirWholeWordAtPhoneTextScale() {
+        val words = listOf("PHOTOSYNTHESIS", "GERMINATION")
+        val sample = WordSearchPuzzle(
+            id = "word-list-layout-only:long-garden",
+            seed = 0L, contentVersion = 3,
+            theme = WordTheme.GARDEN, difficulty = WordDifficulty.HARD,
+            rows = List(30) { "A".repeat(30) },
+            targets = words.map { WordTarget(it, it, emptyList()) }
+        )
+        compose.setContent {
+            val base = LocalDensity.current
+            CompositionLocalProvider(LocalDensity provides Density(base.density, 1.25f)) {
+                GridMatesTheme {
+                    Box(Modifier.width(320.dp).height(300.dp)) {
+                        WordList(sample, emptySet(), daily = false,
+                            modifier = Modifier.height(300.dp), scrollAll = true)
+                    }
+                }
+            }
+        }
+        for (word in words) {
+            val layouts = mutableListOf<TextLayoutResult>()
+            compose.onNodeWithText("○ $word").assertIsDisplayed()
+                .performSemanticsAction(SemanticsActions.GetTextLayoutResult) { it(layouts) }
+            assertTrue("The complete target should fit on one line",
+                layouts.isNotEmpty() && layouts.all {
+                    !it.hasVisualOverflow && it.lineCount == 1
+                })
+        }
+    }
 
     @Test fun classicFifteenByFifteenCanScrollToAllWordsWithoutEightPages() {
         val ctx = InstrumentationRegistry.getInstrumentation().targetContext

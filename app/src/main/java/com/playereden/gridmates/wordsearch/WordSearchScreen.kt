@@ -76,6 +76,8 @@ import androidx.compose.ui.semantics.clearAndSetSemantics
 import androidx.compose.ui.semantics.onClick
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.AnnotatedString
+import androidx.compose.ui.text.rememberTextMeasurer
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.IntSize
@@ -547,6 +549,9 @@ internal fun WordList(
     var page by remember(puzzle.id, remainingOnly) { mutableStateOf(0) }
     var indexOpen by remember(puzzle.id) { mutableStateOf(false) }
     val giantWordList = PaperbackWordIndex.isGiant(puzzle.targets.size)
+    val textMeasurer = rememberTextMeasurer()
+    val wordStyle = MaterialTheme.typography.bodyMedium.copy(fontWeight = FontWeight.Medium)
+    val density = LocalDensity.current
     // Keep the existing placement-order presentation for all released boards.
     // Giant boards only: alphabetize a display copy, never saved target order.
     val targets = if (giantWordList)
@@ -594,7 +599,18 @@ internal fun WordList(
         }
         BoxWithConstraints(Modifier.weight(1f).fillMaxWidth()) {
             val enlarged = LocalDensity.current.fontScale >= 1.3f
-            val columns = if (maxWidth < 320.dp || enlarged) 1 else 2
+            val columnTextWidth = with(density) {
+                ((maxWidth - 6.dp) / 2 - 16.dp).toPx()
+            }
+            val needsFullWidth = remember(targets, wordStyle, density, columnTextWidth) {
+                targets.any { target ->
+                    textMeasurer.measure(
+                        AnnotatedString("○ " + target.word),
+                        style = wordStyle, maxLines = 1, softWrap = false
+                    ).size.width > columnTextWidth
+                }
+            }
+            val columns = if (maxWidth < 320.dp || enlarged || needsFullWidth) 1 else 2
             // The list is paged instead of scrollable. Keep all visible
             // targets within the space left below the fixed puzzle board.
             // Two-line entries must never spill under the pager. Keep more
@@ -682,9 +698,7 @@ internal fun WordList(
                                             else FontWeight.Medium,
                                         style = MaterialTheme.typography.bodyMedium,
                                         textDecoration = if (solved)
-                                            TextDecoration.LineThrough else null,
-                                        maxLines = 2,
-                                        overflow = TextOverflow.Clip)
+                                            TextDecoration.LineThrough else null)
                                 }
                             }
                             if (pair.size < columns) Box(Modifier.weight(1f))

@@ -1,4 +1,12 @@
-# Active development handoff — WS37 puzzle flow visual cohesion
+# Active development handoff — WS38 handset visual fixes
+
+The owner's v100 screenshots establish a handset visual baseline for the shared controls and matching books. [Draft PR #149](https://github.com/PlayerEden/GridMates-Word-Search/pull/149) fixes long Garden labels, the Space page's cool flat background, rectangular Home cover press feedback, and Together setup styling. The [v101 receipt](devlog/2026-11-17_WS38_HANDSET_VISUAL_FIXES.md) records the implementation and the comparison build.
+
+The [signed v101 APK](https://github.com/PlayerEden/GridMates-Word-Search/actions/runs/44181424897/artifacts/14372562300) was built from `cea3c5a6e5614eb223dd2ada4421a8fb31560d2b`. Both standard and independent build checks passed, all 372 package entries agree, and all 228 v100 assets match. [Android install-over, cover, book-page, and Together screenshots](https://github.com/PlayerEden/GridMates-Word-Search/actions/runs/44183668628/artifacts/14373078486) are captured. The [focused long-word and enlarged-text check](https://github.com/PlayerEden/GridMates-Word-Search/actions/runs/44186172695) passed at 125% and 200% text. [Focused screenshots and logs](https://github.com/PlayerEden/GridMates-Word-Search/actions/runs/44186172695/artifacts/14375495904) show the complete target and reachable tools.
+
+Supply the verified v101 update for handset review of these four issues. The [signed v100 APK](https://github.com/PlayerEden/GridMates-Word-Search/actions/runs/44176136860/artifacts/14369903140) is the handset comparison. Two-device Together testing and portable book backup are subsequent tasks.
+
+## Earlier v100 puzzle flow visual cohesion
 
 The [v100 visual and build receipt](devlog/2026-11-17_WS37_VISUAL_COHESION.md) records the shared play chrome, larger board, compact precision tools, and illustrated results. [Draft PR #148](https://github.com/PlayerEden/GridMates-Word-Search/pull/148) is stacked on #147. The [signed v100 QA APK](https://github.com/PlayerEden/GridMates-Word-Search/actions/runs/44176136860/artifacts/14369903140) was built at `ac1bb62783232e4ea5dff73bec037becc6f9be68`. The two builds agree on all packaged entries and reuse the 228 v99 assets.
 

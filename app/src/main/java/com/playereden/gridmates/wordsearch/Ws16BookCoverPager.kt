@@ -1,6 +1,8 @@
 package com.playereden.gridmates.wordsearch
 
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.interaction.MutableInteractionSource
+import androidx.compose.foundation.interaction.collectIsPressedAsState
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.PaddingValues
@@ -13,6 +15,8 @@ import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.PageSize
 import androidx.compose.foundation.pager.PagerState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.TransformOrigin
@@ -81,6 +85,8 @@ internal fun Ws16BookCoverPager(
             ) { page ->
                 val book = books[page]
                 val focused = pagerState.settledPage == page
+                val interactionSource = remember(book.id) { MutableInteractionSource() }
+                val pressed by interactionSource.collectIsPressedAsState()
                 Box(
                     modifier = Modifier.fillMaxWidth().height(226.dp)
                         .graphicsLayer {
@@ -92,7 +98,7 @@ internal fun Ws16BookCoverPager(
                                 (pagerState.currentPage - page) +
                                     pagerState.currentPageOffsetFraction
                             ).absoluteValue.coerceIn(0f, 1f)
-                            val scale = 1f - .12f * distance
+                            val scale = (1f - .12f * distance) * (if (pressed) 0.985f else 1f)
                             scaleX = scale
                             scaleY = scale
                             transformOrigin = TransformOrigin(.5f, 1f)
@@ -102,7 +108,11 @@ internal fun Ws16BookCoverPager(
                                 (if (focused) "Play " else "Select ") +
                                     book.title.removeSuffix(" · TEST BOOK")
                         }
-                        .clickable(role = Role.Button) {
+                        .clickable(
+                            interactionSource = interactionSource,
+                            indication = null,
+                            role = Role.Button
+                        ) {
                             if (!pagerState.isScrollInProgress) {
                                 onCoverTap(page, focused)
                             }
