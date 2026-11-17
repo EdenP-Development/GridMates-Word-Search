@@ -24,3 +24,6 @@ app/src/main/res/drawable-nodpi/woodland_*.png
 app/src/debug/assets/ws12/
 app/src/debug/assets/ws35/
 app/src/debug/assets/ws36/
+
+# Local word-library authoring bytecode
+tools/lexicon/__pycache__/

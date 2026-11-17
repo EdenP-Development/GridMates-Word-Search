@@ -1,3 +1,17 @@
+# Development roadmap
+
+**Current priorities and implementation states are in
+[Current Product Roadmap](CURRENT_PRODUCT_ROADMAP.md).** Read that document and
+the active handoff before selecting work. The table below is a preserved
+historical plan, including superseded status labels and expired artifact links.
+
+The [WS40 GitHub audit](audits/2026-11-17_WS40_GITHUB_PLAN_RECOVERY.md) recovered
+the separate WS10 word-library branch and reconciled those old milestones
+against v102. It does not mark every open issue complete or merge old PRs.
+
+<details>
+<summary>Historical checkpoints before WS40 — reference only</summary>
+
 **WS-14A1 Native Visual Kit — actual implementation (Nov 8, 2026):** [WS-14 umbrella #123](https://github.com/PlayerEden/GridMates-Word-Search/issues/123) and [style milestone #124](https://github.com/PlayerEden/GridMates-Word-Search/issues/124) now have code: a native shared `StorybookVisualKit.kt` (real heading/panel/optional-image/mode-card building blocks and centralized UI tokens), **used by Play, Bookshelf and Collection** on the established QA branch. Android source tests cover native action/320dp+200% text/no fake art. The new `validate_ws14_assets.py` and unit tests prevent nonexistent/mismatched artworks, unreviewed release exports and missing rights approvals. The [WS-14A1 source/QA spec](WS14A1_NATIVE_COMPONENTS_AND_ASSET_GATES_QA_2026-11-08.md) defines **v57** signed QA install-over; Android and art isolation CI must pass before APK delivery. **Not the final visual reskin and not actual individual image-generated sprites yet**; pursue [#125 real illustration production](https://github.com/PlayerEden/GridMates-Word-Search/issues/125) and [#126 three-screen vertical slice](https://github.com/PlayerEden/GridMates-Word-Search/issues/126) next. Keep the last verified v56 as fallback.
 
 **WS-14 — Full-app illustrated visual modernization (Nov 8, 2026):** The owner confirmed the [three-phone Play / Puzzle Books / Collection concept] as the **visual target for the WHOLE app**, not merely a richer bookcase. [New visual-production epic #123](https://github.com/PlayerEden/GridMates-Word-Search/issues/123) and [full implementation plan](WS14_FULL_APP_VISUAL_IDENTITY_AND_UI_PRODUCTION_ROADMAP_2026-11-08.md) cover one coherent production art direction, **actual curated image-generated UI sprites** (rather than the prior procedural SVG placeholders or flattening the entire mockup), native Compose components and consistent accessible screens. [Style bible / source asset contract](../design/visual-system/WS14_VISUAL_STYLE_BIBLE_AND_SPRITE_ASSET_CONTRACT_2026-11-08.md). Ordered issues: [#124 style tokens/asset registry](https://github.com/PlayerEden/GridMates-Word-Search/issues/124), [#125 generated illustration masters/individual sprites](https://github.com/PlayerEden/GridMates-Word-Search/issues/125) (coordinate with #119 book cover art), [#126 Home + Bookcase + Collection as one QA vertical slice](https://github.com/PlayerEden/GridMates-Word-Search/issues/126), [#127 remaining screens](https://github.com/PlayerEden/GridMates-Word-Search/issues/127), [#128 provenance/device/release QA](https://github.com/PlayerEden/GridMates-Word-Search/issues/128). **STATUS: planning only—no production assets or implementation yet**, and no owner approval inferred from the mockup. Must preserve WS-13A v56 working bookcase, Solo/Daily/Nearby, book journals, signed install-over and 12 original Woodland portraits. Do not publish unapproved art or test books.
@@ -372,3 +386,6 @@ Later milestone issues should be opened as work approaches, rather than creating
 ### WS-07F Records navigation subpass (November 7)
 
 [API35 run #42432833373](https://github.com/PlayerEden/GridMates-Word-Search/actions/runs/42432833373) **92/92 Android tests PASS** and signed v0.8.1→v0.8.2 update preserved all saved histories. The preceding run #42430710954 failed one actual 360dp Race visibility regression; corrected tabs-first placement and verified selected Race/Duel headings **visibly accessible**. [Exact source, signer, APK checksum, rollback](WS07F_RECORDS_BUILD_QA_2026-11-07.md). This is a bounded UX pass under the broader WS-07E usability program, **not** completion of the roadmap's WS-07F long-session stress/performance audit. [Collection gallery pagination PR #61](https://github.com/PlayerEden/GridMates-Word-Search/pull/61) is separately staged and not yet full-QA verified. All real-phone gates remain deferred.
+
+
+</details>
