@@ -124,27 +124,6 @@ def scroll_to(label):
     raise AssertionError(f'Action {label!r} could not be reached by scrolling')
 
 
-def select_cover(title):
-    root=await_screen('Open menu')
-    for _ in range(3):
-        selected=find(root,'Play '+title)
-        if selected is not None:
-            return selected
-        neighbor=find(root,'Select '+title)
-        if neighbor is not None:
-            tap(neighbor)
-        else:
-            start=next((node for node in root.iter('node')
-                        if node.get('content-desc') in
-                        ('Play Woodland','Play Space','Play Garden')),None)
-            assert start is not None, 'Home should expose its selected book'
-            left,top,right,bottom=bounds(start)
-            adb('shell','input','swipe',str(right-12),str((top+bottom)//2),
-                str(left+12),str((top+bottom)//2),'450')
-        root=await_screen('Open menu')
-    raise AssertionError(f'Cover {title!r} did not become selected')
-
-
 EVIDENCE.mkdir(exist_ok=True)
 try:
     adb('shell','wm','size','720x1600')
@@ -152,61 +131,14 @@ try:
     adb('shell','settings','put','system','font_scale','1.25')
     adb('shell','wm','dismiss-keyguard')
     adb('shell','settings','put','secure','immersive_mode_confirmations','confirmed')
-    assert b'Success' in adb('install','qa-baseline/app-debug.apk',timeout=90)
-    launch()
-    open_home_action(SOLO)
-    root=await_screen('Home','Hint (3)',GRID)
-    tap(find(root,'Hint (3)'))
-    root=await_screen('Home','Hint (2)')
-    tap(find(root,'Home'))
-    await_screen('Open menu')
-    assert b'Success' in adb('install','-r','qa-candidate/app-debug.apk',timeout=90)
+    assert b'Success' in adb('install','qa-candidate/app-debug.apk',timeout=90)
     assert b'versionCode=101 ' in adb('shell','dumpsys','package',PACKAGE)
     launch()
-    open_home_action(SOLO)
-    root=await_screen('Home','Hint (2)',GRID)
-    tap(find(root,'Home'))
-    print('PASS: signed v101 installs over v100 and retains the saved Solo hint.',flush=True)
-
-    garden=select_cover('Garden')
-    capture('garden-home.png')
-    left,top,right,bottom=bounds(garden)
-    x,y=str((left+right)//2),str((top+bottom)//2)
-    adb('shell','input','motionevent','DOWN',x,y)
-    time.sleep(.3)
-    capture('garden-pressed.png')
-    adb('shell','input','motionevent','UP',x,y)
-    root=await_screen('Back to book','Garden','0 of 12 words found')
-    capture('garden-book-page.png')
-    tap(find(root,'Back to book'))
-    space=select_cover('Space')
-    tap(space)
-    root=await_screen('Back to book','Space','0 of 12 words found')
-    capture('space-book-page.png')
-    tap(find(root,'Back to book'))
-    print('PASS: transparent Garden press and both warm-paper book pages captured through Home.',flush=True)
-
-    open_home_action('Open Together on local Wi-Fi')
-    root=await_screen('Play Together','Co-op','Race','Duel','Host Co-op game')
-    capture('together-coop.png')
-    tap(find(root,'Race'))
-    await_screen('Host Shared Board Race')
-    tap(scroll_to('Duel'))
-    await_screen('Host Speed Duel')
-    tap(scroll_to('Co-op'))
-    await_screen('Host Co-op game')
-    tap(scroll_to('Join nearby game'))
-    scroll_to('Close game finder')
-    capture('together-join.png')
-    adb('shell','input','keyevent','4')
-    await_screen('Open menu')
-    print('PASS: illustrated Together choices and Join finder remain reachable.',flush=True)
-
     # A deterministic, genuinely generated v3 Garden game in this disposable
     # emulator. The owner's phone and Library progress are outside this runner.
     seed=int(Path('core/build/ws38-garden-seed.txt').read_text())
     import json
-    profile={'schema':5,'active':{'theme':'GARDEN','difficulty':'HARD','seed':seed,
+    profile={'schema':5,'pausedSolo':[],'active':{'theme':'GARDEN','difficulty':'HARD','seed':seed,
         'board':'BOOK_GIANT','challenge':'CLASSIC','found':[],'hints':{},'seconds':0}}
     Path('qa-garden.json').write_text(json.dumps(profile))
     adb('shell','am','force-stop',PACKAGE)

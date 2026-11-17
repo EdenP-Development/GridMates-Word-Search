@@ -1,4 +1,4 @@
-name: WS38 signed handset visual fixes review
+name: WS38 long words and enlarged text review
 on:
   push:
     branches: [qa/ws38-handset-review-2026-11-17]
@@ -15,13 +15,6 @@ jobs:
     timeout-minutes: 22
     steps:
       - uses: actions/checkout@v4
-      - name: Fetch signed v100 QA baseline
-        uses: actions/download-artifact@v4
-        with:
-          name: GridMates-WordSearch-Android-QA
-          run-id: 44176136860
-          github-token: ${{ github.token }}
-          path: qa-baseline
       - name: Fetch signed v101 QA candidate
         uses: actions/download-artifact@v4
         with:
@@ -31,7 +24,6 @@ jobs:
           path: qa-candidate
       - name: Check APK digests
         run: |
-          echo 'c5957595f5a84a3140a19f60dd71bf52b13936a77ff6c06ff3998db7e6a3e07a  qa-baseline/app-debug.apk' | sha256sum --check
           echo '2824444742e1b93129a8eb2d711075bd697c34065303b8e469e03f087f87853e  qa-candidate/app-debug.apk' | sha256sum --check
       - uses: actions/setup-java@v5
         with:
@@ -47,7 +39,7 @@ jobs:
           echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=static_node"' | sudo tee /etc/udev/rules.d/99-kvm4all.rules
           sudo udevadm control --reload-rules
           sudo udevadm trigger --name-match=kvm
-      - name: Exercise handset screenshot fixes on Android
+      - name: Exercise long words and enlarged text on Android
         uses: reactivecircus/android-emulator-runner@v2
         with:
           api-level: 35
