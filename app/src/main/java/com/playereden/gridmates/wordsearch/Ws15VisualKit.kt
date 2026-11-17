@@ -142,7 +142,8 @@ internal fun Ws15BackHeader(
     backLabel: String,
     modifier: Modifier = Modifier,
     subtitle: String? = null,
-    onPreviewOptions: (() -> Unit)? = null
+    onPreviewOptions: (() -> Unit)? = null,
+    titleMaxLines: Int = 1
 ) {
     Row(modifier.fillMaxWidth().testTag("ws15-screen-header"),
         verticalAlignment = Alignment.CenterVertically,
@@ -163,7 +164,7 @@ internal fun Ws15BackHeader(
         }
         Column(Modifier.weight(1f), verticalArrangement=Arrangement.spacedBy(1.dp)) {
             Text(title, color=Forest, style=MaterialTheme.typography.titleMedium,
-                fontWeight=FontWeight.Bold,maxLines=1,overflow=TextOverflow.Ellipsis)
+                fontWeight=FontWeight.Bold,maxLines=titleMaxLines,overflow=TextOverflow.Ellipsis)
             if (!subtitle.isNullOrBlank()) {
                 Text(subtitle,color=Muted,style=MaterialTheme.typography.labelMedium,
                     maxLines=1,overflow=TextOverflow.Ellipsis)

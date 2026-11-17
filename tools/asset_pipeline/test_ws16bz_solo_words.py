@@ -13,7 +13,8 @@ class ContinuousSoloIndexTest(unittest.TestCase):
     def test_real_scroll_and_unpaged_all_targets(self):
         src=(APP/"WordSearchScreen.kt").read_text()
         self.assertIn('if (scrollAll) targets.size.coerceAtLeast(1)',src)
-        self.assertIn('if (scrollAll) Modifier.verticalScroll(listScroll) else Modifier',src)
+        self.assertIn('val scrollModifier = if (scrollAll)',src)
+        self.assertIn('.verticalScroll(listScroll)',src)
         self.assertIn('testTag("word-list-scrollable")',src)
         self.assertIn('testTag("word-list-target-" + target.id)',src)
         self.assertIn('val targets = if (giantWordList)',src)

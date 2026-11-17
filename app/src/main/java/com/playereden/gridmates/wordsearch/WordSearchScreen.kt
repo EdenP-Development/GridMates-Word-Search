@@ -53,6 +53,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.drawBehind
+import androidx.compose.ui.draw.drawWithContent
 import androidx.compose.ui.graphics.TransformOrigin
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.draw.clipToBounds
@@ -111,10 +112,6 @@ private val GridRule = Color(0xFFD8DFD2)
  * and its word-selection coordinate math stay entirely unchanged. */
 internal fun gridZoomTapIncrement(boardCells: Int): Float =
     if (boardCells >= 20) 0.5f else 0.25f
-
-internal fun gridZoomInstruction(boardCells: Int): String =
-    if (boardCells >= 20) "Dense board · use + or pinch"
-    else "Trace words · pinch to zoom"
 
 /** WS16BZ: larger Solo games need one continuous, independently scrollable
  * index. Keep the short Daily word list and Book gameplay contracts intact. */
@@ -619,10 +616,31 @@ internal fun WordList(
             // scrollable index; short Daily and legacy small games keep paging.
             // Board gestures remain on ZoomableWordGrid, never on this list.
             val listScroll = remember(puzzle.id, remainingOnly) { ScrollState(0) }
+            val scrollModifier = if (scrollAll) {
+                Modifier.testTag("word-list-scrollable")
+                    .drawWithContent {
+                        drawContent()
+                        val range = listScroll.maxValue
+                        val inset = 2.dp.toPx()
+                        val railHeight = size.height - inset * 2
+                        if (range in 1 until Int.MAX_VALUE && railHeight > 0f) {
+                            val railX = size.width - 3.dp.toPx()
+                            val thumbHeight = (railHeight * size.height / (size.height + range))
+                                .coerceAtLeast(minOf(18.dp.toPx(), railHeight))
+                            val top = inset + (railHeight - thumbHeight) *
+                                (listScroll.value.toFloat() / range)
+                            val stroke = 2.dp.toPx()
+                            drawLine(Forest.copy(alpha = 0.18f), Offset(railX, inset),
+                                Offset(railX, size.height - inset), stroke, StrokeCap.Round)
+                            drawLine(Forest.copy(alpha = 0.60f), Offset(railX, top),
+                                Offset(railX, top + thumbHeight), stroke, StrokeCap.Round)
+                        }
+                    }
+                    .verticalScroll(listScroll)
+                    .padding(end = 8.dp)
+            } else Modifier
             Column(
-                Modifier.fillMaxSize()
-                    .then(if (scrollAll) Modifier.testTag("word-list-scrollable") else Modifier)
-                    .then(if (scrollAll) Modifier.verticalScroll(listScroll) else Modifier),
+                Modifier.fillMaxSize().then(scrollModifier),
                 verticalArrangement = Arrangement.spacedBy(4.dp)
             ) {
                 if (giantWordList) {
@@ -858,10 +876,6 @@ internal fun ZoomableWordGrid(
             Row(Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.SpaceBetween,
                 verticalAlignment = Alignment.CenterVertically) {
-                Text(gridZoomInstruction(puzzle.size),
-                    modifier = Modifier.weight(1f),
-                    style = MaterialTheme.typography.labelSmall,
-                    color = Muted, maxLines = 2)
                 TextButton(
                     onClick = { preciseOpen = true },
                     modifier = Modifier.semantics {
