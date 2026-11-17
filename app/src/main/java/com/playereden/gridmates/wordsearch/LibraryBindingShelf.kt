@@ -63,17 +63,15 @@ internal fun rememberLibraryBindingArt(): LibraryBindingArt? {
     val context = LocalContext.current
     return remember(context) {
         runCatching {
-            fun load(name: String): ImageBitmap =
-                context.assets.open("ws35/spines/$name.png").use {
+            fun load(path: String): ImageBitmap =
+                context.assets.open(path).use {
                     checkNotNull(BitmapFactory.decodeStream(it)).asImageBitmap()
                 }
             LibraryBindingArt(
-                mapOf(
-                    WordTheme.WOODLAND to load("woodland"),
-                    WordTheme.SPACE to load("space"),
-                    WordTheme.GARDEN to load("garden")
-                ),
-                listOf(load("tobacco"), load("auburn"), load("slate"))
+                WordTheme.entries.associateWith { theme ->
+                    load(requireNotNull(matchedQaBookArtPath(theme, BookArtKind.SPINE)))
+                },
+                listOf("tobacco", "auburn", "slate").map { load("ws35/spines/$it.png") }
             )
         }.getOrNull()
     }

@@ -1,3 +1,5 @@
+**WS36 matching covers and bindings (November 17).** [v99 artwork and build receipt](devlog/2026-11-17_WS36_MATCHED_BOOK_BINDINGS.md) · [draft PR #147](https://github.com/PlayerEden/GridMates-Word-Search/pull/147). The same three leather bindings appear on the Library shelf and around the illustrated front covers.
+
 **WS35 Library binding depth (November 17).** [v98 artwork and Android verification](devlog/2026-11-17_WS35_LIBRARY_BINDING_DEPTH.md) · [draft PR #146](https://github.com/PlayerEden/GridMates-Word-Search/pull/146). The playable spines use new textured bindings and native title lettering, with casts on a darker cabinet and real books on both shelves.
 
 **WS34 Android screenshot polish (November 17).** [Verified v97 build and handoff](devlog/2026-11-17_WS34_PHONE_SCREENSHOT_POLISH.md) · [draft PR #145](https://github.com/PlayerEden/GridMates-Word-Search/pull/145). Collection keeps Back and its tabs visible, the Solo word list gains a scrollbar, and the puzzle instructions have room below the board.

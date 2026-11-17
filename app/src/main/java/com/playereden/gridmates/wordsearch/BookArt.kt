@@ -103,6 +103,16 @@ internal fun ws16afCorrectedSpinePath(theme: WordTheme, kind: BookArtKind): Stri
     return "ws16af/spines/$slug.png"
 }
 
+/** The current QA book edition uses the same binding on both faces of the book. */
+internal fun matchedQaBookArtPath(theme: WordTheme, kind: BookArtKind): String? {
+    val slug = theme.name.lowercase()
+    return when (kind) {
+        BookArtKind.COVER -> "ws36/covers/$slug.png"
+        BookArtKind.SPINE -> "ws35/spines/$slug.png"
+        else -> null
+    }
+}
+
 /** Compatibility for existing bookshelf cover-availability checks. */
 internal fun ws14QaCoverPath(theme: WordTheme, kind: BookArtKind): String? =
     if (kind == BookArtKind.COVER) ws14QaBookArtPath(theme, kind) else null
@@ -176,13 +186,14 @@ internal fun BookArt(
     val preferredBookFactory = if (fieldNotes) ws16adQaBookArtPath(theme, kind) else null
     val preferredPaintedV2 = if (fieldNotes) ws16aeQaBookArtPath(theme, kind) else null
     val preferredCorrectedSpine = if (fieldNotes) ws16afCorrectedSpinePath(theme, kind) else null
+    val preferredMatchedBook = if (fieldNotes) matchedQaBookArtPath(theme, kind) else null
     val preferredPageAccent = ws14jQaPageAccentPath(theme, kind, pageAccentCandidate)
     val preferredThreeThemes = ws14k2QaGameMotifPath(theme, kind, pageAccentCandidate)
     val bitmap = remember(context, existingStudyPath, preferredNewPath,
         preferredCorrectedSpine, preferredPaintedV2, preferredBookFactory,
-        preferredPageAccent, preferredThreeThemes) {
+        preferredPageAccent, preferredThreeThemes, preferredMatchedBook) {
         listOfNotNull(preferredThreeThemes, preferredPageAccent,
-            preferredCorrectedSpine, preferredPaintedV2, preferredBookFactory,
+            preferredMatchedBook, preferredCorrectedSpine, preferredPaintedV2, preferredBookFactory,
             preferredNewPath, existingStudyPath)
             .firstNotNullOfOrNull { path ->
                 runCatching {
