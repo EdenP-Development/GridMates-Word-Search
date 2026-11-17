@@ -350,7 +350,8 @@ internal fun WS16ATModularLibraryScene(
                 .then(
                     if (wideTitle) {
                         // Keep the enlarged title below the 54dp Back and menu buttons.
-                        Modifier.padding(horizontal = 16.dp, top = plaqueTop).fillMaxWidth()
+                        Modifier.padding(start = 16.dp, top = plaqueTop, end = 16.dp)
+                            .fillMaxWidth()
                     } else {
                         Modifier.padding(start = 66.dp, end = 66.dp, top = plaqueTop)
                     }
