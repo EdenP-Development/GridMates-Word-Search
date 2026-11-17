@@ -13,8 +13,11 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -22,6 +25,7 @@ import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.graphics.ColorMatrix
 import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.layout.onSizeChanged
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.testTag
@@ -211,9 +215,13 @@ internal fun WS16ATModularLibraryScene(
             22.dp.coerceAtMost((bottom - 32.dp).coerceAtLeast(0.dp))
             else 0.dp
         val titleTop = (top - 88.dp).coerceAtLeast(12.dp)
-        val titleHeight = if (density.fontScale >= 1.65f) 80.dp else 46.dp
+        val wideTitle = packedCatalog && density.fontScale >= 1.65f
+        val plaqueTop = if (wideTitle) 70.dp else titleTop
+        var titleHeightPx by remember { mutableIntStateOf(0) }
+        val headerBottom = safeContentPadding.calculateTopPadding() + plaqueTop +
+            with(density) { titleHeightPx.toDp() }
         val stageTop = if (packedCatalog) maxOf(
-            top + stageDrop, safeContentPadding.calculateTopPadding() + titleTop + titleHeight
+            top + stageDrop, headerBottom + 12.dp
         ) else top + stageDrop
         val stageBottom = bottom - pagerDrop
         val available = (maxHeight - stageTop - stageBottom).coerceAtLeast(1.dp)
@@ -337,14 +345,17 @@ internal fun WS16ATModularLibraryScene(
         Box(Modifier.fillMaxSize().padding(safeContentPadding)
             .testTag("ws16aw-safe-overlays")) {
         WS16BIAdaptivePlaque(
-            label = "Your Library", title = true, styled = cabinetPortrait,
+            label = "Your Library", title = true, styled = cabinetPortrait || wideTitle,
             modifier = Modifier.align(Alignment.TopCenter)
-                // WS16BJ: raise the fitted title under the arch without
-                // intruding on crown lights or the back/menu tap targets.
-                // WS16BL: 8dp further up following the v70 handset screenshot;
-                // leave more book-top clearance without moving the spines.
-                .padding(start = 66.dp, end = 66.dp,
-                    top = titleTop)
+                .then(
+                    if (wideTitle) {
+                        // Keep the enlarged title below the 54dp Back and menu buttons.
+                        Modifier.padding(horizontal = 16.dp, top = plaqueTop).fillMaxWidth()
+                    } else {
+                        Modifier.padding(start = 66.dp, end = 66.dp, top = plaqueTop)
+                    }
+                )
+                .onSizeChanged { titleHeightPx = it.height }
                 .testTag("ws16at-library-title")
         )
         WS16BIAdaptiveControl(

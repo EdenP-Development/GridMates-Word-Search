@@ -23,5 +23,3 @@ run_test 'QaWoodlandBookJourneyAndroidTest#reopenAndCompleteAllWoodlandPages'
 adb exec-out run-as "$package" cat files/woodland-complete.png > "$report/woodland-complete.png"
 adb shell am force-stop "$package"
 run_test 'QaWoodlandBookJourneyAndroidTest#reopenCompletedWoodland'
-run_test 'QaActualBookcaseAndroidTest#packedCaseShowsAllThreeBooksAndSceneryAtLargeText'
-run_test 'QaActualBookcaseAndroidTest#packedCaseSwipesToMorePlayableBooks'

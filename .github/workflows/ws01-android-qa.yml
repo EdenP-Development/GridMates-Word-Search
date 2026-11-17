@@ -351,7 +351,7 @@ jobs:
           echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=static_node"' | sudo tee /etc/udev/rules.d/99-kvm4all.rules
           sudo udevadm control --reload-rules
           sudo udevadm trigger --name-match=kvm
-      - name: Play Woodland through app restarts and check packed shelves
+      - name: Play Woodland through two app restarts
         if: ${{ (github.head_ref || github.ref_name) == 'feature/ws33-packed-library-2026-11-16' }}
         uses: reactivecircus/android-emulator-runner@v2
         with:

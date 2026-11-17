@@ -14,6 +14,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.semantics.SemanticsActions
 import androidx.compose.ui.test.assertIsNotEnabled
 import androidx.compose.ui.test.assertIsEnabled
 import androidx.compose.ui.test.assertHasNoClickAction
@@ -24,8 +25,10 @@ import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
 import androidx.compose.ui.test.performScrollToNode
+import androidx.compose.ui.test.performSemanticsAction
 import androidx.compose.ui.test.performTouchInput
 import androidx.compose.ui.test.swipeLeft
+import androidx.compose.ui.text.TextLayoutResult
 import androidx.compose.ui.unit.Density
 import androidx.compose.ui.unit.dp
 import com.playereden.gridmates.wordsearch.core.BookCatalog
@@ -86,9 +89,14 @@ class QaActualBookcaseAndroidTest {
                 }
             }
         }
-        compose.onNodeWithText("Your Library").assertIsDisplayed()
+        val title = compose.onNodeWithText("Your Library").assertIsDisplayed()
+        val textLayouts = mutableListOf<TextLayoutResult>()
+        title.performSemanticsAction(SemanticsActions.GetTextLayoutResult) { it(textLayouts) }
+        assertTrue(textLayouts.isNotEmpty() && textLayouts.none { it.hasVisualOverflow })
+        val titleBottom = title.fetchSemanticsNode().boundsInRoot.bottom
         for (book in catalog.books) {
-            compose.onNodeWithTag("ws16bh-spine-" + book.id).assertIsDisplayed()
+            val spine = compose.onNodeWithTag("ws16bh-spine-" + book.id).assertIsDisplayed()
+            assertTrue(spine.fetchSemanticsNode().boundsInRoot.top > titleBottom)
         }
         compose.onNodeWithTag("ws16at-movable-shelf-1").assertIsDisplayed()
         compose.onNodeWithTag("ws16bi-blank-cell-1-2")
