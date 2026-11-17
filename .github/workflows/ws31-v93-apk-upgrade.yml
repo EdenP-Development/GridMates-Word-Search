@@ -1,0 +1,58 @@
+name: WS31 Archived APK Upgrade
+
+on:
+  pull_request:
+    types: [synchronize]
+    branches:
+      - feature/ws31-achievement-rank-polish-2026-11-16
+    paths:
+      - '.github/workflows/ws31-v93-apk-upgrade.yml'
+      - '.github/scripts/ws31_archived_apk_upgrade.py'
+
+permissions:
+  actions: read
+  contents: read
+
+jobs:
+  verify-upgrade:
+    runs-on: ubuntu-latest
+    timeout-minutes: 18
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - name: Download the v92 signed QA build
+        uses: actions/download-artifact@v4
+        with:
+          name: GridMates-WordSearch-Android-QA
+          run-id: 43938489643
+          github-token: ${{ github.token }}
+          path: qa-archives/v92
+      - name: Download the PR 139 v93 signed QA build
+        uses: actions/download-artifact@v4
+        with:
+          name: GridMates-WordSearch-Android-QA
+          run-id: 43963840406
+          github-token: ${{ github.token }}
+          path: qa-archives/v93
+      - name: Check both exact APK hashes
+        run: |
+          sha256sum --check <<'CHECKSUMS'
+          98f2e7c99137944a39cad7aeff14f6b7731ea47effe4db9aa9be6c0eccb77a71  qa-archives/v92/app-debug.apk
+          714ea448ee729140aa1cf689b11718bbed19ed8af4431a3b9b34c97e691faf41  qa-archives/v93/app-debug.apk
+          CHECKSUMS
+      - name: Enable emulator hardware acceleration
+        run: |
+          echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=kvm"' | sudo tee /etc/udev/rules.d/99-kvm4all.rules
+          sudo udevadm control --reload-rules
+          sudo udevadm trigger --name-match=kvm
+      - name: Seed, install over, and reopen on Android 15
+        uses: reactivecircus/android-emulator-runner@v2
+        with:
+          api-level: 35
+          target: google_apis
+          arch: x86_64
+          profile: pixel_4
+          disable-animations: true
+          emulator-options: -no-window -gpu swiftshader_indirect -no-snapshot -noaudio -no-boot-anim
+          script: python3 .github/scripts/ws31_archived_apk_upgrade.py

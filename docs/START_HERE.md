@@ -1,5 +1,9 @@
 # START HERE — GridMates: Word Search
 
+**Current development · WS31 / v93.** Start from [draft PR #139](https://github.com/PlayerEden/GridMates-Word-Search/pull/139) at `77eb131ffd23fe60622bb0b76a87249d807884e9`. [Read the baseline audit and WS32 plan](devlog/2026-11-16_WS31_BASELINE_AUDIT_AND_WS32_PLAN.md) and [download the verified v93 QA ZIP](https://github.com/PlayerEden/GridMates-Word-Search/actions/runs/43963840406/artifacts/14274644351). This snapshot starts the Library and save-continuity milestone. The earlier entries below are historical.
+
+## Earlier development snapshots
+
 > **Latest confirmed v76 APK (Nov 14):** WS16BR [full exact-source receipt](devlog/2026-11-14_WS16BR_HOME_PAPER_AND_BOOK_PREVIEW_IMPLEMENTATION.md), [Android QA 72/72](https://github.com/PlayerEden/GridMates-Word-Search/actions/runs/43638723383) and [independent artwork/release 73/73](https://github.com/PlayerEden/GridMates-Word-Search/actions/runs/43638723286); [GitHub APK ZIP](https://github.com/PlayerEden/GridMates-Word-Search/actions/runs/43638723383/artifacts/14130648141). No bookcase art changes, safe same-signer install-over from v75; owner visual and actual saved-game/device acceptance still open, PR #131 DRAFT. Older “current APK” references below are historical.
 
 > **Current WS16BR v76 QA candidate (Nov 14):** [New Home paper/compact book-preview implementation](devlog/2026-11-14_WS16BR_HOME_PAPER_AND_BOOK_PREVIEW_IMPLEMENTATION.md); [asset crosswalk](../design/visual-system/ws16br-runtime-asset-crosswalk.json). Only v75 had previously completed dual-green QA; inspect actual final SHA and workflow results before handoff. PR #131 remains DRAFT, and v76 is an install-over candidate, not production release approval.

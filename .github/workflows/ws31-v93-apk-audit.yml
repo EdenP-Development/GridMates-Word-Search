@@ -1,0 +1,119 @@
+name: WS31 Archived APK Verification
+
+on:
+  pull_request:
+    types: [opened]
+    branches:
+      - feature/ws31-achievement-rank-polish-2026-11-16
+    paths:
+      - '.github/workflows/ws31-v93-apk-audit.yml'
+
+permissions:
+  actions: read
+
+jobs:
+  verify-archived-apks:
+    runs-on: ubuntu-latest
+    timeout-minutes: 6
+    steps:
+      - name: Download and inspect the pinned WS30 and WS31 APKs
+        env:
+          GH_TOKEN: ${{ github.token }}
+        shell: bash
+        run: |
+          work=$(mktemp -d)
+          download_archive() {
+            local artifact_id=$1 name=$2 expected=$3
+            curl --fail --silent --show-error --location --connect-timeout 15 --max-time 90 \
+              --header "Authorization: Bearer $GH_TOKEN" \
+              "https://api.github.com/repos/$GITHUB_REPOSITORY/actions/artifacts/$artifact_id/zip" \
+              --output "$work/$name.zip"
+            printf '%s  %s\n' "$expected" "$work/$name.zip" | sha256sum --check
+          }
+          download_archive 14262602218 ws30 b4177a176d78cdc42c722c34017d11677d77753e1e27ad5d8f2e4a1e1e991417
+          download_archive 14274644351 ws31-android 7752dbc18d5eb653f5135c9397832dfc95bb2ab7db964fc149479d5ec706879f
+          download_archive 14274144473 ws31-art 404e3a5f2f1143bcc3caa8e604ed6fa6e90a7af727f0b7547ffef6d02ae4d4e5
+
+          python3 - "$work" "$ANDROID_HOME/build-tools/35.0.0" <<'PY'
+          import hashlib
+          import re
+          import shutil
+          import subprocess
+          import sys
+          from pathlib import Path
+          from zipfile import ZipFile
+
+          work, build_tools = map(Path, sys.argv[1:])
+          package_id = "com.playereden.gridmates.wordsearch.qa"
+          certificate = "75cc3c896247d71fbd51f7a3ed41f90c8218a8a5a70df8c0f6b494b5cc23d419"
+          receipts = (
+              ("ws30", 92, "0.9.48-achievement-symbols-qa-qa",
+               "98f2e7c99137944a39cad7aeff14f6b7731ea47effe4db9aa9be6c0eccb77a71"),
+              ("ws31-android", 93, "0.9.49-milestone-engraving-qa-qa",
+               "714ea448ee729140aa1cf689b11718bbed19ed8af4431a3b9b34c97e691faf41"),
+              ("ws31-art", 93, "0.9.49-milestone-engraving-qa-qa", None),
+          )
+
+          def sha256(stream):
+              digest = hashlib.sha256()
+              while chunk := stream.read(1024 * 1024):
+                  digest.update(chunk)
+              return digest.hexdigest()
+
+          def capture(tool, *args):
+              return subprocess.run(
+                  [str(build_tools / tool), *args], check=True, text=True, stdout=subprocess.PIPE,
+              ).stdout
+
+          def inspect(name, version_code, version_name, expected_hash):
+              apk = work / f"{name}.apk"
+              with ZipFile(work / f"{name}.zip") as archive:
+                  apks = [member for member in archive.namelist() if member.endswith(".apk")]
+                  if len(apks) != 1:
+                      raise SystemExit(f"{name}: expected one APK, got {apks}")
+                  with archive.open(apks[0]) as source, apk.open("wb") as target:
+                      shutil.copyfileobj(source, target)
+
+              with apk.open("rb") as handle:
+                  digest = sha256(handle)
+              if expected_hash and digest != expected_hash:
+                  raise SystemExit(f"{name}: APK hash differs from the original build receipt")
+
+              badging = capture("aapt", "dump", "badging", str(apk))
+              required = (
+                  f"package: name='{package_id}' versionCode='{version_code}' versionName='{version_name}'",
+                  "sdkVersion:'26'",
+                  "targetSdkVersion:'35'",
+              )
+              if any(value not in badging for value in required):
+                  raise SystemExit(f"{name}: unexpected binary manifest:\n{badging}")
+
+              signing = capture("apksigner", "verify", "--print-certs", str(apk))
+              digests = re.findall(r"^Signer #\d+ certificate SHA-256 digest: ([0-9a-f]+)$", signing, re.M)
+              if digests != [certificate]:
+                  raise SystemExit(f"{name}: unexpected signing certificate: {digests}")
+              print(f"{name}: package {package_id}, code {version_code}, {apk.stat().st_size} bytes")
+              print(f"  APK SHA-256 {digest}\n  Signer SHA-256 {digests[0]}")
+              return apk
+
+          def archive_members(apk):
+              with ZipFile(apk) as archive:
+                  names = archive.namelist()
+                  if len(names) != len(set(names)):
+                      raise SystemExit(f"{apk.name}: duplicate APK entries")
+                  hashes = {}
+                  for name in names:
+                      with archive.open(name) as member:
+                          hashes[name] = sha256(member)
+                  return hashes
+
+          _, android, art = (inspect(*receipt) for receipt in receipts)
+          android_members, art_members = archive_members(android), archive_members(art)
+          changed = sorted(
+              name for name in android_members.keys() | art_members.keys()
+              if android_members.get(name) != art_members.get(name)
+          )
+          if changed:
+              raise SystemExit(f"WS31 APK contents differ: {changed}")
+          print(f"WS31 package contents match: {len(android_members)} identical ZIP member payloads.")
+          PY
