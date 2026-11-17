@@ -1,0 +1,32 @@
+{
+  "android_source_set": "debug",
+  "source_cover_family": "WS16AE V2",
+  "source_binding_family": "WS35",
+  "release_approved": false,
+  "covers": [
+    {
+      "id": "GM_WS_LIBRARY_WOODLAND_COVER_WS36",
+      "theme": "woodland",
+      "hinge": 47,
+      "source_cover_rgba_sha256": "2421cb3e808f91ac133df44d9ade091d15d1044e7829d4c8458baf4980c97686",
+      "binding_id": "GM_WS_LIBRARY_BINDING_WOODLAND_V1",
+      "cover_rgba_sha256": "b7fd74bc6af85b2792ea01e2ce0a5a25b3e53c57fd3826d9ea03a2cd0c3e45e6"
+    },
+    {
+      "id": "GM_WS_LIBRARY_SPACE_COVER_WS36",
+      "theme": "space",
+      "hinge": 40,
+      "source_cover_rgba_sha256": "780fa8f28037131b16dfc343e1eb37f0730a970050d4a48604d9628cf7cac05b",
+      "binding_id": "GM_WS_LIBRARY_BINDING_SPACE_V1",
+      "cover_rgba_sha256": "06e6badc2833c17130fee37946e438a403586517fe845b077efa0b7cd573f64d"
+    },
+    {
+      "id": "GM_WS_LIBRARY_GARDEN_COVER_WS36",
+      "theme": "garden",
+      "hinge": 46,
+      "source_cover_rgba_sha256": "34cd47499f99c0fe90f6971faf2f7129488ce64a7d559a141521a89e75a8d305",
+      "binding_id": "GM_WS_LIBRARY_BINDING_GARDEN_V1",
+      "cover_rgba_sha256": "ffaf43ed131b5e29042ba0a34ae6f98648a8a0c5cf577b88398389a36cc5e5f5"
+    }
+  ]
+}
