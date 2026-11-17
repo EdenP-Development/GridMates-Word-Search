@@ -31,7 +31,12 @@ def names(node):
 
 
 def find(root, label):
-    return next((node for node in root.iter("node") if label in names(node)), None)
+    for node in root.iter("node"):
+        if label in names(node):
+            left, top, right, bottom = bounds(node)
+            if right > left and bottom > top:
+                return node
+    return None
 
 
 def tap(node):
