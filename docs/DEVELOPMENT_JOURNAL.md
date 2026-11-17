@@ -1,3 +1,5 @@
+**WS37 puzzle flow visual cohesion (November 17).** [v100 layout and build receipt](devlog/2026-11-17_WS37_VISUAL_COHESION.md) · [draft PR #148](https://github.com/PlayerEden/GridMates-Word-Search/pull/148). The puzzle screens share illustrated controls with Home, the board has more room, and the completion journal uses the matching book art.
+
 **WS36 matching covers and bindings (November 17).** [v99 artwork and build receipt](devlog/2026-11-17_WS36_MATCHED_BOOK_BINDINGS.md) · [draft PR #147](https://github.com/PlayerEden/GridMates-Word-Search/pull/147). The same three leather bindings appear on the Library shelf and around the illustrated front covers.
 
 **WS35 Library binding depth (November 17).** [v98 artwork and Android verification](devlog/2026-11-17_WS35_LIBRARY_BINDING_DEPTH.md) · [draft PR #146](https://github.com/PlayerEden/GridMates-Word-Search/pull/146). The playable spines use new textured bindings and native title lettering, with casts on a darker cabinet and real books on both shelves.

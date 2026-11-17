@@ -1,4 +1,10 @@
-# Active development handoff — WS36 matching covers and bindings
+# Active development handoff — WS37 puzzle flow visual cohesion
+
+The [v100 visual and build receipt](devlog/2026-11-17_WS37_VISUAL_COHESION.md) records the shared play chrome, larger board, compact precision tools, and illustrated results. [Draft PR #148](https://github.com/PlayerEden/GridMates-Word-Search/pull/148) is stacked on #147. The [signed v100 QA APK](https://github.com/PlayerEden/GridMates-Word-Search/actions/runs/44176136860/artifacts/14369903140) was built at `ac1bb62783232e4ea5dff73bec037becc6f9be68`. The two builds agree on all packaged entries and reuse the 228 v99 assets.
+
+The [Android emulator review](https://github.com/PlayerEden/GridMates-Word-Search/actions/runs/44177294910) passed install-over, Solo layout, a Daily solve through touch input, restart persistence, and 200% text. [Screenshots and device logs](https://github.com/PlayerEden/GridMates-Word-Search/actions/runs/44177294910/artifacts/14371036928) include normal and enlarged layouts. Handset review and two-device Together runtime testing are pending. Review v100 on the owner's phone, then implement portable backup and restore for completed book pages, bookmarks, and unfinished pages.
+
+## Earlier v99 matching covers and bindings
 
 The [v99 matching art receipt](devlog/2026-11-17_WS36_MATCHED_BOOK_BINDINGS.md) records each source-matched pair and its [draft PR #147](https://github.com/PlayerEden/GridMates-Word-Search/pull/147), stacked on #146. The owner reviewed v98 on a handset and liked the rounded spines. The cover edge now shares the spine art across the Home carousel, cover browser, and book previews.
 
