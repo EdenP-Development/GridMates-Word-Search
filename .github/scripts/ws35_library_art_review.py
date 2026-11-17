@@ -62,9 +62,9 @@ def tap(node):
 def start_at(width, height):
     adb("shell", "am", "force-stop", PACKAGE)
     adb("shell", "wm", "size", f"{width}x{height}")
-    adb("shell", "wm", "density", "320")
+    adb("shell", "wm", "density", "240")
     assert f"Override size: {width}x{height}".encode() in adb("shell", "wm", "size")
-    assert b"Override density: 320" in adb("shell", "wm", "density")
+    assert b"Override density: 240" in adb("shell", "wm", "density")
     adb("shell", "am", "start", "-W", "-n", ACTIVITY, timeout=40)
 
 
@@ -90,7 +90,7 @@ def open_library():
 
 
 def capture(name):
-    (EVIDENCE / name).write_bytes(adb("exec-out", "screencap", "-p"))
+    (EVIDENCE / name).write_bytes(adb("exec-out", "screencap", "-p", timeout=35))
 
 
 
@@ -104,11 +104,10 @@ try:
     assert b"Success" in adb("install", "-r", "qa-candidate/app-debug.apk", timeout=90)
     assert b"versionCode=98 " in adb("shell", "dumpsys", "package", PACKAGE)
     print("PASS: replacement install kept the package and accepted the v97 signer.")
-    start_at(720, 1600)
+    start_at(540, 1200)
     open_library()
-    time.sleep(1)
-    capture("v98-library.png")
     shelf = await_nodes("Your Library", "Open Woodland", "Open Space", "Open Garden")
+    print("PASS: the v98 cabinet opened with all three real book targets.")
     capture("v98-library.png")
     woodland = bounds(find(shelf, "Open Woodland"))
     space = bounds(find(shelf, "Open Space"))
@@ -126,18 +125,18 @@ try:
 
     adb("shell", "settings", "put", "system", "font_scale", "2.0")
     assert adb("shell", "settings", "get", "system", "font_scale").strip() == b"2.0"
-    start_at(640, 1440)
+    start_at(480, 1080)
     open_library()
     await_nodes("Your Library", "Open Woodland", "Open Space", "Open Garden")
     capture("v98-library-320dp-200-percent.png")
     print("PASS: the Library heading and all three book targets are available at 320dp with 200% text.")
 
     # A short 260dp phone fits two real books before the swipe.
-    start_at(520, 900)
+    start_at(390, 675)
     open_library()
     await_nodes("Open Woodland", "Open Space", "Next bookcase")
     capture("v98-cabinet-1-260dp.png")
-    adb("shell", "input", "swipe", "393", "475", "129", "475", "350")
+    adb("shell", "input", "swipe", "295", "356", "97", "356", "350")
     second = await_nodes("Open Garden", "Bookcase 2 of 2")
     assert find(second, "Open Woodland") is None
     capture("v98-cabinet-2-260dp.png")

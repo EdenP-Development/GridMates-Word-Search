@@ -53,7 +53,7 @@ jobs:
           profile: pixel_4
           ram-size: 2560M
           disable-animations: true
-          emulator-options: -no-window -gpu swiftshader_indirect -no-snapshot -noaudio -no-boot-anim
+          emulator-options: -no-window -gpu swiftshader_indirect -feature -Vulkan -no-snapshot -noaudio -no-boot-anim
           script: python3 -u .github/scripts/ws35_library_art_review.py
       - name: Save the installed v98 Library screens
         if: always()
