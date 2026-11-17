@@ -2,7 +2,7 @@ name: WS32 My Puzzles Device QA
 
 on:
   pull_request:
-    types: [opened]
+    types: [opened, synchronize]
     branches:
       - feature/ws32-illustrated-my-puzzles-2026-11-16
     paths:

@@ -12,6 +12,7 @@ from ws31_archived_apk_upgrade import (
     back,
     find_label,
     launch,
+    nodes,
     package_state,
     require,
     saved_bytes,
@@ -21,7 +22,9 @@ from ws31_archived_apk_upgrade import (
 
 
 def open_journal():
-    tap("Open menu")
+    find_label("My Puzzles", "Open menu", scroll=True)
+    if any(node.get("content-desc") == "Open menu" for node in nodes()):
+        tap("Open menu")
     tap("My Puzzles")
 
 
