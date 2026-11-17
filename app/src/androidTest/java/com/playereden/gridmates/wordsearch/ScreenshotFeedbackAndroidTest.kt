@@ -25,7 +25,8 @@ class ScreenshotFeedbackAndroidTest {
             rule.onNodeWithText(
                 "Trace a word with one finger. Pinch with two fingers to zoom, or tap its first and last letters."
             ).assertExists()
-            rule.onNodeWithText("Trace words · pinch to zoom").assertExists()
+            rule.onNodeWithText("Trace words ·", substring = true).assertDoesNotExist()
+            rule.onNodeWithContentDescription("Select a word without dragging").assertExists()
             rule.onNodeWithContentDescription("Fit entire puzzle board").assertExists()
             rule.onNodeWithContentDescription("Zoom in").assertExists()
             rule.onNodeWithText("Mode: Move").assertDoesNotExist()

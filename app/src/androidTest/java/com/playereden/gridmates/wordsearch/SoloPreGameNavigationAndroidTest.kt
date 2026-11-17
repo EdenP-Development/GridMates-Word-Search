@@ -59,7 +59,7 @@ class SoloPreGameNavigationAndroidTest {
             assertEquals(PuzzleBoardSize.BOOK_BIG, store.profile.active.boardSize)
             assertEquals(PuzzleChallenge.EXPERT, store.profile.active.challenge)
             assertEquals(listOf(original), store.profile.pausedSolo)
-            rule.onNodeWithText("Trace words · pinch to zoom", substring = true)
+            rule.onNodeWithText("Trace a word with one finger.", substring = true)
                 .assertExists()
         } finally {
             rooms.leaveRoom()
