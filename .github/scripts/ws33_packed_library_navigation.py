@@ -49,8 +49,12 @@ def await_nodes(*labels):
     raise AssertionError(f"Missing {labels!r}; visible screen labels: {details!r}")
 
 
+def bounds(node):
+    return tuple(map(int, re.findall(r"\d+", node.get("bounds", ""))))
+
+
 def tap(node):
-    left, top, right, bottom = map(int, re.findall(r"\d+", node.get("bounds", "")))
+    left, top, right, bottom = bounds(node)
     assert right > left and bottom > top
     adb("shell", "input", "tap", str((left + right) // 2), str((top + bottom) // 2))
 
@@ -64,20 +68,25 @@ def start_at(width, height):
     adb("shell", "am", "start", "-W", "-n", ACTIVITY, timeout=40)
 
 
-def open_library(height):
+def open_library():
     screen = await_nodes("Open menu")
     shortcut = find(screen, "Open Full Library puzzle books")
     if shortcut is not None:
         tap(shortcut)
         return
     tap(find(screen, "Open menu"))
-    screen = await_nodes("My Puzzles")
-    shortcut = find(screen, "Full Library")
-    if shortcut is None:
-        adb("shell", "input", "swipe", "300", str(height * 3 // 4),
-            "300", str(height // 3), "300")
-        shortcut = find(await_nodes("Full Library"), "Full Library")
-    tap(shortcut)
+    screen = await_nodes("Word Search menu")
+    for _ in range(4):
+        shortcut = find(screen, "Full Library")
+        if shortcut is not None:
+            tap(shortcut)
+            return
+        scroll = next(node for node in screen.iter("node") if node.get("scrollable") == "true")
+        left, top, right, bottom = bounds(scroll)
+        x = str((left + right) // 2)
+        adb("shell", "input", "swipe", x, str(bottom - 16), x, str(top + 16), "350")
+        screen = tree()
+    raise AssertionError("Full Library is outside the scrollable Home menu")
 
 
 def capture(name):
@@ -94,23 +103,22 @@ try:
     assert adb("shell", "settings", "get", "system", "font_scale").strip() == b"2.0"
 
     start_at(640, 1440)
-    open_library(1440)
+    open_library()
     shelf = await_nodes("Your Library", "Open Woodland", "Open Space", "Open Garden")
     capture("library-320dp-200-percent.png")
     tap(find(shelf, "Open Garden"))
     book = await_nodes("Garden", "View pages")
     capture("garden-cover-320dp-200-percent.png")
     tap(find(book, "View pages"))
-    detail = await_nodes("Book progress", "Back to Your Library")
+    await_nodes("Book progress")
     print("PASS: 320dp at 200% text visits all three named bindings and opens Garden.")
 
-    # Resize the open Library to one row of two books, so the real
-    # three-volume catalog spans two cases.
-    tap(find(detail, "Back to Your Library"))
-    await_nodes("Open Garden")
-    adb("shell", "wm", "size", "520x900")
-    assert b"Override size: 520x900" in adb("shell", "wm", "size")
+    # At 260x450dp, the menu needs scrolling and one row of two books
+    # splits the three-volume catalog across two real cases.
+    start_at(520, 900)
+    open_library()
     await_nodes("Open Woodland", "Open Space", "Next bookcase")
+    capture("library-first-bookcase.png")
     adb("shell", "input", "swipe", "393", "475", "129", "475", "350")
     second = await_nodes("Open Garden", "Bookcase 2 of 2")
     assert find(second, "Open Woodland") is None

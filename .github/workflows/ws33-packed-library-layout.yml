@@ -1,4 +1,4 @@
-name: WS33 v95 packed Library layout QA
+name: WS33 v96 packed Library layout QA
 on:
   push:
     branches: [qa/ws33-library-layout-2026-11-16]
@@ -17,15 +17,15 @@ jobs:
     timeout-minutes: 16
     steps:
       - uses: actions/checkout@v4
-      - name: Fetch the signed v95 APK from the Woodland run
+      - name: Fetch the signed v96 APK from the independent build
         uses: actions/download-artifact@v4
         with:
-          name: GridMates-WordSearch-Android-QA
-          run-id: 43999350042
+          name: GridMates-WordSearch-Debug-ArtQA
+          run-id: 44026675539
           github-token: ${{ github.token }}
           path: qa-baseline
-      - name: Verify the exact v95 APK
-        run: echo 'd64fdad8ff65ec9b0e7bf28df52362f168da1de7358fbccb847e3ef99fbe096c  qa-baseline/app-debug.apk' | sha256sum --check
+      - name: Verify the exact v96 APK
+        run: echo '9193cb92057d7fbb19a417dcac32ffcb3934c724cce39a5c23330c77526cbe13  qa-baseline/app-debug.apk' | sha256sum --check
       - name: Enable KVM
         run: |
           echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=static_node"' | sudo tee /etc/udev/rules.d/99-kvm4all.rules
@@ -46,7 +46,7 @@ jobs:
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: GridMates-WS33-V95-Packed-Library-Layout
+          name: GridMates-WS33-V96-Packed-Library-Layout
           path: qa-layout-report/
           retention-days: 3
           if-no-files-found: ignore
