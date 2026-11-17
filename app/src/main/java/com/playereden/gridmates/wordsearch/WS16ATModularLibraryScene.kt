@@ -13,13 +13,19 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.ColorFilter
+import androidx.compose.ui.graphics.ColorMatrix
 import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.layout.onSizeChanged
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.testTag
@@ -68,7 +74,9 @@ private fun ws16atLoad(context: Context, name: String, highRes: Boolean): Bitmap
  * have been painted into the cabinet assets.
  */
 @Composable
-private fun WS16ATCabinetLayers(foreground: Boolean, modifier: Modifier = Modifier) {
+private fun WS16ATCabinetLayers(
+    foreground: Boolean, modifier: Modifier = Modifier, woodFilter: ColorFilter? = null
+) {
     val context = LocalContext.current
     BoxWithConstraints(modifier.testTag(if (foreground)
         "ws16at-front-woodwork" else "ws16at-five-part-shell")) {
@@ -90,10 +98,13 @@ private fun WS16ATCabinetLayers(foreground: Boolean, modifier: Modifier = Modifi
         val middleHeight = (maxHeight - crownHeight - baseHeight).coerceAtLeast(1.dp)
 
         if (!foreground) {
-            Canvas(Modifier.fillMaxSize()) { drawRect(Color(0xFF753A1A)) }
+            Canvas(Modifier.fillMaxSize()) {
+                drawRect(if (woodFilter == null) Color(0xFF753A1A) else Color(0xFF60402F))
+            }
             artwork["recessed_backboard"]?.let { bitmap ->
                 Image(bitmap.asImageBitmap(), contentDescription = null,
                     contentScale = middleScale,
+                    colorFilter = woodFilter,
                     modifier = Modifier.align(Alignment.TopStart)
                         .offset(x = leftWidth, y = crownHeight)
                         .width(backWidth).height(middleHeight))
@@ -102,6 +113,7 @@ private fun WS16ATCabinetLayers(foreground: Boolean, modifier: Modifier = Modifi
             artwork["left_pilaster"]?.let { bitmap ->
                 Image(bitmap.asImageBitmap(), contentDescription = null,
                     contentScale = middleScale,
+                    colorFilter = woodFilter,
                     modifier = Modifier.align(Alignment.TopStart)
                         .offset(y = crownHeight)
                         .width(leftWidth).height(middleHeight))
@@ -109,6 +121,7 @@ private fun WS16ATCabinetLayers(foreground: Boolean, modifier: Modifier = Modifi
             artwork["right_pilaster"]?.let { bitmap ->
                 Image(bitmap.asImageBitmap(), contentDescription = null,
                     contentScale = middleScale,
+                    colorFilter = woodFilter,
                     modifier = Modifier.align(Alignment.TopEnd)
                         .offset(y = crownHeight)
                         .width(rightWidth).height(middleHeight))
@@ -116,12 +129,14 @@ private fun WS16ATCabinetLayers(foreground: Boolean, modifier: Modifier = Modifi
             artwork["top_crown"]?.let { bitmap ->
                 Image(bitmap.asImageBitmap(), contentDescription = null,
                     contentScale = ContentScale.FillBounds,
+                    colorFilter = woodFilter,
                     modifier = Modifier.align(Alignment.TopCenter)
                         .fillMaxWidth().height(crownHeight))
             }
             artwork["bottom_base"]?.let { bitmap ->
                 Image(bitmap.asImageBitmap(), contentDescription = null,
                     contentScale = ContentScale.FillBounds,
+                    colorFilter = woodFilter,
                     modifier = Modifier.align(Alignment.BottomCenter)
                         .fillMaxWidth().height(baseHeight))
             }
@@ -138,9 +153,13 @@ internal fun WS16ATModularLibraryScene(
     initialPage: Int = 0,
     onPageChanged: (Int) -> Unit = {},
     safeContentPadding: PaddingValues = PaddingValues(0.dp),
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    packedCatalog: Boolean = false
 ) {
     val density = LocalDensity.current
+    val woodFilter = if (packedCatalog) remember {
+        ColorFilter.colorMatrix(ColorMatrix().apply { setToSaturation(0.50f) })
+    } else null
     BoxWithConstraints(modifier.fillMaxSize().testTag("ws16at-modular-library")) {
         val hitSlot = if (density.fontScale >= 1.65f) 54.dp else 48.dp
         val leftWidth = maxWidth * (126f / 602f)
@@ -151,9 +170,10 @@ internal fun WS16ATModularLibraryScene(
         // screens. Keep a slightly larger slot for increased font scaling.
         // Short/landscape layouts preserve the previous ordinary spine flow.
         val densePortrait = cabinetPortrait
+        val usePackedRows = packedCatalog || densePortrait
         // Real and decorative bindings share nonoverlapping 48dp+ hit cells.
         val packedSlot = if (density.fontScale >= 1.65f) 52.dp else 48.dp
-        val activeSlot = if (densePortrait) packedSlot else hitSlot
+        val activeSlot = if (usePackedRows) packedSlot else hitSlot
         val slots = ((maxWidth - leftWidth - rightWidth).value / activeSlot.value)
             .toInt().coerceIn(1, 12)
         val tierCount = when {
@@ -164,17 +184,16 @@ internal fun WS16ATModularLibraryScene(
             !densePortrait && maxHeight >= 830.dp && books.size > 2 * slots -> 3
             else -> 2
         }
-        // Real-book capacity never includes decorative inventory. Two future
-        // display cases remain browsable after the actual catalog, so the
-        // first 3-volume Library has 3 pages and always feels expandable.
+        // The archived preview includes two decorative display cases.
+        // In the playable catalog, each swipe reaches another case of real titles.
         val capacity = slots * tierCount
         val realPageCount = maxOf(1, (books.size + capacity - 1) / capacity)
-        val futureBookcaseCount = if (densePortrait) 2 else 0
+        val futureBookcaseCount = if (densePortrait && !packedCatalog) 2 else 0
         val pages = realPageCount + futureBookcaseCount
         // WS16BD: a sparse portrait collection should showcase the REAL
         // books across both shelves, not give half the cabinet to fake volumes.
         // Once there are more than one full row, return to catalog-order paging.
-        val balancedSparseLayout = !densePortrait && tierCount == 2 &&
+        val balancedSparseLayout = !usePackedRows && tierCount == 2 &&
             maxHeight >= maxWidth * 1.7f &&
             realPageCount == 1 && books.size in 2..slots
         // WS16BP: re-enter on the same real shelf after inspecting a volume.
@@ -195,22 +214,32 @@ internal fun WS16ATModularLibraryScene(
         val pagerDrop = if (densePortrait)
             22.dp.coerceAtMost((bottom - 32.dp).coerceAtLeast(0.dp))
             else 0.dp
-        val stageTop = top + stageDrop
+        val titleTop = (top - 88.dp).coerceAtLeast(12.dp)
+        val wideTitle = packedCatalog && density.fontScale >= 1.65f
+        val plaqueTop = if (wideTitle) 70.dp else titleTop
+        var titleHeightPx by remember { mutableIntStateOf(0) }
+        val headerBottom = safeContentPadding.calculateTopPadding() + plaqueTop +
+            with(density) { titleHeightPx.toDp() }
+        val stageTop = if (packedCatalog) maxOf(
+            top + stageDrop, headerBottom + 12.dp
+        ) else top + stageDrop
         val stageBottom = bottom - pagerDrop
         val available = (maxHeight - stageTop - stageBottom).coerceAtLeast(1.dp)
         // WS16BK: the bottom count plaque is gone. Reserve a bookcase pager
         // mounting bay outside the shelf plane, never overlapping woodwork.
         val shelfContactDepth = 42.dp
-        val shelfOverhang = if (cabinetPortrait) {
+        val shelfOverhang = if (cabinetPortrait || packedCatalog) {
             ((maxWidth - leftWidth - rightWidth).coerceAtLeast(1.dp) *
                 (125f / 586f)).coerceIn(42.dp, 72.dp) - shelfContactDepth
         } else 0.dp
         val pagerGap = if (density.fontScale >= 1.65f) 8.dp else 12.dp
         val pagerRailBudget = 62.dp
-        val pagerBayHeight = shelfOverhang + pagerGap + pagerRailBudget
+        val showPager = pages > 1
+        val pagerBayHeight = shelfOverhang +
+            if (showPager || !packedCatalog) pagerGap + pagerRailBudget else 0.dp
         // Reserve carved shelf overhang and pager rail clearance first.
         val shelfTierSpace = (available - pagerBayHeight).coerceAtLeast(1.dp)
-        val tierHeights = if (densePortrait) {
+        val tierHeights = if (usePackedRows) {
             // Preserve the pager bay with three live shelves too; a raw
             // stage-height division would push the bottom shelf into it.
             List(tierCount) { shelfTierSpace / tierCount }
@@ -221,7 +250,8 @@ internal fun WS16ATModularLibraryScene(
         ) else List(tierCount) { available / tierCount }
 
         // Backdrop and real shelves/books are independent; hide nothing in a bitmap.
-        WS16ATCabinetLayers(foreground = false, modifier = Modifier.fillMaxSize())
+        WS16ATCabinetLayers(foreground = false, modifier = Modifier.fillMaxSize(),
+            woodFilter = woodFilter)
         HorizontalPager(
             state = pager,
             modifier = Modifier.fillMaxSize()
@@ -237,7 +267,7 @@ internal fun WS16ATModularLibraryScene(
                          else "ws16at-page-$page")) {
                 repeat(tierCount) { tier ->
                     val shelfIndex = page * tierCount + tier
-                    val shelfBooks = if (densePortrait) {
+                    val shelfBooks = if (usePackedRows) {
                         pageBooks.drop(tier * slots).take(slots)
                     } else if (balancedSparseLayout) {
                         val topBooks = (pageBooks.size + 1) / 2
@@ -246,7 +276,7 @@ internal fun WS16ATModularLibraryScene(
                     val tierHeight = tierHeights[tier]
                     Box(Modifier.fillMaxWidth().height(tierHeight)
                         .testTag("ws16at-movable-shelf-$shelfIndex")) {
-                        if (densePortrait) {
+                        if (usePackedRows) {
                             WS16BHDenseSpineBay(
                                 books = shelfBooks,
                                 shelfIndex = shelfIndex,
@@ -256,7 +286,8 @@ internal fun WS16ATModularLibraryScene(
                                 onBookSelected = onBookSelected,
                                 maxSlots = slots,
                                 showDecorativeBlanks = true,
-                                fullPlaceholderShelf = isFutureBookcase
+                                fullPlaceholderShelf = isFutureBookcase,
+                                fillShelf = packedCatalog
                             )
                         } else {
                             // Exact previous renderer remains a rollback for
@@ -280,8 +311,8 @@ internal fun WS16ATModularLibraryScene(
                         Box(Modifier.align(Alignment.BottomCenter)
                             .fillMaxWidth()
                             .testTag("ws16at-home-shelf-$shelfIndex")) {
-                            if (cabinetPortrait) {
-                                Ws16BIMountedCabinetShelf()
+                            if (cabinetPortrait || packedCatalog) {
+                                Ws16BIMountedCabinetShelf(colorFilter = woodFilter)
                             } else {
                                 Ws16EStorybookShelf()
                             }
@@ -301,26 +332,31 @@ internal fun WS16ATModularLibraryScene(
                 // Keep the carved lower apron clear. Bookcase navigation is
                 // rendered once as an overlay, NOT duplicated in every page.
                 if (tierCount >= 2) {
-                    Spacer(Modifier.height(shelfOverhang + pagerGap + pagerRailBudget)
+                    Spacer(Modifier.height(pagerBayHeight)
                         .testTag("ws16bk-navigation-bay"))
                 }
             }
         }
         // Carved woodwork overlays the working shelf sprites at the real edges.
-        WS16ATCabinetLayers(foreground = true, modifier = Modifier.fillMaxSize())
+        WS16ATCabinetLayers(foreground = true, modifier = Modifier.fillMaxSize(),
+            woodFilter = woodFilter)
         // Only controls respect Android safe insets. The cabinet wood and live
         // shelf/book stage remain full-bleed behind visible or gesture bars.
         Box(Modifier.fillMaxSize().padding(safeContentPadding)
             .testTag("ws16aw-safe-overlays")) {
         WS16BIAdaptivePlaque(
-            label = "Your Library", title = true, styled = cabinetPortrait,
+            label = "Your Library", title = true, styled = cabinetPortrait || wideTitle,
             modifier = Modifier.align(Alignment.TopCenter)
-                // WS16BJ: raise the fitted title under the arch without
-                // intruding on crown lights or the back/menu tap targets.
-                // WS16BL: 8dp further up following the v70 handset screenshot;
-                // leave more book-top clearance without moving the spines.
-                .padding(start = 66.dp, end = 66.dp,
-                    top = (top - 88.dp).coerceAtLeast(12.dp))
+                .then(
+                    if (wideTitle) {
+                        // Keep the enlarged title below the 54dp Back and menu buttons.
+                        Modifier.padding(start = 16.dp, top = plaqueTop, end = 16.dp)
+                            .fillMaxWidth()
+                    } else {
+                        Modifier.padding(start = 66.dp, end = 66.dp, top = plaqueTop)
+                    }
+                )
+                .onSizeChanged { titleHeightPx = it.height }
                 .testTag("ws16at-library-title")
         )
         WS16BIAdaptiveControl(
@@ -331,7 +367,7 @@ internal fun WS16ATModularLibraryScene(
                 .padding(start = 9.dp, top = 10.dp)
                 .testTag("ws16at-back")
         )
-        if (pages > 1) {
+        if (showPager) {
             // WS16BN: lower the entire rail with the book stage, while still
             // reserving clearance from the carved cabinet base and safe bars.
             // Swipe and these native controls move the same real pager.
@@ -358,7 +394,7 @@ internal fun WS16ATModularLibraryScene(
         WS16BIAdaptiveControl(
             styled = cabinetPortrait,
             glyph = Ws16AZCabinetGlyph.ART_OPTIONS,
-            description = "Previous Library artwork",
+            description = if (packedCatalog) "Library options" else "Previous Library artwork",
             onClick = onPreviousArt,
             modifier = Modifier.align(Alignment.TopEnd)
                 .padding(end = 9.dp, top = 10.dp)

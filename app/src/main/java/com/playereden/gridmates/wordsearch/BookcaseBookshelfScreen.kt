@@ -16,6 +16,9 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
+import androidx.compose.runtime.key
 import androidx.compose.runtime.rememberCoroutineScope
 import kotlinx.coroutines.launch
 import androidx.compose.ui.window.Dialog
@@ -81,6 +84,7 @@ internal fun BookcaseBookshelfScreen(
         val scope = rememberCoroutineScope()
         var selectedBookId by rememberSaveable { mutableStateOf<String?>(null) }
         var previewToolsOpen by remember { mutableStateOf(false) }
+        var packedCatalog by rememberSaveable { mutableStateOf(true) }
         // QA-only empty-background inspection; regular books are one tap away.
         var emptyCabinetPreview by rememberSaveable { mutableStateOf(false) }
         // Keep the working WS16AI bookcase as a manually selectable QA rollback.
@@ -97,16 +101,22 @@ internal fun BookcaseBookshelfScreen(
         }
 
         if (fieldNotesArt && modularPreview && modularAssetsAvailable) {
-            WS16ATModularLibraryScene(
-                books = catalog.books,
-                onBack = onBack,
-                onBookSelected = { selectedBookId = it },
-                onPreviousArt = { modularPreview = false },
-                initialPage = initialCabinetPage,
-                onPageChanged = onCabinetPageChanged,
-                safeContentPadding = safeContentPadding,
-                modifier = Modifier.fillMaxSize()
-            )
+            key(packedCatalog) {
+                WS16ATModularLibraryScene(
+                    books = catalog.books,
+                    onBack = onBack,
+                    onBookSelected = { selectedBookId = it },
+                    onPreviousArt = {
+                        if (packedCatalog) previewToolsOpen = true
+                        else modularPreview = false
+                    },
+                    initialPage = initialCabinetPage,
+                    onPageChanged = onCabinetPageChanged,
+                    safeContentPadding = safeContentPadding,
+                    modifier = Modifier.fillMaxSize(),
+                    packedCatalog = packedCatalog
+                )
+            }
         } else if (fieldNotesArt && immersiveBooksPreview) {
             WS16AMInteractiveBookcaseScene(
                 books = catalog.books,
@@ -254,7 +264,12 @@ internal fun BookcaseBookshelfScreen(
                 onToggleArt = onToggleArt,
                 onToggleLayout = onToggleLayout,
                 onDismiss = { previewToolsOpen = false },
-                layoutActionLabel = "Try swipe library"
+                layoutActionLabel = "Browse by cover",
+                onPreviousCabinet = if (fieldNotesArt && modularPreview &&
+                    modularAssetsAvailable && packedCatalog
+                ) {
+                    { packedCatalog = false }
+                } else null
             )
         }
     }
@@ -272,7 +287,8 @@ private fun BookcaseBookPreviewDialog(
             variant = GridMatesFrameVariant.PANEL
         ) {
             Column(
-                modifier = Modifier.fillMaxWidth().padding(14.dp),
+                modifier = Modifier.fillMaxWidth().verticalScroll(rememberScrollState())
+                    .padding(14.dp),
                 horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.spacedBy(8.dp)
             ) {

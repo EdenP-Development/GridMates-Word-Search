@@ -50,9 +50,9 @@ object BookProgressRules {
         return completedCount(catalog, progress, bookId) == total
     }
 
-    /** Respects a valid manual bookmark, otherwise the first unfinished page. */
+    /** Respects the bookmark, then resumes a started page in reading order. */
     fun continuePage(catalog: BookCatalog, progress: BookLibraryProgress,
-                     bookId: String): BookPage? {
+                     bookId: String, startedPageIds: Set<String> = emptySet()): BookPage? {
         validate(catalog, progress)
         val pages = catalog.pages(bookId)
         require(pages.isNotEmpty()) { "Unknown book" }
@@ -60,6 +60,7 @@ object BookProgressRules {
         val completed = state?.completedPageIds.orEmpty()
         val bookmarked = state?.bookmarkedPageId
         return pages.firstOrNull { it.id == bookmarked && it.id !in completed }
+            ?: pages.firstOrNull { it.id in startedPageIds && it.id !in completed }
             ?: pages.firstOrNull { it.id !in completed }
     }
 

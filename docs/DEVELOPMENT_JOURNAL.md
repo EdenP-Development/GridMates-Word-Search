@@ -1,3 +1,9 @@
+**WS33 large-text layout (November 16).** [v96 heading and Home menu](devlog/2026-11-16_WS33B_LIBRARY_LARGE_TEXT.md). Android screenshots at 200% text prompted a wider cabinet title with measured shelf clearance and a scrollable Home menu.
+
+**WS33 packed Library (November 16).** [Woodland playthrough and signed v95 receipt](devlog/2026-11-16_WS33_PACKED_LIBRARY.md) · [draft PR #144](https://github.com/PlayerEden/GridMates-Word-Search/pull/144). Woodland resumed after an app restart and all three completed pages persisted through another restart. The packed cabinet reuses the v94 artwork. Portable book backups are next.
+
+**WS33 Library art review (November 16).** [Comparison notes and asset use](devlog/2026-11-16_WS33_LIBRARY_ART_REVIEW.md). The open shelf was a study using the v94 bindings and shared paper.
+
 **WS32 illustrated My Puzzles (November 16).** [Visual pass and QA receipt](devlog/2026-11-16_WS32_ILLUSTRATED_MY_PUZZLES.md) · [v94 draft PR #142](https://github.com/PlayerEden/GridMates-Word-Search/pull/142). The Android builds and both v93 save-upgrade checks passed. Continue with the book-page save, completion and portable backup flow.
 
 **WS31 v93 baseline audit (November 16).** [Exact APK evidence, assets, and the WS32 Library and save-continuity plan](devlog/2026-11-16_WS31_BASELINE_AUDIT_AND_WS32_PLAN.md) · [draft audit PR #141](https://github.com/PlayerEden/GridMates-Word-Search/pull/141). The archived build from #139 is the implementation baseline. The audit records both v93 variants and their separate source commits.

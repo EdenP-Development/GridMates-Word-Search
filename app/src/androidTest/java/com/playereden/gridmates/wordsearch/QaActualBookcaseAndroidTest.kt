@@ -14,14 +14,21 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.semantics.SemanticsActions
 import androidx.compose.ui.test.assertIsNotEnabled
 import androidx.compose.ui.test.assertIsEnabled
+import androidx.compose.ui.test.assertHasNoClickAction
+import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.hasTestTag
 import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
 import androidx.compose.ui.test.performScrollToNode
+import androidx.compose.ui.test.performSemanticsAction
+import androidx.compose.ui.test.performTouchInput
+import androidx.compose.ui.test.swipeLeft
+import androidx.compose.ui.text.TextLayoutResult
 import androidx.compose.ui.unit.Density
 import androidx.compose.ui.unit.dp
 import com.playereden.gridmates.wordsearch.core.BookCatalog
@@ -65,6 +72,66 @@ class QaActualBookcaseAndroidTest {
     private val space = fixture(WordTheme.SPACE, "space", 'b')
     private val garden = fixture(WordTheme.GARDEN, "garden", 'c')
     private val catalog = BookCatalog(listOf(woodland, space, garden))
+
+    @Test fun packedCaseShowsAllThreeBooksAndSceneryAtLargeText() {
+        var selected: String? = null
+        compose.setContent {
+            GridMatesTheme {
+                val systemDensity = LocalDensity.current.density
+                CompositionLocalProvider(LocalDensity provides Density(systemDensity, 2f)) {
+                    Box(Modifier.width(320.dp).height(720.dp)) {
+                        PuzzleBookshelfScreen(
+                            catalog, BookLibraryProgress(),
+                            onBack = {}, onOpenBook = { selected = it },
+                            showPrototypeArt = true, fieldNotesArt = true
+                        )
+                    }
+                }
+            }
+        }
+        val title = compose.onNodeWithText("Your Library").assertIsDisplayed()
+        val textLayouts = mutableListOf<TextLayoutResult>()
+        title.performSemanticsAction(SemanticsActions.GetTextLayoutResult) { it(textLayouts) }
+        assertTrue(textLayouts.isNotEmpty() && textLayouts.none { it.hasVisualOverflow })
+        val titleBottom = title.fetchSemanticsNode().boundsInRoot.bottom
+        for (book in catalog.books) {
+            val spine = compose.onNodeWithTag("ws16bh-spine-" + book.id).assertIsDisplayed()
+            assertTrue(spine.fetchSemanticsNode().boundsInRoot.top > titleBottom)
+        }
+        compose.onNodeWithTag("ws16at-movable-shelf-1").assertIsDisplayed()
+        compose.onNodeWithTag("ws16bi-blank-cell-1-2")
+            .assertIsDisplayed().assertHasNoClickAction()
+        compose.onNodeWithTag("ws16bk-bookcase-pager").assertDoesNotExist()
+        compose.onNodeWithTag("ws16bh-spine-" + garden.id).performClick()
+        compose.onNodeWithText("Garden").assertIsDisplayed()
+        compose.onNodeWithTag("library-view-pages").assertIsDisplayed().performClick()
+        compose.runOnIdle { assertEquals(garden.id, selected) }
+    }
+
+    @Test fun packedCaseSwipesToMorePlayableBooks() {
+        val many = List(9) { i -> woodland.copy(id = "test-volume-$i", volume = i + 1) }
+        var selected: String? = null
+        compose.setContent {
+            GridMatesTheme {
+                Box(Modifier.width(360.dp).height(750.dp)) {
+                    WS16ATModularLibraryScene(
+                        books = many,
+                        onBack = {},
+                        onBookSelected = { selected = it },
+                        onPreviousArt = {},
+                        packedCatalog = true
+                    )
+                }
+            }
+        }
+        compose.onNodeWithTag("ws16at-prev").assertIsNotEnabled()
+        compose.onNodeWithTag("ws16at-bookcase-pages").performTouchInput { swipeLeft() }
+        compose.onNodeWithTag("ws16at-page-1").assertIsDisplayed()
+        compose.onNodeWithTag("ws16at-next").assertIsNotEnabled()
+        compose.onNodeWithTag("ws16bh-spine-" + many.last().id)
+            .assertIsDisplayed().performClick()
+        compose.runOnIdle { assertEquals(many.last().id, selected) }
+    }
 
     @Test fun bookcaseShowsSpinesAndPullOutPreviewUsesStableBookId() {
         var selected: String? = null

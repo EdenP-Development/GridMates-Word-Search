@@ -86,7 +86,7 @@ class DenseLibraryTests(unittest.TestCase):
         self.assertNotIn("BookcaseFutureSpineArt", art)
         self.assertNotIn("BookArtKind.COVER", art)
         self.assertIn("RoundedCornerShape(50)", art)
-        self.assertIn(".width(slot * displayCount)", art)
+        self.assertIn(".width(slot * books.size + blankSlot * blanks)", art)
         self.assertIn("val displayCount = books.size + blanks", art)
         self.assertIn("showDecorativeBlanks: Boolean = false", art)
         gradle=(ROOT / "app/build.gradle.kts").read_text()

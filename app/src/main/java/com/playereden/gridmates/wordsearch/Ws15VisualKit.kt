@@ -3,6 +3,8 @@ package com.playereden.gridmates.wordsearch
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -189,13 +191,17 @@ internal fun Ws15LibraryPreviewDialog(
     onToggleArt: (() -> Unit)?,
     onToggleLayout: (() -> Unit)?,
     onDismiss: () -> Unit,
-    layoutActionLabel: String = "Classic shelves"
+    layoutActionLabel: String = "Classic shelves",
+    onPreviousCabinet: (() -> Unit)? = null
 ) {
     AlertDialog(
         onDismissRequest=onDismiss,
         title={ Text("Preview options",color=Forest) },
         text={
-            Column(verticalArrangement=Arrangement.spacedBy(8.dp)) {
+            Column(
+                Modifier.verticalScroll(rememberScrollState()),
+                verticalArrangement = Arrangement.spacedBy(8.dp)
+            ) {
                 Text("Compare book layouts and artwork in this QA build. These choices do not change saved puzzle progress.",
                     color=Muted,style=MaterialTheme.typography.bodyMedium)
                 if (onToggleLayout != null) {
@@ -209,6 +215,12 @@ internal fun Ws15LibraryPreviewDialog(
                         modifier=Modifier.fillMaxWidth().testTag("ws15-art-toggle")) {
                         Text(if (fieldNotesArt) "Original art (A)" else "Illustrated art (B)")
                     }
+                }
+                if (onPreviousCabinet != null) {
+                    TextButton(
+                        onClick = { onPreviousCabinet(); onDismiss() },
+                        modifier = Modifier.fillMaxWidth()
+                    ) { Text("Earlier bookcase") }
                 }
             }
         },

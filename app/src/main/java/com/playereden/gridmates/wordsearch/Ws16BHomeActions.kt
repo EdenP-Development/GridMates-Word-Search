@@ -8,6 +8,8 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.background
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
@@ -178,11 +180,12 @@ internal fun Ws16BCompactMenu(
             modifier = Modifier.fillMaxWidth().testTag("ws16b-compact-menu"),
             variant = GridMatesFrameVariant.PANEL
         ) {
-            Column(Modifier.padding(horizontal = 14.dp, vertical = 10.dp),
+            Column(Modifier.verticalScroll(rememberScrollState())
+                .padding(horizontal = 14.dp, vertical = 10.dp),
                 verticalArrangement = Arrangement.spacedBy(1.dp)) {
                 Row(Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically,
                     horizontalArrangement = Arrangement.SpaceBetween) {
-                    Text("Word Search menu", color = Forest,
+                    Text("Word Search menu", modifier = Modifier.weight(1f), color = Forest,
                         style = MaterialTheme.typography.titleMedium,
                         fontWeight = FontWeight.Bold)
                     androidx.compose.material3.TextButton(onClick = onDismiss,

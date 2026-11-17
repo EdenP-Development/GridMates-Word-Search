@@ -32,7 +32,7 @@ concurrency:
 jobs:
   android-qa:
     runs-on: ubuntu-latest
-    timeout-minutes: 25
+    timeout-minutes: 40
     steps:
       - uses: actions/checkout@v4
       # Byte-for-byte reuse of the 12 already-approved Sudoku portraits.
@@ -343,4 +343,30 @@ jobs:
         with:
           name: GridMates-WordSearch-Android-QA
           path: app/build/outputs/apk/debug/*.apk
-          retention-days: 30
+          retention-days: ${{ github.head_ref == 'feature/ws33-packed-library-2026-11-16' && 3 || 30 }}
+      - name: Prepare the targeted Library test APK and emulator
+        if: ${{ (github.head_ref || github.ref_name) == 'feature/ws33-packed-library-2026-11-16' }}
+        run: |
+          gradle --no-daemon :app:assembleDebugAndroidTest
+          echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=static_node"' | sudo tee /etc/udev/rules.d/99-kvm4all.rules
+          sudo udevadm control --reload-rules
+          sudo udevadm trigger --name-match=kvm
+      - name: Play Woodland through two app restarts
+        if: ${{ (github.head_ref || github.ref_name) == 'feature/ws33-packed-library-2026-11-16' }}
+        uses: reactivecircus/android-emulator-runner@v2
+        with:
+          api-level: 35
+          target: google_apis
+          arch: x86_64
+          profile: pixel_4
+          disable-animations: true
+          emulator-options: -no-window -gpu swiftshader_indirect -no-snapshot -noaudio -no-boot-anim
+          script: bash scripts/ws33_library_emulator.sh
+      - name: Upload Library run evidence
+        if: ${{ always() && (github.head_ref || github.ref_name) == 'feature/ws33-packed-library-2026-11-16' }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: GridMates-WS33-Library-Emulator
+          path: qa-library-report/
+          if-no-files-found: ignore
+          retention-days: 3

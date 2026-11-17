@@ -17,7 +17,7 @@ class CabinetRefinementTests(unittest.TestCase):
     def test_matched_shelf_is_used_with_portrait_cabinet(self):
         scene=(APP/"WS16ATModularLibraryScene.kt").read_text()
         shelf=(APP/"Ws16BBMatchedCabinetShelf.kt").read_text()
-        self.assertIn("Ws16BIMountedCabinetShelf()",scene)
+        self.assertIn("Ws16BIMountedCabinetShelf(colorFilter = woodFilter)",scene)
         self.assertIn("Ws16BBMatchedCabinetShelf(modifier)", (APP/"Ws16BIMountedCabinetShelf.kt").read_text())
         self.assertIn("Ws16EStorybookShelf()",scene)
         self.assertIn("hasWs16baCabinetArt",scene)
@@ -28,12 +28,12 @@ class CabinetRefinementTests(unittest.TestCase):
 
     def test_spaced_library_and_separate_count(self):
         scene=(APP/"WS16ATModularLibraryScene.kt").read_text()
-        self.assertIn("val pagerBayHeight = shelfOverhang + pagerGap + pagerRailBudget",scene)
+        self.assertIn("if (showPager || !packedCatalog) pagerGap + pagerRailBudget else 0.dp",scene)
         self.assertIn("shelfTierSpace * 0.54f",scene)
         self.assertIn("shelfTierSpace * 0.46f",scene)
         self.assertIn("ws16bk-navigation-bay",scene)
         self.assertIn("showFutureVolumes = false",scene)
-        self.assertIn("val balancedSparseLayout = !densePortrait && tierCount == 2",scene)
+        self.assertIn("val balancedSparseLayout = !usePackedRows && tierCount == 2",scene)
         self.assertIn("WS16BHDenseSpineBay(",scene)
         self.assertIn("slot = if (balancedSparseLayout) 60.dp else hitSlot",scene)
         self.assertIn('label = "Coming soon"',scene)

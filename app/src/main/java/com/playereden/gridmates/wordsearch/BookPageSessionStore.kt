@@ -76,6 +76,10 @@ internal class BookPageSessionStore(
     fun session(bookId: String, pageId: String): BookPageSession? =
         BookPageSessionRules.session(current, bookId, pageId)
 
+    fun startedPageIds(bookId: String): Set<String> = current.sessions
+        .filter { it.bookId == bookId }
+        .mapTo(mutableSetOf()) { it.pageId }
+
     fun claim(
         bookId: String, pageId: String, start: GridPoint, end: GridPoint
     ): WordClaim {

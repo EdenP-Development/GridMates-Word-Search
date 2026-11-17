@@ -37,7 +37,8 @@ internal fun WS16BHDenseSpineBay(
     modifier: Modifier = Modifier,
     maxSlots: Int = 12,
     showDecorativeBlanks: Boolean = false,
-    fullPlaceholderShelf: Boolean = false
+    fullPlaceholderShelf: Boolean = false,
+    fillShelf: Boolean = false
 ) {
     BoxWithConstraints(
         modifier.fillMaxWidth().height(height)
@@ -50,7 +51,12 @@ internal fun WS16BHDenseSpineBay(
         ).coerceAtLeast(12.dp)
         val bindingHeight = bindingWidth / bindingRatio
         // Environment decoration must not consume book IDs, capacity or taps.
-        val blanks = if (showDecorativeBlanks) {
+        val blankSlot = if (fillShelf) bindingWidth.coerceIn(18.dp, slot) else slot
+        val blanks = if (fillShelf) {
+            // Decorative bindings do not need a 48dp touch target.
+            val room = (maxWidth - slot * books.size).coerceAtLeast(0.dp)
+            (room.value / blankSlot.value).toInt().coerceAtMost(18)
+        } else if (showDecorativeBlanks) {
             val room = (maxSlots - books.size).coerceAtLeast(0)
             if (fullPlaceholderShelf && books.isEmpty()) room
             else room.coerceAtMost(if (books.isEmpty()) 4 else 2)
@@ -59,7 +65,7 @@ internal fun WS16BHDenseSpineBay(
         if (displayCount > 0) {
             Row(
                 Modifier.align(Alignment.BottomCenter)
-                    .width(slot * displayCount)
+                    .width(slot * books.size + blankSlot * blanks)
                     .padding(bottom = 2.dp)
                     .testTag("ws16bh-real-book-row-$shelfIndex"),
                 horizontalArrangement = Arrangement.spacedBy(0.dp),
@@ -110,10 +116,12 @@ internal fun WS16BHDenseSpineBay(
                     }
                 }
                 repeat(blanks) { i ->
+                    val blankHeight = if (fillShelf)
+                        bindingHeight * (0.84f + 0.04f * (i % 4)) else bindingHeight
                     Box(
-                        Modifier.width(slot).height(bindingHeight + 4.dp)
+                        Modifier.width(blankSlot).height(bindingHeight + 4.dp)
                             .testTag("ws16bi-blank-cell-$shelfIndex-$i"),
-                        contentAlignment = Alignment.BottomCenter
+                            contentAlignment = Alignment.BottomCenter
                     ) {
                         Box(
                             Modifier.align(Alignment.BottomCenter)
@@ -124,8 +132,8 @@ internal fun WS16BHDenseSpineBay(
                         )
                         WS16BIUnletteredBlankSpine(
                             index = shelfIndex * 5 + i,
-                            modifier = Modifier.width(bindingWidth)
-                                .height(bindingHeight)
+                            modifier = Modifier.width(minOf(bindingWidth, blankSlot))
+                                .height(blankHeight)
                         )
                     }
                 }

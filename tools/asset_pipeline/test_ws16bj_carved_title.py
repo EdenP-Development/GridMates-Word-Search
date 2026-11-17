@@ -11,12 +11,12 @@ class CarvedTitleTests(unittest.TestCase):
         src = (APP / "WS16BJCarvedTitlePlaque.kt").read_text()
         chrome = (APP / "WS16BICabinetChrome.kt").read_text()
         self.assertIn("internal fun WS16BJCarvedTitlePlaque(", src)
-        self.assertIn("modifier = modifier.height(46.dp)", src)
+        self.assertIn("modifier = modifier.heightIn(min = 46.dp)", src)
         self.assertIn("quadraticBezierTo(", src)
         self.assertIn("Brush.verticalGradient(", src)
         self.assertIn("Color(0xFFE5AD5B)", src)
         self.assertIn("for (right in listOf(false, true))", src)
-        self.assertIn("maxLines = 1", src)
+        self.assertIn("maxLines = if (largeText) 2 else 1", src)
         self.assertIn("Text(", src)
         self.assertNotIn(".clickable(", src)
         self.assertNotIn("BitmapFactory", src)
@@ -27,14 +27,14 @@ class CarvedTitleTests(unittest.TestCase):
     def test_title_moves_up_without_repositioning_book_pagers(self):
         scene = (APP / "WS16ATModularLibraryScene.kt").read_text()
         self.assertIn('label = "Your Library", title = true, styled = cabinetPortrait', scene)
-        self.assertIn('top = (top - 88.dp).coerceAtLeast(12.dp)', scene)
+        self.assertIn('val titleTop = (top - 88.dp).coerceAtLeast(12.dp)', scene)
         self.assertIn('.padding(start = 66.dp, end = 66.dp,', scene)
         self.assertIn('testTag("ws16at-library-title")', scene)
         self.assertNotIn('top = (top - 58.dp).coerceAtLeast(38.dp)', scene)
         # No regression to spine-first, count or pagination behavior.
         for literal in (
             "WS16BHDenseSpineBay(", "showDecorativeBlanks = true",
-            "Ws16BIMountedCabinetShelf()", "val capacity = slots * tierCount",
+            "Ws16BIMountedCabinetShelf(colorFilter = woodFilter)", "val capacity = slots * tierCount",
             "books.drop(page * capacity).take(capacity)",
             'WS16BKBookcasePager(',
             'testTag("ws16at-pagination")',

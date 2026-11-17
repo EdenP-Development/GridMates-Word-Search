@@ -13,7 +13,9 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Path
 import androidx.compose.ui.graphics.StrokeCap
 import androidx.compose.ui.graphics.drawscope.Stroke
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 
@@ -23,7 +25,7 @@ import androidx.compose.ui.unit.dp
  * Unlike the old pill-like rectangular plaque, this is a walnut cartouche
  * with shaped shoulders, inset aged-brass edging and small mirrored carved
  * leaves. Native serif lettering is preserved for accessibility/localization.
- * Fixed 46dp total height: no extra line height can descend over book spines.
+ * At enlarged text sizes the plaque can accommodate a wrapped title.
  *
  * This has no touch surface and no baked lettering/assets; it replaces ONLY
  * the portrait Library title. Book count and hardware remain WS16BI.
@@ -33,8 +35,9 @@ internal fun WS16BJCarvedTitlePlaque(
     label: String,
     modifier: Modifier = Modifier
 ) {
+    val largeText = LocalDensity.current.fontScale >= 1.65f
     Box(
-        modifier = modifier.height(46.dp),
+        modifier = modifier.heightIn(min = 46.dp),
         contentAlignment = Alignment.Center
     ) {
         Canvas(Modifier.matchParentSize()) {
@@ -149,11 +152,13 @@ internal fun WS16BJCarvedTitlePlaque(
         }
         Text(
             text = label,
-            modifier = Modifier.padding(horizontal = 29.dp, vertical = 4.dp),
+            modifier = Modifier.padding(horizontal = if (largeText) 10.dp else 29.dp,
+                vertical = 4.dp),
             color = Color(0xFFFFEAD0),
             style = MaterialTheme.typography.titleLarge,
             fontWeight = FontWeight.Bold,
-            maxLines = 1,
+            textAlign = TextAlign.Center,
+            maxLines = if (largeText) 2 else 1,
             overflow = TextOverflow.Ellipsis
         )
     }
