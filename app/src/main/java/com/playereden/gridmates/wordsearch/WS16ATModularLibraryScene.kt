@@ -20,6 +20,7 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.graphics.ColorMatrix
@@ -157,8 +158,15 @@ internal fun WS16ATModularLibraryScene(
     packedCatalog: Boolean = false
 ) {
     val density = LocalDensity.current
-    val woodFilter = if (packedCatalog) remember {
-        ColorFilter.colorMatrix(ColorMatrix().apply { setToSaturation(0.50f) })
+    val bindingArt = if (packedCatalog) rememberLibraryBindingArt() else null
+    val woodFilter = if (packedCatalog) remember(bindingArt) {
+        val matrix = if (bindingArt != null) ColorMatrix(floatArrayOf(
+            .64f, .18f, .04f, 0f, 0f,
+            .11f, .69f, .04f, 0f, 0f,
+            .09f, .22f, .52f, 0f, 0f,
+            0f, 0f, 0f, 1f, 0f
+        )) else ColorMatrix().apply { setToSaturation(0.50f) }
+        ColorFilter.colorMatrix(matrix)
     } else null
     BoxWithConstraints(modifier.fillMaxSize().testTag("ws16at-modular-library")) {
         val hitSlot = if (density.fontScale >= 1.65f) 54.dp else 48.dp
@@ -173,7 +181,8 @@ internal fun WS16ATModularLibraryScene(
         val usePackedRows = packedCatalog || densePortrait
         // Real and decorative bindings share nonoverlapping 48dp+ hit cells.
         val packedSlot = if (density.fontScale >= 1.65f) 52.dp else 48.dp
-        val activeSlot = if (usePackedRows) packedSlot else hitSlot
+        val catalogSlot = if (bindingArt != null) 56.dp else packedSlot
+        val activeSlot = if (usePackedRows) catalogSlot else hitSlot
         val slots = ((maxWidth - leftWidth - rightWidth).value / activeSlot.value)
             .toInt().coerceIn(1, 12)
         val tierCount = when {
@@ -252,6 +261,21 @@ internal fun WS16ATModularLibraryScene(
         // Backdrop and real shelves/books are independent; hide nothing in a bitmap.
         WS16ATCabinetLayers(foreground = false, modifier = Modifier.fillMaxSize(),
             woodFilter = woodFilter)
+        if (bindingArt != null) {
+            Canvas(Modifier.fillMaxSize().padding(
+                start = leftWidth, end = rightWidth, top = top, bottom = bottom
+            )) {
+                val recess = Color(0xFF201209)
+                drawRect(Brush.horizontalGradient(
+                    0f to recess.copy(alpha = .58f), .24f to Color.Transparent,
+                    .69f to Color.Transparent, 1f to recess.copy(alpha = .46f)
+                ))
+                drawRect(Brush.verticalGradient(
+                    0f to recess.copy(alpha = .12f), .44f to recess.copy(alpha = .22f),
+                    1f to recess.copy(alpha = .47f)
+                ))
+            }
+        }
         HorizontalPager(
             state = pager,
             modifier = Modifier.fillMaxSize()
@@ -262,12 +286,18 @@ internal fun WS16ATModularLibraryScene(
             val isFutureBookcase = densePortrait && page >= realPageCount
             val pageBooks = if (isFutureBookcase) emptyList() else
                 books.drop(page * capacity).take(capacity)
+            // A small catalog gives both shelves a real book to open.
+            val spreadCatalog = bindingArt != null && tierCount == 2 &&
+                realPageCount == 1 && pageBooks.size in 2..slots
             Column(Modifier.fillMaxSize()
                 .testTag(if (isFutureBookcase) "ws16bk-future-bookcase-$page"
                          else "ws16at-page-$page")) {
                 repeat(tierCount) { tier ->
                     val shelfIndex = page * tierCount + tier
-                    val shelfBooks = if (usePackedRows) {
+                    val shelfBooks = if (spreadCatalog) {
+                        val topBooks = (pageBooks.size + 1) / 2
+                        if (tier == 0) pageBooks.take(topBooks) else pageBooks.drop(topBooks)
+                    } else if (usePackedRows) {
                         pageBooks.drop(tier * slots).take(slots)
                     } else if (balancedSparseLayout) {
                         val topBooks = (pageBooks.size + 1) / 2
@@ -276,7 +306,16 @@ internal fun WS16ATModularLibraryScene(
                     val tierHeight = tierHeights[tier]
                     Box(Modifier.fillMaxWidth().height(tierHeight)
                         .testTag("ws16at-movable-shelf-$shelfIndex")) {
-                        if (usePackedRows) {
+                        if (bindingArt != null) {
+                            LibraryBindingShelf(
+                                books = shelfBooks,
+                                art = bindingArt,
+                                shelfIndex = shelfIndex,
+                                bookSlot = catalogSlot,
+                                height = (tierHeight - shelfContactDepth).coerceAtLeast(54.dp),
+                                onBookSelected = onBookSelected
+                            )
+                        } else if (usePackedRows) {
                             WS16BHDenseSpineBay(
                                 books = shelfBooks,
                                 shelfIndex = shelfIndex,

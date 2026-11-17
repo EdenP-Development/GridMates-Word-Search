@@ -22,3 +22,4 @@ app/src/main/res/drawable-nodpi/woodland_*.png
 
 # QA Art Lab source-generated, never commit preview assets as release artwork.
 app/src/debug/assets/ws12/
+app/src/debug/assets/ws35/
