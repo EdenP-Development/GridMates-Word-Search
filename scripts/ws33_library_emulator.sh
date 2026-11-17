@@ -13,7 +13,7 @@ run_test() {
     adb shell am instrument -w -r -e class "$test_namespace.$test_name" \
         "$package.test/androidx.test.runner.AndroidJUnitRunner" \
         | tee "$report/${test_name#*#}.txt"
-    rg -q '^OK \(1 test\)' "$report/${test_name#*#}.txt"
+    grep -Eq '^OK \(1 test\)' "$report/${test_name#*#}.txt"
 }
 
 run_test 'QaWoodlandBookJourneyAndroidTest#startAndPauseWoodland'
