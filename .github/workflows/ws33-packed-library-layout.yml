@@ -12,7 +12,7 @@ permissions:
 jobs:
   library-layout:
     runs-on: ubuntu-latest
-    timeout-minutes: 25
+    timeout-minutes: 16
     steps:
       - uses: actions/checkout@v4
       - name: Fetch the signed v95 APK from the Woodland run
@@ -24,47 +24,12 @@ jobs:
           path: qa-baseline
       - name: Verify the exact v95 APK
         run: echo 'd64fdad8ff65ec9b0e7bf28df52362f168da1de7358fbccb847e3ef99fbe096c  qa-baseline/app-debug.apk' | sha256sum --check
-      - uses: actions/checkout@v4
-        with:
-          repository: PlayerEden/SudokuTogether
-          ref: 975e31a1e8cbfebad1fbbc7602b3340c357da7ef
-          path: _approved_sudoku
-          persist-credentials: false
-      - uses: actions/checkout@v4
-        with:
-          repository: google/fonts
-          ref: 24ddc1f324cac5d9f5aedca126d298f56e3f1640
-          path: _approved_fonts
-          persist-credentials: false
-          filter: blob:none
-          sparse-checkout: |
-            ofl/atkinsonhyperlegible
-            ofl/ibmplexmono
-            ofl/dmmono
-            ofl/patrickhand
-            ofl/literata
-      - name: Import the resources needed by the test build
+      - name: Enable KVM
         run: |
-          python3 -m pip install --disable-pip-version-check --user fonttools==4.59.2 Pillow==12.3.0 CairoSVG==2.8.2
-          python3 scripts/import_woodland_portraits.py --source _approved_sudoku
-          python3 scripts/import_font_library.py --source _approved_fonts
-      - uses: actions/setup-java@v5
-        with:
-          distribution: temurin
-          java-version: '17'
-      - name: Install verified Gradle 8.11.1
-        run: bash tools/ci/install_pinned_gradle.sh
-      - uses: gradle/actions/setup-gradle@v4
-      - name: Prepare instrumentation and free runner memory before boot
-        run: |
-          SDKMANAGER="$(command -v sdkmanager || find "$ANDROID_HOME/cmdline-tools" -name sdkmanager -type f -print -quit)"
-          "$SDKMANAGER" "platforms;android-35" "build-tools;35.0.0"
-          gradle --no-daemon --max-workers=2 -Pkotlin.compiler.execution.strategy=in-process :app:assembleDebugAndroidTest
-          gradle --stop
           echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=static_node"' | sudo tee /etc/udev/rules.d/99-kvm4all.rules
           sudo udevadm control --reload-rules
           sudo udevadm trigger --name-match=kvm
-      - name: Test 200% text and swipe paging on the already-built v95
+      - name: Open the catalog at 200% text and swipe to a second case
         uses: reactivecircus/android-emulator-runner@v2
         with:
           api-level: 35
@@ -74,8 +39,8 @@ jobs:
           ram-size: 1536M
           disable-animations: true
           emulator-options: -no-window -gpu swiftshader_indirect -no-snapshot -noaudio -no-boot-anim
-          script: bash .github/scripts/ws33-packed-library-layout.sh
-      - name: Save targeted layout results
+          script: python3 .github/scripts/ws33_packed_library_navigation.py
+      - name: Save layout checks and Android captures
         if: always()
         uses: actions/upload-artifact@v4
         with:
