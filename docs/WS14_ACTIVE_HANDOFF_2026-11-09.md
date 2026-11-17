@@ -1,4 +1,16 @@
-# Active development handoff — WS33 Library art review
+# Active development handoff — WS33 packed Library and large text
+
+The [v96 layout and build receipt](devlog/2026-11-16_WS33B_LIBRARY_LARGE_TEXT.md) follows the [v95 Woodland playthrough](devlog/2026-11-16_WS33_PACKED_LIBRARY.md). Continue from [draft PR #144](https://github.com/PlayerEden/GridMates-Word-Search/pull/144). The [signed v96 QA APK](https://github.com/PlayerEden/GridMates-Word-Search/actions/runs/44026675539/artifacts/14304230230) was built at `05c23755d6f697fb2856f64b3e5c81d2a6637032`. The cabinet heading uses the full safe width at larger text sizes, and the Home menu scrolls on short screens. The v96 receipt links the Android results. [v95 comparison build](https://github.com/PlayerEden/GridMates-Word-Search/actions/runs/43999350042/artifacts/14291891401).
+
+The next task is portable backup and restore for completed book pages, bookmarks, and unfinished pages. The Library currently uses the QA catalog.
+
+## Earlier v95 packed Library checkpoint
+
+The [WS33 build and playthrough receipt](devlog/2026-11-16_WS33_PACKED_LIBRARY.md) records the packed cabinet and saved-page resume actions. [Draft PR #144](https://github.com/PlayerEden/GridMates-Word-Search/pull/144) is stacked on #142. The [signed v95 QA APK](https://github.com/PlayerEden/GridMates-Word-Search/actions/runs/43999350042/artifacts/14291891401) was built at `8218deb68ae84cb747bbfb74f11e351c687fa035`. Woodland passed two restarts on Android 15 and the independent build passed release-art isolation. [v94 comparison build](https://github.com/PlayerEden/GridMates-Word-Search/actions/runs/43987637538/artifacts/14286536417).
+
+Continue with portable book progress and unfinished-page backup and restore. The book catalog remains QA content.
+
+## Earlier Library art review
 
 [Library art review](devlog/2026-11-16_WS33_LIBRARY_ART_REVIEW.md) · design branch `design/ws33-open-shelf-2026-11-16` based on [draft PR #142](https://github.com/PlayerEden/GridMates-Word-Search/pull/142) at `59fc485018ab18b217c9ea2eb66ee116f1e49b5f`. This pass produced a design comparison using the current spines and book cover with the established paper, font, and control treatment. Android baseline is v94, tested runtime `bbbee51bacc8ad6242fd4291cbc70e1d7689bc97`. [Exact verified fallback](https://github.com/PlayerEden/GridMates-Word-Search/actions/runs/43987637538/artifacts/14286536417).
 
