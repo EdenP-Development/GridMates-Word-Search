@@ -1,0 +1,60 @@
+name: WS34 v97 handset screenshot polish QA
+on:
+  push:
+    branches: [qa/ws34-phone-polish-2026-11-17]
+    paths:
+      - .github/workflows/ws34-phone-polish.yml
+      - .github/scripts/ws34_phone_polish.py
+
+permissions:
+  contents: read
+  actions: read
+
+jobs:
+  phone-polish:
+    runs-on: ubuntu-latest
+    timeout-minutes: 16
+    steps:
+      - uses: actions/checkout@v4
+      - name: Fetch the known v96 QA APK
+        uses: actions/download-artifact@v4
+        with:
+          name: GridMates-WordSearch-Debug-ArtQA
+          run-id: 44026675539
+          github-token: ${{ github.token }}
+          path: qa-baseline
+      - name: Fetch the signed v97 QA APK
+        uses: actions/download-artifact@v4
+        with:
+          name: GridMates-WordSearch-Android-QA
+          run-id: 44120147813
+          github-token: ${{ github.token }}
+          path: qa-candidate
+      - name: Verify the two exact APKs
+        run: |
+          echo '9193cb92057d7fbb19a417dcac32ffcb3934c724cce39a5c23330c77526cbe13  qa-baseline/app-debug.apk' | sha256sum --check
+          echo '311cd5d5879912bc6062a744490a947d93ee17a235ef64075f8ea2d8bb5aa156  qa-candidate/app-debug.apk' | sha256sum --check
+      - name: Enable KVM
+        run: |
+          echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=static_node"' | sudo tee /etc/udev/rules.d/99-kvm4all.rules
+          sudo udevadm control --reload-rules
+          sudo udevadm trigger --name-match=kvm
+      - name: Test install-over and use Collection and Solo on Android
+        uses: reactivecircus/android-emulator-runner@v2
+        with:
+          api-level: 35
+          target: google_apis
+          arch: x86_64
+          profile: pixel_4
+          ram-size: 1536M
+          disable-animations: true
+          emulator-options: -no-window -gpu swiftshader_indirect -no-snapshot -noaudio -no-boot-anim
+          script: python3 .github/scripts/ws34_phone_polish.py
+      - name: Save layout evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: GridMates-WS34-v97-Phone-Polish-Evidence
+          path: qa-phone-report/
+          retention-days: 7
+          if-no-files-found: ignore
