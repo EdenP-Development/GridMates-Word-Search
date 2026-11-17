@@ -104,7 +104,8 @@ def words(root):
 
 EVIDENCE.mkdir(exist_ok=True)
 try:
-    adb("shell", "wm", "size", "720x1440")
+    # The gallery needs 320dp of content width after gesture insets and margins.
+    adb("shell", "wm", "size", "800x1440")
     adb("shell", "wm", "density", "320")
     adb("shell", "settings", "put", "system", "font_scale", "1.0")
     adb("shell", "wm", "dismiss-keyguard")
@@ -113,7 +114,7 @@ try:
     assert b"Success" in adb("install", "-r", "qa-candidate/app-debug.apk", timeout=90)
     assert b"versionCode=97 " in adb("shell", "dumpsys", "package", PACKAGE)
     launch()
-    print("PASS: signed v97 installed over v96 at 360 x 720 dp.")
+    print("PASS: signed v97 installed over v96 at 400 x 720 dp.")
 
     open_home_action(COLLECTION)
     tabs = ("Your Collection", BACK, "Portraits", "Fonts", "Achievements")
