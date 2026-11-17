@@ -1,3 +1,9 @@
+# Active development handoff — WS33 Library art review
+
+[Library art review](devlog/2026-11-16_WS33_LIBRARY_ART_REVIEW.md) · design branch `design/ws33-open-shelf-2026-11-16` based on [draft PR #142](https://github.com/PlayerEden/GridMates-Word-Search/pull/142) at `59fc485018ab18b217c9ea2eb66ee116f1e49b5f`. This pass produced a design comparison using the current spines and book cover with the established paper, font, and control treatment. Android baseline is v94, tested runtime `bbbee51bacc8ad6242fd4291cbc70e1d7689bc97`. [Exact verified fallback](https://github.com/PlayerEden/GridMates-Word-Search/actions/runs/43987637538/artifacts/14286536417).
+
+Next, bring the open shelf into the native QA Library and prove the Woodland book journey from selection through page completion and process restart. Use the real shared book and save routes, and keep the selected draft art and pilot catalog subject to the existing QA and release gates.
+
 # Active development handoff — WS32 illustrated My Puzzles
 
 [The WS32 visual pass and QA receipt](devlog/2026-11-16_WS32_ILLUSTRATED_MY_PUZZLES.md) covers the first Library and save-continuity change. The [draft PR #142](https://github.com/PlayerEden/GridMates-Word-Search/pull/142) is based on the verified #139 branch. Its tested runtime is `bbbee51bacc8ad6242fd4291cbc70e1d7689bc97` and the QA version code is 94.
