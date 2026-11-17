@@ -101,12 +101,15 @@ try:
     book = await_nodes("Garden", "View pages")
     capture("garden-cover-320dp-200-percent.png")
     tap(find(book, "View pages"))
-    await_nodes("Book progress")
+    detail = await_nodes("Book progress", "Back to Your Library")
     print("PASS: 320dp at 200% text visits all three named bindings and opens Garden.")
 
-    # One row of two books forces the real three-volume catalog onto two cases.
-    start_at(520, 900)
-    open_library(900)
+    # Resize the open Library to one row of two books, so the real
+    # three-volume catalog spans two cases.
+    tap(find(detail, "Back to Your Library"))
+    await_nodes("Open Garden")
+    adb("shell", "wm", "size", "520x900")
+    assert b"Override size: 520x900" in adb("shell", "wm", "size")
     await_nodes("Open Woodland", "Open Space", "Next bookcase")
     adb("shell", "input", "swipe", "393", "475", "129", "475", "350")
     second = await_nodes("Open Garden", "Bookcase 2 of 2")
