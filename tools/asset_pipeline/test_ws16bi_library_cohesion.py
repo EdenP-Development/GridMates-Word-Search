@@ -53,7 +53,7 @@ class CohesiveCabinetTests(unittest.TestCase):
         src=(APP/"WS16ATModularLibraryScene.kt").read_text()
         shelf=(APP/"Ws16BIMountedCabinetShelf.kt").read_text()
         chrome=(APP/"WS16BICabinetChrome.kt").read_text()
-        self.assertIn("Ws16BIMountedCabinetShelf()",src)
+        self.assertIn("Ws16BIMountedCabinetShelf(colorFilter = woodFilter)",src)
         self.assertIn("ws16bi/shelf.png",shelf)
         self.assertIn("250f / 1172f",shelf)
         self.assertIn("paintedHeight - 42.dp",shelf)
