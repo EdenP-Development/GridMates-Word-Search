@@ -98,6 +98,7 @@ def main():
     first_install = package_state(92)
     launch()
 
+    tap("Open menu")
     tap("My Puzzles")
     tap("New Solo")
     tap("Start puzzle")
@@ -121,6 +122,7 @@ def main():
     require(package_state(93) == first_install, "Android reported a fresh install rather than an update")
     require(saved_bytes() == original, "The APK update changed the on-disk save")
     launch()
+    tap("Open menu")
     tap("My Puzzles")
     find_label("Paused · 1 / 24", scroll=True)
     shell("am", "force-stop", PACKAGE)
