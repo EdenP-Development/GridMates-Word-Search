@@ -42,21 +42,26 @@ internal fun Modifier.puzzlePaper(): Modifier =
 internal fun PuzzleTitleBar(
     title: String,
     subtitle: String? = null,
+    compact: Boolean = false,
     leading: @Composable () -> Unit,
     actions: @Composable RowScope.() -> Unit = {}
 ) {
+    val compactText = compact && LocalDensity.current.fontScale >= 1.5f
     val heading: @Composable (Modifier) -> Unit = { modifier ->
         Column(modifier, verticalArrangement = Arrangement.spacedBy(1.dp)) {
-            Text(title, color = Forest, style = MaterialTheme.typography.titleLarge,
-                fontWeight = FontWeight.SemiBold, maxLines = 2, overflow = TextOverflow.Ellipsis)
-            if (!subtitle.isNullOrBlank()) {
+            Text(title, color = Forest,
+                style = if (compactText) MaterialTheme.typography.titleSmall
+                    else MaterialTheme.typography.titleLarge,
+                fontWeight = FontWeight.SemiBold, maxLines = if (compactText) 1 else 2,
+                overflow = TextOverflow.Ellipsis)
+            if (!compactText && !subtitle.isNullOrBlank()) {
                 Text(subtitle, color = Muted, style = MaterialTheme.typography.labelSmall,
                     maxLines = 2, overflow = TextOverflow.Ellipsis)
             }
         }
     }
     BoxWithConstraints(Modifier.fillMaxWidth().testTag("puzzle-title-bar")) {
-        if (maxWidth < 238.dp || LocalDensity.current.fontScale >= 1.5f) {
+        if (maxWidth < 238.dp || (!compact && LocalDensity.current.fontScale >= 1.5f)) {
             Column(verticalArrangement = Arrangement.spacedBy(4.dp)) {
                 Row(Modifier.fillMaxWidth(),
                     horizontalArrangement = Arrangement.spacedBy(7.dp),

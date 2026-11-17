@@ -83,6 +83,7 @@ internal fun NearbyActiveMatchScreen(
         verticalArrangement = Arrangement.spacedBy(4.dp)) {
         PuzzleTitleBar(
             title = matchTitle,
+            compact = true,
             subtitle = if (connected) "$partner connected" else "Waiting for $partner",
             leading = { PuzzleTextAction("Back", onClick = onBack) }
         ) {

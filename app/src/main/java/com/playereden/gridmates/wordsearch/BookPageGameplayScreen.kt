@@ -275,6 +275,7 @@ internal fun BookPageGameplayScreen(
             val pageNumber = catalog.pages(bookId).indexOfFirst { it.id == pageId } + 1
             PuzzleTitleBar(
                 title = book.title.removeSuffix(" · TEST BOOK"),
+                compact = true,
                 subtitle = "Page $pageNumber" + when {
                     practice -> " · Practice (unsaved)"
                     committed -> " · Completed"

@@ -218,8 +218,6 @@ internal fun WordSearchScreen(
         val enlarged = LocalDensity.current.fontScale >= 1.5f
         val compactHud = maxWidth < 360.dp || enlarged
         val compactTools = enlarged || maxWidth < 238.dp || maxHeight < 500.dp
-        val visibleStatus = if (enlarged && status == PuzzleModeHelp.opening(puzzle.size))
-            "Drag a word or tap its first and last letters." else status
         val boardViewport = if (landscape) {
             minOf(maxHeight - when {
                     compactHud -> 248.dp
@@ -260,6 +258,7 @@ internal fun WordSearchScreen(
         Column(Modifier.fillMaxSize(), verticalArrangement = Arrangement.spacedBy(4.dp)) {
             PuzzleTitleBar(
                 title = if (daily) "Daily Puzzle" else theme.label,
+                compact = true,
                 subtitle = (if (daily) theme.label + " · " else "") +
                     sizeLabel + " · " + challengeLabel,
                 leading = {
@@ -372,7 +371,7 @@ internal fun WordSearchScreen(
                             compactControls = compactTools,
                             zoomConsoleVisible = toolsOpen,
                             onDismissZoomConsole = { toolsOpen = false })
-                        PuzzleStatus(visibleStatus, compact = true)
+                        if (!enlarged) PuzzleStatus(status, compact = true)
                     }
                     WordList(puzzle, found, daily,
                         Modifier.weight(1f).fillMaxSize(),
@@ -393,13 +392,22 @@ internal fun WordSearchScreen(
                         zoomConsoleVisible = toolsOpen,
                         onDismissZoomConsole = { toolsOpen = false })
                 }
-                PuzzleStatus(visibleStatus, compact = false)
+                if (!enlarged) PuzzleStatus(status, compact = false)
                 WordList(puzzle, found, daily,
                     Modifier.weight(1f).fillMaxWidth(),
                     onShowResults = if (finished) { { reviewingCompletedBoard = false } }
                         else null,
                     scrollAll = continuousSoloIndex)
             }
+        }
+        if (enlarged && (!finished || reviewingCompletedBoard) &&
+            status != PuzzleModeHelp.opening(puzzle.size) &&
+            status != "Keep going — the next word is waiting.") {
+            BookPageNoticeOverlay(status,
+                Modifier.align(Alignment.BottomCenter).padding(bottom = 8.dp)
+                    .clickable(onClickLabel = "Dismiss message") {
+                        status = PuzzleModeHelp.opening(puzzle.size)
+                    })
         }
     }
 }
@@ -570,9 +578,13 @@ internal fun WordList(
                 Text("Words to find · " + (puzzle.targets.size - found.size) + " left",
                     modifier = Modifier.weight(1f).padding(end = 4.dp),
                     style = MaterialTheme.typography.titleSmall,
-                    fontWeight = FontWeight.Bold, color = Forest)
+                    fontWeight = FontWeight.Bold, color = Forest,
+                    maxLines = 2, overflow = TextOverflow.Ellipsis)
                 if (onShowResults != null) {
                     TextButton(onClick = onShowResults) { Text("Results") }
+                } else if (LocalDensity.current.fontScale >= 1.5f) {
+                    BookPageCompactFilterButton(remainingOnly,
+                        onClick = { remainingOnly = !remainingOnly })
                 } else {
                     FilterChip(selected = remainingOnly,
                         onClick = { remainingOnly = !remainingOnly },
