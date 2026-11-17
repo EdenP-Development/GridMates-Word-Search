@@ -3,17 +3,13 @@ package com.playereden.gridmates.wordsearch
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.heightIn
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Button
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -47,17 +43,11 @@ internal fun SoloSetupScreen(
     val board = PuzzleBoardSize.valueOf(boardName)
     val challenge = PuzzleChallenge.valueOf(challengeName)
 
-    Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
-        PaperEyebrow("CUSTOM · BEFORE YOU PLAY")
-        TextButton(onClick = onBack) { Text("Cancel") }
-    }
-    Text("New puzzle", style = MaterialTheme.typography.headlineSmall,
-        fontWeight = FontWeight.Bold, color = Forest)
-    Text("Pick your puzzle, then start. You can come back to unfinished games " +
-        "from My Puzzles.", color = Muted, style = MaterialTheme.typography.bodyMedium)
+    PuzzleTitleBar(title = "New puzzle", leading = {
+        PuzzleTextAction("Cancel", onClick = onBack)
+    })
 
-    PaperPanel(Modifier.fillMaxWidth()) {
-        PaperEyebrow("Your puzzle")
+    GridMatesInfoPanel {
         SetupChoice(
             title = "Theme",
             selection = theme.label,
@@ -82,22 +72,17 @@ internal fun SoloSetupScreen(
             color = Muted)
     }
 
-    PaperPanel(Modifier.fillMaxWidth()) {
-        Text("Ready to begin?", fontWeight = FontWeight.SemiBold, color = Forest)
-        Text("${theme.label} · ${board.cells}×${board.cells} · " +
-            "${board.targets} words · ${challenge.label}",
-            color = Ink, style = MaterialTheme.typography.bodyMedium)
-        Text("Your current unfinished puzzle will be saved automatically. " +
-            "The new one will start with a fresh board.",
-            style = MaterialTheme.typography.bodySmall, color = Muted)
-        store.warning?.let { Text(it, color = Gold,
-            style = MaterialTheme.typography.bodySmall) }
-        Button(onClick = {
+    Text("You can resume your current puzzle from My Puzzles.",
+        style = MaterialTheme.typography.bodySmall, color = Muted)
+    store.warning?.let { Text(it, color = Gold,
+        style = MaterialTheme.typography.bodySmall) }
+    GridMatesIllustratedPill(
+        label = "Start puzzle",
+        modifier = Modifier.fillMaxWidth(),
+        onClick = {
             if (store.chooseSolo(theme, board, challenge)) onStarted()
-        }, modifier = Modifier.fillMaxWidth().heightIn(min = 48.dp)) {
-            Text("Start puzzle", maxLines = 1)
         }
-    }
+    )
 }
 
 /** Dropdowns keep setup short even on narrow devices and larger font scales. */

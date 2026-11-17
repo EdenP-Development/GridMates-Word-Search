@@ -30,8 +30,8 @@ import androidx.compose.ui.unit.dp
 /** Functional UI icons, deliberately simple vectors with real 48dp touch targets. */
 @Composable
 internal fun BookPageToolsButton(onClick: () -> Unit) {
-    IconButton(onClick = onClick, modifier = Modifier.size(48.dp)
-        .semantics { contentDescription = "Puzzle tools" }.testTag("ws14k2-tools")) {
+    PuzzleIconAction("Puzzle tools", onClick = onClick,
+        modifier = Modifier.testTag("ws14k2-tools")) {
         Canvas(Modifier.size(24.dp)) {
             drawCircle(Forest, radius = size.width * .26f,
                 center = Offset(size.width * .4f, size.height * .4f),
@@ -51,8 +51,8 @@ internal fun BookPageToolsButton(onClick: () -> Unit) {
 
 @Composable
 internal fun BookPageNoticeHistoryButton(hasNotices: Boolean, onClick: () -> Unit) {
-    IconButton(onClick = onClick, modifier = Modifier.size(48.dp)
-        .semantics { contentDescription = "Notice history" }.testTag("ws14k2-notice-history")) {
+    PuzzleIconAction("Notice history", onClick = onClick,
+        modifier = Modifier.testTag("ws14k2-notice-history")) {
         Canvas(Modifier.size(24.dp)) {
             drawRoundRect(Forest, topLeft = Offset(size.width * .22f, size.height * .17f),
                 size = Size(size.width * .57f, size.height * .65f),

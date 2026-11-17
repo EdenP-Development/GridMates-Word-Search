@@ -9,6 +9,7 @@ import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.onNodeWithText
+import androidx.compose.ui.test.performClick
 import androidx.compose.ui.test.performScrollTo
 import androidx.compose.ui.unit.Density
 import androidx.compose.ui.unit.dp
@@ -44,7 +45,11 @@ class CompactGameplayAndroidTest {
             rule.onNodeWithText("Options").assertIsDisplayed()
             rule.onNodeWithText("Hint (", substring = true).assertIsDisplayed()
             rule.onNodeWithText("Elapsed", substring = true).assertExists()
-            rule.onNodeWithText("Words to find", substring = true).assertExists()
+            rule.onNodeWithText("Words to find", substring = true).assertIsDisplayed()
+            rule.onNodeWithText("Options").performClick()
+            rule.onNodeWithText("Puzzle tools").performClick()
+            rule.onNodeWithText("Select by row and column").assertIsDisplayed()
+            rule.onNodeWithText("Done").performClick()
             val puzzle = SoloProgressRules.puzzle(store.profile.active)
             rule.runOnIdle {
                 puzzle.targets.forEach { target ->

@@ -10,17 +10,10 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.layout.size
-import androidx.compose.material3.Button
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.OutlinedButton
-import androidx.compose.ui.graphics.Color
-import com.playereden.gridmates.wordsearch.core.WordTheme
-import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
@@ -33,9 +26,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalDensity
-import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.playereden.gridmates.wordsearch.core.BookCatalog
@@ -43,7 +34,6 @@ import com.playereden.gridmates.wordsearch.core.BookPageSessionRules
 import com.playereden.gridmates.wordsearch.core.BookProgressRules
 import com.playereden.gridmates.wordsearch.core.ClaimStatus
 import com.playereden.gridmates.wordsearch.core.GridPoint
-import com.playereden.gridmates.wordsearch.core.WordSearchPuzzle
 import com.playereden.gridmates.wordsearch.core.WordSearchRules
 import kotlinx.coroutines.delay
 
@@ -277,41 +267,34 @@ internal fun BookPageGameplayScreen(
             minOf(maxWidth * 0.50f, maxHeight * if (enlarged) 0.62f else 0.74f)
                 .coerceAtLeast(130.dp)
         } else {
-            minOf(maxWidth, maxHeight * if (enlarged) 0.39f else 0.49f)
+            minOf(maxWidth, maxHeight * if (enlarged) 0.36f else 0.46f)
                 .coerceAtLeast(130.dp)
         }
         val choose: (GridPoint, GridPoint) -> Unit = { start, end -> select(start, end) }
         Column(Modifier.fillMaxSize(), verticalArrangement = Arrangement.spacedBy(5.dp)) {
-            // WS-14K1 first real-phone refinement: one control row instead
-            // of a separate back/save row and an oversized book title row.
-            // Native labels remain accessible; no art or gesture hot-spots.
-            Row(Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.spacedBy(5.dp),
-                verticalAlignment = Alignment.CenterVertically) {
-                BookPageBackButton(onBack = onBack)
-                // Keep the theme illustration at the word list, not in the
-                // crowded title row. Real handset review showed "Woodl...".
-                Column(Modifier.weight(1f),
-                    verticalArrangement = Arrangement.spacedBy(1.dp)) {
-                    Text(book.title.removeSuffix(" · TEST BOOK"),
-                        color = Forest, fontWeight = FontWeight.Bold,
-                        style = MaterialTheme.typography.titleMedium,
-                        maxLines = 1, overflow = TextOverflow.Ellipsis)
-                    val pageNumber = catalog.pages(bookId).indexOfFirst {
-                        it.id == pageId
-                    } + 1
-                    Text("Page $pageNumber" + when {
-                        practice -> " · Practice (unsaved)"
-                        committed -> " · Completed"
-                        else -> ""
-                    }, color = Muted, style = MaterialTheme.typography.labelMedium,
-                        maxLines = 1, overflow = TextOverflow.Ellipsis)
-                }
+            val pageNumber = catalog.pages(bookId).indexOfFirst { it.id == pageId } + 1
+            PuzzleTitleBar(
+                title = book.title.removeSuffix(" · TEST BOOK"),
+                subtitle = "Page $pageNumber" + when {
+                    practice -> " · Practice (unsaved)"
+                    committed -> " · Completed"
+                    else -> ""
+                },
+                leading = { BookPageBackButton(onBack = onBack) }
+            ) {
                 BookPageToolsButton(onClick = { toolsOpen = true })
                 BookPageNoticeHistoryButton(
                     hasNotices = noticeHistory.isNotEmpty(),
                     onClick = { noticeHistoryOpen = true }
                 )
+            }
+            val elapsed = active?.elapsedSeconds ?: 0L
+            PuzzleProgressPanel(
+                label = "${wordsFound.size} of ${board.targets.size} words found",
+                detail = "Elapsed ${elapsed / 60}:${(elapsed % 60).toString().padStart(2, '0')}",
+                found = wordsFound.size,
+                total = board.targets.size
+            ) {
                 if (!practice && !committed) {
                     // Icon-only hint, with a full 48dp touch target and an
                     // accessibility description. Same durable hint policy.
@@ -343,37 +326,32 @@ internal fun BookPageGameplayScreen(
                     })
                 }
             }
-            Text(
-                wordsFound.size.toString() + " of " + board.targets.size +
-                    " words found · " +
-                    ((active?.elapsedSeconds ?: 0L) / 60L).toString() + "m " +
-                    ((active?.elapsedSeconds ?: 0L) % 60L).toString() + "s",
-                color = Ink, style = MaterialTheme.typography.bodyMedium
-            )
-            PaperProgress(wordsFound.size, board.targets.size)
             if (committed && !practice) {
                 Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                    OutlinedButton(
+                    PuzzleTextAction(
+                        label = "Practice again",
                         onClick = {
                             practice = true
                             practiceFound = emptySet()
                             status = "Practice replay will not change your book progress."
                         },
-                        modifier = Modifier.weight(1f).heightIn(min = 48.dp)
-                    ) { Text("Practice again") }
+                        modifier = Modifier.weight(1f)
+                    )
                     if (next != null && onNextPage != null) {
-                        Button(
+                        GridMatesIllustratedPill(
+                            label = "Next page",
                             onClick = { onNextPage(bookId, next.id) },
-                            modifier = Modifier.weight(1f).heightIn(min = 48.dp)
-                        ) { Text("Next page") }
+                            modifier = Modifier.weight(1f)
+                        )
                     }
                 }
             }
             if (practice) {
-                OutlinedButton(
+                PuzzleTextAction(
+                    label = "Finish practice",
                     onClick = { practice = false; practiceFound = emptySet() },
-                    modifier = Modifier.fillMaxWidth().heightIn(min = 48.dp)
-                ) { Text("Finish practice") }
+                    modifier = Modifier.fillMaxWidth()
+                )
             }
             if (landscape) {
                 Row(Modifier.fillMaxWidth().weight(1f),
