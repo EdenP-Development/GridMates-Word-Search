@@ -1,6 +1,8 @@
-# Active development handoff — WS42 handset polish
+# Active development handoff — WS42 v104 verified
 
-[Pass and test plan](devlog/2026-11-17_WS42_HANDSET_POLISH.md). Branch `feature/ws42-handset-polish-2026-11-17` starts at WS41 #152 head `a1f7237b1da893df01b5c5a666357640fea1b7ae`. v104 build pending. Verify v103 install-over, pinned Home controls, chapter jump and notice history. The verified v103 fallback and WS41 receipt are below.
+[Verification receipt](devlog/2026-11-18_WS42_HANDSET_VERIFICATION.md) · [draft PR #153](https://github.com/PlayerEden/GridMates-Word-Search/pull/153). Latest tested source `f2304c5d81a57cc1a29197277702d92645460c96` on `feature/ws42-handset-polish-2026-11-17`. [Standard Android QA](https://github.com/PlayerEden/GridMates-Word-Search/actions/runs/44252800362) and [independent build and release isolation](https://github.com/PlayerEden/GridMates-Word-Search/actions/runs/44252800303) passed. [Signed v104 APK](https://github.com/PlayerEden/GridMates-Word-Search/actions/runs/44252800362/artifacts/14404433051), 34,207,390 bytes, SHA-256 `9c0b68612dd61d192a6382ce35c2ffc04fce39584ae7f9753e1b7b56e4782033`.
+
+The app adds pinned Home controls, smaller upper foliage, chapter jumps, useful book hints and paper notice history. Three isolated emulator sessions verified the v103 install-over and exact saved 20×20 board, the Library-to-Garden page 19 route, and all 31 instrumented tests. All 228 assets match v103. The earlier v103 is the verified fallback. Owner handset and physical two-phone acceptance remain open. For the next content pass, start with the [150-word Fall authoring draft](https://github.com/PlayerEden/GridMates-Word-Search/pull/154) and plan its page recipes.
 
 # Active development handoff — WS41 v103 verified
 

@@ -2,11 +2,11 @@
 
 Read [current roadmap](CURRENT_PRODUCT_ROADMAP.md), the top of [active handoff](WS14_ACTIVE_HANDOFF_2026-11-09.md), [development journal](DEVELOPMENT_JOURNAL.md) and its latest dated pass. Inspect live GitHub PR/CI heads; `main` and historical APK banners are not the current source.
 
-**Latest playable is v103 / WS41.** [Exact source, signed APK and actual Android checks](devlog/2026-11-17_WS41_MIXED_PLAY_AND_BOOK_CONTENT.md). [Draft PR #152](https://github.com/PlayerEden/GridMates-Word-Search/pull/152) stacks on #151. Mixed 12/15/20 Quick Play,670 QA words, 63 book pages and schema6 frozen saves/book rewards are implemented. Both builds and 24 Android tests passed, including native install-over/playthrough and narrow/large-text header checks. Owner physical/two-phone and editorial release review remain open.
+**Latest playable is v104 / WS42.** [Exact source, signed APK and Android checks](devlog/2026-11-18_WS42_HANDSET_VERIFICATION.md) · [draft PR #153](https://github.com/PlayerEden/GridMates-Word-Search/pull/153). The saved 20×20 puzzle survived the v103 upgrade. The native Garden chapter jump and hint, all 31 Android tests, and independent build and release isolation passed. v103 is the verified fallback. Owner handset and two-phone acceptance remain open.
 
 [WS40 recovery audit](audits/2026-11-17_WS40_GITHUB_PLAN_RECOVERY.md) retains the exact missing lexicon source and forgotten roadmap crosswalk. Root data stays the historical negative-test fixture; new editorial work lives in `data/lexicon/authoring/en-v1`. The10,000-word/ 30-plus-topic goal is ongoing, not fulfilled by candidate counts or this first 670-word QA edition.
 
-Next curate a 100–250-word Fall batch. New themed Custom/LAN packs need explicit mode/content versioning; current V2/V3 Custom/Nearby remain compatible. Regular books stay12/15/20. Do not revive deferred Marathon/Spanish/economy/online plans from an old checklist. Do not merge draft stacks, reset user data or change Sudoku. Record every pass/build and retain v102 as the previous tested fallback.
+The [Fall vocabulary draft](https://github.com/PlayerEden/GridMates-Word-Search/pull/154) has 150 words ready for QA page planning. Use its six subtopics to plan page recipes and test placement and repeat play on 12×12, 15×15 and 20×20 boards. New themed Custom and LAN packs need explicit mode and content versioning. Preserve user saves and Sudoku's separate source, keep the drafts open for review, and record each pass and each APK build in the journal.
 
 <details>
 <summary>Historical checkpoints before WS40 — reference only</summary>

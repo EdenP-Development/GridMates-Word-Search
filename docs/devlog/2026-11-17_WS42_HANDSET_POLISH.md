@@ -1,6 +1,6 @@
 # 2026-11-17 — Home controls, book chapters, and puzzle feedback
 
-**Status** · v104 build pending. v103 remains the verified APK.
+**Implementation record.** [The November 18 verification receipt](2026-11-18_WS42_HANDSET_VERIFICATION.md) records the signed v104 build and Android QA.
 
 ## Who, what, where, and why
 
