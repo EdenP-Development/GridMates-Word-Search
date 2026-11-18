@@ -29,16 +29,20 @@ class HomeTitleLayoutAndroidTest {
                 }
             }
         } }
-        for ((width,scale) in listOf(360 to 1f,320 to 1f,360 to 2f,320 to 2f)) {
+        val failures=mutableListOf<String>()
+        for ((width,scale) in listOf(360 to 1f,324 to 1f,284 to 1f,360 to 2f,324 to 2f,284 to 2f)) {
             compose.runOnIdle { layout.value=width to scale }
             val results=mutableListOf<TextLayoutResult>()
             compose.onNodeWithTag("ws41-home-title").performSemanticsAction(
                 SemanticsActions.GetTextLayoutResult) { it(results) }
             assertEquals("Word Search",results.single().layoutInput.text.text)
-            assertFalse("Title clipped at $width dp, $scale text",results.single().hasVisualOverflow)
+            val result=results.single()
+            println("WS41 HEADER width=$width scale=$scale size=${result.size} constraints=${result.layoutInput.constraints} lines=${result.lineCount} overflowWidth=${result.didOverflowWidth} overflowHeight=${result.didOverflowHeight}")
+            if(result.hasVisualOverflow) failures+="Title clipped at $width dp, $scale text; size=${result.size}, lines=${result.lineCount}"
             compose.onNodeWithContentDescription("Open player profile").assertIsDisplayed().performClick()
             compose.onNodeWithContentDescription("Open menu").assertIsDisplayed().performClick()
         }
-        compose.runOnIdle { assertEquals(4,profiles);assertEquals(4,menus) }
+        assertTrue(failures.joinToString("; "),failures.isEmpty())
+        compose.runOnIdle { assertEquals(6,profiles);assertEquals(6,menus) }
     }
 }

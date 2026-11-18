@@ -5,10 +5,8 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -52,30 +50,20 @@ internal fun Ws16HomeHeader(
             veryRoomy -> 24.dp
             else -> 17.dp
         }
-        Row(Modifier.fillMaxWidth().qaTrackBounds("Home header").testTag("ws16-home-header"),
-            verticalAlignment = Alignment.CenterVertically,
+        Column(Modifier.fillMaxWidth().qaTrackBounds("Home header")
+            .testTag("ws16-home-header")) {
+        Row(Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.spacedBy(4.dp)) {
-        Column(Modifier.weight(1f).padding(start = leftInset),
-            verticalArrangement = Arrangement.spacedBy(0.dp)) {
-            Row(verticalAlignment = Alignment.CenterVertically,
+            Row(Modifier.weight(1f).padding(start = leftInset),
+                verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.spacedBy(5.dp)) {
                 Ws16FamilyMark()
                 Text("GridMates", color = Forest,
+                    modifier = Modifier.weight(1f),
                     style = MaterialTheme.typography.titleSmall,
                     fontWeight = FontWeight.Bold, maxLines = 1,
                     overflow = TextOverflow.Ellipsis)
             }
-            Row(verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.spacedBy(5.dp)) {
-                Ws16WordSearchMark()
-                Text("Word Search", color = Forest,
-                    style = MaterialTheme.typography.titleLarge,
-                    modifier = Modifier.testTag("ws41-home-title"),
-                    fontWeight = FontWeight.Bold, maxLines = 2,
-                    overflow = TextOverflow.Ellipsis)
-            }
-        }
-        if (roomy && veryRoomy) Spacer(Modifier.width(7.dp))
         IconButton(onClick = onProfile,
             modifier = Modifier.size(48.dp)
                 .semantics { contentDescription = "Open player profile" }
@@ -103,6 +91,17 @@ internal fun Ws16HomeHeader(
                         strokeWidth = 2.2.dp.toPx(), cap = StrokeCap.Round)
                 }
             }
+        }
+        }
+        Row(Modifier.fillMaxWidth().padding(start = leftInset),
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.spacedBy(5.dp)) {
+            Ws16WordSearchMark()
+            Text("Word Search", color = Forest,
+                modifier = Modifier.weight(1f).testTag("ws41-home-title"),
+                style = MaterialTheme.typography.titleLarge,
+                fontWeight = FontWeight.Bold, maxLines = 2,
+                overflow = TextOverflow.Ellipsis)
         }
         }
     }
