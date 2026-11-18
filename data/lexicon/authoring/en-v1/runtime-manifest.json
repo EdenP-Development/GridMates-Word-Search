@@ -1,0 +1,32 @@
+{
+  "scope": "assistant-reviewed-qa-only",
+  "owner_release_approved": false,
+  "packs": [
+    {
+      "id": "en-cozy-mixed-v1",
+      "runtime_sha256": "b6e84745692fc45d85177f9291599b4c1e74c5ba7d7d72a97fccd1cfceb14570",
+      "entries": 670
+    },
+    {
+      "id": "en-everyday-v1",
+      "runtime_sha256": "f9ce2dc6f6f0b27ea3ff94ef0686709a5509a37429e2f3f4125cdbdc0fe14b6d",
+      "entries": 200
+    },
+    {
+      "id": "en-garden-v1",
+      "runtime_sha256": "633b448abd99c22b72eb51ca3db7d4ef15c18c230b89a73b833166c5eb14dfe4",
+      "entries": 174
+    },
+    {
+      "id": "en-space-v1",
+      "runtime_sha256": "7bfcebe244ff214eb59c9651d20e0f3b9f12d6991a29e9071bcfcc919b00494c",
+      "entries": 169
+    },
+    {
+      "id": "en-woodland-v1",
+      "runtime_sha256": "65393cb62e9da1d4a71fcaef72a2d3ff109e4e06ab727530db997f26d002f8a8",
+      "entries": 159
+    }
+  ],
+  "kotlin_sha256": "b76163b7b14457b28311404e9fc891ce8a44c337ec31eea8a160a8ae41aabbdf"
+}

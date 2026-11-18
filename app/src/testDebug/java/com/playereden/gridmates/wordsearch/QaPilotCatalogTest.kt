@@ -11,25 +11,23 @@ import org.junit.Test
  * fail their own immutable book hash/target/route checks.
  */
 class QaPilotCatalogTest {
-    @Test fun allThreeTestVolumesAndNinePagesAreActuallyPlayable() {
+    @Test fun allThreeExpandedVolumesAndSixtyThreePagesAreActuallyPlayable() {
         assertTrue(BookQaPilot.enabled)
         val catalog = BookQaPilot.catalog()
         assertEquals(3, catalog.books.size)
         assertEquals(
-            setOf("Woodland · TEST BOOK", "Space · TEST BOOK", "Garden · TEST BOOK"),
+            setOf("Woodland", "Space", "Garden"),
             catalog.books.map { it.title }.toSet()
         )
-        assertEquals(9, catalog.books.sumOf { book ->
+        assertEquals(63, catalog.books.sumOf { book ->
             catalog.pages(book.id).size
         })
         val puzzleIds = hashSetOf<String>()
         for (book in catalog.books) {
-            assertEquals(2, book.chapters.size)
-            assertEquals(3, catalog.pages(book.id).size)
+            assertEquals(8, book.chapters.size)
+            assertEquals(21, catalog.pages(book.id).size)
             assertTrue(book.id.contains("qa"))
-            assertTrue(book.title.contains("TEST"))
             for (chapter in book.chapters) {
-                assertTrue(chapter.title.contains("TEST"))
                 for (page in chapter.pages) {
                     assertTrue(page.id.contains("qa"))
                     val puzzle = BookPageSessionRules.puzzle(catalog, book.id, page.id)

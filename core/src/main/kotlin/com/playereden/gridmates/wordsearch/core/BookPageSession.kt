@@ -44,6 +44,11 @@ object BookPageSessionRules {
         val book = requireNotNull(catalog.book(bookId)) { "Book not in published catalog" }
         val page = requireNotNull(catalog.page(bookId, pageId)) { "Page not in published catalog" }
         val result = puzzleCache[page.puzzleId] ?: when (page.generatorVersion) {
+            WordSearchGeneratorV5.CONTENT_VERSION -> {
+                val exact = requireNotNull(page.frozen) { "V5 book is missing its frozen board" }
+                require(exact.board == page.boardSize && exact.challenge == page.challenge)
+                exact.puzzle
+            }
             WordSearchGeneratorV2.CONTENT_VERSION -> {
                 require(page.boardSize in PuzzleBoardSize.bookPresets) {
                     "Unsupported V2 book size"

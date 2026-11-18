@@ -81,7 +81,8 @@ internal fun BookPageGameplayScreen(
     onBack: () -> Unit,
     onNextPage: ((bookId: String, pageId: String) -> Unit)? = null,
     showPrototypeArt: Boolean = false,
-    fieldNotesArt: Boolean = false
+    fieldNotesArt: Boolean = false,
+    onBookProgressSaved: () -> Unit = {}
 ) {
     BackHandler(onBack = onBack)
     val book = catalog.book(bookId)
@@ -187,6 +188,7 @@ internal fun BookPageGameplayScreen(
                         val awardCommitted = pageId in
                             progressStore.progress.volumes[bookId]?.completedPageIds.orEmpty()
                         status = if (awardCommitted) {
+                            onBookProgressSaved()
                             if (finalized) "Book page complete! Continue when you're ready."
                             else "Page completed and saved. Cleanup will retry safely."
                         } else "Page solved and saved. The completion record needs recovery."

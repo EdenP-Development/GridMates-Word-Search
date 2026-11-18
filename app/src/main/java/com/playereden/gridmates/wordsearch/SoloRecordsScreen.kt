@@ -243,7 +243,7 @@ internal fun SoloRecordsScreen(profile: SoloProfile) {
                 Column(Modifier.padding(14.dp), verticalArrangement = Arrangement.spacedBy(4.dp)) {
                     Column(Modifier.fillMaxWidth(),
                         verticalArrangement = Arrangement.spacedBy(2.dp)) {
-                        Text(record.theme.label + " · " +
+                        Text((if (record.quickPackId != null) "Quick Play" else record.theme.label) + " · " +
                             (record.boardSize?.let { it.cells.toString() + "×" + it.cells } ?:
                                 (record.difficulty.gridSize.toString() + "×" +
                                     record.difficulty.gridSize)) +

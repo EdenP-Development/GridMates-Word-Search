@@ -20,7 +20,8 @@ data class BookPage(
     val challenge: PuzzleChallenge,
     val seed: Long,
     /** SHA-256 of BookBoardDigest.v1(puzzle), including letters AND answer paths. */
-    val boardSha256: String
+    val boardSha256: String,
+    val frozen: FrozenWordSearch? = null
 )
 
 data class BookChapter(
@@ -138,7 +139,7 @@ class BookCatalog(val books: List<PuzzleBook> = emptyList()) {
             }
             val oldChapters = oldBook.chapters
             val newChapters = newer.chapters
-            require(oldChapters.size == newChapters.size &&
+            require(oldChapters.size <= newChapters.size &&
                 oldChapters.indices.all { i ->
                     oldChapters[i].id == newChapters[i].id &&
                         oldChapters[i].pages == newChapters[i].pages

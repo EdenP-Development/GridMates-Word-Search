@@ -127,7 +127,8 @@ internal fun WordSearchScreen(
     onRecords: () -> Unit,
     /** A route to separate pre-game setup; never changes a puzzle in-game. */
     onNewPuzzle: (() -> Unit)? = null,
-    showBookArt: Boolean = false
+    showBookArt: Boolean = false,
+    onPlayAnother: (() -> Unit)? = null
 ) {
     val dailyEntry = if (daily) store.selectedDaily else null
     val run = if (daily) dailyEntry?.run else store.profile.active
@@ -242,7 +243,7 @@ internal fun WordSearchScreen(
             when (result.status) {
                 ClaimStatus.FOUND -> {
                     val target = requireNotNull(result.target)
-                    status = "✓ " + target.word + " found! · " +
+                    status = "✓ " + target.display + " found! · " +
                         (found.size + 1) + " of " + puzzle.targets.size
                     if (hapticsEnabled) haptics.performHapticFeedback(HapticFeedbackType.LongPress)
                     if (soundEnabled) view.playSoundEffect(SoundEffectConstants.CLICK)
@@ -259,7 +260,7 @@ internal fun WordSearchScreen(
 
         Column(Modifier.fillMaxSize(), verticalArrangement = Arrangement.spacedBy(4.dp)) {
             PuzzleTitleBar(
-                title = if (daily) "Daily Puzzle" else theme.label,
+                title = if (daily) "Daily Puzzle" else puzzle.displayTitle,
                 compact = true,
                 subtitle = (if (daily) theme.label + " · " else "") +
                     sizeLabel + " · " + challengeLabel,
@@ -330,12 +331,12 @@ internal fun WordSearchScreen(
                                 val (next, target) = if (daily) store.dailyHint() else store.hint()
                                 status = if (target == null || next == null) "All words found!" else {
                                     when (next.hints[target.id] ?: 0) {
-                                        1 -> "Try " + target.word + " near row " +
+                                        1 -> "Try " + target.display + " near row " +
                                             (target.positions.first().row + 1) + "."
-                                        2 -> target.word + " starts at row " +
+                                        2 -> target.display + " starts at row " +
                                             (target.positions.first().row + 1) + ", col " +
                                             (target.positions.first().col + 1) + "."
-                                        else -> "Follow the faint gold guide for " + target.word + "."
+                                        else -> "Follow the faint gold guide for " + target.display + "."
                                     }
                                 }
                             }
@@ -354,7 +355,8 @@ internal fun WordSearchScreen(
                     onReview = { reviewingCompletedBoard = true },
                     onRecords = { store.flush(); onRecords() },
                     onHome = { store.flush(); onBack() },
-                    onAnother = if (daily) null else onNewPuzzle,
+                    onAnother = if (daily) null else onPlayAnother ?: onNewPuzzle,
+                    onChangeSize = if (run.frozen != null) onNewPuzzle else null,
                     showBookArt = showBookArt,
                     modifier = Modifier.weight(1f).fillMaxWidth()
                 )
@@ -450,7 +452,8 @@ private fun CompletionPanel(
     onHome: () -> Unit,
     onAnother: (() -> Unit)?,
     showBookArt: Boolean,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    onChangeSize: (() -> Unit)? = null
 ) {
     var shareText by remember(puzzle.id) { mutableStateOf<String?>(null) }
     val usedHints = run.hints.values.sum()
@@ -475,7 +478,7 @@ private fun CompletionPanel(
                         Modifier.width(74.dp).height(98.dp), fieldNotes = true)
                 }
             }
-            Text(puzzle.theme.label + " · " + puzzle.size + "×" + puzzle.size +
+            Text(puzzle.displayTitle + " · " + puzzle.size + "×" + puzzle.size +
                 " · " + (run.challenge?.label ?: run.difficulty.label),
                 color = Gold, style = MaterialTheme.typography.labelLarge)
             PaperProgress(puzzle.targets.size, puzzle.targets.size)
@@ -518,6 +521,8 @@ private fun CompletionPanel(
         }, modifier = Modifier.fillMaxWidth())
 
         PuzzleTextAction("Review completed board", onClick = onReview,
+            modifier = Modifier.fillMaxWidth())
+        if (onChangeSize != null) PuzzleTextAction("Change size", onClick = onChangeSize,
             modifier = Modifier.fillMaxWidth())
         Row(Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.spacedBy(8.dp)) {
@@ -605,7 +610,7 @@ internal fun WordList(
             val needsFullWidth = remember(targets, wordStyle, density, columnTextWidth) {
                 targets.any { target ->
                     textMeasurer.measure(
-                        AnnotatedString("○ " + target.word),
+                        AnnotatedString("○ " + target.display),
                         style = wordStyle, maxLines = 1, softWrap = false
                     ).size.width > columnTextWidth
                 }
@@ -692,7 +697,7 @@ internal fun WordList(
                                         if (solved) Color(0xFFC5D9C8) else GridRule, shape)
                                     .padding(horizontal = 8.dp, vertical = 5.dp)
                                 ) {
-                                    Text((if (solved) "✓ " else "○ ") + target.word,
+                                    Text((if (solved) "✓ " else "○ ") + target.display,
                                         color = if (solved) Forest else Ink,
                                         fontWeight = if (solved) FontWeight.Normal
                                             else FontWeight.Medium,

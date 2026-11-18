@@ -14,10 +14,13 @@ data class SoloRun(
     val boardSize: PuzzleBoardSize? = null,
     val challenge: PuzzleChallenge? = null,
     /** Optional, per-puzzle viewing position. Never contributes to puzzle identity. */
-    val viewportBookmark: LargeBoardBookmark? = null
+    val viewportBookmark: LargeBoardBookmark? = null,
+    /** V5 exact board and reviewed pack identity; old generators remain unchanged. */
+    val frozen: FrozenWordSearch? = null
 ) {
     val puzzleId: String get() =
-        if (boardSize != null && challenge != null)
+        if (frozen != null) frozen.puzzle.id
+        else if (boardSize != null && challenge != null)
             if (boardSize in PuzzleBoardSize.largePresets)
                 WordSearchGeneratorV3.puzzleId(theme, boardSize, challenge, seed)
             else WordSearchGeneratorV2.puzzleId(theme, boardSize, challenge, seed)
@@ -33,7 +36,8 @@ data class SoloResult(
     val hintSteps: Int,
     val completedAtMs: Long,
     val boardSize: PuzzleBoardSize? = null,
-    val challenge: PuzzleChallenge? = null
+    val challenge: PuzzleChallenge? = null,
+    val quickPackId: String? = null
 ) {
     val assisted: Boolean get() = hintSteps > 0
 }
@@ -48,7 +52,8 @@ data class SoloProfile(
     /** Completely separate Speed Duel journal in the same atomic profile. */
     val duelResults: List<DuelResult> = emptyList(),
     /** Schema-5 paused Solo puzzle library, newest paused first. No Daily games here. */
-    val pausedSolo: List<SoloRun> = emptyList()
+    val pausedSolo: List<SoloRun> = emptyList(),
+    val bookAwards: List<BookPageAward> = emptyList()
 ) {
     val raceSummary: RaceSummary get() = RaceSummary.of(raceResults)
     val duelSummary: DuelSummary get() = DuelSummary.of(duelResults)
@@ -56,6 +61,11 @@ data class SoloProfile(
     val assistedCompletions: Int get() = results.count { it.assisted }
     val totalWords: Int get() = results.sumOf { it.wordCount }
     val dailyCompletions: Int get() = dailyEntries.count { it.completed }
+    val bookCompletions: Int get() = bookAwards.size
+    val bookWords: Int get() = bookAwards.sumOf { it.wordCount }
+    val allCompletions: Int get() = completions + dailyCompletions + bookCompletions
+    val allWords: Int get() = totalWords + bookWords + dailyEntries.filter { it.completed }
+        .sumOf { it.run.boardSize?.targets ?: it.run.difficulty.targetCount }
 }
 
 /**
@@ -124,6 +134,12 @@ object SoloProgressRules {
     /** Version dispatch is the only place that reconstructs a saved puzzle. */
     @Synchronized
     fun puzzle(run: SoloRun): WordSearchPuzzle {
+        run.frozen?.let { exact ->
+            require(run.boardSize == exact.board && run.challenge == exact.challenge &&
+                run.theme == exact.puzzle.theme && run.seed == exact.puzzle.seed &&
+                run.difficulty == exact.puzzle.difficulty) { "Saved V5 recipe mismatch" }
+            return exact.puzzle
+        }
         require((run.boardSize == null) == (run.challenge == null)) {
             "Partially specified v2 puzzle; preserve original save"
         }
@@ -199,7 +215,8 @@ object SoloProgressRules {
             hintSteps = run.hints.values.sum(),
             completedAtMs = nowMs,
             boardSize = run.boardSize,
-            challenge = run.challenge
+            challenge = run.challenge,
+            quickPackId = run.frozen?.packId
         )
         return profile.copy(results = listOf(record) + profile.results)
     }
@@ -219,6 +236,7 @@ object SoloSessionLibrary {
         WordSearchRules.complete(SoloProgressRules.puzzle(run), run.foundIds)
 
     fun verify(profile: SoloProfile) {
+        BookRewardRules.validate(profile.bookAwards)
         require(profile.pausedSolo.size <= MAX_PAUSED) { "Too many paused Solo puzzles" }
         val allIds = listOf(profile.active.puzzleId) +
             profile.pausedSolo.map { it.puzzleId }

@@ -22,7 +22,7 @@ internal object PuzzleResultShare {
         return listOf(
             "GridMates: Word Search",
             title + " complete!",
-            puzzle.theme.label + " · " + size + "×" + size + " · " + challenge,
+            puzzle.displayTitle + " · " + size + "×" + size + " · " + challenge,
             puzzle.targets.size.toString() + " words found · " + minutes + ":" + sec,
             hintLine,
             "Good puzzles. Good company."
