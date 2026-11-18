@@ -1,4 +1,5 @@
 """Check a signed v103 upgrade, Home, Quick Play and a real chapter jump."""
+import argparse
 import json
 import os
 from pathlib import Path
@@ -21,13 +22,14 @@ def read_save():
     return ui.adb("exec-out", "run-as", PACKAGE, "cat", SAVE)
 
 
-def main():
-    ui.EVIDENCE.mkdir(exist_ok=True)
-    ui.adb("shell", "wm", "size", "744x1696")
-    ui.adb("shell", "wm", "density", "320")
-    ui.adb("shell", "settings", "put", "system", "font_scale", "1.0")
-    ui.adb("shell", "settings", "put", "secure", "immersive_mode_confirmations", "confirmed")
-    ui.adb("shell", "wm", "dismiss-keyguard")
+def write_receipt(phase, **checks):
+    receipt = {"source": os.environ.get("WS42_SOURCE"), "display": "372dp, API 35", **checks}
+    (ui.EVIDENCE / f"{phase}-receipt.json").write_text(
+        json.dumps(receipt, indent=2) + "\n", encoding="utf-8"
+    )
+
+
+def review_upgrade():
     assert b"Success" in ui.adb("install", "qa-baseline/app-debug.apk", timeout=90)
     assert b"versionCode=103 " in ui.adb("shell", "dumpsys", "package", PACKAGE)
     ui.launch()
@@ -69,7 +71,20 @@ def main():
     tap("Close")
     tap("Home")
 
-    print("Home and 20×20 resume checks passed. Opening the Library.", flush=True)
+    write_receipt(
+        "upgrade",
+        upgrade="v103 to v104, save bytes unchanged",
+        quick_play="20x20 frozen grid resumed with fitted board and gesture help",
+        home="Open menu bounds stable after scrolling to My Puzzles",
+    )
+
+
+def review_book():
+    assert b"Success" in ui.adb(
+        "install", "app/build/outputs/apk/debug/app-debug.apk", timeout=90
+    )
+    assert b"versionCode=104 " in ui.adb("shell", "dumpsys", "package", PACKAGE)
+    ui.launch()
     ui.open_home_action(LIBRARY)
     library = ui.await_screen("Open Garden")
     ui.capture("library.png")
@@ -93,14 +108,24 @@ def main():
     ui.capture("game-notices.png")
     tap("Close")
     ui.await_screen("Page 19")
-    (ui.EVIDENCE / "receipt.json").write_text(json.dumps({
-        "source": os.environ.get("WS42_SOURCE"),
-        "upgrade": "v103 to v104, save bytes unchanged",
-        "quick_play": "20x20 frozen grid resumed with fitted board and gesture help",
-        "home": "Open menu bounds stable after scrolling to My Puzzles",
-        "book": "Garden chapter 8 jumped to page 19, useful hint in notices",
-        "display": "372dp, API 35"
-    }, indent=2) + "\n")
+    write_receipt("book", book="Garden chapter 8 jumped to page 19, useful hint in notices")
+
+
+def main():
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("phase", choices=("upgrade", "book"))
+    phase = parser.parse_args().phase
+    ui.EVIDENCE.mkdir(exist_ok=True)
+    ui.adb("shell", "wm", "size", "744x1696")
+    ui.adb("shell", "wm", "density", "320")
+    ui.adb("shell", "settings", "put", "system", "font_scale", "1.0")
+    ui.adb("shell", "settings", "put", "secure", "immersive_mode_confirmations", "confirmed")
+    ui.adb("shell", "wm", "dismiss-keyguard")
+    if phase == "upgrade":
+        review_upgrade()
+    else:
+        review_book()
+    print(f"WS42 {phase} review passed", flush=True)
 
 
 if __name__ == "__main__":

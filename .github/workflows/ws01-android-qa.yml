@@ -360,6 +360,7 @@ jobs:
           python3 tools/lexicon/render_qa_runtime.py
           git diff --exit-code -- app/src/debug/java/com/playereden/gridmates/wordsearch/QuickPlayContent.kt core/src/test/resources/reviewed-packs data/lexicon
       - name: Prepare WS42 device tests and v103 baseline
+        id: ws42-prep
         if: ${{ (github.head_ref || github.ref_name) == 'feature/ws42-handset-polish-2026-11-17' }}
         env:
           GH_TOKEN: ${{ github.token }}
@@ -382,10 +383,39 @@ jobs:
           target: google_apis
           arch: x86_64
           profile: pixel_4
+          avd-name: ws42-upgrade
           ram-size: 3072M
           disable-animations: true
           emulator-options: -no-window -gpu swiftshader -no-snapshot -noaudio -no-boot-anim
-          script: bash scripts/ws42_handset_emulator.sh
+          script: bash scripts/ws42_handset_emulator.sh upgrade
+      - name: Open the Library and play a later Garden chapter on Android
+        if: ${{ !cancelled() && steps.ws42-prep.outcome == 'success' }}
+        uses: reactivecircus/android-emulator-runner@v2
+        env:
+          WS42_SOURCE: ${{ github.event.pull_request.head.sha || github.sha }}
+        with:
+          api-level: 35
+          target: google_apis
+          arch: x86_64
+          profile: pixel_4
+          avd-name: ws42-book
+          ram-size: 3072M
+          disable-animations: true
+          emulator-options: -no-window -gpu swangle -no-snapshot -noaudio -no-boot-anim
+          script: bash scripts/ws42_handset_emulator.sh book
+      - name: Execute the WS42 Android regression suite
+        if: ${{ !cancelled() && steps.ws42-prep.outcome == 'success' }}
+        uses: reactivecircus/android-emulator-runner@v2
+        with:
+          api-level: 35
+          target: google_apis
+          arch: x86_64
+          profile: pixel_4
+          avd-name: ws42-regression
+          ram-size: 3072M
+          disable-animations: true
+          emulator-options: -no-window -gpu swiftshader -no-snapshot -noaudio -no-boot-anim
+          script: bash scripts/ws42_handset_emulator.sh regression
       - name: Upload WS42 native and device evidence
         if: ${{ always() && (github.head_ref || github.ref_name) == 'feature/ws42-handset-polish-2026-11-17' }}
         uses: actions/upload-artifact@v4
