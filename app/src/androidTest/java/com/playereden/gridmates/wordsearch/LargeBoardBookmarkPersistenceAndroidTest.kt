@@ -61,7 +61,7 @@ class LargeBoardBookmarkPersistenceAndroidTest {
             assertEquals(viewpoint.zoom, requireNotNull(restoredWindow).zoom, 0.0001f)
 
             val backup = restarted.exportBackup()
-            assertEquals(5, JSONObject(backup).getInt("schema"))
+            assertEquals(6, JSONObject(backup).getInt("schema"))
             assertTrue(JSONObject(backup).getJSONObject("active")
                 .has("viewport"))
             val restored = SoloStore(ctx, imported)

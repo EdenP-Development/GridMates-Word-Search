@@ -46,7 +46,9 @@ object BookPageSessionRules {
         val result = puzzleCache[page.puzzleId] ?: when (page.generatorVersion) {
             WordSearchGeneratorV5.CONTENT_VERSION -> {
                 val exact = requireNotNull(page.frozen) { "V5 book is missing its frozen board" }
-                require(exact.board == page.boardSize && exact.challenge == page.challenge)
+                require(exact.board == page.boardSize && exact.challenge == page.challenge &&
+                    exact.packId == page.lexiconVersion && exact.puzzle.seed == page.seed &&
+                    exact.puzzle.theme == book.theme)
                 exact.puzzle
             }
             WordSearchGeneratorV2.CONTENT_VERSION -> {

@@ -23,7 +23,10 @@ import com.playereden.gridmates.wordsearch.core.WordSearchGeneratorV5
 internal object BookQaPilot {
     const val enabled = true
 
-    fun catalog(): BookCatalog {
+    private val cachedCatalog by lazy { buildCatalog() }
+    fun catalog(): BookCatalog = cachedCatalog
+
+    private fun buildCatalog(): BookCatalog {
         fun page(
             name: String, theme: WordTheme, size: PuzzleBoardSize,
             challenge: PuzzleChallenge, seed: Long

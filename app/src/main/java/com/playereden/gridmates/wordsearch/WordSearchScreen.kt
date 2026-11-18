@@ -473,7 +473,7 @@ private fun CompletionPanel(
                     Text("${puzzle.targets.size} / ${puzzle.targets.size} found",
                         color = Muted, style = MaterialTheme.typography.bodyMedium)
                 }
-                if (showBookArt && LocalDensity.current.fontScale < 1.3f) {
+                if (showBookArt && run.frozen == null && LocalDensity.current.fontScale < 1.3f) {
                     BookArt(puzzle.theme, BookArtKind.COVER,
                         Modifier.width(74.dp).height(98.dp), fieldNotes = true)
                 }
@@ -568,7 +568,7 @@ internal fun WordList(
         Row(Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.SpaceBetween,
             verticalAlignment = Alignment.CenterVertically) {
-            if (scrollAll && bookThemeAccent) {
+            if (scrollAll && bookThemeAccent && puzzle.displayTitle != "Quick Play") {
                 Row(Modifier.weight(1f),
                     verticalAlignment = Alignment.CenterVertically,
                     horizontalArrangement = Arrangement.spacedBy(5.dp)) {

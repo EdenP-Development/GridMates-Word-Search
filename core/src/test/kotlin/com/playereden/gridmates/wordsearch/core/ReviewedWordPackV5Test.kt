@@ -88,7 +88,7 @@ class ReviewedWordPackV5Test {
         println("WS41 VARIETY unique=$unique adjacentMean=$overlap quadrants=$balanced/100 directions=$directions")
     }
 
-    @Test fun captureLiteralNewVersionFixturesForPublishing() {
+    @Test fun newVersionFixturesStayByteIdentical() {
         val p=pack()
         val report=PuzzleBoardSize.bookPresets.map { size ->
             val b=WordSearchGeneratorV5.generate(p,size,PuzzleChallenge.CLASSIC,42L)
@@ -96,7 +96,9 @@ class ReviewedWordPackV5Test {
         }.joinToString("\n")
         File("build/ws41-v5-goldens.txt").apply { parentFile.mkdirs(); writeText(report+"\n") }
         println("WS41 NEW GOLDENS\n$report")
-        // Existing V1/V2/V3 literal golden tests continue to run independently.
+        assertEquals("""BOOK_SHORT|c68eb463cc3939e3e17bd644ecaf54aa3bb95b3eee385fde3c0ca01acf82284a|gm000426
+BOOK_CLASSIC|6bc7a6781db9147286dd8e0bc79e8dc3f2cb8a6ca93a35d334785492a55a94b3|gm000029
+BOOK_BIG|766f8eb0dd8464d098b85b6fe9ebfebe9b1580b99a3cb9468aa4a23bc4856ce0|gm000410""", report)
     }
 
     @Test fun bookAwardsAreIdempotentAndDoNotGrantSoloOnlyAchievements() {

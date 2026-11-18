@@ -24,6 +24,15 @@ class QaPilotCatalogTest {
         })
         val puzzleIds = hashSetOf<String>()
         for (book in catalog.books) {
+            val seed = when(book.theme.name) { "WOODLAND" -> 171L; "SPACE" -> 281L; else -> 391L }
+            catalog.pages(book.id).take(3).forEachIndexed { index,page ->
+                val original=com.playereden.gridmates.wordsearch.core.WordSearchGeneratorV2.generate(
+                    book.theme,page.boardSize,page.challenge,seed+index)
+                assertEquals(original.id,page.puzzleId)
+                assertEquals(com.playereden.gridmates.wordsearch.core.BookBoardDigest.sha256(original),page.boardSha256)
+            }
+        }
+        for (book in catalog.books) {
             assertEquals(8, book.chapters.size)
             assertEquals(21, catalog.pages(book.id).size)
             assertTrue(book.id.contains("qa"))
