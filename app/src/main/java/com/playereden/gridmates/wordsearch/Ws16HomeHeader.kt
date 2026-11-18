@@ -46,7 +46,7 @@ internal fun Ws16HomeHeader(
         val roomy = maxWidth >= 310.dp && LocalDensity.current.fontScale < 1.30f
         val veryRoomy = maxWidth >= 370.dp
         val leftInset = when {
-            !roomy -> 4.dp
+            !roomy || !veryRoomy -> 4.dp
             displayMode == DisplayMode.FULLSCREEN && veryRoomy -> 35.dp
             displayMode == DisplayMode.FULLSCREEN -> 23.dp
             veryRoomy -> 24.dp
@@ -70,7 +70,8 @@ internal fun Ws16HomeHeader(
                 Ws16WordSearchMark()
                 Text("Word Search", color = Forest,
                     style = MaterialTheme.typography.titleLarge,
-                    fontWeight = FontWeight.Bold, maxLines = 1,
+                    modifier = Modifier.testTag("ws41-home-title"),
+                    fontWeight = FontWeight.Bold, maxLines = 2,
                     overflow = TextOverflow.Ellipsis)
             }
         }

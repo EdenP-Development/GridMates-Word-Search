@@ -149,6 +149,7 @@ try:
     assert before==after, 'Install-over changed save bytes'
     assert b'versionCode=103 ' in adb('shell','dumpsys','package',PACKAGE)
     launch(); await_screen('Open menu')
+    capture('ws41-native-home.png')
     open_home_action('Quick Play. Choose a size for a fresh puzzle')
     root=await_screen('Medium · 15×15','16 words · Recommended')
     capture('ws41-native-size-chooser.png')

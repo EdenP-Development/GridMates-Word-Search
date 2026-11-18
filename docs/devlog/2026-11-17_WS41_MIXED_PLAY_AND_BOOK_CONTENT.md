@@ -18,7 +18,7 @@ Starting source: WS40 PR #151 head bb90af0a2948e8b21879e6e47cbd81d4ef0e94a8. Its
 
 ## Verification / build
 
-Pending core preflight, literal new V5 fixtures, full Android and independent builds, real emulator migration/backup/input tests, and native review. No successful new APK claimed. Physical two-phone gate remains open.
+First source `539543d125945e83698627fa63f6f66bf8ad5fb0` passed core preflight (24 tests, run 44233330672), full standard Android run 44233338654 and independent run 44233338683. Actual native v102→v103 install-over and 16 finger traces/restart/resume/Another passed, plus 23 Android tests (15.178s). Artifact 14395939693 preserves that evidence. Screenshot inspection found Home's game title ellipsized at 360dp. Reclaiming the unnecessary narrow-screen inset, allowing a second title line, and adding actual 320/360dp 100/200% text-layout checks before delivery. A corrected signed build and 24-test emulator rerun are pending. Physical two-phone gate remains open.
 
 ## Next exact action
 
