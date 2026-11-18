@@ -57,23 +57,21 @@ internal fun Ws16IHomeEdgeDecor(mode: DisplayMode = DisplayMode.STANDARD) {
     val bottomInset = WindowInsets.navigationBars.asPaddingValues().calculateBottomPadding()
     Box(Modifier.fillMaxSize().clearAndSetSemantics { }
         .testTag("ws16i-home-edge-decor")) {
-        // In Standard the leafy parts start near the visible paper edge, not
-        // underneath the clock/notification icons. Fullscreen displays fuller
-        // corners in the extra screen space without intercepting touch targets.
+        // Keep the upper sprigs in the paper margin, clear of the pinned toolbar.
+        val topY = if (immersive) (-54).dp else topInset - 33.dp
+        val topWidth = if (immersive) 142.dp else 112.dp
+        val topHeight = if (immersive) 86.dp else 56.dp
+        val edgeOffset = if (immersive) 66.dp else 55.dp
         Ws16IDecorSprite("top-left",
             Modifier.align(Alignment.TopStart)
-                .offset(x = if (immersive) (-80).dp else (-62).dp,
-                    y = if (immersive) (-36).dp else topInset - 13.dp)
-                .width(if (immersive) 168.dp else 126.dp)
-                .height(if (immersive) 113.dp else 78.dp)
-                .alpha(if (immersive) .85f else .70f))
+                .offset(x = -edgeOffset, y = topY)
+                .width(topWidth).height(topHeight)
+                .alpha(.76f))
         Ws16IDecorSprite("top-right",
             Modifier.align(Alignment.TopEnd)
-                .offset(x = if (immersive) 80.dp else 63.dp,
-                    y = if (immersive) (-35).dp else topInset - 15.dp)
-                .width(if (immersive) 168.dp else 126.dp)
-                .height(if (immersive) 113.dp else 78.dp)
-                .alpha(if (immersive) .85f else .70f))
+                .offset(x = edgeOffset, y = topY)
+                .width(topWidth).height(topHeight)
+                .alpha(.76f))
         // In Standard, flower bases end ABOVE the navigation control area.
         // In fullscreen, they can extend almost to the physical bottom edge.
         Ws16IDecorSprite("bottom-left",

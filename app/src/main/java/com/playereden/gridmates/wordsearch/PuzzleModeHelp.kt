@@ -2,6 +2,8 @@ package com.playereden.gridmates.wordsearch
 
 /** Brief touch guidance, no mandatory mode switching or scrolling puzzle. */
 internal object PuzzleModeHelp {
+    const val inlineTip = "Drag a word or tap its first and last letters."
+
     fun opening(boardSize: Int): String =
         if (boardSize >= 15)
             "Trace a word with one finger. Pinch with two fingers to zoom, or tap its first and last letters."

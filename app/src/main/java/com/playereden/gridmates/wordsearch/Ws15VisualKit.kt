@@ -143,7 +143,8 @@ internal fun Ws15BackHeader(
     modifier: Modifier = Modifier,
     subtitle: String? = null,
     onPreviewOptions: (() -> Unit)? = null,
-    titleMaxLines: Int = 1
+    titleMaxLines: Int = 1,
+    trailing: (@Composable () -> Unit)? = null
 ) {
     Row(modifier.fillMaxWidth().testTag("ws15-screen-header"),
         verticalAlignment = Alignment.CenterVertically,
@@ -182,6 +183,7 @@ internal fun Ws15BackHeader(
                 }
             }
         }
+        trailing?.invoke()
     }
 }
 

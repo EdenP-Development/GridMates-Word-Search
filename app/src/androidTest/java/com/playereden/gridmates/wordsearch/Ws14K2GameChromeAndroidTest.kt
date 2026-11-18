@@ -1,6 +1,11 @@
 package com.playereden.gridmates.wordsearch
 
 import androidx.compose.foundation.layout.Row
+import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.test.assertIsDisplayed
+import androidx.compose.ui.test.performScrollTo
+import androidx.compose.ui.unit.Density
 import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.onNodeWithContentDescription
 import androidx.compose.ui.test.onNodeWithText
@@ -33,16 +38,20 @@ class Ws14K2GameChromeAndroidTest {
             assertEquals(1, history)
         }
     }
-    @Test fun noticeHistoryRetainsPassedMessages() {
+    @Test fun longNoticeHistoryScrollsWithCloseVisibleAtLargeText() {
+        var closed = false
+        val notices = List(30) { "Hint ${it + 1}: Look for Watering Can near row 3." }
         compose.setContent {
             GridMatesTheme {
-                BookPageNoticeHistoryDialog(
-                    notices = listOf("Hint: look for a five-letter word.",
-                        "FOX found!"),
-                    onDismiss = {})
+                val density = LocalDensity.current.density
+                CompositionLocalProvider(LocalDensity provides Density(density, 2f)) {
+                    BookPageNoticeHistoryDialog(notices, onDismiss = { closed = true })
+                }
             }
         }
-        compose.onNodeWithText("Game notices").assertExists()
-        compose.onNodeWithText("Hint: look for a five-letter word.").assertExists()
+        compose.onNodeWithText("Game notices").assertIsDisplayed()
+        compose.onNodeWithText(notices.last()).performScrollTo().assertIsDisplayed()
+        compose.onNodeWithText("Close").assertIsDisplayed().performClick()
+        compose.runOnIdle { assertEquals(true, closed) }
     }
 }

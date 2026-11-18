@@ -1,3 +1,7 @@
+# Active development handoff — WS42 handset polish
+
+[Pass and test plan](devlog/2026-11-17_WS42_HANDSET_POLISH.md). Branch `feature/ws42-handset-polish-2026-11-17` starts at WS41 #152 head `a1f7237b1da893df01b5c5a666357640fea1b7ae`. v104 build pending. Verify v103 install-over, pinned Home controls, chapter jump and notice history. The verified v103 fallback and WS41 receipt are below.
+
 # Active development handoff — WS41 v103 verified
 
 Read [current roadmap](CURRENT_PRODUCT_ROADMAP.md) and [WS41 receipt](devlog/2026-11-17_WS41_MIXED_PLAY_AND_BOOK_CONTENT.md). [Draft PR #152](https://github.com/PlayerEden/GridMates-Word-Search/pull/152), branch `feature/ws41-mixed-quick-play-2026-11-17`, stacked on WS40 #151. Exact tested source `01eb02e4e5460feaab131236e4da7b9d8eb5c2e1`; later receipt-only commits do not rebuild. [Standard](https://github.com/PlayerEden/GridMates-Word-Search/actions/runs/44236302499) and [independent](https://github.com/PlayerEden/GridMates-Word-Search/actions/runs/44236302498) SUCCESS; [signed APK](https://github.com/PlayerEden/GridMates-Word-Search/actions/runs/44236302499/artifacts/14397980688), 34,191,002 bytes, SHA256 `19949e41b1ed9165781c7a39b89857c9996bd5e27cfe25227dc5afabcfe25359`. Actual package `com.playereden.gridmates.wordsearch.qa`, code 103 / name `0.9.59-ws41-qa`, same QA signer. All 372 extracted entries match independently and all 228 assets equal v102.

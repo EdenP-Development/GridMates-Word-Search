@@ -9,7 +9,10 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.ScrollState
 import androidx.compose.foundation.background
+import androidx.compose.foundation.verticalScroll
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -65,6 +68,7 @@ internal fun Ws16HomeScreen(
     displayMode: DisplayMode = DisplayMode.FULLSCREEN,
     onDisplayModeChange: (DisplayMode) -> Unit = {},
     compactHome: Boolean = false,
+    scrollState: ScrollState,
     onQuickPlay: () -> Unit = onNewSolo
 ) {
     var menuOpen by remember { mutableStateOf(false) }
@@ -80,134 +84,143 @@ internal fun Ws16HomeScreen(
     val soloComplete = WordSearchRules.complete(soloPuzzle, active.foundIds)
     val soloSize = active.boardSize?.cells ?: active.difficulty.gridSize
 
-    // Fullscreen lends a little more room to the illustrated page-top border.
-    // Standard keeps the existing compact fit on smaller three-button phones.
-    if (displayMode == DisplayMode.FULLSCREEN)
-        Spacer(Modifier.height(if (compactHome) 7.dp else 14.dp))
-    Ws16HomeHeader(displayMode = displayMode,
-        onProfile = onProfile, onMenu = { menuOpen = true })
-    // An independent antique-gold botanical rule, no words baked in art.
-    Ws16IHeaderDivider()
-
-    store.warning?.let { message ->
-        PaperPanel(Modifier.fillMaxWidth()) {
-            Text(message, color = Gold, style = MaterialTheme.typography.bodyMedium)
+    val sectionSpacing = if (compactHome) 3.dp else 6.dp
+    Column(Modifier.fillMaxSize(), verticalArrangement = Arrangement.spacedBy(sectionSpacing)) {
+        if (displayMode == DisplayMode.FULLSCREEN) {
+            Spacer(Modifier.height(if (compactHome) 9.dp else 14.dp))
         }
-    }
+        Ws16HomeHeader(
+            displayMode = displayMode,
+            onProfile = onProfile,
+            onMenu = { menuOpen = true }
+        )
+        Ws16IHeaderDivider()
 
-    if (selected != null && catalog != null && bookProgress != null) {
-        LaunchedEffect(pager.settledPage, books) {
-            books.getOrNull(pager.settledPage)?.let { onFocusedBookChanged(it.id) }
-        }
-        Column(Modifier.fillMaxWidth().qaTrackBounds("Books + progress").testTag("ws16-home-books"),
-            verticalArrangement = Arrangement.spacedBy(6.dp)) {
-            Row(Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.SpaceBetween) {
-                Text("Your puzzle books", color = Forest, fontWeight = FontWeight.Bold,
-                    style = MaterialTheme.typography.titleMedium)
-                Text("${pager.settledPage + 1} of ${books.size}",
-                    color = Muted, style = MaterialTheme.typography.labelSmall)
-            }
-            Ws16BookCoverPager(
-                books = books,
-                pagerState = pager,
-                fieldNotesArt = true,
-                onCoverTap = { index, focused ->
-                    if (focused) onPlayBook(books[index].id)
-                    else scope.launch { pager.animateScrollToPage(index) }
+        Column(
+            Modifier.weight(1f).fillMaxWidth().testTag("home-mode-scroll").verticalScroll(scrollState),
+            verticalArrangement = Arrangement.spacedBy(sectionSpacing)
+        ) {
+            store.warning?.let { message ->
+                PaperPanel(Modifier.fillMaxWidth()) {
+                    Text(message, color = Gold, style = MaterialTheme.typography.bodyMedium)
                 }
-            )
-            val count = remember(catalog, bookProgress, selected.id) {
-                runCatching {
-                    BookProgressRules.completedCount(catalog, bookProgress, selected.id)
-                }.getOrDefault(0)
             }
-            val pages = catalog.pages(selected.id).size
-            Text(selected.title.removeSuffix(" · TEST BOOK") +
-                    " · $count/$pages pages complete",
-                color = Forest, style = MaterialTheme.typography.bodyMedium,
-                fontWeight = FontWeight.Medium, maxLines = 1,
-                overflow = TextOverflow.Ellipsis,
-                textAlign = TextAlign.Center,
-                modifier = Modifier.fillMaxWidth().testTag("ws16-selected-book"))
-            // Dynamic chapter completion; no painted-in progress or fabricated count.
-            PaperProgress(count, pages,
-                Modifier.padding(horizontal = 34.dp)
-                    .testTag("ws25-home-book-progress"))
-        }
-    } else {
-        // A production build without editorially approved books must never
-        // fabricate QA covers, pages or a playable book.
-        PaperPanel(Modifier.fillMaxWidth()) {
-            Text("Puzzle books", color = Forest,
-                style = MaterialTheme.typography.titleMedium,
-                fontWeight = FontWeight.Bold)
-            Text("Illustrated puzzle books are being prepared. You can play Solo or Daily now.",
-                color = Muted, style = MaterialTheme.typography.bodyMedium)
-        }
-    }
 
-    // Puzzle volumes and their unlockable art deserve sibling Home entry points.
-    // Collection remains visible even while production books await approval.
-    Ws16DLibraryShortcuts(
-        fullShelfAvailable = selected != null && catalog != null && bookProgress != null,
-        onFullShelf = onFullShelf,
-        onCollection = onCollection
-    )
-
-    // The entire paper card is one accessible action. The green Play pill
-    // is a visual affordance, not a second overlapping tap target.
-    val soloAction: () -> Unit = if (soloComplete) onNewSolo else onSolo
-    GridMatesIllustratedFrame(
-        modifier = Modifier.fillMaxWidth().heightIn(min = 68.dp)
-            .qaTrackBounds("Continue Solo")
-            .testTag("ws16-continue-solo")
-            .semantics { contentDescription = if (soloComplete)
-                "Start a new solo word search" else "Continue saved solo word search" },
-        variant = GridMatesFrameVariant.FEATURE,
-        onClick = soloAction
-    ) {
-        Row(Modifier.fillMaxWidth().heightIn(min = 68.dp)
-            .padding(horizontal = 11.dp, vertical = 4.dp),
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-            Ws16BActionArt(Ws16BArt.CONTINUE, iconSize = 42.dp)
-            // Separate bookmark art from the actual saved Solo progress.
-            // The whole card responds to taps, including the Play pill.
-            Spacer(Modifier.width(1.dp).height(31.dp)
-                .background(Color(0x77B78F47)))
-            Column(Modifier.weight(1f), verticalArrangement = Arrangement.spacedBy(2.dp)) {
-                Text(if (soloComplete) "New puzzle" else "Continue",
-                    color = Forest, fontWeight = FontWeight.Bold,
-                    style = MaterialTheme.typography.titleSmall)
-                // Keep progress explicit and on one line at normal phone widths.
-                // Grid dimensions remain visible in Custom and the active puzzle.
-                Text((if (soloComplete) "" else "Saved: ") + (active.frozen?.puzzle?.displayTitle ?: active.theme.label) +
-                    if (soloComplete) " · Finished" else
-                        " · ${active.foundIds.size}/${soloPuzzle.targets.size} words",
-                    color = Muted, style = MaterialTheme.typography.labelSmall,
-                    maxLines = 2, overflow = TextOverflow.Ellipsis)
+            if (selected != null && catalog != null && bookProgress != null) {
+                LaunchedEffect(pager.settledPage, books) {
+                    books.getOrNull(pager.settledPage)?.let { onFocusedBookChanged(it.id) }
+                }
+                Column(Modifier.fillMaxWidth().qaTrackBounds("Books + progress").testTag("ws16-home-books"),
+                    verticalArrangement = Arrangement.spacedBy(6.dp)) {
+                    Row(Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically,
+                        horizontalArrangement = Arrangement.SpaceBetween) {
+                        Text("Your puzzle books", color = Forest, fontWeight = FontWeight.Bold,
+                            style = MaterialTheme.typography.titleMedium)
+                        Text("${pager.settledPage + 1} of ${books.size}",
+                            color = Muted, style = MaterialTheme.typography.labelSmall)
+                    }
+                    Ws16BookCoverPager(
+                        books = books,
+                        pagerState = pager,
+                        fieldNotesArt = true,
+                        onCoverTap = { index, focused ->
+                            if (focused) onPlayBook(books[index].id)
+                            else scope.launch { pager.animateScrollToPage(index) }
+                        }
+                    )
+                    val count = remember(catalog, bookProgress, selected.id) {
+                        runCatching {
+                            BookProgressRules.completedCount(catalog, bookProgress, selected.id)
+                        }.getOrDefault(0)
+                    }
+                    val pages = catalog.pages(selected.id).size
+                    Text(selected.title.removeSuffix(" · TEST BOOK") +
+                            " · $count/$pages pages complete",
+                        color = Forest, style = MaterialTheme.typography.bodyMedium,
+                        fontWeight = FontWeight.Medium, maxLines = 1,
+                        overflow = TextOverflow.Ellipsis,
+                        textAlign = TextAlign.Center,
+                        modifier = Modifier.fillMaxWidth().testTag("ws16-selected-book"))
+                    // Dynamic chapter completion; no painted-in progress or fabricated count.
+                    PaperProgress(count, pages,
+                        Modifier.padding(horizontal = 34.dp)
+                            .testTag("ws25-home-book-progress"))
+                }
+            } else {
+                // A production build without editorially approved books must never
+                // fabricate QA covers, pages or a playable book.
+                PaperPanel(Modifier.fillMaxWidth()) {
+                    Text("Puzzle books", color = Forest,
+                        style = MaterialTheme.typography.titleMedium,
+                        fontWeight = FontWeight.Bold)
+                    Text("Illustrated puzzle books are being prepared. You can play Solo or Daily now.",
+                        color = Muted, style = MaterialTheme.typography.bodyMedium)
+                }
             }
-            GridMatesIllustratedPill(
-                label = if (soloComplete) "New" else "Play",
-                onClick = null,
-                modifier = Modifier.testTag("ws16-resume-solo")
+
+            // Puzzle volumes and their unlockable art deserve sibling Home entry points.
+            // Collection remains visible even while production books await approval.
+            Ws16DLibraryShortcuts(
+                fullShelfAvailable = selected != null && catalog != null && bookProgress != null,
+                onFullShelf = onFullShelf,
+                onCollection = onCollection
             )
+
+            // The entire paper card is one accessible action. The green Play pill
+            // is a visual affordance, not a second overlapping tap target.
+            val soloAction: () -> Unit = if (soloComplete) onNewSolo else onSolo
+            GridMatesIllustratedFrame(
+                modifier = Modifier.fillMaxWidth().heightIn(min = 68.dp)
+                    .qaTrackBounds("Continue Solo")
+                    .testTag("ws16-continue-solo")
+                    .semantics { contentDescription = if (soloComplete)
+                        "Start a new solo word search" else "Continue saved solo word search" },
+                variant = GridMatesFrameVariant.FEATURE,
+                onClick = soloAction
+            ) {
+                Row(Modifier.fillMaxWidth().heightIn(min = 68.dp)
+                    .padding(horizontal = 11.dp, vertical = 4.dp),
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                    Ws16BActionArt(Ws16BArt.CONTINUE, iconSize = 42.dp)
+                    // Separate bookmark art from the actual saved Solo progress.
+                    // The whole card responds to taps, including the Play pill.
+                    Spacer(Modifier.width(1.dp).height(31.dp)
+                        .background(Color(0x77B78F47)))
+                    Column(Modifier.weight(1f), verticalArrangement = Arrangement.spacedBy(2.dp)) {
+                        Text(if (soloComplete) "New puzzle" else "Continue",
+                            color = Forest, fontWeight = FontWeight.Bold,
+                            style = MaterialTheme.typography.titleSmall)
+                        // Keep progress explicit and on one line at normal phone widths.
+                        // Grid dimensions remain visible in Custom and the active puzzle.
+                        Text((if (soloComplete) "" else "Saved: ") + (active.frozen?.puzzle?.displayTitle ?: active.theme.label) +
+                            if (soloComplete) " · Finished" else
+                                " · ${active.foundIds.size}/${soloPuzzle.targets.size} words",
+                            color = Muted, style = MaterialTheme.typography.labelSmall,
+                            maxLines = 2, overflow = TextOverflow.Ellipsis)
+                    }
+                    GridMatesIllustratedPill(
+                        label = if (soloComplete) "New" else "Play",
+                        onClick = null,
+                        modifier = Modifier.testTag("ws16-resume-solo")
+                    )
+                }
+            }
+            Ws16BHomeActions(
+                onDaily = onDaily,
+                onNearby = onNearby,
+                onCustom = onNewSolo,
+                onMyPuzzles = onMyPuzzles,
+                showQuickPlay = showQuickPlay,
+                onQuickPlay = onQuickPlay,
+                compactHome = compactHome
+            )
+            store.warning?.let { warning ->
+                Text(warning, color = Gold, modifier = Modifier.fillMaxWidth()
+                    .semantics { liveRegion = androidx.compose.ui.semantics.LiveRegionMode.Polite },
+                    style = MaterialTheme.typography.bodyMedium)
+            }
         }
-    }
-    Ws16BHomeActions(
-        onDaily = onDaily,
-        onNearby = onNearby,
-        onCustom = onNewSolo,
-        onMyPuzzles = onMyPuzzles,
-        showQuickPlay = showQuickPlay,
-        onQuickPlay = onQuickPlay,
-        compactHome = compactHome
-    )
-    store.warning?.let { warning ->
-        Text(warning, color = Gold, modifier = Modifier.fillMaxWidth()
-            .semantics { liveRegion = androidx.compose.ui.semantics.LiveRegionMode.Polite },
-            style = MaterialTheme.typography.bodyMedium)
     }
 
     if (menuOpen) {

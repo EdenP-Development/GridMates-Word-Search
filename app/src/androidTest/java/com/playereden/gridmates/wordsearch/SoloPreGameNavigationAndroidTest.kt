@@ -59,8 +59,11 @@ class SoloPreGameNavigationAndroidTest {
             assertEquals(PuzzleBoardSize.BOOK_BIG, store.profile.active.boardSize)
             assertEquals(PuzzleChallenge.EXPERT, store.profile.active.challenge)
             assertEquals(listOf(original), store.profile.pausedSolo)
-            rule.onNodeWithText("Trace a word with one finger.", substring = true)
-                .assertExists()
+            rule.onNodeWithText(PuzzleModeHelp.inlineTip).assertIsDisplayed()
+            rule.onNodeWithText("Options").performClick()
+            rule.onNodeWithText("How to select words").performClick()
+            rule.onNodeWithText(PuzzleModeHelp.opening(20)).assertIsDisplayed()
+            rule.onNodeWithText("Close").performClick()
         } finally {
             rooms.leaveRoom()
             for (suffix in listOf("", ".bak", ".new"))

@@ -3,16 +3,12 @@ package com.playereden.gridmates.wordsearch
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.verticalScroll
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Surface
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
@@ -103,26 +99,19 @@ internal fun BookPageNoticeOverlay(message: String, modifier: Modifier = Modifie
 
 @Composable
 internal fun BookPageNoticeHistoryDialog(notices: List<String>, onDismiss: () -> Unit) {
-    AlertDialog(onDismissRequest = onDismiss,
-        title = { Text("Game notices", color = Forest) },
-        text = {
-            Column(Modifier.heightIn(max = 370.dp).verticalScroll(rememberScrollState()),
-                verticalArrangement = Arrangement.spacedBy(10.dp)) {
-                if (notices.isEmpty()) {
-                    Text("No notices yet. Hints and game messages appear here while this page is open.",
-                        color = Muted)
-                } else {
-                    Text("Recent messages for this open page", color = Muted,
-                        style = MaterialTheme.typography.labelMedium)
-                    notices.forEach { notice ->
-                        Surface(shape = RoundedCornerShape(8.dp), color = Paper) {
-                            Text(notice, modifier = Modifier.fillMaxWidth().padding(10.dp),
-                                color = Ink, style = MaterialTheme.typography.bodyMedium)
-                        }
-                    }
-                }
+    GridMatesPaperDialog(
+        title = "Game notices",
+        onDismiss = onDismiss,
+        modifier = Modifier.testTag("book-notices-dialog")
+    ) {
+        if (notices.isEmpty()) {
+            Text("Hints and game messages appear here as you play.",
+                color = Muted, style = MaterialTheme.typography.bodyMedium)
+        } else {
+            notices.forEach { notice ->
+                Text(notice, modifier = Modifier.fillMaxWidth().puzzlePaper().padding(10.dp),
+                    color = Ink, style = MaterialTheme.typography.bodyMedium)
             }
-        },
-        confirmButton = { TextButton(onClick = onDismiss) { Text("Close") } }
-    )
+        }
+    }
 }

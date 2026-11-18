@@ -152,9 +152,12 @@ internal fun WordSearchScreen(
         }
     }
     var status by remember(puzzle.id) {
-        mutableStateOf(PuzzleModeHelp.opening(puzzle.size))
+        mutableStateOf(if (puzzle.size >= 20) {
+            if (found.isEmpty()) PuzzleModeHelp.inlineTip else ""
+        } else PuzzleModeHelp.opening(puzzle.size))
     }
     var feelOpen by rememberSaveable { mutableStateOf(false) }
+    var helpOpen by rememberSaveable { mutableStateOf(false) }
     var cluesOpen by rememberSaveable { mutableStateOf(false) }
     var optionsOpen by rememberSaveable { mutableStateOf(false) }
     var toolsOpen by rememberSaveable { mutableStateOf(false) }
@@ -175,7 +178,14 @@ internal fun WordSearchScreen(
     LaunchedEffect(status, puzzle.id) {
         if (status.startsWith("✓")) {
             delay(2200L)
-            status = "Keep going — the next word is waiting."
+            status = ""
+        }
+    }
+
+    if (helpOpen) {
+        GridMatesPaperDialog("How to select words", onDismiss = { helpOpen = false }) {
+            Text(PuzzleModeHelp.opening(puzzle.size), color = Ink,
+                style = MaterialTheme.typography.bodyMedium)
         }
     }
 
@@ -296,6 +306,11 @@ internal fun WordSearchScreen(
                                     cluesOpen = true
                                 })
                         }
+                        DropdownMenuItem(text = { Text("How to select words") },
+                            onClick = {
+                                optionsOpen = false
+                                helpOpen = true
+                            })
                         DropdownMenuItem(text = { Text("Feedback settings") },
                             onClick = {
                                 optionsOpen = false
@@ -406,11 +421,11 @@ internal fun WordSearchScreen(
         }
         if (enlarged && (!finished || reviewingCompletedBoard) &&
             status != PuzzleModeHelp.opening(puzzle.size) &&
-            status != "Keep going — the next word is waiting.") {
+            status.isNotBlank() && status != PuzzleModeHelp.inlineTip) {
             BookPageNoticeOverlay(status,
                 Modifier.align(Alignment.BottomCenter).padding(bottom = 8.dp)
                     .clickable(onClickLabel = "Dismiss message") {
-                        status = PuzzleModeHelp.opening(puzzle.size)
+                        status = ""
                     })
         }
     }
@@ -419,6 +434,7 @@ internal fun WordSearchScreen(
 /** A small, calm result/hint announcement that does not obstruct the board. */
 @Composable
 private fun PuzzleStatus(message: String, compact: Boolean) {
+    if (message.isBlank()) return
     val positive = message.startsWith("✓")
     val hint = message.startsWith("Try ") || message.contains("starts at row") ||
         message.startsWith("Follow the faint")
