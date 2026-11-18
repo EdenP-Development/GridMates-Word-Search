@@ -1,37 +1,12 @@
 # Start here — GridMates: Word Search
 
-Read [the current product roadmap](CURRENT_PRODUCT_ROADMAP.md), the top of the
-[active handoff](WS14_ACTIVE_HANDOFF_2026-11-09.md), the
-[development journal](DEVELOPMENT_JOURNAL.md) and its latest dated pass before
-making changes. Inspect live GitHub PR heads and CI rather than using `main` or
-an old APK banner as the current source.
+Read [current roadmap](CURRENT_PRODUCT_ROADMAP.md), the top of [active handoff](WS14_ACTIVE_HANDOFF_2026-11-09.md), [development journal](DEVELOPMENT_JOURNAL.md) and its latest dated pass. Inspect live GitHub PR/CI heads; `main` and historical APK banners are not the current source.
 
-**Latest playable build is v102 / WS39.** [Source, signed APK and Android
-checks](devlog/2026-11-17_WS39_REPLAY_AND_BOOK_BACKUPS.md). WS40 is an authoring/
-plan recovery pass and does not rebuild or change the installed app.
+**Latest playable is v103 / WS41.** [Exact source, signed APK and actual Android checks](devlog/2026-11-17_WS41_MIXED_PLAY_AND_BOOK_CONTENT.md). [Draft PR #152](https://github.com/PlayerEden/GridMates-Word-Search/pull/152) stacks on #151. Mixed 12/15/20 Quick Play,670 QA words, 63 book pages and schema6 frozen saves/book rewards are implemented. Both builds and 24 Android tests passed, including native install-over/playthrough and narrow/large-text header checks. Owner physical/two-phone and editorial release review remain open.
 
-The [WS40 audit](audits/2026-11-17_WS40_GITHUB_PLAN_RECOVERY.md) recovered the
-separate WS10 canonical lexicon, pinned candidate intake and review tools.
-The old 10,000-word objective remains a long-term content goal. Neither 36,213
-quarantined roots nor 532 proposal rows are approved game vocabulary.
+[WS40 recovery audit](audits/2026-11-17_WS40_GITHUB_PLAN_RECOVERY.md) retains the exact missing lexicon source and forgotten roadmap crosswalk. Root data stays the historical negative-test fixture; new editorial work lives in `data/lexicon/authoring/en-v1`. The10,000-word/ 30-plus-topic goal is ongoing, not fulfilled by candidate counts or this first 670-word QA edition.
 
-Next complete a reviewed editorial batch and immutable pack export, then add a
-new pack-aware generator/save path and the full mixed Quick Play size/Play
-Another loop. Current Quick Play is one-theme 12×12. Regular books remain
-12/15/20; 25/30 are optional Solo and larger Marathon boards remain research.
-
-For artwork, also read the
-[production playbook](ASSET_CREATION_GITHUB_INTEGRATION_PLAYBOOK.md),
-[visual identity plan](WS14_FULL_APP_VISUAL_IDENTITY_AND_UI_PRODUCTION_ROADMAP_2026-11-08.md),
-[style bible](../design/visual-system/WS14_VISUAL_STYLE_BIBLE_AND_SPRITE_ASSET_CONTRACT_2026-11-08.md)
-and [shared identity/motion contract](GRIDMATES_SHARED_VISUAL_IDENTITY_AND_MOTION_2026-11-09.md).
-Preserve the matched cover/spine families and original portraits. Art and
-production content promotion remain separate from a green debug build.
-
-Every development pass gets a dated log and current handoff update. Record
-exact tested source, CI, artifact/checksum if any, what actually ran, limitations,
-fallback and one next task. Do not merge the draft stack, clear player data, or
-claim physical two-phone acceptance from loopback/emulator tests.
+Next curate a 100–250-word Fall batch. New themed Custom/LAN packs need explicit mode/content versioning; current V2/V3 Custom/Nearby remain compatible. Regular books stay12/15/20. Do not revive deferred Marathon/Spanish/economy/online plans from an old checklist. Do not merge draft stacks, reset user data or change Sudoku. Record every pass/build and retain v102 as the previous tested fallback.
 
 <details>
 <summary>Historical checkpoints before WS40 — reference only</summary>

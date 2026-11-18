@@ -8,31 +8,27 @@ source crosswalk and the [development journal](DEVELOPMENT_JOURNAL.md) for recei
 
 ## Current playable baseline
 
-**v102 / WS39**, tested source `8ce68b0d0564ce11c30c0b18dcb208d7b9a1b6f4`,
-[draft PR #150](https://github.com/PlayerEden/GridMates-Word-Search/pull/150).
-The latest cumulative source is on its development branch, not `main`.
-[v102 receipt](devlog/2026-11-17_WS39_REPLAY_AND_BOOK_BACKUPS.md).
+**v103 / WS41 QA**, tested source `01eb02e4e5460feaab131236e4da7b9d8eb5c2e1`,
+[draft PR #152](https://github.com/PlayerEden/GridMates-Word-Search/pull/152).
+Latest cumulative source is on its feature branch, not `main`.
+[Build/native/Android receipt](devlog/2026-11-17_WS41_MIXED_PLAY_AND_BOOK_CONTENT.md) · [signed APK](https://github.com/PlayerEden/GridMates-Word-Search/actions/runs/44236302499/artifacts/14397980688).
 
-- Solo/Custom supports 12/15/20/25/30 boards with independent challenge levels,
-  24 paused games, hints, records and progress protection.
-- Daily, original Woodland portraits, free font unlocks, profile and results work
-  in the QA app. Nearby Co-op, Race and Duel have implemented source and tests.
-- The three illustrated QA books have nine total test pages. This is not yet a
-  full release catalog. Public builds still isolate QA book/art content.
-- Quick Play starts a fresh **single-theme 12×12** Classic Solo board.
-- Full backup/restore includes book progress and unfinished pages. Its restore
-  recovery and signed install-over were tested in WS39.
+- Mixed Quick Play offers Small 12×12 / Medium 15×15 recommended / Large 20×20 and same-size Play Another. It uses 670 distinct QA answers over four groups.
+- Three QA books now have 21 pages each/63 total; original nine page IDs/recipes stay stable. This remains a QA catalog requiring editorial/production promotion.
+- Schema 6 stores exact V5 boards plus idempotent book-to-profile rewards. Full backups, interrupted restore recovery and v102 install-over passed actual Android checks.
+- Legacy Solo/Custom 12/15/20/25/30, Daily, original portraits/fonts and Nearby remain. Custom/Nearby use their legacy themed content; V5 is active in Quick Play/books.
+- Both builds, 24 actual Android tests and native finger playthrough passed. All 228 art assets match v102. Owner phone/two-phone acceptance is still open; v102 is the prior tested fallback.
 
 ## What still applies
 
 | Priority | Work | Current state and completion target |
 | --- | --- | --- |
-| Next | **Large curated word library** | Recover WS10's separate authoring branch, then review 100–250-word batches. Long-term target remains **10,000 distinct approved playable words over 30-plus topics**. Current APK V2 pools have 36 words/theme and V3 has 81/81/79. Candidate/source counts do not count as shipped content. |
-| Next | **Immutable packs and new content engine** | WS40 adds an approved-only snapshot exporter. Next needs actual reviewed content plus an offline loader/versioned generator, stable pack IDs and hashes, frozen fixtures, portable saves and content-compatible LAN messages. Preserve V1/V2/V3 and old Daily boards. |
-| With new packs | **Consecutive-play quality benchmarks** | Recover the genre research's word-set overlap, subtopic/length mix, direction balance, crossings and target-region coverage checks across many consecutive seeds. The v102 solvability audit does not by itself prove long-term vocabulary freshness. Measure distributions and poor outliers before tuning quotas. |
-| Then | **Complete mixed Quick Play** | Recover WS16B/WS17's intended Small 12×12 / Medium 15×15 / Large 20×20 selector, mixed-theme plus general vocabulary, and same-size Play Another. Medium is recommended. v102's usable short themed mode is a partial implementation of that broader design. |
-| Then | **Publishable book catalog** | Replace the tiny test-only catalog with reviewed fixed pages, chapters and meaningful volume length. Add books from data and matched art, never fake playable future volumes. Maintain regular book sizes at 12/15/20. |
-| Before public book release | **Book rewards/profile policy** | Current book completion writes its separate journal. Portrait unlocks count Solo + Daily. Define and test an idempotent book-to-profile reward path before promising that book pages earn those cosmetics. Do not silently alter old unlock IDs or grant QA-test rewards. |
+| Next | **Large curated word library** | WS40 tooling recovery and the first 670-word assistant-reviewed QA batch are complete. Continue 100–250-word batches toward **10,000 distinct approved words / 30-plus topics**, with human/editorial release review. Candidate/source counts do not count as shipped words. |
+| QA implemented | **Immutable packs and new content engine** | V5 strict pack loader, SHA-pinned exports, literal fixtures and portable frozen boards work for Quick Play/books. V1/V2/V3/Daily stay frozen. Add explicit mode/pack identity before activating new themed Custom or content-compatible LAN; Nearby currently retains its existing protocol/content. |
+| QA measured | **Consecutive-play quality benchmarks** | 100 Medium boards used 608 unique words; adjacent overlap 0.364; 100/100 covered all quadrants; word-length/subtopic/direction/crossing metrics recorded in WS41. Continue outlier and full-book editorial review as packs grow. |
+| QA complete | **Complete mixed Quick Play** | Small 12×12 / Medium 15×15 recommended / Large 20×20 selector, four-group vocabulary, same-size Play Another and optional Change Size work through actual Android input and restart. Owner review pending. |
+| QA expanded; release work remains | **Publishable book catalog** | Three 21-page QA volumes now preserve the original nine pages and append 54. Complete editorial review/fixed release manifests and matched art promotion before publishing; never promote reserved QA IDs. Regular books remain 12/15/20. |
+| QA implemented | **Book rewards/profile policy** | Idempotent book-page ledger grants general profile/portrait/font/count-achievement progress once and travels in full backups. No invented historical hints/time, Solo-only achievements or production approvals. |
 | Parallel, beta gate | **Two physical phones** | Open [issue #53](https://github.com/PlayerEden/GridMates-Word-Search/issues/53) records an old real-device marking failure. Later input/UI fixes and automated tests exist. Current host/guest drag, endpoint selection, claims, reconnect, Race and Duel still need physical acceptance. Do not infer either a current failure or a pass from the old issue alone. |
 | Ongoing | **Cohesive book families and menus** | Keep the accepted parchment/green/gold look and matched cover/spine material. Use chapter/bookmark/seal motifs where useful. Fix concrete readability/input defects; optional decoration is secondary to playable content. |
 | Before beta/release | **Regression and publishing** | Device/font/orientation/TalkBack/performance checks, complete progress migration, app/art/content promotion, production catalog/signing/AAB and store preparation remain. Keep release credentials and QA/prototype isolation intact. |
@@ -74,14 +70,6 @@ The latest cumulative source is on its development branch, not `main`.
 
 ## Next exact implementation
 
-Create a versioned authoring directory from the recovered schemas, keeping the
-exact recovery fixture intact. Complete the first reviewed content batch from
-the Woodland/Space/Garden sheets and a general vocabulary source, export packs, and
-implement the new pack-aware mixed generator/save path. Then add the compact
-three-size Quick Play chooser and Play Another loop. Run saved-board goldens,
-novelty/solvability/length-tier tests, backup/upgrade tests and actual Android
-play before calling that full WS17 milestone done.
+Curate the next100–250-word Fall batch in the versioned authoring catalog, preserving canonical IDs and many-to-many assignments. Verify spelling/display/theme fit and export under a new immutable identity before activating any future book. The10k goal remains ongoing;670 QA words are the first edition, not its completion.
 
-WS40 itself recovers tooling and plans, adds snapshot safety, and reproduces
-the editorial queues. It does not add approved words to the installed game or
-create another APK. v102 remains the playable baseline during this pass.
+Before using new packs in Custom or Nearby, distinguish play mode from pack identity in portable saves/results and version the LAN content contract. Keep old boards and protocol behavior. Owner physical v103 review and the two-phone acceptance gate remain parallel work. Production content/art/AAB/store promotion remains separate from a successful QA build.
