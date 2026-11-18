@@ -62,12 +62,20 @@ class ReviewedWordPackV5Test {
         val sets=mutableListOf<Set<String>>()
         val layouts=mutableSetOf<List<String>>()
         var balanced=0
+        val lengths=mutableListOf<Int>()
+        val subtopicCounts=mutableListOf<Int>()
+        val crossingCells=mutableListOf<Int>()
+        val byId=p.words.associateBy { it.id }
         val directions=mutableMapOf<Pair<Int,Int>,Int>()
         repeat(100) { seed ->
             val board=WordSearchGeneratorV5.generate(p,PuzzleBoardSize.BOOK_CLASSIC,
                 PuzzleChallenge.CLASSIC,seed.toLong()).puzzle
             sets+=board.targets.map { it.id }.toSet()
             layouts+=board.rows
+            lengths+=board.targets.map { it.word.length }
+            subtopicCounts+=board.targets.flatMap { target -> byId.getValue(target.id).topics
+                .filter { it.topicId==target.topicId }.map { it.subtopic } }.distinct().size
+            crossingCells+=board.targets.flatMap { it.positions }.groupingBy { it }.eachCount().count { it.value>1 }
             val quadrants=IntArray(4)
             board.targets.forEach { t ->
                 val a=t.positions[0]; val b=t.positions[1]
@@ -85,6 +93,9 @@ class ReviewedWordPackV5Test {
         assertTrue("Too much adjacent repetition: $overlap",overlap<=4.0)
         assertTrue("Missing quadrant work: $balanced/100",balanced>=95)
         assertEquals(6,directions.size)
+        assertTrue(lengths.count { it<=4 }>=50 && lengths.count { it>=9 }>=50)
+        assertTrue(subtopicCounts.average()>=6.0)
+        println("WS41 MIX lengthsMean=${lengths.average()} short=${lengths.count { it<=4 }} long=${lengths.count { it>=9 }} subtopicsMean=${subtopicCounts.average()} crossingsMean=${crossingCells.average()} crossingsMax=${crossingCells.max()}")
         println("WS41 VARIETY unique=$unique adjacentMean=$overlap quadrants=$balanced/100 directions=$directions")
     }
 

@@ -549,7 +549,7 @@ private fun SavedSoloScreen(
         val puzzle = remember(run.puzzleId) { SoloProgressRules.puzzle(run) }
         val dimension = run.boardSize?.cells ?: run.difficulty.gridSize
         val challenge = run.challenge?.label ?: run.difficulty.label
-        Text("${run.theme.label} · ${dimension}×${dimension} · $challenge",
+        Text("${puzzle.displayTitle} · ${dimension}×${dimension} · $challenge",
             color = Forest, style = MaterialTheme.typography.titleSmall,
             fontWeight = FontWeight.SemiBold)
         Text("${run.foundIds.size} of ${puzzle.targets.size} found · ${run.elapsedSeconds / 60}m",

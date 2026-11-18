@@ -178,7 +178,7 @@ internal fun BookPageGameplayScreen(
                     practiceFound = practiceFound + word.id
                     status = if (WordSearchRules.complete(board, practiceFound))
                         "Practice complete! Your book results were not changed."
-                    else "✓ " + word.word + " found in practice."
+                    else "✓ " + word.display + " found in practice."
                 } else {
                     // The word was already durably written to GMWS by claim().
                     val current = sessionStore.session(bookId, pageId)
@@ -194,7 +194,7 @@ internal fun BookPageGameplayScreen(
                         } else "Page solved and saved. The completion record needs recovery."
                     } else {
                         revision++
-                        status = "✓ " + word.word + " found!"
+                        status = "✓ " + word.display + " found!"
                     }
                 }
             }
