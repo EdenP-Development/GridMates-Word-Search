@@ -1,3 +1,9 @@
+# Active development handoff — WS43 Fall authoring verified
+
+[Fall pack and CI receipt](devlog/2026-11-18_WS43_FALL_VOCABULARY.md) · [draft PR #154](https://github.com/PlayerEden/GridMates-Word-Search/pull/154), tested content source `5c279ae9fde53bb95718ae84f1e82807ea1e67cc`. [Vocabulary CI](https://github.com/PlayerEden/GridMates-Word-Search/actions/runs/44251550015) passed all 28 tests. The immutable pack has 150 answers across six subtopics. The current installed vocabularies and books are tracked by the v104 receipt below.
+
+**Next development task.** Use the Fall snapshot to plan book page recipes. Check replay repetition, placement and target coverage at all three book sizes. Owner editorial review, a playable Fall volume and matching artwork remain open. The latest signed handset build is v104, with v103 as the previous verified APK.
+
 # Active development handoff — WS42 v104 verified
 
 [Verification receipt](devlog/2026-11-18_WS42_HANDSET_VERIFICATION.md) · [draft PR #153](https://github.com/PlayerEden/GridMates-Word-Search/pull/153). Latest tested source `f2304c5d81a57cc1a29197277702d92645460c96` on `feature/ws42-handset-polish-2026-11-17`. [Standard Android QA](https://github.com/PlayerEden/GridMates-Word-Search/actions/runs/44252800362) and [independent build and release isolation](https://github.com/PlayerEden/GridMates-Word-Search/actions/runs/44252800303) passed. [Signed v104 APK](https://github.com/PlayerEden/GridMates-Word-Search/actions/runs/44252800362/artifacts/14404433051), 34,207,390 bytes, SHA-256 `9c0b68612dd61d192a6382ce35c2ffc04fce39584ae7f9753e1b7b56e4782033`.

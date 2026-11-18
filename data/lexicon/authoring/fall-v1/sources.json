@@ -1,0 +1,28 @@
+{
+  "schema_version": 1,
+  "status_note": "Original Fall selections and reused reviewed GridMates entries for QA.",
+  "sources": [
+    {
+      "id": "gridmates-qa-english",
+      "label": "WS41 original QA word selection",
+      "type": "internal",
+      "license": "project-maintained-word-selection",
+      "rights_review": "internal-existing",
+      "attribution": "Original thematic selection and display labels by Codex for GridMates.",
+      "source_url": null,
+      "approval_scope": "assistant-reviewed-qa-only",
+      "owner_release_approved": false
+    },
+    {
+      "id": "gridmates-qa-fall",
+      "label": "WS43 Fall QA selection",
+      "type": "internal",
+      "license": "project-maintained-word-selection",
+      "rights_review": "internal-existing",
+      "attribution": "Original Fall selection and display labels by Codex for GridMates.",
+      "source_url": null,
+      "approval_scope": "assistant-reviewed-qa-only",
+      "owner_release_approved": false
+    }
+  ]
+}

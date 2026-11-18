@@ -6,7 +6,7 @@ Read [current roadmap](CURRENT_PRODUCT_ROADMAP.md), the top of [active handoff](
 
 [WS40 recovery audit](audits/2026-11-17_WS40_GITHUB_PLAN_RECOVERY.md) retains the exact missing lexicon source and forgotten roadmap crosswalk. Root data stays the historical negative-test fixture; new editorial work lives in `data/lexicon/authoring/en-v1`. The10,000-word/ 30-plus-topic goal is ongoing, not fulfilled by candidate counts or this first 670-word QA edition.
 
-The [Fall vocabulary draft](https://github.com/PlayerEden/GridMates-Word-Search/pull/154) has 150 words ready for QA page planning. Use its six subtopics to plan page recipes and test placement and repeat play on 12×12, 15×15 and 20×20 boards. New themed Custom and LAN packs need explicit mode and content versioning. Preserve user saves and Sudoku's separate source, keep the drafts open for review, and record each pass and each APK build in the journal.
+The [Fall QA vocabulary receipt](devlog/2026-11-18_WS43_FALL_VOCABULARY.md) and [authoring catalog](../data/lexicon/authoring/fall-v1/README.md) are current in [draft PR #154](https://github.com/PlayerEden/GridMates-Word-Search/pull/154). Use its six subtopics to plan page recipes and test placement and repeat play on 12×12, 15×15 and 20×20 boards. New themed Custom and LAN packs need explicit mode and content versioning. Preserve user saves and Sudoku's separate source, keep the drafts open for review, and record each pass and each APK build in the journal.
 
 <details>
 <summary>Historical checkpoints before WS40 — reference only</summary>
