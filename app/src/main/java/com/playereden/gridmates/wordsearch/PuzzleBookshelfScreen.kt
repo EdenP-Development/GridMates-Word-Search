@@ -16,16 +16,22 @@ import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.Alignment
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material3.Button
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
@@ -272,278 +278,283 @@ internal fun PuzzleBookDetailScreen(
     val bookmark = if (healthy && book != null)
         progress.volumes[bookId]?.bookmarkedPageId else null
 
-    LazyColumn(
-        modifier = modifier.testTag("book-detail-list"),
-        contentPadding = PaddingValues(horizontal = 18.dp, vertical = 12.dp),
-        verticalArrangement = Arrangement.spacedBy(10.dp)
-    ) {
-        item(key = "book-heading") {
-            Column(verticalArrangement = Arrangement.spacedBy(10.dp)) {
-                Ws15BackHeader(
-                    title = "Your Library",
-                    subtitle = "Book details",
-                    onBack = onBack,
-                    backLabel = "Back to Your Library"
-                )
-                if (showPrototypeArt && book != null) {
-                    // After picking a volume from a shelf it appears as a
-                    // large, readable physical object, not a giant text card.
-                    Row(
-                        Modifier.fillMaxWidth().testTag("pulled-book-hero"),
-                        horizontalArrangement = Arrangement.spacedBy(10.dp),
-                        verticalAlignment = Alignment.CenterVertically
-                    ) {
-                        // One coherent book silhouette: cover already has a
-                        // left binding; never draw a separate tiny spine.
-                        BookArt(book.theme, BookArtKind.COVER,
-                            Modifier.width(112.dp).height(150.dp)
-                                .testTag("book-detail-cover-" + book.id),
-                            fieldNotes = fieldNotesArt)
-                        Column(Modifier.weight(1f),
-                            verticalArrangement = Arrangement.spacedBy(5.dp)) {
-                            Text(book.title.removeSuffix(" · TEST BOOK"),
-                                color = Forest,
-                                style = MaterialTheme.typography.titleLarge,
-                                fontWeight = FontWeight.Bold)
-                            Text(
-                                "Volume " + book.volume + " · " +
-                                    book.chapters.size + " chapters",
-                                style = MaterialTheme.typography.bodyMedium,
-                                color = Muted
-                            )
-                            // QA status stays visible at the library entry, not
-                            // stamped repeatedly on the illustrated detail hero.
-                            BookArt(book.theme, BookArtKind.EMBLEM,
-                                Modifier.size(40.dp).testTag("book-emblem-" + book.id),
-                                fieldNotes = fieldNotesArt, pageAccentCandidate = true)
-                        }
-                    }
-                } else {
-                Row(Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.spacedBy(12.dp),
-                    verticalAlignment = Alignment.CenterVertically) {
+    val listState = rememberLazyListState()
+    val chapters = if (healthy) book?.chapters.orEmpty() else emptyList()
+    var chaptersOpen by rememberSaveable(bookId) { mutableStateOf(false) }
+
+    if (chaptersOpen && chapters.size > 1 && book != null) {
+        BookChapterPicker(book, completed, onDismiss = { chaptersOpen = false }) { chapterIndex ->
+            chaptersOpen = false
+            // Two list entries precede the first chapter: the cover and progress panel.
+            val previous = chapters.take(chapterIndex).sumOf { 1 + it.pages.size }
+            listState.requestScrollToItem(2 + previous)
+        }
+    }
+
+    Column(modifier.fillMaxSize()) {
+        Ws15BackHeader(
+            title = "Your Library",
+            onBack = onBack,
+            backLabel = "Back to Your Library",
+            titleMaxLines = 2,
+            modifier = Modifier.padding(horizontal = 18.dp, vertical = 4.dp),
+            trailing = if (chapters.size > 1) {
+                {
+                    BookChaptersAction { chaptersOpen = true }
+                }
+            } else null
+        )
+        LazyColumn(
+            state = listState,
+            modifier = Modifier.weight(1f).fillMaxWidth().testTag("book-detail-list"),
+            contentPadding = PaddingValues(horizontal = 18.dp, vertical = 8.dp),
+            verticalArrangement = Arrangement.spacedBy(10.dp)
+        ) {
+            item(key = "book-heading") {
+                Column(verticalArrangement = Arrangement.spacedBy(10.dp)) {
                     if (showPrototypeArt && book != null) {
-                        BookArt(book.theme, BookArtKind.EMBLEM,
-                            Modifier.size(52.dp).testTag("book-emblem-" + book.id), fieldNotes = fieldNotesArt)
-                    }
-                    Column(Modifier.weight(1f)) {
+                        // After picking a volume from a shelf it appears as a
+                        // large, readable physical object, not a giant text card.
+                        Row(
+                            Modifier.fillMaxWidth().testTag("pulled-book-hero"),
+                            horizontalArrangement = Arrangement.spacedBy(10.dp),
+                            verticalAlignment = Alignment.CenterVertically
+                        ) {
+                            // One coherent book silhouette: cover already has a
+                            // left binding; never draw a separate tiny spine.
+                            BookArt(book.theme, BookArtKind.COVER,
+                                Modifier.width(112.dp).height(150.dp)
+                                    .testTag("book-detail-cover-" + book.id),
+                                fieldNotes = fieldNotesArt)
+                            Column(Modifier.weight(1f),
+                                verticalArrangement = Arrangement.spacedBy(5.dp)) {
+                                Text(book.title.removeSuffix(" · TEST BOOK"),
+                                    color = Forest,
+                                    style = MaterialTheme.typography.titleLarge,
+                                    fontWeight = FontWeight.Bold)
+                                Text(
+                                    "Volume " + book.volume + " · " +
+                                        book.chapters.size + " chapters",
+                                    style = MaterialTheme.typography.bodyMedium,
+                                    color = Muted
+                                )
+                                // QA status stays visible at the library entry, not
+                                // stamped repeatedly on the illustrated detail hero.
+                                BookArt(book.theme, BookArtKind.EMBLEM,
+                                    Modifier.size(40.dp).testTag("book-emblem-" + book.id),
+                                    fieldNotes = fieldNotesArt, pageAccentCandidate = true)
+                            }
+                        }
+                    } else {
                         Text(
-                            if (showPrototypeArt)
-                                book?.title?.removeSuffix(" · TEST BOOK")
-                                    ?: "Book unavailable"
-                            else book?.title ?: "Book unavailable",
+                            book?.title ?: "Book unavailable",
                             color = Forest, style = MaterialTheme.typography.headlineMedium,
                             fontWeight = FontWeight.Bold
                         )
-                        if (showPrototypeArt && book?.title?.endsWith(" · TEST BOOK") == true) {
-                            Text("TEST BOOK · Volume " + book.volume,
-                                color = Muted, style = MaterialTheme.typography.labelMedium)
-                        }
-                    }
-                }
-                }
-            }
-        }
-        if (!healthy || book == null) {
-            item(key = "book-unavailable") {
-                BookDetailCohesionPanel(showPrototypeArt,
-                    Modifier.fillMaxWidth().testTag("book-detail-unavailable-panel")) {
-                    Text("This book cannot be opened right now.",
-                        color = Forest, style = MaterialTheme.typography.titleMedium,
-                        fontWeight = FontWeight.Bold)
-                    Text("Saved progress has not been changed. Return to the Library.",
-                        style = MaterialTheme.typography.bodyMedium)
-                }
-            }
-        } else {
-            item(key = "book-progress") {
-                BookDetailCohesionPanel(showPrototypeArt,
-                    Modifier.fillMaxWidth().testTag("book-detail-progress-panel")) {
-                    Text(
-                        if (showPrototypeArt) "Book progress"
-                        else book.theme.label + " · Volume " + book.volume,
-                        color = Muted, style = MaterialTheme.typography.bodyMedium
-                    )
-                    Row(Modifier.fillMaxWidth(),
-                        verticalAlignment = Alignment.CenterVertically,
-                        horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                        if (showPrototypeArt && pages.isNotEmpty() &&
-                            completed.size == pages.size) {
-                            BookArt(book.theme, BookArtKind.COMPLETION,
-                                Modifier.size(48.dp).testTag("book-volume-complete-" + book.id), fieldNotes = fieldNotesArt)
-                        }
-                        Text(completed.size.toString() + " of " + pages.size +
-                            " pages completed",
-                            color = Ink, style = MaterialTheme.typography.bodyMedium)
-                    }
-                    PaperProgress(completed.size, pages.size)
-                    if (next == null) {
-                        Text("Book complete · You can revisit any page.",
-                            color = Forest, style = MaterialTheme.typography.titleMedium)
-                    } else if (onPlayPage != null) {
-                        Button(
-                            onClick = { onPlayPage(bookId, next.id) },
-                            modifier = Modifier.fillMaxWidth().heightIn(min = 48.dp)
-                                    .testTag("book-continue")
-                        ) {
-                            Text(when {
-                                next.id in startedPageIds -> "Resume page " + (pages.indexOf(next) + 1)
-                                completed.isEmpty() -> "Start solving"
-                                else -> "Continue solving"
-                            })
-                        }
-                    } else {
-                        Text("Book pages will be playable after content approval.",
-                            color = Muted, style = MaterialTheme.typography.bodyMedium)
                     }
                 }
             }
-            book.chapters.forEachIndexed { index, chapter ->
-                item(key = "chapter:" + chapter.id) {
-                    Column(
-                        Modifier.fillMaxWidth().padding(top = 8.dp),
-                        verticalArrangement = Arrangement.spacedBy(4.dp)
-                    ) {
+            if (!healthy || book == null) {
+                item(key = "book-unavailable") {
+                    BookDetailCohesionPanel(showPrototypeArt,
+                        Modifier.fillMaxWidth().testTag("book-detail-unavailable-panel")) {
+                        Text("This book cannot be opened right now.",
+                            color = Forest, style = MaterialTheme.typography.titleMedium,
+                            fontWeight = FontWeight.Bold)
+                        Text("Saved progress has not been changed. Return to the Library.",
+                            style = MaterialTheme.typography.bodyMedium)
+                    }
+                }
+            } else {
+                item(key = "book-progress") {
+                    BookDetailCohesionPanel(showPrototypeArt,
+                        Modifier.fillMaxWidth().testTag("book-detail-progress-panel")) {
+                        Text(
+                            if (showPrototypeArt) "Book progress"
+                            else book.theme.label + " · Volume " + book.volume,
+                            color = Muted, style = MaterialTheme.typography.bodyMedium
+                        )
                         Row(Modifier.fillMaxWidth(),
-                            horizontalArrangement = Arrangement.spacedBy(10.dp),
-                            verticalAlignment = Alignment.CenterVertically) {
-                            if (showPrototypeArt) {
-                                BookArt(book.theme, BookArtKind.EMBLEM,
-                                    Modifier.size(36.dp).testTag("book-chapter-" + chapter.id),
-                                    fieldNotes = fieldNotesArt, pageAccentCandidate = true)
+                            verticalAlignment = Alignment.CenterVertically,
+                            horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                            if (showPrototypeArt && pages.isNotEmpty() &&
+                                completed.size == pages.size) {
+                                BookArt(book.theme, BookArtKind.COMPLETION,
+                                    Modifier.size(48.dp).testTag("book-volume-complete-" + book.id), fieldNotes = fieldNotesArt)
                             }
-                            Column(Modifier.weight(1f)) {
-                                val chapterDone = chapter.pages.count { it.id in completed }
-                                PaperEyebrow(
-                                    if (showPrototypeArt)
-                                        "Chapter " + (index + 1) + " · " +
-                                            chapterDone + "/" + chapter.pages.size + " pages"
-                                    else "Chapter " + (index + 1)
-                                )
-                                Text(
-                                    if (showPrototypeArt) chapter.title.removeSuffix(" · TEST")
-                                    else chapter.title,
-                                    style = if (showPrototypeArt)
-                                        MaterialTheme.typography.titleMedium
-                                    else MaterialTheme.typography.titleLarge,
-                                    color = Forest, fontWeight = FontWeight.Bold
-                                )
-                            }
+                            Text(completed.size.toString() + " of " + pages.size +
+                                " pages completed",
+                                color = Ink, style = MaterialTheme.typography.bodyMedium)
                         }
-                        if (!showPrototypeArt) {
-                            Text(chapter.pages.count { it.id in completed }.toString() +
-                                " of " + chapter.pages.size + " pages completed",
+                        PaperProgress(completed.size, pages.size)
+                        if (next == null) {
+                            Text("Book complete · You can revisit any page.",
+                                color = Forest, style = MaterialTheme.typography.titleMedium)
+                        } else if (onPlayPage != null) {
+                            Button(
+                                onClick = { onPlayPage(bookId, next.id) },
+                                modifier = Modifier.fillMaxWidth().heightIn(min = 48.dp)
+                                        .testTag("book-continue")
+                            ) {
+                                Text(when {
+                                    next.id in startedPageIds -> "Resume page " + (pages.indexOf(next) + 1)
+                                    completed.isEmpty() -> "Start solving"
+                                    else -> "Continue solving"
+                                })
+                            }
+                        } else {
+                            Text("Book pages will be playable after content approval.",
                                 color = Muted, style = MaterialTheme.typography.bodyMedium)
                         }
                     }
                 }
-                items(chapter.pages, key = { "page:" + it.id }) { page ->
-                    // Use book-wide page numbers. Chapter 2 must not restart
-                    // at "Page 1" while Chapter 1's Page 1 also exists.
-                    val ordinal = pages.indexOfFirst { it.id == page.id } + 1
-                    val isComplete = page.id in completed
-                    val isCurrent = page.id == next?.id
-                    val inProgress = !isComplete && page.id in startedPageIds
-                    val action = if (inProgress) "Resume" else "Play"
-                    BookDetailCohesionPanel(showPrototypeArt,
-                        Modifier.fillMaxWidth().testTag("book-detail-page-panel-" + page.id)) {
-                        Row(Modifier.fillMaxWidth(),
-                            verticalAlignment = Alignment.CenterVertically,
-                            horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                            if (showPrototypeArt && bookmark == page.id && !isComplete) {
-                                BookArt(book.theme, BookArtKind.BOOKMARK,
-                                    Modifier.width(17.dp).height(48.dp)
-                                        .testTag("book-bookmark-" + page.id), fieldNotes = fieldNotesArt)
+                book.chapters.forEachIndexed { index, chapter ->
+                    item(key = "chapter:" + chapter.id) {
+                        Column(
+                            Modifier.fillMaxWidth().padding(top = 8.dp),
+                            verticalArrangement = Arrangement.spacedBy(4.dp)
+                        ) {
+                            Row(Modifier.fillMaxWidth(),
+                                horizontalArrangement = Arrangement.spacedBy(10.dp),
+                                verticalAlignment = Alignment.CenterVertically) {
+                                if (showPrototypeArt) {
+                                    BookArt(book.theme, BookArtKind.EMBLEM,
+                                        Modifier.size(36.dp).testTag("book-chapter-" + chapter.id),
+                                        fieldNotes = fieldNotesArt, pageAccentCandidate = true)
+                                }
+                                Column(Modifier.weight(1f)) {
+                                    val chapterDone = chapter.pages.count { it.id in completed }
+                                    PaperEyebrow(
+                                        if (showPrototypeArt)
+                                            "Chapter " + (index + 1) + " · " +
+                                                chapterDone + "/" + chapter.pages.size + " pages"
+                                        else "Chapter " + (index + 1)
+                                    )
+                                    Text(
+                                        if (showPrototypeArt) chapter.title.removeSuffix(" · TEST")
+                                        else chapter.title,
+                                        style = if (showPrototypeArt)
+                                            MaterialTheme.typography.titleMedium
+                                        else MaterialTheme.typography.titleLarge,
+                                        color = Forest, fontWeight = FontWeight.Bold
+                                    )
+                                }
                             }
-                            if (showPrototypeArt && isComplete) {
-                                BookArt(book.theme, BookArtKind.COMPLETION,
-                                    Modifier.size(43.dp).testTag("book-page-complete-" + page.id), fieldNotes = fieldNotesArt)
-                            }
-                            Column(Modifier.weight(1f)) {
-                                Text("Page " + ordinal + when {
-                                    isComplete -> " · Completed"
-                                    inProgress -> " · In progress"
-                                    isCurrent -> " · Next page"
-                                    else -> " · Not started"
-                                },
-                                    color = Forest,
-                                    style = MaterialTheme.typography.titleMedium,
-                                    fontWeight = FontWeight.SemiBold)
-                                Text(page.boardSize.cells.toString() + "×" +
-                                    page.boardSize.cells + " · " + page.challenge.label,
-                                    color = Muted,
-                                    style = MaterialTheme.typography.bodyMedium)
+                            if (!showPrototypeArt) {
+                                Text(chapter.pages.count { it.id in completed }.toString() +
+                                    " of " + chapter.pages.size + " pages completed",
+                                    color = Muted, style = MaterialTheme.typography.bodyMedium)
                             }
                         }
-                        // On a normal phone the two page actions share a row,
-                        // avoiding a long pair of oversized buttons on every page.
-                        // Stack again for 320dp and/or enlarged system text.
-                        if (showPrototypeArt && !isComplete &&
-                            onPlayPage != null && onBookmarkPage != null) {
-                            BoxWithConstraints(Modifier.fillMaxWidth()) {
-                                val compactRow = maxWidth >= 270.dp &&
-                                    LocalDensity.current.fontScale <= 1.25f
-                                if (compactRow) {
-                                    Row(Modifier.fillMaxWidth(),
-                                        horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                                        Button(
-                                            onClick = { onPlayPage(bookId, page.id) },
-                                            modifier = Modifier.weight(0.44f).heightIn(min = 48.dp)
-                                                .semantics { contentDescription = "$action page $ordinal" }
-                                        ) { Text(action, maxLines = 1) }
-                                        OutlinedButton(
-                                            onClick = { onBookmarkPage(bookId, page.id) },
-                                            enabled = bookmark != page.id,
-                                            modifier = Modifier.weight(0.56f).heightIn(min = 48.dp)
-                                                .semantics {
-                                                    contentDescription = if (bookmark == page.id)
-                                                        "Bookmark saved for page $ordinal"
-                                                    else "Bookmark page $ordinal"
-                                                }
-                                        ) {
-                                            Text(if (bookmark == page.id) "Saved" else "Bookmark",
-                                                maxLines = 1)
+                    }
+                    items(chapter.pages, key = { "page:" + it.id }) { page ->
+                        // Use book-wide page numbers. Chapter 2 must not restart
+                        // at "Page 1" while Chapter 1's Page 1 also exists.
+                        val ordinal = pages.indexOfFirst { it.id == page.id } + 1
+                        val isComplete = page.id in completed
+                        val isCurrent = page.id == next?.id
+                        val inProgress = !isComplete && page.id in startedPageIds
+                        val action = if (inProgress) "Resume" else "Play"
+                        BookDetailCohesionPanel(showPrototypeArt,
+                            Modifier.fillMaxWidth().testTag("book-detail-page-panel-" + page.id)) {
+                            Row(Modifier.fillMaxWidth(),
+                                verticalAlignment = Alignment.CenterVertically,
+                                horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                                if (showPrototypeArt && bookmark == page.id && !isComplete) {
+                                    BookArt(book.theme, BookArtKind.BOOKMARK,
+                                        Modifier.width(17.dp).height(48.dp)
+                                            .testTag("book-bookmark-" + page.id), fieldNotes = fieldNotesArt)
+                                }
+                                if (showPrototypeArt && isComplete) {
+                                    BookArt(book.theme, BookArtKind.COMPLETION,
+                                        Modifier.size(43.dp).testTag("book-page-complete-" + page.id), fieldNotes = fieldNotesArt)
+                                }
+                                Column(Modifier.weight(1f)) {
+                                    Text("Page " + ordinal + when {
+                                        isComplete -> " · Completed"
+                                        inProgress -> " · In progress"
+                                        isCurrent -> " · Next page"
+                                        else -> " · Not started"
+                                    },
+                                        color = Forest,
+                                        style = MaterialTheme.typography.titleMedium,
+                                        fontWeight = FontWeight.SemiBold)
+                                    Text(page.boardSize.cells.toString() + "×" +
+                                        page.boardSize.cells + " · " + page.challenge.label,
+                                        color = Muted,
+                                        style = MaterialTheme.typography.bodyMedium)
+                                }
+                            }
+                            // On a normal phone the two page actions share a row,
+                            // avoiding a long pair of oversized buttons on every page.
+                            // Stack again for 320dp and/or enlarged system text.
+                            if (showPrototypeArt && !isComplete &&
+                                onPlayPage != null && onBookmarkPage != null) {
+                                BoxWithConstraints(Modifier.fillMaxWidth()) {
+                                    val compactRow = maxWidth >= 270.dp &&
+                                        LocalDensity.current.fontScale <= 1.25f
+                                    if (compactRow) {
+                                        Row(Modifier.fillMaxWidth(),
+                                            horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                                            Button(
+                                                onClick = { onPlayPage(bookId, page.id) },
+                                                modifier = Modifier.weight(0.44f).heightIn(min = 48.dp)
+                                                    .semantics { contentDescription = "$action page $ordinal" }
+                                            ) { Text(action, maxLines = 1) }
+                                            OutlinedButton(
+                                                onClick = { onBookmarkPage(bookId, page.id) },
+                                                enabled = bookmark != page.id,
+                                                modifier = Modifier.weight(0.56f).heightIn(min = 48.dp)
+                                                    .semantics {
+                                                        contentDescription = if (bookmark == page.id)
+                                                            "Bookmark saved for page $ordinal"
+                                                        else "Bookmark page $ordinal"
+                                                    }
+                                            ) {
+                                                Text(if (bookmark == page.id) "Saved" else "Bookmark",
+                                                    maxLines = 1)
+                                            }
                                         }
-                                    }
-                                } else {
-                                    Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
-                                        Button(
-                                            onClick = { onPlayPage(bookId, page.id) },
-                                            modifier = Modifier.fillMaxWidth().heightIn(min = 48.dp)
-                                                .semantics { contentDescription = "$action page $ordinal" }
-                                        ) { Text(action, maxLines = 1) }
-                                        OutlinedButton(
-                                            onClick = { onBookmarkPage(bookId, page.id) },
-                                            enabled = bookmark != page.id,
-                                            modifier = Modifier.fillMaxWidth().heightIn(min = 48.dp)
-                                                .semantics {
-                                                    contentDescription = if (bookmark == page.id)
-                                                        "Bookmark saved for page $ordinal"
-                                                    else "Bookmark page $ordinal"
-                                                }
-                                        ) {
-                                            Text(if (bookmark == page.id) "Saved" else "Bookmark",
-                                                maxLines = 1)
+                                    } else {
+                                        Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
+                                            Button(
+                                                onClick = { onPlayPage(bookId, page.id) },
+                                                modifier = Modifier.fillMaxWidth().heightIn(min = 48.dp)
+                                                    .semantics { contentDescription = "$action page $ordinal" }
+                                            ) { Text(action, maxLines = 1) }
+                                            OutlinedButton(
+                                                onClick = { onBookmarkPage(bookId, page.id) },
+                                                enabled = bookmark != page.id,
+                                                modifier = Modifier.fillMaxWidth().heightIn(min = 48.dp)
+                                                    .semantics {
+                                                        contentDescription = if (bookmark == page.id)
+                                                            "Bookmark saved for page $ordinal"
+                                                        else "Bookmark page $ordinal"
+                                                    }
+                                            ) {
+                                                Text(if (bookmark == page.id) "Saved" else "Bookmark",
+                                                    maxLines = 1)
+                                            }
                                         }
                                     }
                                 }
-                            }
-                        } else {
-                            if (onPlayPage != null) {
-                                Button(onClick = { onPlayPage(bookId, page.id) },
-                                    modifier = Modifier.fillMaxWidth().heightIn(min = 48.dp)) {
-                                    Text(if (isComplete) "Replay page $ordinal"
-                                        else "$action page $ordinal")
+                            } else {
+                                if (onPlayPage != null) {
+                                    Button(onClick = { onPlayPage(bookId, page.id) },
+                                        modifier = Modifier.fillMaxWidth().heightIn(min = 48.dp)) {
+                                        Text(if (isComplete) "Replay page $ordinal"
+                                            else "$action page $ordinal")
+                                    }
                                 }
-                            }
-                            if (!isComplete && onBookmarkPage != null) {
-                                OutlinedButton(
-                                    onClick = { onBookmarkPage(bookId, page.id) },
-                                    enabled = bookmark != page.id,
-                                    modifier = Modifier.fillMaxWidth().heightIn(min = 48.dp)
-                                ) {
-                                    Text(if (bookmark == page.id) "Bookmark saved"
-                                        else "Bookmark page $ordinal")
+                                if (!isComplete && onBookmarkPage != null) {
+                                    OutlinedButton(
+                                        onClick = { onBookmarkPage(bookId, page.id) },
+                                        enabled = bookmark != page.id,
+                                        modifier = Modifier.fillMaxWidth().heightIn(min = 48.dp)
+                                    ) {
+                                        Text(if (bookmark == page.id) "Bookmark saved"
+                                            else "Bookmark page $ordinal")
+                                    }
                                 }
                             }
                         }

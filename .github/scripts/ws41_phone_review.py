@@ -132,81 +132,86 @@ def scroll_to(label):
     raise AssertionError(f'Action {label!r} could not be reached by scrolling')
 
 
-EVIDENCE.mkdir(exist_ok=True)
-try:
-    import hashlib, json, base64, struct
-    adb('shell','wm','size','720x1600')
-    adb('shell','wm','density','320')
-    adb('shell','settings','put','system','font_scale','1.0')
-    adb('shell','settings','put','secure','immersive_mode_confirmations','confirmed')
-    adb('shell','wm','dismiss-keyguard')
-    assert b'Success' in adb('install','qa-baseline/app-debug.apk',timeout=90)
-    launch(); await_screen('Open menu')
-    adb('shell','am','force-stop',PACKAGE)
-    before=adb('exec-out','run-as',PACKAGE,'cat','files/gridmates_wordsearch_solo_v1.json')
-    assert b'Success' in adb('install','-r','app/build/outputs/apk/debug/app-debug.apk',timeout=90)
-    after=adb('exec-out','run-as',PACKAGE,'cat','files/gridmates_wordsearch_solo_v1.json')
-    assert before==after, 'Install-over changed save bytes'
-    assert b'versionCode=103 ' in adb('shell','dumpsys','package',PACKAGE)
-    launch(); await_screen('Open menu')
-    capture('ws41-native-home.png')
-    open_home_action('Quick Play. Choose a size for a fresh puzzle')
-    root=await_screen('Medium · 15×15','16 words · Recommended')
-    capture('ws41-native-size-chooser.png')
-    tap(find(root,'Medium · 15×15'))
-    grid_label='Word-search grid, 15 by 15. Drag or tap letters, or choose precise selection.'
-    root=await_screen('Home','0 / 16 found',grid_label)
-    left,top,right,bottom=check_grid(root,grid_label)
-    save=json.loads(adb('exec-out','run-as',PACKAGE,'cat','files/gridmates_wordsearch_solo_v1.json'))
-    encoded=save['active']['frozen']; data=base64.b64decode(encoded)
-    assert hashlib.sha256(data[:-32]).digest()==data[-32:]
-    cursor=0
-    def integer():
-        global cursor
-        n=struct.unpack_from('>i',data,cursor)[0];cursor+=4;return n
-    def utf():
-        global cursor
-        n=struct.unpack_from('>H',data,cursor)[0];cursor+=2
-        value=data[cursor:cursor+n].decode('utf-8');cursor+=n;return value
-    assert integer()==0x474d5735 and integer()==1
-    for _ in range(5): utf()
-    cursor+=8; utf(); utf()
-    size=integer(); rows=[utf() for _ in range(size)]
-    targets=[]
-    for _ in range(integer()):
-        word_id= utf();answer=utf();display=utf();topic=utf()
-        coords=[(integer(),integer()) for _ in range(integer())]
-        targets.append((word_id,coords))
-    def trace(coords):
-        (r,c),(er,ec)=coords[0],coords[-1]
-        x=lambda v: str(round(left+(v+0.5)*(right-left)/size))
-        y=lambda v: str(round(top+(v+0.5)*(bottom-top)/size))
-        adb('shell','input','swipe',x(c),y(r),x(ec),y(er),'350')
-    trace(targets[0][1]); await_screen('1 / 16 found',grid_label)
-    capture('ws41-native-mixed-puzzle.png')
-    tap(find(await_screen('Home'),'Home'))
-    restart(); open_home_action(SOLO)
-    root=await_screen('1 / 16 found',grid_label)
-    restored=json.loads(adb('exec-out','run-as',PACKAGE,'cat','files/gridmates_wordsearch_solo_v1.json'))
-    assert restored['active']['frozen']==encoded and targets[0][0] in restored['active']['found']
-    left,top,right,bottom=check_grid(root,grid_label)
-    for i,(_,coords) in enumerate(targets[1:],2):
-        trace(coords)
-        if i<16:await_screen(f'{i} / 16 found')
-    scroll_to('Play another puzzle'); await_screen('Puzzle complete!','Change size')
-    capture('ws41-native-completion.png')
-    tap(scroll_to('Play another puzzle'))
-    await_screen('0 / 16 found',grid_label)
-    fresh=json.loads(adb('exec-out','run-as',PACKAGE,'cat','files/gridmates_wordsearch_solo_v1.json'))
-    assert fresh['active']['frozen']!=encoded and len(fresh['results'])==1
-    tap(find(await_screen('Home'),'Home'))
-    root=await_screen('Open menu');tap(find(root,'Open menu'))
-    tap(find(await_screen('Settings & backup'),'Settings & backup'))
-    scroll_to('Export backup');capture('ws41-native-backup.png')
-    (EVIDENCE/'receipt.json').write_text(json.dumps({
-        'source':__import__('os').environ.get('WS41_SOURCE'),
-        'install_over_v102':'passed, prior bytes preserved',
-        'native_flow':'Home > Medium > 16 finger traces > restart/resume > completion > same-size Another',
-        'backup_actions':'reachable','viewport':'360dp, 100%, API35'},indent=2))
-finally:
-    (EVIDENCE/'android-logcat.txt').write_bytes(adb('logcat','-d','-t','500'))
+def main():
+    EVIDENCE.mkdir(exist_ok=True)
+    try:
+        import hashlib, json, base64, struct
+        adb('shell','wm','size','720x1600')
+        adb('shell','wm','density','320')
+        adb('shell','settings','put','system','font_scale','1.0')
+        adb('shell','settings','put','secure','immersive_mode_confirmations','confirmed')
+        adb('shell','wm','dismiss-keyguard')
+        assert b'Success' in adb('install','qa-baseline/app-debug.apk',timeout=90)
+        launch(); await_screen('Open menu')
+        adb('shell','am','force-stop',PACKAGE)
+        before=adb('exec-out','run-as',PACKAGE,'cat','files/gridmates_wordsearch_solo_v1.json')
+        assert b'Success' in adb('install','-r','app/build/outputs/apk/debug/app-debug.apk',timeout=90)
+        after=adb('exec-out','run-as',PACKAGE,'cat','files/gridmates_wordsearch_solo_v1.json')
+        assert before==after, 'Install-over changed save bytes'
+        assert b'versionCode=103 ' in adb('shell','dumpsys','package',PACKAGE)
+        launch(); await_screen('Open menu')
+        capture('ws41-native-home.png')
+        open_home_action('Quick Play. Choose a size for a fresh puzzle')
+        root=await_screen('Medium · 15×15','16 words · Recommended')
+        capture('ws41-native-size-chooser.png')
+        tap(find(root,'Medium · 15×15'))
+        grid_label='Word-search grid, 15 by 15. Drag or tap letters, or choose precise selection.'
+        root=await_screen('Home','0 / 16 found',grid_label)
+        left,top,right,bottom=check_grid(root,grid_label)
+        save=json.loads(adb('exec-out','run-as',PACKAGE,'cat','files/gridmates_wordsearch_solo_v1.json'))
+        encoded=save['active']['frozen']; data=base64.b64decode(encoded)
+        assert hashlib.sha256(data[:-32]).digest()==data[-32:]
+        cursor=0
+        def integer():
+            nonlocal cursor
+            n=struct.unpack_from('>i',data,cursor)[0];cursor+=4;return n
+        def utf():
+            nonlocal cursor
+            n=struct.unpack_from('>H',data,cursor)[0];cursor+=2
+            value=data[cursor:cursor+n].decode('utf-8');cursor+=n;return value
+        assert integer()==0x474d5735 and integer()==1
+        for _ in range(5): utf()
+        cursor+=8; utf(); utf()
+        size=integer(); rows=[utf() for _ in range(size)]
+        targets=[]
+        for _ in range(integer()):
+            word_id= utf();answer=utf();display=utf();topic=utf()
+            coords=[(integer(),integer()) for _ in range(integer())]
+            targets.append((word_id,coords))
+        def trace(coords):
+            (r,c),(er,ec)=coords[0],coords[-1]
+            x=lambda v: str(round(left+(v+0.5)*(right-left)/size))
+            y=lambda v: str(round(top+(v+0.5)*(bottom-top)/size))
+            adb('shell','input','swipe',x(c),y(r),x(ec),y(er),'350')
+        trace(targets[0][1]); await_screen('1 / 16 found',grid_label)
+        capture('ws41-native-mixed-puzzle.png')
+        tap(find(await_screen('Home'),'Home'))
+        restart(); open_home_action(SOLO)
+        root=await_screen('1 / 16 found',grid_label)
+        restored=json.loads(adb('exec-out','run-as',PACKAGE,'cat','files/gridmates_wordsearch_solo_v1.json'))
+        assert restored['active']['frozen']==encoded and targets[0][0] in restored['active']['found']
+        left,top,right,bottom=check_grid(root,grid_label)
+        for i,(_,coords) in enumerate(targets[1:],2):
+            trace(coords)
+            if i<16:await_screen(f'{i} / 16 found')
+        scroll_to('Play another puzzle'); await_screen('Puzzle complete!','Change size')
+        capture('ws41-native-completion.png')
+        tap(scroll_to('Play another puzzle'))
+        await_screen('0 / 16 found',grid_label)
+        fresh=json.loads(adb('exec-out','run-as',PACKAGE,'cat','files/gridmates_wordsearch_solo_v1.json'))
+        assert fresh['active']['frozen']!=encoded and len(fresh['results'])==1
+        tap(find(await_screen('Home'),'Home'))
+        root=await_screen('Open menu');tap(find(root,'Open menu'))
+        tap(find(await_screen('Settings & backup'),'Settings & backup'))
+        scroll_to('Export backup');capture('ws41-native-backup.png')
+        (EVIDENCE/'receipt.json').write_text(json.dumps({
+            'source':__import__('os').environ.get('WS41_SOURCE'),
+            'install_over_v102':'passed, prior bytes preserved',
+            'native_flow':'Home > Medium > 16 finger traces > restart/resume > completion > same-size Another',
+            'backup_actions':'reachable','viewport':'360dp, 100%, API35'},indent=2))
+    finally:
+        (EVIDENCE/'android-logcat.txt').write_bytes(adb('logcat','-d','-t','500'))
+
+
+if __name__ == "__main__":
+    main()

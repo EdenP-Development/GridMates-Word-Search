@@ -238,8 +238,8 @@ internal fun GridMatesShell(
             modifier = Modifier
                 .fillMaxSize()
                 .padding(contentPadding)
-                .verticalScroll(pageScroll)
-                 .padding(horizontal = 18.dp, vertical = when {
+                .then(if (page == Page.PLAY) Modifier else Modifier.verticalScroll(pageScroll))
+                .padding(horizontal = 18.dp, vertical = when {
                     compactHome -> 3.dp
                     page == Page.PLAY -> 6.dp
                     else -> 20.dp
@@ -323,7 +323,8 @@ internal fun GridMatesShell(
                         showQuickPlay = true,
                         displayMode = displayMode,
                         onDisplayModeChange = onDisplayModeChange,
-                        compactHome = compactHome
+                        compactHome = compactHome,
+                        scrollState = pageScroll
                     )
                 }
                 Page.MY_PUZZLES -> SavedSoloScreen(soloStore,

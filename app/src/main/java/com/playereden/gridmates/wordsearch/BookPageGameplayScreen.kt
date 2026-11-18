@@ -318,11 +318,12 @@ internal fun BookPageGameplayScreen(
                             revision++
                             val step = sessionStore.session(bookId, pageId)
                                 ?.hints?.get(hint.id) ?: 1
+                            val first = hint.positions.first()
+                            val name = hint.display
                             status = when (step) {
-                                1 -> "Hint: look for a " + hint.word.length + "-letter word."
-                                2 -> "Hint: " + hint.word + " starts in row " +
-                                    (hint.positions.first().row + 1) + "."
-                                else -> "Hint: " + hint.word + " is highlighted on the grid."
+                                1 -> "Hint: Look for $name near row ${first.row + 1}."
+                                2 -> "Hint: $name starts at row ${first.row + 1}, column ${first.col + 1}."
+                                else -> "Hint: $name is highlighted on the grid."
                             }
                         }
                     })
