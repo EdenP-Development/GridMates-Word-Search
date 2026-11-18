@@ -57,7 +57,7 @@ class MultiSessionPersistenceAndroidTest {
 
             val exported = store.exportBackup()
             val document = JSONObject(exported)
-            assertEquals(5, document.getInt("schema"))
+            assertEquals(6, document.getInt("schema"))
             assertEquals(2, document.getJSONArray("pausedSolo").length())
             assertEquals(store.profile, SoloStore(ctx, name).profile)
             val clean = SoloStore(ctx, imported)
@@ -82,7 +82,7 @@ class MultiSessionPersistenceAndroidTest {
             val store = SoloStore(ctx, name)
             assertTrue(store.newPuzzle())
             val safe = JSONObject(store.exportBackup())
-            assertEquals(5, safe.getInt("schema"))
+            assertEquals(6, safe.getInt("schema"))
             assertEquals(1, safe.getJSONArray("pausedSolo").length())
             val cases = listOf(
                 JSONObject(safe.toString()).put("pausedSolo", "not-an-array"),

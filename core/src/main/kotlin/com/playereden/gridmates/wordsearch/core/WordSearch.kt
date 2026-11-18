@@ -28,7 +28,10 @@ enum class WordDifficulty(val label: String, val gridSize: Int, val targetCount:
 }
 
 data class GridPoint(val row: Int, val col: Int)
-data class WordTarget(val id: String, val word: String, val positions: List<GridPoint>)
+data class WordTarget(
+    val id: String, val word: String, val positions: List<GridPoint>,
+    val display: String = word, val topicId: String? = null
+)
 
 data class WordSearchPuzzle(
     val id: String,
@@ -37,7 +40,8 @@ data class WordSearchPuzzle(
     val theme: WordTheme,
     val difficulty: WordDifficulty,
     val rows: List<String>,
-    val targets: List<WordTarget>
+    val targets: List<WordTarget>,
+    val displayTitle: String = theme.label
 ) {
     val size: Int get() = rows.size
     fun letter(point: GridPoint): Char? =

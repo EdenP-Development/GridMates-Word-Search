@@ -105,10 +105,10 @@ internal fun Ws16CProfileHub(
                 Text("Your local GridMates profile", color = Muted,
                     style = MaterialTheme.typography.bodyMedium)
                 // Two stable metric lines avoid orphaning "found" on small phones.
-                Text("${profile.completions} puzzles completed", color = Ink,
+                Text("${profile.allCompletions} puzzles completed", color = Ink,
                     style = MaterialTheme.typography.bodySmall,
                     modifier = Modifier.testTag("ws16bu-profile-completed"))
-                Text("${profile.totalWords} words found", color = Ink,
+                Text("${profile.allWords} words found", color = Ink,
                     style = MaterialTheme.typography.bodySmall,
                     modifier = Modifier.testTag("ws16bu-profile-words"))
             }

@@ -64,7 +64,7 @@ internal fun Ws16BHomeActions(
                 .qaTrackBounds("Quick Play")
                 .testTag("ws39-quick-play")
                 .semantics { contentDescription =
-                    "Quick Play. Start a fresh 12 by 12 themed puzzle" },
+                    if (QuickPlayContent.mixed != null) "Quick Play. Choose a size for a fresh puzzle" else "Quick Play. Start a fresh 12 by 12 puzzle" },
             variant = GridMatesFrameVariant.FEATURE,
             onClick = onQuickPlay
         ) {
@@ -83,7 +83,7 @@ internal fun Ws16BHomeActions(
                     Text("Quick Play", color = Forest,
                         style = MaterialTheme.typography.titleSmall,
                         fontWeight = FontWeight.SemiBold)
-                    Text("Fresh themed puzzles · 12×12",
+                    Text(if (QuickPlayContent.mixed != null) "Fresh mixed-word puzzles" else "Fresh themed puzzles · 12×12",
                         color = Muted.copy(alpha = .86f),
                         style = MaterialTheme.typography.labelMedium)
                 }

@@ -81,7 +81,8 @@ internal fun BookPageGameplayScreen(
     onBack: () -> Unit,
     onNextPage: ((bookId: String, pageId: String) -> Unit)? = null,
     showPrototypeArt: Boolean = false,
-    fieldNotesArt: Boolean = false
+    fieldNotesArt: Boolean = false,
+    onBookProgressSaved: () -> Unit = {}
 ) {
     BackHandler(onBack = onBack)
     val book = catalog.book(bookId)
@@ -177,7 +178,7 @@ internal fun BookPageGameplayScreen(
                     practiceFound = practiceFound + word.id
                     status = if (WordSearchRules.complete(board, practiceFound))
                         "Practice complete! Your book results were not changed."
-                    else "✓ " + word.word + " found in practice."
+                    else "✓ " + word.display + " found in practice."
                 } else {
                     // The word was already durably written to GMWS by claim().
                     val current = sessionStore.session(bookId, pageId)
@@ -187,12 +188,13 @@ internal fun BookPageGameplayScreen(
                         val awardCommitted = pageId in
                             progressStore.progress.volumes[bookId]?.completedPageIds.orEmpty()
                         status = if (awardCommitted) {
+                            onBookProgressSaved()
                             if (finalized) "Book page complete! Continue when you're ready."
                             else "Page completed and saved. Cleanup will retry safely."
                         } else "Page solved and saved. The completion record needs recovery."
                     } else {
                         revision++
-                        status = "✓ " + word.word + " found!"
+                        status = "✓ " + word.display + " found!"
                     }
                 }
             }

@@ -27,6 +27,13 @@ import com.playereden.gridmates.wordsearch.core.SoloProgressRules
 import com.playereden.gridmates.wordsearch.core.SoloResult
 import com.playereden.gridmates.wordsearch.core.SoloSessionLibrary
 import com.playereden.gridmates.wordsearch.core.SoloRun
+import com.playereden.gridmates.wordsearch.core.FrozenWordSearchCodec
+import com.playereden.gridmates.wordsearch.core.WordSearchGeneratorV5
+import com.playereden.gridmates.wordsearch.core.BookPageAward
+import com.playereden.gridmates.wordsearch.core.BookRewardRules
+import com.playereden.gridmates.wordsearch.core.BookCatalog
+import com.playereden.gridmates.wordsearch.core.BookLibraryProgress
+import java.util.Base64
 import com.playereden.gridmates.wordsearch.core.WordDifficulty
 import com.playereden.gridmates.wordsearch.core.WordSearchGenerator
 import com.playereden.gridmates.wordsearch.core.WordSearchRules
@@ -170,9 +177,9 @@ internal class SoloStore(
     private fun decode(raw: String): SoloProfile {
         val root = JSONObject(raw)
         val schema = root.getInt("schema")
-        require(schema in 1..5) { "Unsupported save schema" }
+        require(schema in 1..6) { "Unsupported save schema" }
         val active = root.getJSONObject("active")
-        val run = readRun(active)
+        val run = readRun(active, allowV5 = schema >= 6)
         val clean = SoloProgressRules.validate(run)
         val results = root.optJSONArray("results")
         require(!root.has("results") || results != null) { "Malformed Solo completion records" }
@@ -190,7 +197,8 @@ internal class SoloStore(
                 boardSize = item.optString("board", "").takeIf { it.isNotBlank() }
                     ?.let { PuzzleBoardSize.valueOf(it) },
                 challenge = item.optString("challenge", "").takeIf { it.isNotBlank() }
-                    ?.let { PuzzleChallenge.valueOf(it) }
+                    ?.let { PuzzleChallenge.valueOf(it) },
+                quickPackId = item.optString("quickPack", "").takeIf { it.isNotBlank() }
             )
         }
         // Fail closed rather than silently shrink a player's completion history
@@ -211,7 +219,7 @@ internal class SoloStore(
             val item = dailyRaw.getJSONObject(i)
             val entry = DailyProgress(
                 date = item.getString("date"),
-                run = readRun(item.getJSONObject("run")),
+                run = readRun(item.getJSONObject("run"), allowV5 = false),
                 completedAtMs = item.optLong("completedAt", 0L).takeIf { it > 0L }
             )
             daily += DailyChallenge.validate(entry)
@@ -276,7 +284,7 @@ internal class SoloStore(
         // suspended sessions are part of the SAME atomic save and JSON backup.
         // Missing or wrong-type schema-5 data must fail closed, not erase games.
         val pausedRaw = root.optJSONArray("pausedSolo")
-        if (schema == 5) require(pausedRaw != null) { "Missing paused Solo journal" }
+        if (schema >= 5) require(pausedRaw != null) { "Missing paused Solo journal" }
         else require(!root.has("pausedSolo")) { "Unexpected paused Solo journal" }
         val paused = mutableListOf<SoloRun>()
         if (pausedRaw != null) {
@@ -284,7 +292,7 @@ internal class SoloStore(
                 "Too many paused Solo puzzles"
             }
             for (i in 0 until pausedRaw.length()) {
-                val saved = readRun(pausedRaw.getJSONObject(i))
+                val saved = readRun(pausedRaw.getJSONObject(i), allowV5 = schema >= 6)
                 // Reject and protect a corrupt file rather than silently
                 // stripping any found word, hint or elapsed time.
                 require(SoloProgressRules.validate(saved) == saved) {
@@ -293,14 +301,27 @@ internal class SoloStore(
                 paused += saved
             }
         }
+        val bookAwards = mutableListOf<BookPageAward>()
+        if (schema >= 6) {
+            val awards = root.getJSONArray("bookAwards")
+            require(awards.length() <= 12_000)
+            for (i in 0 until awards.length()) {
+                val item = awards.getJSONObject(i)
+                bookAwards += BookPageAward(item.getString("book"), item.getString("page"),
+                    item.getString("puzzle"), item.getString("digest"), item.getInt("words")).validate()
+            }
+        } else require(!root.has("bookAwards"))
+        require(loaded.all { record -> record.quickPackId?.let { pack ->
+            schema >= 6 && record.puzzleId.startsWith("wordsearch:v5:$pack:")
+        } ?: !record.puzzleId.startsWith("wordsearch:v5:") })
         val loadedProfile = SoloProfile(clean, loaded, daily, rawIdentity,
             RaceJournalRules.validateImported(races),
-            DuelJournalRules.validateImported(duels), paused)
+            DuelJournalRules.validateImported(duels), paused, BookRewardRules.validate(bookAwards))
         SoloSessionLibrary.verify(loadedProfile)
         return loadedProfile.copy(identity = WoodlandCollection.sanitize(rawIdentity, loadedProfile))
     }
 
-    private fun readRun(source: JSONObject): SoloRun {
+    private fun readRun(source: JSONObject, allowV5: Boolean): SoloRun {
         val found = source.optJSONArray("found")
         require(!source.has("found") || found != null) { "Malformed found-word progress" }
         val hints = source.optJSONObject("hints")
@@ -315,7 +336,13 @@ internal class SoloStore(
             boardSize = source.optString("board", "").takeIf { it.isNotBlank() }
                 ?.let { PuzzleBoardSize.valueOf(it) },
             challenge = source.optString("challenge", "").takeIf { it.isNotBlank() }
-                ?.let { PuzzleChallenge.valueOf(it) }
+                ?.let { PuzzleChallenge.valueOf(it) },
+            frozen = if (source.has("frozen")) {
+                require(allowV5) { "Legacy/Daily data cannot contain a V5 board" }
+                val encoded = source.getString("frozen")
+                require(encoded.length <= 90_000)
+                FrozenWordSearchCodec.decode(Base64.getDecoder().decode(encoded))
+            } else null
         )
         // "viewport" is purely optional presentation state, including in old
         // schema-5 saves and manual backups. Never reject or overwrite a valid
@@ -356,6 +383,8 @@ internal class SoloStore(
             .put("hints", JSONObject(run.hints))
         run.boardSize?.let { data.put("board", it.name) }
         run.challenge?.let { data.put("challenge", it.name) }
+        run.frozen?.let { data.put("frozen", Base64.getEncoder().encodeToString(
+            FrozenWordSearchCodec.encode(it))) }
         run.viewportBookmark?.takeIf {
             run.boardSize in PuzzleBoardSize.largePresets &&
                 it.puzzleId == run.puzzleId
@@ -379,6 +408,7 @@ internal class SoloStore(
             .apply {
                 r.boardSize?.let { put("board", it.name) }
                 r.challenge?.let { put("challenge", it.name) }
+                r.quickPackId?.let { put("quickPack", it) }
             })
         val daily = JSONArray()
         for (entry in value.dailyEntries) {
@@ -411,9 +441,14 @@ internal class SoloStore(
         }
         val paused = JSONArray()
         for (run in value.pausedSolo) paused.put(writeRun(run))
-        return JSONObject().put("schema", 5).put("active", active)
+        val awards = JSONArray()
+        for (a in value.bookAwards) awards.put(JSONObject().put("book", a.bookId)
+            .put("page", a.pageId).put("puzzle", a.puzzleId)
+            .put("digest", a.boardSha256).put("words", a.wordCount))
+        return JSONObject().put("schema", 6).put("active", active)
             .put("results", results).put("daily", daily).put("identity", identity)
             .put("races", races).put("duels", duels).put("pausedSolo", paused)
+            .put("bookAwards", awards)
             .toString().toByteArray(StandardCharsets.UTF_8)
     }
 
@@ -659,11 +694,46 @@ internal class SoloStore(
         return true
     }
 
-    fun startQuickPlay(): Boolean {
-        // Persist through normal Solo so resume, hints, rewards and backup agree.
+    fun startQuickPlay(board: PuzzleBoardSize = PuzzleBoardSize.BOOK_CLASSIC): Boolean {
+        if (blocked || board !in PuzzleBoardSize.bookPresets) return false
+        val pack = QuickPlayContent.mixed
+        if (pack != null) {
+            return try {
+                val frozen = WordSearchGeneratorV5.generate(pack, board, PuzzleChallenge.CLASSIC, nextSeed())
+                val candidate = SoloRun(frozen.puzzle.theme, frozen.puzzle.difficulty,
+                    frozen.puzzle.seed, boardSize = board, challenge = frozen.challenge, frozen = frozen)
+                val next = SoloSessionLibrary.start(profile, candidate)
+                if (next == null) {
+                    warning = "My Puzzles is full. Remove a paused puzzle to start another."
+                    false
+                } else commitSession(next)
+            } catch (_: Exception) {
+                warning = "This puzzle couldn't start. Your saved games were kept. Please try again."
+                false
+            }
+        }
+        // Release fallback until the new QA editorial content is promoted.
         val choices = WordTheme.entries.filter { it != profile.active.theme }
         val theme = choices[kotlin.random.Random.nextInt(choices.size)]
-        return chooseSolo(theme, PuzzleBoardSize.BOOK_SHORT, PuzzleChallenge.CLASSIC)
+        return chooseSolo(theme, board, PuzzleChallenge.CLASSIC)
+    }
+
+    fun syncBookRewards(catalog: BookCatalog, progress: BookLibraryProgress): Boolean {
+        if (blocked) return false
+        return try {
+            var next = profile
+            val awarded = next.bookAwards.map { it.key }.toHashSet()
+            for ((bookId, saved) in progress.volumes) for (pageId in saved.completedPageIds) {
+                if ("$bookId/$pageId" !in awarded) {
+                    next = BookRewardRules.award(next, catalog, progress, bookId, pageId)
+                    awarded += "$bookId/$pageId"
+                }
+            }
+            if (next == profile) true else commitSession(next)
+        } catch (_: Exception) {
+            warning = "Book progress is saved. Its collection rewards will retry when you return Home."
+            false
+        }
     }
 
     /** Existing callers of the V2 API remain supported for legacy book sizes. */

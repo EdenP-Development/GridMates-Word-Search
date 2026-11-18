@@ -15,13 +15,16 @@ import java.io.File
 class QuickPlayNavigationAndroidTest {
     @get:Rule val compose = createAndroidComposeRule<MainActivity>()
 
-    @Test fun homeQuickPlayStartsARealPuzzleAndReturnsHomeWithResume() {
+    @Test fun homeQuickPlayChoosesMediumAndReturnsHomeWithResume() {
         compose.onNodeWithTag("ws39-quick-play").performScrollTo()
-        snapshot("ws39-quick-play-home.png")
+        snapshot("ws41-quick-play-home.png")
         compose.onNodeWithTag("ws39-quick-play").performClick()
-        compose.onNodeWithText("12×12 · Classic").assertExists()
-        compose.onNodeWithText("0 / 12 found").assertExists()
-        snapshot("ws39-quick-play-puzzle.png")
+        compose.onNodeWithText("16 words · Recommended").assertExists()
+        snapshot("ws41-quick-play-chooser.png")
+        compose.onNodeWithTag("quick-size-15").performClick()
+        compose.onNodeWithText("15×15 · Classic").assertExists()
+        compose.onNodeWithText("0 / 16 found").assertExists()
+        snapshot("ws41-quick-play-puzzle.png")
         compose.onNodeWithText("Home").performClick()
         compose.onNodeWithContentDescription("Continue saved solo word search")
             .performScrollTo().assertExists()

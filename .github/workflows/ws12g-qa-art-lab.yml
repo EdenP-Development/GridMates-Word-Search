@@ -226,6 +226,17 @@ jobs:
         run: python3 -m unittest discover -s tools/asset_pipeline -p 'test_field_notes_study.py' -v
       - name: Compile Android DEBUG with both A/B art studies and RELEASE without them
         run: gradle --no-daemon :core:test :app:assembleDebug :app:assembleRelease --console=plain
+      - name: Verify reviewed QA vocabulary is absent from the release APK
+        run: |
+          python3 - <<'PYCODE'
+          import zipfile
+          with zipfile.ZipFile('app/build/outputs/apk/release/app-release-unsigned.apk') as apk:
+              dex=b''.join(apk.read(n) for n in apk.namelist() if n.endswith('.dex'))
+              for pack in ('en-cozy-mixed-v1','en-woodland-v1','en-space-v1','en-garden-v1','en-everyday-v1'):
+                  assert pack.encode() not in dex, pack
+          print('All five QA pack identifiers/data projections absent from release DEX')
+          PYCODE
+
       - name: Verify stable QA signing certificate for install-over updates
         run: |
           APK=app/build/outputs/apk/debug/app-debug.apk

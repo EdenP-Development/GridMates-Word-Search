@@ -1,0 +1,53 @@
+{
+  "schema_version": 1,
+  "status_note": "Original QA vocabulary selection; no bulk dictionary imported.",
+  "sources": [
+    {
+      "id": "gridmates-internal",
+      "label": "Project-maintained original and illustrative proposed terms",
+      "type": "internal",
+      "license": "project-original",
+      "rights_review": "internal-existing",
+      "attribution": "Project-maintained; draft entries require editorial review.",
+      "source_url": null
+    },
+    {
+      "id": "scowl-research",
+      "label": "SCOWL / English Speller Database",
+      "type": "external-research-only",
+      "license": "verify-current-revision-notice",
+      "rights_review": "not-cleared",
+      "attribution": "No data imported; verify exact copyright notices",
+      "source_url": "https://github.com/en-wl/wordlist"
+    },
+    {
+      "id": "enable-research",
+      "label": "ENABLE word list",
+      "type": "external-research-only",
+      "license": "verify-original-public-domain-provenance",
+      "rights_review": "not-cleared",
+      "attribution": "No data imported",
+      "source_url": null
+    },
+    {
+      "id": "wordfreq-research",
+      "label": "Robyn Speer wordfreq",
+      "type": "external-research-only",
+      "license": "Apache-2.0-code_CC-BY-SA-4.0-data-check",
+      "rights_review": "not-cleared",
+      "attribution": "No data imported; separate code vs. data licensing",
+      "source_url": "https://github.com/rspeer/wordfreq"
+    },
+    {
+      "id": "gridmates-qa-english",
+      "label": "WS41 original QA word selection",
+      "type": "internal",
+      "license": "project-maintained-word-selection",
+      "rights_review": "internal-existing",
+      "attribution": "Original thematic selection and display labels by Codex for GridMates.",
+      "source_url": null,
+      "approval_scope": "assistant-reviewed-qa-only",
+      "owner_release_approved": false
+    }
+  ]
+}

@@ -27,3 +27,7 @@ app/src/debug/assets/ws36/
 
 # Local word-library authoring bytecode
 tools/lexicon/__pycache__/
+
+# Local Python verification caches
+__pycache__/
+*.pyc

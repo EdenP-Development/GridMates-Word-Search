@@ -42,7 +42,7 @@ object WoodlandCollection {
     val ids: Set<String> = byId.keys
 
     fun completedCount(profile: SoloProfile): Int =
-        profile.completions + profile.dailyCompletions
+        profile.completions + profile.dailyCompletions + profile.bookCompletions
 
     fun unlocked(profile: SoloProfile): Set<String> {
         val count = completedCount(profile)
@@ -99,13 +99,13 @@ data class AchievementProgress(
 object WordSearchAchievements {
     val definitions = listOf(
         AchievementDefinition("first_puzzle", "First Page", "Complete your first puzzle.", 1) {
-            it.completions + it.dailyCompletions
+            it.allCompletions
         },
         AchievementDefinition("five_puzzles", "Puzzle Regular", "Complete five puzzles.", 5) {
-            it.completions + it.dailyCompletions
+            it.allCompletions
         },
         AchievementDefinition("twenty_puzzles", "Puzzle Keeper", "Complete twenty puzzles.", 20) {
-            it.completions + it.dailyCompletions
+            it.allCompletions
         },
         AchievementDefinition("one_daily", "Today Counts", "Finish a Daily puzzle.", 1) {
             it.dailyCompletions
@@ -120,7 +120,8 @@ object WordSearchAchievements {
             it.results.count { result -> result.difficulty == WordDifficulty.HARD }
         },
         AchievementDefinition("all_themes", "Three Chapters", "Complete a Solo puzzle in Woodland, Space and Garden.", 3) {
-            it.results.map { result -> result.theme }.distinct().size
+            it.results.filter { result -> result.quickPackId == null }
+                .map { result -> result.theme }.distinct().size
         }
     )
 

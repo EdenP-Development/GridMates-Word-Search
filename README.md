@@ -3,27 +3,25 @@
 An offline-first Android puzzle game with illustrated puzzle books, Solo/Custom,
 Daily, nearby Co-op, Shared Board Race and Speed Duel.
 
-**Current playable QA is v102 / WS39**, with fresh themed Quick Play and complete
-book backup/restore. [Download the tested QA artifact](https://github.com/PlayerEden/GridMates-Word-Search/actions/runs/44192668122/artifacts/14377072810).
-[Build and Android receipt](docs/devlog/2026-11-17_WS39_REPLAY_AND_BOOK_BACKUPS.md).
+**Current playable QA is v103 / WS41.** Mixed three-size Quick Play with 670 QA words,
+63 book pages, portable frozen boards and book-to-collection rewards.
+[Download signed QA APK](https://github.com/PlayerEden/GridMates-Word-Search/actions/runs/44236302499/artifacts/14397980688) · [Build and Android receipt](docs/devlog/2026-11-17_WS41_MIXED_PLAY_AND_BOOK_CONTENT.md).
+Both independent builds, native install-over/playthrough and 24 Android tests passed.
+Owner handset/two-phone and editorial release review remain open.
 
-Current development lives on the cumulative draft feature branch, not `main`.
-The WS40 pass recovers the missing word-library branch and reconciles old plans.
-It changes authoring/tools/docs and does not produce another APK.
+Current development is on [draft PR #152](https://github.com/PlayerEden/GridMates-Word-Search/pull/152), not `main`.
 
 - [Current product roadmap](docs/CURRENT_PRODUCT_ROADMAP.md)
 - [Start here for development](docs/START_HERE.md)
 - [Active handoff](docs/WS14_ACTIVE_HANDOFF_2026-11-09.md)
 - [Development journal](docs/DEVELOPMENT_JOURNAL.md)
-- [GitHub recovery audit](docs/audits/2026-11-17_WS40_GITHUB_PLAN_RECOVERY.md)
-- [Word-library authoring](data/lexicon/README.md)
+- [Recovered GitHub plans and source crosswalk](docs/audits/2026-11-17_WS40_GITHUB_PLAN_RECOVERY.md)
+- [Current QA vocabulary authoring](data/lexicon/authoring/en-v1/README.md)
 - [Master game design](docs/MASTER_GAME_DESIGN.md)
 
-The next content milestone is reviewed immutable packs and the complete mixed
-Quick Play loop, followed by real book catalog growth. Two-phone physical
-acceptance and release gates remain open. Keep the twelve original Woodland
-portraits, stable saves/signing and the shared warm-paper/green/gold identity.
-The separate GridMates: Sudoku app is not modified by this project.
+Continue reviewed vocabulary batches toward 10k/ 30-plus topics and future book
+families. Keep stable saves/signing and the shared warm-paper/green/gold identity.
+GridMates: Sudoku is a separate project.
 
 <details>
 <summary>Historical checkpoints before WS40 — reference only</summary>

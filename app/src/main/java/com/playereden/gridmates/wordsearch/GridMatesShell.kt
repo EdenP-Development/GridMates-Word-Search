@@ -32,6 +32,7 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -99,6 +100,8 @@ internal fun GridMatesShell(
     var homeFocusedBookId by rememberSaveable { mutableStateOf<String?>(null) }
     var homeBookIntent by rememberSaveable { mutableStateOf<String?>(null) }
     var soloSetupReturnPage by rememberSaveable { mutableStateOf(Page.PLAY.name) }
+    var quickChooser by rememberSaveable { mutableStateOf(false) }
+    var quickMessage by remember { mutableStateOf("") }
     // Profile-origin sections should return to Profile; Menu-origin sections to Home.
     var sectionReturnPageName by rememberSaveable { mutableStateOf(Page.PLAY.name) }
     fun openSoloSetup(origin: Page) {
@@ -107,6 +110,17 @@ internal fun GridMatesShell(
         pageName = Page.SOLO_SETUP.name
     }
     val page = Page.entries.firstOrNull { it.name == pageName } ?: Page.PLAY
+    LaunchedEffect(page) {
+        if (page in setOf(Page.PLAY, Page.PROFILE, Page.COLLECTION, Page.RECORDS))
+            qa.syncBookRewards(soloStore)
+    }
+    if (quickChooser) QuickPlayChooser(quickMessage, onPick = { board ->
+        if (soloStore.startQuickPlay(board)) {
+            quickChooser = false
+            quickMessage = ""
+            pageName = Page.PUZZLE.name
+        } else quickMessage = soloStore.warning ?: "This puzzle couldn't start. Try again."
+    }, onDismiss = { quickChooser = false; quickMessage = "" })
     // A new page must start from its top, not inherit the previous tab's
     // scroll offset and appear mysteriously halfway down.
     val pageScroll = remember(page) { ScrollState(0) }
@@ -171,7 +185,8 @@ internal fun GridMatesShell(
                         },
                         showPrototypeArt = qa.enabled,
                         safeContentPadding = contentPadding,
-                        initialBookId = homeBookIntent
+                        initialBookId = homeBookIntent,
+                        onBookProgressSaved = { qa.syncBookRewards(soloStore) }
                     )
                 }
             } else {
@@ -196,7 +211,17 @@ internal fun GridMatesShell(
                         pageName = Page.RECORDS.name
                     },
                     onNewPuzzle = if (page == Page.DAILY_PUZZLE) null
-                        else { { openSoloSetup(Page.PUZZLE) } },
+                        else if (soloStore.profile.active.frozen != null) {
+                            { quickChooser = true }
+                        } else { { openSoloSetup(Page.PUZZLE) } },
+                    onPlayAnother = if (page == Page.PUZZLE && soloStore.profile.active.frozen != null) {
+                        {
+                            if (!soloStore.startQuickPlay(requireNotNull(soloStore.profile.active.boardSize))) {
+                                quickMessage = soloStore.warning ?: "Please try another puzzle."
+                                quickChooser = true
+                            }
+                        }
+                    } else null,
                     showBookArt = qa.enabled
                 )
             }
@@ -288,7 +313,10 @@ internal fun GridMatesShell(
                         onMyPuzzles = { pageName = Page.MY_PUZZLES.name },
                         onNewSolo = { openSoloSetup(Page.PLAY) },
                         onQuickPlay = {
-                            if (soloStore.startQuickPlay()) pageName = Page.PUZZLE.name
+                            if (QuickPlayContent.mixed != null) quickChooser = true
+                            else if (soloStore.startQuickPlay(
+                                    com.playereden.gridmates.wordsearch.core.PuzzleBoardSize.BOOK_SHORT))
+                                pageName = Page.PUZZLE.name
                         },
                         onDaily = { pageName = Page.DAILY.name },
                         onNearby = { pageName = Page.NEARBY.name },
@@ -412,7 +440,7 @@ private fun HomeScreen(store: SoloStore, onHelp: () -> Unit, onSolo: () -> Unit,
         Text(if (finished) "Ready for another?" else "Pick up where you left off",
             style = MaterialTheme.typography.titleMedium,
             fontWeight = FontWeight.Bold, color = Forest, maxLines = 2)
-        Text(run.theme.label + " · " + boardSize + "×" + boardSize +
+        Text((run.frozen?.puzzle?.displayTitle ?: run.theme.label) + " · " + boardSize + "×" + boardSize +
             " · " + challengeLabel +
             (if (finished) " · Complete" else
                 " · " + run.foundIds.size + "/" + puzzle.targets.size + " found"),
@@ -521,7 +549,7 @@ private fun SavedSoloScreen(
         val puzzle = remember(run.puzzleId) { SoloProgressRules.puzzle(run) }
         val dimension = run.boardSize?.cells ?: run.difficulty.gridSize
         val challenge = run.challenge?.label ?: run.difficulty.label
-        Text("${run.theme.label} · ${dimension}×${dimension} · $challenge",
+        Text("${puzzle.displayTitle} · ${dimension}×${dimension} · $challenge",
             color = Forest, style = MaterialTheme.typography.titleSmall,
             fontWeight = FontWeight.SemiBold)
         Text("${run.foundIds.size} of ${puzzle.targets.size} found · ${run.elapsedSeconds / 60}m",

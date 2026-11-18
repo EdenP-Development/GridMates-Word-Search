@@ -4,6 +4,7 @@ import androidx.test.platform.app.InstrumentationRegistry
 import com.playereden.gridmates.wordsearch.core.*
 import org.junit.Assert.*
 import org.junit.Test
+import org.json.JSONObject
 import java.io.File
 
 class QuickPlayAndroidTest {
@@ -19,14 +20,17 @@ class QuickPlayAndroidTest {
     }
 
     @Test fun quickPlayReopensExactBoardAndAwardsNormalCompletionOnce() = withStore { store, name ->
-        val oldTheme = store.profile.active.theme
+        val original = store.profile.active
         assertTrue(store.startQuickPlay())
         val run = store.profile.active
-        assertNotEquals(oldTheme, run.theme)
-        assertEquals(PuzzleBoardSize.BOOK_SHORT, run.boardSize)
+        assertNotNull(run.frozen)
+        assertTrue(store.profile.pausedSolo.any { it.puzzleId == original.puzzleId })
+        assertEquals(PuzzleBoardSize.BOOK_CLASSIC, run.boardSize)
         assertEquals(PuzzleChallenge.CLASSIC, run.challenge)
         val puzzle = SoloProgressRules.puzzle(run)
-        assertEquals(12, puzzle.targets.size)
+        assertEquals(16, puzzle.targets.size)
+        assertEquals("Quick Play", puzzle.displayTitle)
+        assertEquals(4, puzzle.targets.map { it.topicId }.distinct().size)
         val first = puzzle.targets.first()
         assertEquals(ClaimStatus.FOUND,
             store.claim(first.positions.last(), first.positions.first()).status)
@@ -69,4 +73,36 @@ class QuickPlayAndroidTest {
         assertEquals(before, store.profile)
         assertTrue(requireNotNull(store.warning).contains("full"))
     }
+    @Test fun allSizesPreserveCustomPresetAndCorruptSnapshotCannotReplaceProgress() = withStore { store, name ->
+        assertTrue(store.chooseSolo(WordTheme.GARDEN, PuzzleBoardSize.BOOK_BIG, PuzzleChallenge.EXPERT))
+        val preset=store.soloSetupPreset()
+        for(size in PuzzleBoardSize.bookPresets) {
+            assertTrue(store.startQuickPlay(size))
+            assertEquals(preset, store.soloSetupPreset())
+            val p=SoloProgressRules.puzzle(store.profile.active)
+            assertEquals(size.cells,p.size)
+            assertEquals(size.targets,p.targets.size)
+        }
+        val before=store.exportBackup()
+        val broken=JSONObject(before)
+        broken.getJSONObject("active").put("frozen", "bm90LWEtdmFsaWQtYm9hcmQ=")
+        assertTrue(runCatching { store.previewBackup(broken.toString()) }.isFailure)
+        assertEquals(before,store.exportBackup())
+        val context=InstrumentationRegistry.getInstrumentation().targetContext
+        assertEquals(store.profile,SoloStore(context,name).profile)
+    }
+
+    @Test fun schemaFivePartialLegacyBoardUpgradesWithoutChangingItsLetters() = withStore { store, _ ->
+        val run=store.profile.active
+        val p=SoloProgressRules.puzzle(run)
+        val first=p.targets.first()
+        store.claim(first.positions.first(),first.positions.last())
+        val legacy=JSONObject(store.exportBackup()).put("schema",5).apply { remove("bookAwards") }
+        val restored=store.previewBackup(legacy.toString())
+        assertEquals(p,SoloProgressRules.puzzle(restored.active))
+        assertTrue(first.id in restored.active.foundIds)
+        assertTrue(store.restoreBackup(restored))
+        assertEquals(6,JSONObject(store.exportBackup()).getInt("schema"))
+    }
+
 }

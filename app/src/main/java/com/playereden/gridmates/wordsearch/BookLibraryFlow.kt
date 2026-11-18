@@ -40,7 +40,8 @@ internal fun BookLibraryFlow(
     showPrototypeArt: Boolean = false,
     /** Home may send an existing catalog book straight into the next safe page. */
     initialBookId: String? = null,
-    safeContentPadding: PaddingValues = PaddingValues(0.dp)
+    safeContentPadding: PaddingValues = PaddingValues(0.dp),
+    onBookProgressSaved: () -> Unit = {}
 ) {
     val initialBook = initialBookId?.takeIf { catalog.book(it) != null }
     val directFromHome = initialBook != null
@@ -104,6 +105,7 @@ internal fun BookLibraryFlow(
                 boardFontId = boardFontId,
                 showPrototypeArt = showPrototypeArt,
                 fieldNotesArt = fieldNotesArt,
+                onBookProgressSaved = onBookProgressSaved,
                 onBack = {
                     if (directFromHome) onExit()
                     else {

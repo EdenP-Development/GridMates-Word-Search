@@ -33,6 +33,13 @@ internal class QaBookshelfRuntime(context: Context) {
     val sessionStore: BookPageSessionStore?
         get() = pendingSessions.value
 
+    fun syncBookRewards(solo: SoloStore): Boolean {
+        if (!enabled) return true
+        val progress = progressStore ?: return true
+        if (progress.blocked) return false
+        return solo.syncBookRewards(catalog, progress.progress)
+    }
+
     fun setForeground(foreground: Boolean) {
         // Do not generate nine QA puzzles when opening ordinary Solo or Home.
         if (pendingSessions.isInitialized()) {

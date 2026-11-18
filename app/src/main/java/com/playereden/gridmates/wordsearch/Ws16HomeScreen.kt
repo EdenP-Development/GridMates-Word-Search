@@ -177,12 +177,12 @@ internal fun Ws16HomeScreen(
             Spacer(Modifier.width(1.dp).height(31.dp)
                 .background(Color(0x77B78F47)))
             Column(Modifier.weight(1f), verticalArrangement = Arrangement.spacedBy(2.dp)) {
-                Text(if (soloComplete) "New Solo" else "Continue Solo",
+                Text(if (soloComplete) "New puzzle" else "Continue",
                     color = Forest, fontWeight = FontWeight.Bold,
                     style = MaterialTheme.typography.titleSmall)
                 // Keep progress explicit and on one line at normal phone widths.
                 // Grid dimensions remain visible in Custom and the active puzzle.
-                Text((if (soloComplete) "" else "Saved: ") + active.theme.label +
+                Text((if (soloComplete) "" else "Saved: ") + (active.frozen?.puzzle?.displayTitle ?: active.theme.label) +
                     if (soloComplete) " · Finished" else
                         " · ${active.foundIds.size}/${soloPuzzle.targets.size} words",
                     color = Muted, style = MaterialTheme.typography.labelSmall,

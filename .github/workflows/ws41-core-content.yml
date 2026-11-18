@@ -1,0 +1,46 @@
+name: WS41 Reviewed Content and Core Preflight
+on:
+  push:
+    branches: [feature/ws41-mixed-quick-play-2026-11-17]
+    paths:
+      - 'core/**'
+      - 'data/lexicon/**'
+      - 'tools/lexicon/**'
+      - '.github/workflows/ws41-core-content.yml'
+permissions:
+  contents: read
+concurrency:
+  group: ws41-core-${{ github.ref }}
+  cancel-in-progress: true
+jobs:
+  content-core:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v5
+        with:
+          distribution: temurin
+          java-version: '17'
+      - uses: gradle/actions/setup-gradle@v4
+        with:
+          gradle-version: '8.11.1'
+      - name: Verify curation and frozen exports
+        run: |
+          python3 tools/lexicon/audit_recovery.py
+          python3 tools/lexicon/build_qa_curation.py
+          python3 tools/lexicon/render_qa_runtime.py
+          git diff --exit-code
+          python3 -m unittest discover -s tools/lexicon -p 'test_*.py' -q
+      - name: Execute reviewed-pack, saved-board and book reward tests
+        run: gradle --no-daemon :core:test --tests '*ReviewedWordPackV5Test' --tests '*WordSearchGeneratorV2Test' --tests '*WordSearchGeneratorV3Test' --tests '*BookCatalogTest'
+      - name: Preserve new-version fingerprints and test reports
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: GridMates-WS41-Core-Content-Preflight
+          path: |
+            core/build/ws41-v5-goldens.txt
+            core/build/test-results/test/
+          retention-days: 30
+          if-no-files-found: warn
