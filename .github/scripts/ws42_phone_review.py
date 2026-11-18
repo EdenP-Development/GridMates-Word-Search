@@ -43,6 +43,7 @@ def main():
     )
     assert b"versionCode=104 " in ui.adb("shell", "dumpsys", "package", PACKAGE)
     assert before == read_save(), "An install-over must preserve the v103 save bytes"
+    print("v103 to v104 upgrade preserved the 20×20 save", flush=True)
 
     ui.launch()
     roots = ui.await_screen("Open menu", "Open player profile", "Word Search")
@@ -68,8 +69,11 @@ def main():
     tap("Close")
     tap("Home")
 
+    print("Home and 20×20 resume checks passed. Opening the Library.", flush=True)
     ui.open_home_action(LIBRARY)
-    tap("Open Garden")
+    library = ui.await_screen("Open Garden")
+    ui.capture("library.png")
+    ui.tap(ui.find(library, "Open Garden"))
     tap("View pages")
     ui.await_screen("Chapters", "0 of 21 pages completed")
     ui.capture("book-detail.png")
@@ -100,7 +104,4 @@ def main():
 
 
 if __name__ == "__main__":
-    try:
-        main()
-    finally:
-        (ui.EVIDENCE / "android-logcat.txt").write_bytes(ui.adb("logcat", "-d", "-t", "500"))
+    main()

@@ -382,9 +382,9 @@ jobs:
           target: google_apis
           arch: x86_64
           profile: pixel_4
-          ram-size: 1536M
+          ram-size: 3072M
           disable-animations: true
-          emulator-options: -no-window -gpu swiftshader_indirect -no-snapshot -noaudio -no-boot-anim
+          emulator-options: -no-window -gpu swiftshader -no-snapshot -noaudio -no-boot-anim
           script: bash scripts/ws42_handset_emulator.sh
       - name: Upload WS42 native and device evidence
         if: ${{ always() && (github.head_ref || github.ref_name) == 'feature/ws42-handset-polish-2026-11-17' }}

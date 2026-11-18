@@ -5,6 +5,10 @@ package=com.playereden.gridmates.wordsearch.qa
 report=qa-ws42-report
 mkdir -p "$report"
 
+adb logcat -T 1 -s AndroidRuntime ActivityManager lmkd OpenGLRenderer > "$report/android-logcat.txt" 2>&1 &
+logcat_pid=$!
+trap 'kill "$logcat_pid" 2>/dev/null || true' EXIT
+
 python3 .github/scripts/ws42_phone_review.py
 adb install -r -t app/build/outputs/apk/androidTest/debug/app-debug-androidTest.apk
 
