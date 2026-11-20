@@ -1,3 +1,15 @@
+# Parallel Game Design Quality Lab — WS47 bonus origin study (Nov 19)
+
+**Current isolated draft:** `feature/ws47-bonus-origin-and-fragment-audit-2026-11-19` based on WS46 `5eb67d81662f3ea79d8a6f28af5b39177ef5aaa0`, separate from Work's active WS43 branch. [Read full WS47 study](devlog/2026-11-19_WS47_BONUS_ORIGIN_AUDIT.md) and [WS46 baseline report](devlog/2026-11-19_WS46_BONUS_OPPORTUNITY_AUDIT.md) before taking action.
+
+The aim is to measure **real physical placement** of extra words: exclusively inside listed target paths vs crossing target cells vs a separate path with zero shared cells. Piggybacks on the 339 deterministic V1/V2/V3/V5 boards already used in WS46 and compares QA 670+ built-ins vs original built-in-only fallback. **CI and measured results are pending at this checkpoint**, no runtime APK changes and no new install needed. No merge to `main` or Work's feature branches without approval.
+
+**Last safe gameplay build:** WS45 v106 [native Android run #44652880670](https://github.com/PlayerEden/GridMates-Word-Search/actions/runs/44652880670), 18/18 actually executed tests, same signer as v105/v104; owner handset approval pending. WS46's two independent research workflows passed and produced identical original TSVs.
+
+**Next:** Check WS47 exact SHA and both workflow outcomes, download and compare `core/build/ws47-bonus-origin.tsv` results, summarize per-size fragment/crossing/free distributions, post the full receipt to the draft PR and handoff issue #140. Do not change points or bonus dictionary without review.
+
+---
+
 # Parallel Quality Lab WS46 — bonus availability audit (source-only, no gameplay changes)
 
 This Game Design chat's latest **isolated, draft** milestone is `feature/ws46-bonus-opportunity-audit-2026-11-19`, stacked on the WS45 bonus-journal branch ([PR #157](https://github.com/PlayerEden/GridMates-Word-Search/pull/157)) and ultimately Work's WS43 cumulative branch. Read [WS46 reproducible real-board opportunity study](devlog/2026-11-19_WS46_BONUS_OPPORTUNITY_AUDIT.md) and [journal](DEVELOPMENT_JOURNAL.md) before making changes. **This study has no production/gameplay changes and no new APK to install.**
