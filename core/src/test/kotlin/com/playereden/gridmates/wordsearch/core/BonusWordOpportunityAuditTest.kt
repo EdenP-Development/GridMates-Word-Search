@@ -153,7 +153,7 @@ class BonusWordOpportunityAuditTest {
             }
             repeat(5) { seed ->
                 val board = WordSearchGeneratorV3.generate(
-                    theme, PuzzleBoardSize.BOOK_GIANT, PuzzleChallenge.CLASSIC,
+                    theme, PuzzleBoardSize.BOOK_GRAND, PuzzleChallenge.CLASSIC,
                     seed.toLong())
                 allTrials += trial("solo_v3_25x25_${theme.name}", board)
             }
