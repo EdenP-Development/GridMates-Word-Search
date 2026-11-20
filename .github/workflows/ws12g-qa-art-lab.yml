@@ -194,6 +194,8 @@ jobs:
         run: python3 -m unittest discover -s tools/asset_pipeline -p 'test_ws47_bonus_origin.py' -v
       - name: WS49 Fall QA-only naturally recognized bonus coverage guard
         run: python3 -m unittest discover -s tools/asset_pipeline -p 'test_ws49_fall_natural_coverage.py' -v
+      - name: WS50 Verify thematic chapter map and QA-only manuscript boundaries
+        run: python3 -m unittest discover -s tools/asset_pipeline -p 'test_ws50_chapter_map.py' -v
       - name: WS16BU compact gallery/pager and profile readability guards
         run: python3 -m unittest discover -s tools/asset_pipeline -p 'test_ws16bu_compact_gallery.py' -v
       - name: WS16BV compact bundled Fonts and license access guards
@@ -493,5 +495,16 @@ jobs:
             core/build/ws47-bonus-origin.tsv
             core/build/ws49-fall-natural-increment.tsv
             core/build/ws49-fall-candidate-frequencies.tsv
+          if-no-files-found: error
+          retention-days: 30
+
+      - name: WS50 Upload chapter-map and Birdsong three-page manuscript reports
+        if: ${{ always() && (github.head_ref || github.ref_name) == 'feature/ws50-chapter-recipe-and-birdsong-lab-2026-11-19' }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: GridMates-WS50-Chapter-Recipe-QA
+          path: |
+            core/build/ws50-chapter-pool-coverage.tsv
+            core/build/ws50-birdsong-qa-preview.tsv
           if-no-files-found: error
           retention-days: 30
