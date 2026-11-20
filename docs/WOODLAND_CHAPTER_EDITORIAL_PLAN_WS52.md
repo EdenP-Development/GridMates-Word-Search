@@ -1,6 +1,11 @@
 # WS52 — Woodland chapter manuscripts: five more chapters, exact-source QA
 
-> **Stage:** Source-authored, isolated **QA manuscripts only**; Android/core and independent art/release tests **pending** at initial commit. Not an installed feature, book edition, owner approval or published content.
+> **Stage:** **15 real reproducible V5 boards verified in both independent QA workflows; editorial approval withheld** because of cross-chapter repetition and theme-fit issues. No playable content or release approval.
+
+## WS52 measured editorial outcome
+Both independent [Android/core #44670927912](https://github.com/PlayerEden/GridMates-Word-Search/actions/runs/44670927912) and [art/release #44670927977](https://github.com/PlayerEden/GridMates-Word-Search/actions/runs/44670927977) **passed** at `ee3c390fb62813273eff07be4da2e18259c09bf5`. All 15 frozen grids, pack IDs, SHA hashes and exact-target list digests are in the [verified WS52 journal](devlog/2026-11-20_WS52_WOODLAND_FIVE_CHAPTER_QA.md); both pipeline report files matched byte-for-byte.
+
+The biggest **book-quality hold** is repetition across chapter boundaries: Chapter 3 and 7 share **48 of 52** words, Chapters 6 and 7 share 33, Chapters 6 and 8 share 30. The current Chapter 3 and 7 maps use precisely the same two subtopics. **Do not publish** or declare completed editorial design simply because V5 generates the pages. The next chapter-scope diversification must be a **new versioned editorial proposal**, not an in-place rewrite of old QA/playable pages or original WS50 results.
 
 ## Reason for the pass
 The user chose **curated chapters and permanent, repeatable puzzle pages** instead of a randomly assembled list unrelated to a chapter title. WS50 scoped 18 chapter names to existing topic tags. WS51 actually produced a three-page Birdsong pilot, using 52 distinct targets across 12/16/24-word pages, with easy-to-hard progression; the 23 new Birdsong proposals were still not cleared for release.
