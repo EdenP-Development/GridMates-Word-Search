@@ -1,6 +1,25 @@
 # WS50 — Thematic chapter content plan and Birdsong three-page QA prototype
 
-> **Status:** Source-authored prototype in isolated draft; Kotlin and independent CI **pending**. No release APK or playable-book mutation intended.
+> **Status:** **VERIFIED TEST-ONLY PROTOTYPE.** Both independent GitHub workflows passed at exact test source `0ea6d03bd0e4ef1c4e6e9f4aa700b4d7f8cc2e83`; two TSV report payloads match byte-for-byte. No playable-book, runtime, art or saved-page mutation.
+
+## Verified execution, full 18-chapter coverage and three inspectable Birdsong pages
+
+- **Exact test source SHA:** `0ea6d03bd0e4ef1c4e6e9f4aa700b4d7f8cc2e83` (initial source commit `d60201278c41a5380cecb70ec3d773b6ecdce7a6` plus one Python source-guard literal correction). Full independent **Android/core CI [#44666632435](https://github.com/PlayerEden/GridMates-Word-Search/actions/runs/44666632435) SUCCESS** and **art/debug/release CI [#44666632455](https://github.com/PlayerEden/GridMates-Word-Search/actions/runs/44666632455) SUCCESS**. Kotlin tests including exact Birdsong frozen reconstruction and three WS50 Python contract checks passed in both.
+- Standard research archive [artifact #14597944207](https://github.com/PlayerEden/GridMates-Word-Search/actions/runs/44666632435/artifacts/14597944207); independent archive [artifact #14598131567](https://github.com/PlayerEden/GridMates-Word-Search/actions/runs/44666632455/artifacts/14598131567). **Both TSV files byte-identical across the two jobs**; outer ZIP bytes differ because archive metadata differs.
+- `ws50-chapter-pool-coverage.tsv`: **18/18** actual chapter names have source-backed pools of 29–145 candidate words and enough length/familiarity candidates for the three book sizes. **1,873 bytes**, SHA-256 `5170430492caf409fe51a0fc6d26c5b768a43f3652c06021f37fa7b11d4bec0c`. Note: counts refer to eligible source pool sizes and do **not** independently prove three balanced, distinct, finished pages for all 18 chapters.
+- `ws50-birdsong-qa-preview.tsv`: **3 real V5 generated, validated and reproducible QA-only frozen candidates**, 2,024 bytes, SHA-256 `6acd497bd46de9c4b7696c4a3eb1cd5e208d840773fb7691a3ea001047970ae6`.
+
+| Birdsong page | Board/target count | Difficulty | Fixed seed | Board SHA-256 |
+| --- | --- | --- | --- | --- |
+| 1. Forest Birdwatching | 12×12 / 12 | Relaxed | 5171 | `1a04687169ebe6a1370de90485b05f1dd6431ca0f4dfb1cf19474908aab3e702` |
+| 2. Feathers and Flight | 15×15 / 16 | Classic | 5208 | `c0676216952ff41dfa33610b297c1e5a1f0e37ab419769dd327ea09c3db83968` |
+| 3. Birdsong Challenge | 20×20 / 24 | Classic | 5245 | `ac7877ae63645bb52cb48ce98cfef849e63891a1626cdb7e211d7ef8977befec` |
+
+The preview uses pack ID `en-woodland-birdsong-qa-v1`, whose source is **29 original Woodland/birds tagged QA words**. All 52 target slots are in the bird category; the three pages collectively use all 29 distinct available bird answers. Adjacent overlaps are **6 words** for Page 1→2 and **11 words** for Page 2→3. **52 slots from 29 words necessarily require repeated appearances**, so publisher/editor should extend familiar bird/birdlife word variety, select less repetitive lists and especially check Page 1 word familiarity before adopting a polished volume. These repeats are not a test failure but they are a deliberate editorial hold.
+
+**No playable Library page was added, no existing 63 page IDs/word layouts changed, no production content was cleared or approved.** A green Android build is not a physical handset signoff. Runtime generation, save files, bonus-word scoring and release vocabulary remain unchanged; the QA research pack/seed/manifest identity belongs to the lab and must not be silently promoted as production.
+
+**Next exact action:** Plan more familiar bird-related (not just bird-species) candidate vocabulary and a page-level target-selection/repetition budget with human editorial review. Then use a *new* QA content ID/new book volume instead of rewriting old QA progress. Other 17 mapped chapters still require individual board audit and user review before production.
 
 ## Who, what, where, why
 - **Owner direction:** Library books should be curated chapter experiences, not randomly assorted theme words under unrelated chapter titles. Keep puzzle generation to place words, freeze approved pages, and maintain random Quick Play. "Let's plan it and get to it."
