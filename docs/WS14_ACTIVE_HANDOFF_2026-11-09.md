@@ -1,3 +1,15 @@
+# WS47 Quality Lab — verified independent side-word origin audit (read first)
+
+[Draft PR #159](https://github.com/PlayerEden/GridMates-Word-Search/pull/159) is a **non-gameplay** branch stacked on WS46→WS45; Work's active WS43 and `main` are untouched. The **executed/tested code SHA is `ae3ab61f6826a8535609736d0e910bf8126469f7`**; subsequent edits are documentation only and don't alter test code.
+
+**Result:** Same 339 seeded V1/V2/V3/V5 boards as WS46. Among **887** candidate bonus-word/board opportunities under QA 670+legacy vocabulary, **590 (66.5%) were solely target fragments, 263 (29.7%) crossing-only, and 34 (3.8%) had a fully separate route**. Under built-in-only fallback, **171 of 225 (76%) fragments**, 50 crossing, only **4 (1.8%)** independent routes. **Daily-shaped 8×8: zero truly independent bonuses in all 72 sampled boards** under either vocabulary. These are *potential* paths, not actual player finds.
+
+**Exact source CI:** [Android/core #44657363467](https://github.com/PlayerEden/GridMates-Word-Search/actions/runs/44657363467) 97 successful steps, no fails; [independent art/release #44657363518](https://github.com/PlayerEden/GridMates-Word-Search/actions/runs/44657363518) 96 successful, no fails. Their original and new 339-board report TSVs are byte-identical. [New origin report artifact](https://github.com/PlayerEden/GridMates-Word-Search/actions/runs/44657363467/artifacts/14593079788), [full methods and numerical results](devlog/2026-11-19_WS47_BONUS_ORIGIN_AUDIT.md).
+
+**Recommendation to Work:** Don't remove earned bonuses or change the immutable prior boards. If truly independent hidden words are desired, design a **new versioned generator** for future puzzle instances with optional curated non-target placements; editorial QA and actual handset test remain required. Don't auto-promote QA 670 into release. **No new APK in WS47.** Latest actual Android-tested bonus scoring candidate is WS45 **v106** ([18/18 executed](https://github.com/PlayerEden/GridMates-Word-Search/actions/runs/44652880670)), still pending owner phone approval. Work should inspect [handoff issue #140](https://github.com/PlayerEden/GridMates-Word-Search/issues/140), PRs #156–#159, and not auto-merge.
+
+---
+
 # Parallel Game Design Quality Lab — WS47 bonus origin study (Nov 19)
 
 **Current isolated draft:** `feature/ws47-bonus-origin-and-fragment-audit-2026-11-19` based on WS46 `5eb67d81662f3ea79d8a6f28af5b39177ef5aaa0`, separate from Work's active WS43 branch. [Read full WS47 study](devlog/2026-11-19_WS47_BONUS_ORIGIN_AUDIT.md) and [WS46 baseline report](devlog/2026-11-19_WS46_BONUS_OPPORTUNITY_AUDIT.md) before taking action.
