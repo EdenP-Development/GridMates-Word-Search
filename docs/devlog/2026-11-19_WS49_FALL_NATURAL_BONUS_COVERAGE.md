@@ -1,6 +1,30 @@
 # WS49 — Natural bonus opportunities from Fall QA vocabulary
 
-> **Status:** New isolated test-only comparison for the same 339 generated boards. Source, independent CI report outputs and numerical gain remain **pending exact-source CI**. No APK version, runtime dictionary or game rule changed.
+> **Status:** **VERIFIED RESEARCH.** Both independent CI workflows succeeded at exact test SHA `57632ca1e8b08ace516ae76e2e0a2ba13f89e970`; all four generated TSV payloads match byte-for-byte. No APK runtime, dictionary, generator, save or game rule changed.
+
+## Verified actual WS49 results — two independent CI artifacts
+
+**Research code tested:** `57632ca1e8b08ace516ae76e2e0a2ba13f89e970`. [Standard Android/core run #44663712025](https://github.com/PlayerEden/GridMates-Word-Search/actions/runs/44663712025) **SUCCESS**; [independent artwork/release run #44663712042](https://github.com/PlayerEden/GridMates-Word-Search/actions/runs/44663712042) **SUCCESS**. Both ran the three WS49 source-contract tests, Kotlin/core tests and their existing build gates without failures. No WS49-specific Android emulator instrumentation or physical owner testing was performed; the older WS45 v106 Android 18/18 actual-test evidence is a separate checkpoint.
+
+- Standard report ZIP [artifact #14597231420](https://github.com/PlayerEden/GridMates-Word-Search/actions/runs/44663712025/artifacts/14597231420) and independent report ZIP [artifact #14597071925](https://github.com/PlayerEden/GridMates-Word-Search/actions/runs/44663712042/artifacts/14597071925) each contain **four internally byte-identical TSV files**; ZIP container-level hashes are different due to archive metadata.
+- Original WS46 `ws46-bonus-opportunities.tsv`: 5,189 bytes, SHA-256 `3686f509174cc690fa3024bd3e12a9c1c9cf36cb8998cdcc68bd726531932a9e`, identical to earlier WS46/47 proof.
+- Original WS47 `ws47-bonus-origin.tsv`: 5,628 bytes, SHA-256 `d5281e089265a295b811cb54d664a37e6ada66a7a25b71ee8fe4e3fbbea01887`, unchanged.
+- New `ws49-fall-natural-increment.tsv`: 1,343 bytes, SHA-256 `2ee2cafa3f087e21f712ea42aa9534681b40736dd1eae1e7b8302c7a0b45206e`.
+- New `ws49-fall-candidate-frequencies.tsv`: 432 bytes, SHA-256 `e2cdef3c3a1ff218c5a418973205391f038a70163b56066122cb883251f1c2cb`.
+
+**Exactly 339 actual, unmodified generated boards:** 887 baseline QA+built-in *distinct bonus-word/board opportunities* increased to **933**, gaining **46 opportunities (5.2%)** from 150 existing Fall QA words. **43/339 boards (12.7%)** gained any additional recognized word; **296/339** gained none. These are physical opportunities, *not player-observed finds*, and may coexist on the same board.
+
+| Generator family | Boards | Before | Increment | Boards gaining | Fragment | Crossing | Independent |
+| --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
+| V5 12/15/20 | 216 | 635 | 32 | 31 | 23 | 9 | 0 |
+| Daily-shaped V1 8x8 | 72 | 23 | 0 | 0 | 0 | 0 | 0 |
+| Legacy V2 15x15 | 36 | 78 | 9 | 7 | 6 | 2 | 1 |
+| Legacy V3 25x25 | 15 | 151 | 5 | 5 | 3 | 2 | 0 |
+| **All** | **339** | **887** | **46** | **43** | **32** | **13** | **1** |
+
+**Only eight distinct newly recognized Fall words** appeared across the 339 boards: CORN (30 boards; 27 fragment/3 crossing), CHAI (4), STEW (4), CLOVE (2), GOOSE (2), WOOL (2; one free path), AMBER (1), MIST (1). The 150 Fall answers have 33 overlaps with the current 670-answer mixed pack; 117 are new to the existing QA+built-in set, of which 116 satisfy 4–16 bonus length. Most new matches were short fragments; no independent new Fall match on V5 or 8x8 sampled boards. Every match is still one optional +15 when actually traced; no category has different payout.
+
+**Decision:** The owner does not want planted bonus words. Do not expand or release the Fall QA pack merely for the bonus feature based on this modest incidental gain. Editorially explore broader **familiar 4–7-letter everyday vocabulary**, with explicit owner release approval and source/license checks, and validate it against unmodified boards before considering future dictionary versions. Do not claim any newly identified word is editor-cleared for public release, do not modify the generator, and do not retroactively change score history.
 
 ## Owner request and context
 - **Decision:** The player wants the generator to produce ordinary word-search puzzles. Recognize valid extra words that arise **naturally**, not intentionally planted bonus words. WS48 [PR #160](https://github.com/PlayerEden/GridMates-Word-Search/pull/160) and [owner-policy record](2026-11-19_WS48_NATURAL_BONUS_POLICY.md) prohibit forced hidden-word quotas.
