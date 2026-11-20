@@ -1,5 +1,6 @@
 package com.playereden.gridmates.wordsearch
 
+import com.playereden.gridmates.wordsearch.core.BonusWordRules
 import com.playereden.gridmates.wordsearch.core.SoloRun
 import com.playereden.gridmates.wordsearch.core.WordSearchPuzzle
 
@@ -25,6 +26,10 @@ internal object PuzzleResultShare {
             puzzle.displayTitle + " · " + size + "×" + size + " · " + challenge,
             puzzle.targets.size.toString() + " words found · " + minutes + ":" + sec,
             hintLine,
+            "Score " + BonusWordRules.points(puzzle.targets.size,
+                run.bonusWords.size, true) + " · " +
+                run.bonusWords.size + " bonus " +
+                (if (run.bonusWords.size == 1) "word" else "words"),
             "Good puzzles. Good company."
         ).joinToString("\n")
     }

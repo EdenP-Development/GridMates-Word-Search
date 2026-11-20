@@ -257,6 +257,9 @@ internal fun SoloRecordsScreen(profile: SoloProfile) {
                         (record.elapsedSeconds % 60L).toString() + "s · " +
                         record.hintSteps.toString() + " hint steps",
                         style = MaterialTheme.typography.bodyMedium)
+                    Text("Score " + record.points + " · " + record.bonusWordCount +
+                        " bonus " + (if (record.bonusWordCount == 1) "word" else "words"),
+                        color = Forest, style = MaterialTheme.typography.bodySmall)
                     Text(
                         DateFormat.getDateTimeInstance(DateFormat.MEDIUM, DateFormat.SHORT)
                             .format(Date(record.completedAtMs)),

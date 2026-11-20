@@ -89,6 +89,8 @@ import com.playereden.gridmates.wordsearch.core.LargeBoardBookmark
 import com.playereden.gridmates.wordsearch.core.BoardRenderWindow
 import com.playereden.gridmates.wordsearch.core.PaperbackPageLayout
 import com.playereden.gridmates.wordsearch.core.PaperbackWordIndex
+import com.playereden.gridmates.wordsearch.core.BonusClaimStatus
+import com.playereden.gridmates.wordsearch.core.BonusWordRules
 import com.playereden.gridmates.wordsearch.core.ClaimStatus
 import com.playereden.gridmates.wordsearch.core.DragDirection
 import com.playereden.gridmates.wordsearch.core.GridPoint
@@ -259,7 +261,21 @@ internal fun WordSearchScreen(
                     if (soundEnabled) view.playSoundEffect(SoundEffectConstants.CLICK)
                 }
                 ClaimStatus.ALREADY_FOUND -> status = "Already found. Nice work!"
-                ClaimStatus.INVALID -> status = "Try a word from the list."
+                ClaimStatus.INVALID -> {
+                    val extra = if (!finished) store.claimSideWord(start, end, daily)
+                        else null
+                    status = when (extra?.status) {
+                        BonusClaimStatus.FOUND -> {
+                            if (hapticsEnabled) haptics.performHapticFeedback(
+                                HapticFeedbackType.LongPress)
+                            if (soundEnabled) view.playSoundEffect(SoundEffectConstants.CLICK)
+                            "✓ Bonus word ${extra.word}! +${BonusWordRules.SIDE_WORD_POINTS} points"
+                        }
+                        BonusClaimStatus.ALREADY_FOUND -> "Bonus word already found."
+                        BonusClaimStatus.FULL -> "All 12 bonus-word slots collected!"
+                        else -> "Try a listed word or discover a hidden bonus word."
+                    }
+                }
             }
         }
         val onStep: (Int) -> Unit = { count ->
@@ -325,7 +341,9 @@ internal fun WordSearchScreen(
                 val reviewingClues = hintsRemaining == 0 && usedHintSteps > 0
                 PuzzleProgressPanel(
                     label = "${found.size} / ${puzzle.targets.size} found",
-                    detail = "Elapsed $timeLabel",
+                    detail = "Score " + BonusWordRules.points(
+                        found.size, run.bonusWords.size, finished) +
+                        " · Elapsed $timeLabel",
                     found = found.size,
                     total = puzzle.targets.size
                 ) {
@@ -498,6 +516,14 @@ private fun CompletionPanel(
                 " · " + (run.challenge?.label ?: run.difficulty.label),
                 color = Gold, style = MaterialTheme.typography.labelLarge)
             PaperProgress(puzzle.targets.size, puzzle.targets.size)
+            Text(
+                "Score " + BonusWordRules.points(puzzle.targets.size,
+                    run.bonusWords.size, true) + " points · " +
+                    run.bonusWords.size + " bonus " +
+                    (if (run.bonusWords.size == 1) "word" else "words"),
+                color = Forest, style = MaterialTheme.typography.bodyMedium,
+                fontWeight = FontWeight.SemiBold
+            )
             HorizontalDivider(color = GridRule)
             Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(5.dp)) {
                 listOf(

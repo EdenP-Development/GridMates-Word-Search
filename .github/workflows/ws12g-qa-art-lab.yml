@@ -184,6 +184,8 @@ jobs:
         run: python3 -m unittest discover -s tools/asset_pipeline -p 'test_ws30_medal_symbols.py' -v
       - name: WS31 Advanced milestone engravings and achievement integrity
         run: python3 -m unittest discover -s tools/asset_pipeline -p 'test_ws31_milestone_engraving.py' -v
+      - name: WS44 Verified side-word scoring and local save contract
+        run: python3 -m unittest discover -s tools/asset_pipeline -p 'test_ws44_side_word_scoring.py' -v
       - name: WS16BU compact gallery/pager and profile readability guards
         run: python3 -m unittest discover -s tools/asset_pipeline -p 'test_ws16bu_compact_gallery.py' -v
       - name: WS16BV compact bundled Fonts and license access guards
