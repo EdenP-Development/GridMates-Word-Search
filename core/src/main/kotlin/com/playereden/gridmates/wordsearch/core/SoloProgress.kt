@@ -16,7 +16,9 @@ data class SoloRun(
     /** Optional, per-puzzle viewing position. Never contributes to puzzle identity. */
     val viewportBookmark: LargeBoardBookmark? = null,
     /** V5 exact board and reviewed pack identity; old generators remain unchanged. */
-    val frozen: FrozenWordSearch? = null
+    val frozen: FrozenWordSearch? = null,
+    /** Optional WS44 side finds. Preserved for active, paused and Daily runs. */
+    val bonusWords: Set<String> = emptySet()
 ) {
     val puzzleId: String get() =
         if (frozen != null) frozen.puzzle.id
@@ -37,9 +39,12 @@ data class SoloResult(
     val completedAtMs: Long,
     val boardSize: PuzzleBoardSize? = null,
     val challenge: PuzzleChallenge? = null,
-    val quickPackId: String? = null
+    val quickPackId: String? = null,
+    /** Count recorded on completion; old records default to zero side finds. */
+    val bonusWordCount: Int = 0
 ) {
     val assisted: Boolean get() = hintSteps > 0
+    val points: Int get() = BonusWordRules.points(wordCount, bonusWordCount, true)
 }
 
 data class SoloProfile(
@@ -161,6 +166,7 @@ object SoloProgressRules {
 
     fun validate(run: SoloRun): SoloRun {
         val puzzle = puzzle(run)
+        BonusWordRules.validateSaved(puzzle, run.bonusWords)
         val allowed = puzzle.targets.map { it.id }.toSet()
         return run.copy(
             foundIds = run.foundIds.intersect(allowed),
@@ -216,7 +222,8 @@ object SoloProgressRules {
             completedAtMs = nowMs,
             boardSize = run.boardSize,
             challenge = run.challenge,
-            quickPackId = run.frozen?.packId
+            quickPackId = run.frozen?.packId,
+            bonusWordCount = run.bonusWords.size
         )
         return profile.copy(results = listOf(record) + profile.results)
     }
