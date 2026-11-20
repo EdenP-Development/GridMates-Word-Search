@@ -1,3 +1,13 @@
+# Parallel Game Design lab — WS45 v106 optional bonus journal + executed scoring QA candidate
+
+**Source lineage:** isolated `feature/ws45-bonus-android-reliability-2026-11-19` from [WS44 PR #156](https://github.com/PlayerEden/GridMates-Word-Search/pull/156), base SHA `9c7eddea7967a61f1d353f1466dcc9a0328dd636`; Work's active WS43 branch remains unchanged. [WS45 development entry](devlog/2026-11-19_WS45_BONUS_RUNTIME_QA_AND_DISCOVERY.md). **Full workflows/native test evidence pending** at time of writing; do not call v106 owner-tested or release-ready.
+
+The previous WS44/v105 candidate has two successful CI builds, matched APK identities and preserved schema-6 saves, but Android bonus test was compiled only. WS45 adds an optional `Options → Extra words` saved-word journal and a true Android emulator invocation of side word + Solo/Quick Play/Daily/backup/schema tests. v106 uses same QA signer and no new dictionary/package approvals. No artwork, multiplayer scoring, books, local saved IDs or snapshots changed.
+
+**Work next action:** inspect cumulative draft WS45 and CI emulator/test receipts, independently evaluate and cherry-pick/rebase only when wanted; avoid merging or public shipping without owner sign-off. Last prior reliable built QA fallback is **WS44 v105** ([Android run #44649467539](https://github.com/PlayerEden/GridMates-Word-Search/actions/runs/44649467539)), with v104's broader Android emulator suite recorded below. No user phone validation of v105/v106 yet.
+
+---
+
 # Active development handoff — WS43 Fall authoring verified
 
 [Fall pack and CI receipt](devlog/2026-11-18_WS43_FALL_VOCABULARY.md) · [draft PR #154](https://github.com/PlayerEden/GridMates-Word-Search/pull/154), tested content source `5c279ae9fde53bb95718ae84f1e82807ea1e67cc`. [Vocabulary CI](https://github.com/PlayerEden/GridMates-Word-Search/actions/runs/44251550015) passed all 28 tests. The immutable pack has 150 answers across six subtopics. The current installed vocabularies and books are tracked by the v104 receipt below.
