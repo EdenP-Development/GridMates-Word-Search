@@ -1,3 +1,17 @@
+# WS52 Woodland 5-chapter authored manuscripts — isolated parallel QA pass
+
+**Owner goal:** Structured chapter puzzle books with curated lists and immutable played pages, while Quick Play remains fresh/random. Bonus words remain natural, never planted. Do not silently replace old book IDs/saves.
+
+**Current separate draft branch:** `feature/ws52-woodland-five-chapter-manuscripts-2026-11-20`, stacked on WS51 [draft PR #163](https://github.com/PlayerEden/GridMates-Word-Search/pull/163); no Work/main modifications. [Editorial scope/design for all five chapters](WOODLAND_CHAPTER_EDITORIAL_PLAN_WS52.md) · [pass log](devlog/2026-11-20_WS52_WOODLAND_FIVE_CHAPTER_QA.md).
+
+**What it actually authors:** 15 new test-only page target lists (five chapters × three sizes 12/16/24), **260 target slots / 52 distinct in each chapter / only 124 different across the five** due shared vocabulary. All 260 are exact original Woodland QA entries with unchanged IDs/topics/spellings; no new words, no release approvals. Fixed page-specific V5 QA pack IDs, seeded frozen puzzle generator regression, exact BookCatalog+BookPageSession reconstruction; two independent workflow artifacts with grid rows and hashes, source and repetition audit.
+
+**Risk/owner editorial hold:** Cross-chapter repetition and broad category-to-title matches need actual semantic editing, and the exact 15-board V5 generation **is CI-pending** at this entry. WS51 Birdsong is separately verified test-only with 52 unique 3-page targets and 23 unapproved birdlife candidates. Existing 63 game QA book pages, saves, achievements, runtime/core generation, score rules, art, Nearby, QA signing and release packs unchanged. No phone test or publication.
+
+**Next Work action:** Review 15 page reports once both independent CI runs actually complete, triage repeated words across book chapters and revise chapter scopes or add/editorially approve new vocabulary. Publish only a *new versioned edition* with owner and Android migration signoff, not in-place swaps.
+
+---
+
 # WS51 verified Birdsong: 3 chapter pages, 52 distinct answers, no repeated targets
 
 **Owner direction:** Books contain thematically curated, permanent pages; Quick Play remains random, Daily deterministic, incidental +15 bonus words are *not planted*. Do not silently replace previously saved book puzzles.
