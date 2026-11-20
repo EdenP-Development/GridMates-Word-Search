@@ -1,6 +1,6 @@
 # WS51 — Birdsong: three progressively harder, distinct-word page manuscripts
 
-> **Stage:** Source-authored, isolated **QA candidate only**; generated-board CI pending at initial commit. Not an active game chapter or approved publication.
+> **Stage:** **Verified QA prototype (not published).** Exact-source V5 generation and BookCatalog checks passed in both independent Android/Art pipelines; all three board digests are recorded in the WS51 journal. The 23 new words remain unapproved editorial candidates.
 
 ## Player goal and design decision
 The owner wants collectible, curated chapter puzzles with permanent boards after review, not general themed randomness masquerading as chapter themes. WS50 proved a 29-word species-only Birdsong chapter can build exact frozen pages, but its first page drew KINGFISHER, CHICKADEE, NUTHATCH, WARBLER and ORIOLE and shared **6** words with the second page and **11** with the third. This does not feel like good difficulty progression.
