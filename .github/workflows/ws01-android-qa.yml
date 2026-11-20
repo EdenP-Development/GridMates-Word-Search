@@ -518,3 +518,34 @@ jobs:
           path: qa-library-report/
           if-no-files-found: ignore
           retention-days: 3
+
+      - name: WS45 Prepare focused score and save instrumentation
+        if: ${{ (github.head_ref || github.ref_name) == 'feature/ws45-bonus-android-reliability-2026-11-19' }}
+        run: |
+          gradle --no-daemon :app:assembleDebugAndroidTest
+          echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=static_node"' | sudo tee /etc/udev/rules.d/99-kvm4all.rules
+          sudo udevadm control --reload-rules
+          sudo udevadm trigger --name-match=kvm
+
+      - name: WS45 Run side-word, Solo, Daily and backup regression on Android
+        if: ${{ (github.head_ref || github.ref_name) == 'feature/ws45-bonus-android-reliability-2026-11-19' }}
+        uses: reactivecircus/android-emulator-runner@v2
+        with:
+          api-level: 35
+          target: google_apis
+          arch: x86_64
+          profile: pixel_4
+          avd-name: ws45-bonus-regression
+          ram-size: 3072M
+          disable-animations: true
+          emulator-options: -no-window -gpu swiftshader -no-snapshot -noaudio -no-boot-anim
+          script: bash scripts/ws45_bonus_emulator.sh
+
+      - name: WS45 Upload actual Android scoring and persistence evidence
+        if: ${{ always() && (github.head_ref || github.ref_name) == 'feature/ws45-bonus-android-reliability-2026-11-19' }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: GridMates-WS45-Score-Android-Execution
+          path: qa-ws45-bonus/
+          if-no-files-found: warn
+          retention-days: 30
