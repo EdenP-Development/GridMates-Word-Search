@@ -1,3 +1,17 @@
+# WS54 stream-content QA and whole Woodland book overlap — isolated manuscript
+
+**Owner design choice:** Collectible word search books should have meaningful, intentionally selected chapter words and *permanent, frozen* page boards after approval. Quick Play stays random; extra bonus words remain natural/incidental and never deliberately planted. Existing saved pages may never silently change.
+
+**Separate WS54 draft research branch:** `feature/ws54-stream-chapter-bookwide-quality-2026-11-20`, stacked on verified WS53 [draft PR #165](https://github.com/PlayerEden/GridMates-Word-Search/pull/165), **not main or paused Work branch**. [Source/editorial design and safeguards](WOODLAND_BOOKWIDE_EDITORIAL_PLAN_WS54.md) · [WS54 current QA status](devlog/2026-11-20_WS54_STREAM_BOOKWIDE_EDITORIAL_QA.md).
+
+**Authored now:** New versioned *By the Stream* Chapter 6, 3 specifically chosen page lists: 12×12/12 Relaxed *Water's Edge* (4.42-letter mean), 15×15/16 Classic *Life Along the Bank* (5.75), 20×20/24 Expert *River Currents* (8.42). All 52 different targets; **19 original canonical Woodland QA words with stable IDs**, **33 newly proposed streamlife words unapproved for release**, no new words in runtime/Daily/Quick Play/bonus lexicon. Test-only V5 exact frozen page generator + BookCatalog/BookPageSession reproduction, source guards and two independent CI report artifacts wired. Actual boards **CI pending at authoring**.
+
+**Whole-book manuscript comparison (prior WS52 ch3/4/6/8 + WS53 ch7 + WS51 birds ch5 vs substitute this *new* ch6 QA proposal):** 312 target slots, six-chapter different words **168→202**, total overlapping word intersections **204→139**, worst pairwise overlap **30→26**, Ch6↔Ch3 **29→10**, Ch6↔Ch8 **30→10**, Ch6↔Ch7 **21→3**, Ch6↔Ch4 **9→2**, Ch6↔Ch5 **1→0**. New total includes **56 explicitly unapproved words** across WS51 Birdsong and WS54 stream—do **not** treat 202 as a release dictionary tally.
+
+**Release blockers and future Work tasks:** Confirm both exact CI outcomes + data artifacts and any generation failures; owner/editor read 33 proposed terms, inspect actual grids on Android, review *Forest Discoveries* (Ch8) and *Under the Canopy* (Ch4) to reduce 26/25 remaining overlaps, then authorize new *versioned* production edition and save compatibility checks. Original **63 QA Library pages and their IDs, saves/unlocks, prior WS50–53 frozen manuscripts, runtime V5, natural bonus, art, Nearby, app version, public wordpack and Work code untouched**.
+
+---
+
 # WS53 verified — revised Quiet Clearings distinguished, editorial publication still on hold
 
 **Owner's product direction:** Author meaningful chapter-specific words, generate once and freeze exact puzzle identities; leave Quick Play random and incidental bonus words unplanted. Saved Library pages must never silently change.

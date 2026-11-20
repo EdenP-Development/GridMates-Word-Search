@@ -202,6 +202,8 @@ jobs:
         run: python3 -m unittest discover -s tools/asset_pipeline -p 'test_ws52_woodland_manuscript.py' -v
       - name: WS53 Verify revised Quiet Clearings recipe and honest chapter overlap gains
         run: python3 -m unittest discover -s tools/asset_pipeline -p 'test_ws53_quiet_clearings.py' -v
+      - name: WS54 Validate stream chapter source and six-chapter bookwide variety
+        run: python3 -m unittest discover -s tools/asset_pipeline -p 'test_ws54_stream_bookwide_quality.py' -v
       - name: WS16BU compact gallery/pager and profile readability guards
         run: python3 -m unittest discover -s tools/asset_pipeline -p 'test_ws16bu_compact_gallery.py' -v
       - name: WS16BV compact bundled Fonts and license access guards
@@ -638,5 +640,17 @@ jobs:
           path: |
             core/build/ws53-quiet-clearings-frozen-boards.tsv
             core/build/ws53-woodland-overlap-delta.tsv
+          if-no-files-found: error
+          retention-days: 30
+
+      - name: WS54 Upload stream frozen boards and complete Woodland bookwide repetition study
+        if: ${{ always() && (github.head_ref || github.ref_name) == 'feature/ws54-stream-chapter-bookwide-quality-2026-11-20' }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: GridMates-WS54-Stream-Bookwide-QA
+          path: |
+            core/build/ws54-stream-frozen-pages.tsv
+            core/build/ws54-bookwide-overlap-delta.tsv
+            core/build/ws54-bookwide-word-frequency.tsv
           if-no-files-found: error
           retention-days: 30
