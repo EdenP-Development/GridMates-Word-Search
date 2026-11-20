@@ -161,6 +161,7 @@ internal fun WordSearchScreen(
     var feelOpen by rememberSaveable { mutableStateOf(false) }
     var helpOpen by rememberSaveable { mutableStateOf(false) }
     var cluesOpen by rememberSaveable { mutableStateOf(false) }
+    var bonusJournalOpen by rememberSaveable { mutableStateOf(false) }
     var optionsOpen by rememberSaveable { mutableStateOf(false) }
     var toolsOpen by rememberSaveable { mutableStateOf(false) }
     var reviewingCompletedBoard by remember(puzzle.id) { mutableStateOf(false) }
@@ -220,6 +221,30 @@ internal fun WordSearchScreen(
     if (cluesOpen) {
         SavedCluesDialog(puzzle = puzzle, run = run,
             onDismiss = { cluesOpen = false })
+    }
+
+    // Small opt-in text journal rather than an always-on overlay on the board.
+    // These are verified discovered *non-target* words, not new requirements.
+    if (bonusJournalOpen) {
+        GridMatesPaperDialog("Extra words", onDismiss = { bonusJournalOpen = false }) {
+            Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
+                Text(
+                    "${run.bonusWords.size} of ${BonusWordRules.MAX_SIDE_WORDS} found · " +
+                        (run.bonusWords.size * BonusWordRules.SIDE_WORD_POINTS) + " bonus points",
+                    color = Forest, style = MaterialTheme.typography.bodyMedium
+                )
+                Text(
+                    "Trace a real word not on the list. Each new word of 4–16 letters earns 15 points. " +
+                        "Extra words never replace the puzzle's listed targets.",
+                    color = Muted, style = MaterialTheme.typography.bodySmall
+                )
+                Text(
+                    if (run.bonusWords.isEmpty()) "No extras discovered yet."
+                    else run.bonusWords.sorted().joinToString(" · "),
+                    color = Ink, style = MaterialTheme.typography.bodyMedium
+                )
+            }
+        }
     }
 
     // Measure against the paperback margins and leave room for the word list.
@@ -322,6 +347,12 @@ internal fun WordSearchScreen(
                                     cluesOpen = true
                                 })
                         }
+                        DropdownMenuItem(
+                            text = { Text("Extra words (${run.bonusWords.size}/${BonusWordRules.MAX_SIDE_WORDS})") },
+                            onClick = {
+                                optionsOpen = false
+                                bonusJournalOpen = true
+                            })
                         DropdownMenuItem(text = { Text("How to select words") },
                             onClick = {
                                 optionsOpen = false
