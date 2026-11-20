@@ -1,0 +1,53 @@
+chapter	chapter_title	page	page_title	answer	word_id	display	tier	subtopic	provenance
+6	By the Stream	1	Water's Edge	WATER	ws54s001	Water	familiar	streamlife	ws54_streamlife_candidate_unapproved
+6	By the Stream	1	Water's Edge	FISH	ws54s002	Fish	familiar	streamlife	ws54_streamlife_candidate_unapproved
+6	By the Stream	1	Water's Edge	REED	ws54s003	Reed	familiar	streamlife	ws54_streamlife_candidate_unapproved
+6	By the Stream	1	Water's Edge	POOL	ws54s004	Pool	familiar	streamlife	ws54_streamlife_candidate_unapproved
+6	By the Stream	1	Water's Edge	RIVER	gm000120	River	familiar	habitats	existing_woodland_QA_not_release
+6	By the Stream	1	Water's Edge	BROOK	gm000123	Brook	familiar	habitats	existing_woodland_QA_not_release
+6	By the Stream	1	Water's Edge	CREEK	gm000124	Creek	familiar	habitats	existing_woodland_QA_not_release
+6	By the Stream	1	Water's Edge	POND	gm000122	Pond	familiar	habitats	existing_woodland_QA_not_release
+6	By the Stream	1	Water's Edge	LAKE	gm000125	Lake	familiar	habitats	existing_woodland_QA_not_release
+6	By the Stream	1	Water's Edge	OTTER	gm000049	Otter	familiar	forest-animals	existing_woodland_QA_not_release
+6	By the Stream	1	Water's Edge	FROG	gm000064	Frog	familiar	forest-animals	existing_woodland_QA_not_release
+6	By the Stream	1	Water's Edge	TOAD	gm000065	Toad	familiar	forest-animals	existing_woodland_QA_not_release
+6	By the Stream	2	Life Along the Bank	BEAVER	gm000008	Beaver	familiar	forest-animals	existing_woodland_QA_not_release
+6	By the Stream	2	Life Along the Bank	STREAM	gm000121	Stream	familiar	habitats	existing_woodland_QA_not_release
+6	By the Stream	2	Life Along the Bank	MARSH	gm000126	Marsh	familiar	habitats	existing_woodland_QA_not_release
+6	By the Stream	2	Life Along the Bank	SWAMP	gm000127	Swamp	familiar	habitats	existing_woodland_QA_not_release
+6	By the Stream	2	Life Along the Bank	MOSS	gm000139	Moss	familiar	habitats	existing_woodland_QA_not_release
+6	By the Stream	2	Life Along the Bank	WILLOW	gm000094	Willow	familiar	trees	existing_woodland_QA_not_release
+6	By the Stream	2	Life Along the Bank	TURTLE	gm000066	Turtle	familiar	forest-animals	existing_woodland_QA_not_release
+6	By the Stream	2	Life Along the Bank	RIPPLE	ws54s005	Ripple	familiar	streamlife	ws54_streamlife_candidate_unapproved
+6	By the Stream	2	Life Along the Bank	SPLASH	ws54s006	Splash	familiar	streamlife	ws54_streamlife_candidate_unapproved
+6	By the Stream	2	Life Along the Bank	MINNOW	ws54s007	Minnow	familiar	streamlife	ws54_streamlife_candidate_unapproved
+6	By the Stream	2	Life Along the Bank	CATTAIL	ws54s008	Cattail	familiar	streamlife	ws54_streamlife_candidate_unapproved
+6	By the Stream	2	Life Along the Bank	TADPOLE	ws54s009	Tadpole	familiar	streamlife	ws54_streamlife_candidate_unapproved
+6	By the Stream	2	Life Along the Bank	SPRING	ws54s010	Spring	familiar	streamlife	ws54_streamlife_candidate_unapproved
+6	By the Stream	2	Life Along the Bank	GRAVEL	ws54s011	Gravel	familiar	streamlife	ws54_streamlife_candidate_unapproved
+6	By the Stream	2	Life Along the Bank	MAYFLY	ws54s012	Mayfly	familiar	streamlife	ws54_streamlife_candidate_unapproved
+6	By the Stream	2	Life Along the Bank	NEWT	ws54s013	Newt	familiar	streamlife	ws54_streamlife_candidate_unapproved
+6	By the Stream	3	River Currents	WATERFALL	gm000039	Waterfall	familiar	habitats	existing_woodland_QA_not_release
+6	By the Stream	3	River Currents	RIVERBANK	gm000006	Riverbank	familiar	habitats	existing_woodland_QA_not_release
+6	By the Stream	3	River Currents	WETLAND	gm000147	Wetland	familiar	habitats	existing_woodland_QA_not_release
+6	By the Stream	3	River Currents	SALAMANDER	gm000067	Salamander	familiar	forest-animals	existing_woodland_QA_not_release
+6	By the Stream	3	River Currents	CURRENT	ws54s014	Current	intermediate	streamlife	ws54_streamlife_candidate_unapproved
+6	By the Stream	3	River Currents	RAPIDS	ws54s015	Rapids	intermediate	streamlife	ws54_streamlife_candidate_unapproved
+6	By the Stream	3	River Currents	MEANDER	ws54s016	Meander	intermediate	streamlife	ws54_streamlife_candidate_unapproved
+6	By the Stream	3	River Currents	RIVERBED	ws54s017	Riverbed	intermediate	streamlife	ws54_streamlife_candidate_unapproved
+6	By the Stream	3	River Currents	CRAYFISH	ws54s018	Crayfish	intermediate	streamlife	ws54_streamlife_candidate_unapproved
+6	By the Stream	3	River Currents	WATERLILY	ws54s019	Waterlily	intermediate	streamlife	ws54_streamlife_candidate_unapproved
+6	By the Stream	3	River Currents	DRAGONFLY	ws54s020	Dragonfly	intermediate	streamlife	ws54_streamlife_candidate_unapproved
+6	By the Stream	3	River Currents	TRIBUTARY	ws54s021	Tributary	intermediate	streamlife	ws54_streamlife_candidate_unapproved
+6	By the Stream	3	River Currents	WATERSHED	ws54s022	Watershed	intermediate	streamlife	ws54_streamlife_candidate_unapproved
+6	By the Stream	3	River Currents	HEADWATERS	ws54s023	Headwaters	intermediate	streamlife	ws54_streamlife_candidate_unapproved
+6	By the Stream	3	River Currents	FLOODPLAIN	ws54s024	Floodplain	intermediate	streamlife	ws54_streamlife_candidate_unapproved
+6	By the Stream	3	River Currents	RIVERSTONE	ws54s025	Riverstone	intermediate	streamlife	ws54_streamlife_candidate_unapproved
+6	By the Stream	3	River Currents	STREAMBED	ws54s026	Streambed	intermediate	streamlife	ws54_streamlife_candidate_unapproved
+6	By the Stream	3	River Currents	DRIFTWOOD	ws54s027	Driftwood	intermediate	streamlife	ws54_streamlife_candidate_unapproved
+6	By the Stream	3	River Currents	REFLECTION	ws54s028	Reflection	intermediate	streamlife	ws54_streamlife_candidate_unapproved
+6	By the Stream	3	River Currents	SHORELINE	ws54s029	Shoreline	intermediate	streamlife	ws54_streamlife_candidate_unapproved
+6	By the Stream	3	River Currents	BUBBLES	ws54s030	Bubbles	intermediate	streamlife	ws54_streamlife_candidate_unapproved
+6	By the Stream	3	River Currents	CASCADE	ws54s031	Cascade	intermediate	streamlife	ws54_streamlife_candidate_unapproved
+6	By the Stream	3	River Currents	RUSHING	ws54s032	Rushing	intermediate	streamlife	ws54_streamlife_candidate_unapproved
+6	By the Stream	3	River Currents	PEBBLES	ws54s033	Pebbles	intermediate	streamlife	ws54_streamlife_candidate_unapproved
