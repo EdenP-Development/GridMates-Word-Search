@@ -190,6 +190,8 @@ jobs:
         run: python3 -m unittest discover -s tools/asset_pipeline -p 'test_ws45_bonus_journal.py' -v
       - name: WS46 Reproducible bonus-word opportunity audit and artifact guard
         run: python3 -m unittest discover -s tools/asset_pipeline -p 'test_ws46_bonus_opportunity_audit.py' -v
+      - name: WS47 Bonus fragment geometry and measured-origin artifact guards
+        run: python3 -m unittest discover -s tools/asset_pipeline -p 'test_ws47_bonus_origin.py' -v
       - name: WS16BU compact gallery/pager and profile readability guards
         run: python3 -m unittest discover -s tools/asset_pipeline -p 'test_ws16bu_compact_gallery.py' -v
       - name: WS16BV compact bundled Fonts and license access guards
@@ -466,4 +468,15 @@ jobs:
           name: GridMates-WS46-Bonus-Opportunity-Audit
           path: core/build/ws46-bonus-opportunities.tsv
           if-no-files-found: warn
+          retention-days: 30
+
+      - name: WS47 Upload real-board fragment crossing and free-word origins
+        if: ${{ always() && (github.head_ref || github.ref_name) == 'feature/ws47-bonus-origin-and-fragment-audit-2026-11-19' }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: GridMates-WS47-Bonus-Origin-Audit
+          path: |
+            core/build/ws46-bonus-opportunities.tsv
+            core/build/ws47-bonus-origin.tsv
+          if-no-files-found: error
           retention-days: 30

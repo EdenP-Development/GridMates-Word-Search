@@ -68,7 +68,9 @@ class BonusWordOpportunityAuditTest {
         val group: String,
         val qa: Set<String>,
         val fallback: Set<String>,
-        val listedTargetCount: Int
+        val listedTargetCount: Int,
+        val qaOrigins: Map<String, SideWordOrigin>,
+        val fallbackOrigins: Map<String, SideWordOrigin>
     )
 
     private fun trial(group: String, puzzle: WordSearchPuzzle): Trial {
@@ -80,7 +82,11 @@ class BonusWordOpportunityAuditTest {
             qa.none { candidate -> puzzle.targets.any { it.word == candidate } })
         assertTrue("Unlisted word must be 4–16 A–Z letters",
             qa.all { it.length in 4..16 && it.all { c -> c in 'A'..'Z' } })
-        return Trial(group, qa, fallback, puzzle.targets.size)
+        val origin = SideWordOriginStudy.classify(puzzle, qaDictionary)
+        assertEquals("Exactly the same eligible QA words as WS46", qa, origin.keys)
+        val fallbackOrigin = origin.filterKeys { it in inAppFallback }
+        assertEquals("Exactly the same built-in eligibility as WS46", fallback, fallbackOrigin.keys)
+        return Trial(group, qa, fallback, puzzle.targets.size, origin, fallbackOrigin)
     }
 
     private fun report(
@@ -112,6 +118,57 @@ class BonusWordOpportunityAuditTest {
             percent(twelveOrMore), fmt(mean), counts.first(), median, p90,
             counts.last(), fmt(fourLetterShare), fmt(offeredPoints),
             frequency.size, top
+        ).joinToString("\t")
+    }
+
+    /**
+     * Counts DISTINCT eligible bonus words once per board.
+     * Route priority: fully independent > partial crossing > target fragment.
+     * This is opportunity provenance, not the selection path chosen by a player.
+     */
+    private fun originReport(
+        rows: List<Trial>,
+        lexicon: String,
+        include: (Trial) -> Map<String, SideWordOrigin>
+    ): String {
+        val n = rows.size
+        val all = rows.flatMap { include(it).entries }
+        val counts = SideWordOrigin.entries.associateWith { kind ->
+            all.count { it.value == kind }
+        }
+        val fragments = SideWordOrigin.TARGET_FRAGMENT_ONLY
+        val crossings = SideWordOrigin.CROSSING_ONLY
+        val independent = SideWordOrigin.FREE_PATH_AVAILABLE
+        fun mean(kind: SideWordOrigin): Double =
+            counts.getValue(kind).toDouble() / n
+        fun pct(x: Int, den: Int = n): Double =
+            if (den == 0) 0.0 else 100.0 * x / den
+        fun fmt(x: Double) = "%.2f".format(Locale.ROOT, x)
+        val noIndependent = rows.count { row ->
+            include(row).values.none { it == independent }
+        }
+        val withFragment = rows.count { row ->
+            include(row).values.any { it == fragments }
+        }
+        val fragmentWords = all.filter { it.value == fragments }.map { it.key }
+        val fragmentFrequent = fragmentWords.groupingBy { it }.eachCount()
+            .entries.sortedWith(compareByDescending<Map.Entry<String, Int>> { it.value }
+                .thenBy { it.key }).take(7)
+            .joinToString(",") { "${it.key}:${it.value}" }
+        val total = all.size
+        assertEquals("Origin types partition every possible unique side word",
+            total, counts.values.sum())
+        return listOf(
+            rows.first().group, lexicon, n, rows.first().listedTargetCount,
+            fmt(total.toDouble() / n),
+            fmt(mean(fragments)), fmt(mean(crossings)), fmt(mean(independent)),
+            fmt(pct(noIndependent)), fmt(pct(n - noIndependent)),
+            fmt(pct(withFragment)),
+            fmt(pct(counts.getValue(fragments), total)),
+            fmt(pct(counts.getValue(crossings), total)),
+            fmt(pct(counts.getValue(independent), total)),
+            fmt(pct(fragmentWords.count { it.length == 4 }, fragmentWords.size)),
+            fragmentFrequent
         ).joinToString("\t")
     }
 
@@ -175,5 +232,26 @@ class BonusWordOpportunityAuditTest {
         println("WS46 BONUS OPPORTUNITY AUDIT: ${allTrials.size} deterministic, real source-backed boards; TSV=$location")
         lines.drop(1).forEach { println("WS46 ${it}") }
         assertEquals(1 + allTrials.groupBy { it.group }.size * 2, lines.size)
+
+        // WS47: use the SAME 339 generated boards, without spending time
+        // regenerating them or changing the established WS46 report.
+        val originHeader = listOf(
+            "group","lexicon","boards","targets","mean_bonus_words",
+            "mean_fragment_only","mean_crossing_only","mean_free_path",
+            "pct_boards_no_free_path","pct_boards_with_free_path",
+            "pct_boards_with_fragment_only","pct_words_fragment_only",
+            "pct_words_crossing_only","pct_words_free_path",
+            "pct_fragment_only_4letter","top_fragment_only_words"
+        ).joinToString("\t")
+        val originLines = mutableListOf(originHeader)
+        for ((_, items) in allTrials.groupBy { it.group }.toSortedMap()) {
+            originLines += originReport(items, "qa_670_plus_builtins") { it.qaOrigins }
+            originLines += originReport(items, "builtins_only_release_fallback") { it.fallbackOrigins }
+        }
+        val origins = File("build/ws47-bonus-origin.tsv")
+        origins.writeText(originLines.joinToString("\n") + "\n")
+        println("WS47 BONUS ORIGIN AUDIT: ${allTrials.size} real boards; TSV=$origins")
+        originLines.drop(1).forEach { println("WS47 ${it}") }
+        assertEquals(lines.size, originLines.size)
     }
 }
