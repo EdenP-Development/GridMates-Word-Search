@@ -1,3 +1,15 @@
+# WS53 verified — revised Quiet Clearings distinguished, editorial publication still on hold
+
+**Owner's product direction:** Author meaningful chapter-specific words, generate once and freeze exact puzzle identities; leave Quick Play random and incidental bonus words unplanted. Saved Library pages must never silently change.
+
+**Current isolated test-only branch:** [WS53 draft PR #165](https://github.com/PlayerEden/GridMates-Word-Search/pull/165), stacked on WS52, not merged to main/Work. Exact source SHA `4c11c0b15c9fe9feab6b0275292d9ec43da2a7d7`; [Android/core #44758251802](https://github.com/PlayerEden/GridMates-Word-Search/actions/runs/44758251802) and [art/release #44758251892](https://github.com/PlayerEden/GridMates-Word-Search/actions/runs/44758251892) both **SUCCESS**. Full 3-page board reports and comparison TSV payloads identical between independent jobs. [WS53 journal with exact artifact IDs/hashes and grid checks](devlog/2026-11-20_WS53_QUIET_CLEARINGS_EDITORIAL_DIVERSITY.md) · [editorial decision record](QUIET_CLEARINGS_EDITORIAL_SCOPE_WS53.md).
+
+**What actually works:** Three QA-only versioned Chapter 7 *Quiet Clearings* pages (*Moss and Fern* 12×12/12 Relaxed, *Grove and Canopy* 15×15/16 Classic, *Woodland Whispers* 20×20/24 Expert) generated, recreated with identical SHA, passed exact target-ID lists, no required word repeats, source integrity and BookCatalog/BookPageSession validation. All words come from original Woodland QA entries, no new terms. Source scope switches to proposed `habitats + trees`, **without modifying WS50's existing published/research map or WS52's older candidate pages**. Ch3↔Ch7 overlap **48→18**; Ch6↔Ch7 **33→21**; tradeoff Ch4↔Ch7 **0→26**, Ch8↔Ch7 **12→20**. Five-chapter variety rises **124→129** different words; including WS51 Birdsong yields **168 distinct words in 312 target slots**, with 23 Birdsong original QA-only proposals still unapproved.
+
+**Editorial remaining:** These are not approved/sold as real book pages, and book-wide repetition is still meaningful (including 26 shared words with Under the Canopy). Need owner semantic and visual review, likely vocabulary expansion focused on distinct chapter moods, new versioned production edition + backup/upgrade regression and physical Android tests. All **63 original QA Library pages, saves/unlocks, scores, generator, app/art, published vocabulary, Nearby and Work branch remain untouched**. Do not auto-merge stacked QA PRs.
+
+---
+
 # WS52 verified five Woodland chapter technical QA — BOOK EDITORIAL HOLD
 
 **Design direction:** User wants chapter-specific author-selected target lists, followed by reproducible/frozen V5 board placement. Book pages should have stable IDs and **never silently change behind existing saves**. Quick Play stays fresh, incidental bonus words stay natural and unplanted.

@@ -1,0 +1,53 @@
+chapter	chapter_title	page	page_title	primary_subtopic	allowed_subtopics	answer	word_id	display	tier	word_subtopic	provenance
+7	Quiet Clearings	1	Moss and Fern	habitats	trees,habitats	MOSS	gm000139	Moss	familiar	habitats	existing_woodland_QA_not_release
+7	Quiet Clearings	1	Moss and Fern	habitats	trees,habitats	FERN	gm000140	Fern	familiar	habitats	existing_woodland_QA_not_release
+7	Quiet Clearings	1	Moss and Fern	habitats	trees,habitats	GROVE	gm000131	Grove	familiar	habitats	existing_woodland_QA_not_release
+7	Quiet Clearings	1	Moss and Fern	habitats	trees,habitats	GLADE	gm000146	Glade	familiar	habitats	existing_woodland_QA_not_release
+7	Quiet Clearings	1	Moss and Fern	habitats	trees,habitats	MEADOW	gm000119	Meadow	familiar	habitats	existing_woodland_QA_not_release
+7	Quiet Clearings	1	Moss and Fern	habitats	trees,habitats	NEST	gm000136	Nest	familiar	habitats	existing_woodland_QA_not_release
+7	Quiet Clearings	1	Moss and Fern	habitats	trees,habitats	LEAF	gm000111	Leaf	familiar	trees	existing_woodland_QA_not_release
+7	Quiet Clearings	1	Moss and Fern	habitats	trees,habitats	TWIG	gm000113	Twig	familiar	trees	existing_woodland_QA_not_release
+7	Quiet Clearings	1	Moss and Fern	habitats	trees,habitats	BARK	gm000110	Bark	familiar	trees	existing_woodland_QA_not_release
+7	Quiet Clearings	1	Moss and Fern	habitats	trees,habitats	ACORN	gm000112	Acorn	familiar	trees	existing_woodland_QA_not_release
+7	Quiet Clearings	1	Moss and Fern	habitats	trees,habitats	BIRCH	gm000091	Birch	familiar	trees	existing_woodland_QA_not_release
+7	Quiet Clearings	1	Moss and Fern	habitats	trees,habitats	PINE	gm000090	Pine	familiar	trees	existing_woodland_QA_not_release
+7	Quiet Clearings	2	Grove and Canopy	habitats	trees,habitats	CANOPY	gm000135	Canopy	familiar	habitats	existing_woodland_QA_not_release
+7	Quiet Clearings	2	Grove and Canopy	habitats	trees,habitats	HOLLOW	gm000133	Hollow	familiar	habitats	existing_woodland_QA_not_release
+7	Quiet Clearings	2	Grove and Canopy	habitats	trees,habitats	LICHEN	gm000141	Lichen	familiar	habitats	existing_woodland_QA_not_release
+7	Quiet Clearings	2	Grove and Canopy	habitats	trees,habitats	THICKET	gm000134	Thicket	familiar	habitats	existing_woodland_QA_not_release
+7	Quiet Clearings	2	Grove and Canopy	habitats	trees,habitats	BRAMBLE	gm000142	Bramble	familiar	habitats	existing_woodland_QA_not_release
+7	Quiet Clearings	2	Grove and Canopy	habitats	trees,habitats	FOREST	gm000001	Forest	familiar	habitats	existing_woodland_QA_not_release
+7	Quiet Clearings	2	Grove and Canopy	habitats	trees,habitats	SAPLING	gm000115	Sapling	familiar	trees	existing_woodland_QA_not_release
+7	Quiet Clearings	2	Grove and Canopy	habitats	trees,habitats	WILLOW	gm000094	Willow	familiar	trees	existing_woodland_QA_not_release
+7	Quiet Clearings	2	Grove and Canopy	habitats	trees,habitats	SPRUCE	gm000098	Spruce	familiar	trees	existing_woodland_QA_not_release
+7	Quiet Clearings	2	Grove and Canopy	habitats	trees,habitats	POPLAR	gm000103	Poplar	familiar	trees	existing_woodland_QA_not_release
+7	Quiet Clearings	2	Grove and Canopy	habitats	trees,habitats	ALDER	gm000104	Alder	familiar	trees	existing_woodland_QA_not_release
+7	Quiet Clearings	2	Grove and Canopy	habitats	trees,habitats	BEECH	gm000096	Beech	familiar	trees	existing_woodland_QA_not_release
+7	Quiet Clearings	2	Grove and Canopy	habitats	trees,habitats	STUMP	gm000114	Stump	familiar	trees	existing_woodland_QA_not_release
+7	Quiet Clearings	2	Grove and Canopy	habitats	trees,habitats	TRUNK	gm000108	Trunk	familiar	trees	existing_woodland_QA_not_release
+7	Quiet Clearings	2	Grove and Canopy	habitats	trees,habitats	ROOT	gm000116	Root	familiar	trees	existing_woodland_QA_not_release
+7	Quiet Clearings	2	Grove and Canopy	habitats	trees,habitats	PINECONE	gm000004	Pinecone	familiar	trees	existing_woodland_QA_not_release
+7	Quiet Clearings	3	Woodland Whispers	habitats	trees,habitats	UNDERGROWTH	gm000145	Undergrowth	familiar	habitats	existing_woodland_QA_not_release
+7	Quiet Clearings	3	Woodland Whispers	habitats	trees,habitats	CLEARING	gm000132	Clearing	familiar	habitats	existing_woodland_QA_not_release
+7	Quiet Clearings	3	Woodland Whispers	habitats	trees,habitats	WOODLAND	gm000118	Woodland	familiar	habitats	existing_woodland_QA_not_release
+7	Quiet Clearings	3	Woodland Whispers	habitats	trees,habitats	WILDFLOWER	gm000007	Wildflower	familiar	habitats	existing_woodland_QA_not_release
+7	Quiet Clearings	3	Woodland Whispers	habitats	trees,habitats	BLACKBERRY	gm000143	Blackberry	familiar	habitats	existing_woodland_QA_not_release
+7	Quiet Clearings	3	Woodland Whispers	habitats	trees,habitats	BLUEBERRY	gm000144	Blueberry	familiar	habitats	existing_woodland_QA_not_release
+7	Quiet Clearings	3	Woodland Whispers	habitats	trees,habitats	WETLAND	gm000147	Wetland	familiar	habitats	existing_woodland_QA_not_release
+7	Quiet Clearings	3	Woodland Whispers	habitats	trees,habitats	MUSHROOM	gm000005	Mushroom	familiar	habitats	existing_woodland_QA_not_release
+7	Quiet Clearings	3	Woodland Whispers	habitats	trees,habitats	BURROW	gm000137	Burrow	familiar	habitats	existing_woodland_QA_not_release
+7	Quiet Clearings	3	Woodland Whispers	habitats	trees,habitats	EVERGREEN	gm000172	Evergreen	intermediate	trees	existing_woodland_QA_not_release
+7	Quiet Clearings	3	Woodland Whispers	habitats	trees,habitats	DECIDUOUS	gm000174	Deciduous	intermediate	trees	existing_woodland_QA_not_release
+7	Quiet Clearings	3	Woodland Whispers	habitats	trees,habitats	COTTONWOOD	gm000180	Cottonwood	intermediate	trees	existing_woodland_QA_not_release
+7	Quiet Clearings	3	Woodland Whispers	habitats	trees,habitats	BLACKTHORN	gm000179	Blackthorn	intermediate	trees	existing_woodland_QA_not_release
+7	Quiet Clearings	3	Woodland Whispers	habitats	trees,habitats	CHESTNUT	gm000101	Chestnut	familiar	trees	existing_woodland_QA_not_release
+7	Quiet Clearings	3	Woodland Whispers	habitats	trees,habitats	SYCAMORE	gm000106	Sycamore	familiar	trees	existing_woodland_QA_not_release
+7	Quiet Clearings	3	Woodland Whispers	habitats	trees,habitats	SEQUOIA	gm000175	Sequoia	intermediate	trees	existing_woodland_QA_not_release
+7	Quiet Clearings	3	Woodland Whispers	habitats	trees,habitats	HEMLOCK	gm000176	Hemlock	intermediate	trees	existing_woodland_QA_not_release
+7	Quiet Clearings	3	Woodland Whispers	habitats	trees,habitats	DOGWOOD	gm000177	Dogwood	intermediate	trees	existing_woodland_QA_not_release
+7	Quiet Clearings	3	Woodland Whispers	habitats	trees,habitats	HAWTHORN	gm000178	Hawthorn	intermediate	trees	existing_woodland_QA_not_release
+7	Quiet Clearings	3	Woodland Whispers	habitats	trees,habitats	BUTTERNUT	gm000181	Butternut	intermediate	trees	existing_woodland_QA_not_release
+7	Quiet Clearings	3	Woodland Whispers	habitats	trees,habitats	HICKORY	gm000100	Hickory	familiar	trees	existing_woodland_QA_not_release
+7	Quiet Clearings	3	Woodland Whispers	habitats	trees,habitats	REDWOOD	gm000102	Redwood	familiar	trees	existing_woodland_QA_not_release
+7	Quiet Clearings	3	Woodland Whispers	habitats	trees,habitats	JUNIPER	gm000105	Juniper	familiar	trees	existing_woodland_QA_not_release
+7	Quiet Clearings	3	Woodland Whispers	habitats	trees,habitats	CONIFER	gm000173	Conifer	intermediate	trees	existing_woodland_QA_not_release
