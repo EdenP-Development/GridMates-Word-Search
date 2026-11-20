@@ -1,6 +1,10 @@
 # WS54 — Woodland book-wide editorial quality: a genuine *By the Stream* chapter
 
-> **Status at authoring:** New versioned test-only stream manuscript and source/real-V5 regression committed; exact-source independent CI **pending**. Not a playable chapter, production release, owner word approval, or change to old saved pages.
+> **Status:** **Three V5 frozen candidate boards verified; two independent Android/core + release/art QA pipelines succeeded.** Editorial and owner/public-release approval still withheld; all existing Library pages and saves untouched.
+
+## Verified result and next quality hold
+
+The executed source `1655d03cda06afd173d1e61e04fd8624f2bfc6ef` passed both [Android/core #44764877945](https://github.com/PlayerEden/GridMates-Word-Search/actions/runs/44764877945) and [independent art/release #44764877878](https://github.com/PlayerEden/GridMates-Word-Search/actions/runs/44764877878), and generated three identical-content QA puzzle report payloads across pipelines. [Exact board hashes, source checksums and full word-frequency findings](devlog/2026-11-20_WS54_STREAM_BOOKWIDE_EDITORIAL_QA.md) are available. The next owner/editor pass should prioritize 33 newly proposed stream terms and display spelling before any new edition, then remove the biggest remaining Chapter 4 ↔ 7/8 overlaps.
 
 ## Decision and source-based editorial problem
 The user chose deliberately authored, permanent collectible puzzle-book chapters. Generator V5 can place and freeze a chosen target set, but the source QA Woodland book has only **159 existing words** and the earlier six-chapter research manuscripts contained **312 target slots / 168 unique answers**. That includes 23 previously proposed WS51 Birdsong terms which remain **editorial QA-only, not owner release approved**.
