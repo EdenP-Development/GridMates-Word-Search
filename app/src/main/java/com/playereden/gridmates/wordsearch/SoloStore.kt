@@ -12,6 +12,9 @@ import com.playereden.gridmates.wordsearch.core.PlayerIdentity
 import com.playereden.gridmates.wordsearch.core.PuzzleBoardSize
 import com.playereden.gridmates.wordsearch.core.PuzzleChallenge
 import com.playereden.gridmates.wordsearch.core.WoodlandCollection
+import com.playereden.gridmates.wordsearch.core.BonusClaimStatus
+import com.playereden.gridmates.wordsearch.core.BonusWordClaim
+import com.playereden.gridmates.wordsearch.core.BonusWordRules
 import com.playereden.gridmates.wordsearch.core.ClaimStatus
 import com.playereden.gridmates.wordsearch.core.GridPoint
 import com.playereden.gridmates.wordsearch.core.LargeBoardBookmark
@@ -198,7 +201,8 @@ internal class SoloStore(
                     ?.let { PuzzleBoardSize.valueOf(it) },
                 challenge = item.optString("challenge", "").takeIf { it.isNotBlank() }
                     ?.let { PuzzleChallenge.valueOf(it) },
-                quickPackId = item.optString("quickPack", "").takeIf { it.isNotBlank() }
+                quickPackId = item.optString("quickPack", "").takeIf { it.isNotBlank() },
+                bonusWordCount = item.optInt("extraWords", 0)
             )
         }
         // Fail closed rather than silently shrink a player's completion history
@@ -207,6 +211,7 @@ internal class SoloStore(
         require(loaded.all {
             it.puzzleId.isNotBlank() && it.wordCount in 1..44 &&
                 it.elapsedSeconds >= 0L && it.hintSteps >= 0 &&
+                it.bonusWordCount in 0..BonusWordRules.MAX_SIDE_WORDS &&
                 it.completedAtMs > 0L
         }) { "Malformed Solo completion record" }
         require(loaded.map { it.puzzleId }.distinct().size == loaded.size) {
@@ -326,6 +331,10 @@ internal class SoloStore(
         require(!source.has("found") || found != null) { "Malformed found-word progress" }
         val hints = source.optJSONObject("hints")
         require(!source.has("hints") || hints != null) { "Malformed hint progress" }
+        val rawExtras = source.optJSONArray("sideWords")
+        require(!source.has("sideWords") || rawExtras != null) { "Malformed side-word progress" }
+        val extras = rawExtras.strings()
+        require(extras.size == extras.distinct().size) { "Duplicate side-word discoveries" }
         val run = SoloRun(
             theme = WordTheme.valueOf(source.getString("theme")),
             difficulty = WordDifficulty.valueOf(source.getString("difficulty")),
@@ -342,7 +351,8 @@ internal class SoloStore(
                 val encoded = source.getString("frozen")
                 require(encoded.length <= 90_000)
                 FrozenWordSearchCodec.decode(Base64.getDecoder().decode(encoded))
-            } else null
+            } else null,
+            bonusWords = extras.toSet()
         )
         // "viewport" is purely optional presentation state, including in old
         // schema-5 saves and manual backups. Never reject or overwrite a valid
@@ -381,6 +391,9 @@ internal class SoloStore(
             .put("seconds", run.elapsedSeconds)
             .put("found", JSONArray(run.foundIds.sorted()))
             .put("hints", JSONObject(run.hints))
+        if (run.bonusWords.isNotEmpty()) {
+            data.put("sideWords", JSONArray(run.bonusWords.sorted()))
+        }
         run.boardSize?.let { data.put("board", it.name) }
         run.challenge?.let { data.put("challenge", it.name) }
         run.frozen?.let { data.put("frozen", Base64.getEncoder().encodeToString(
@@ -409,6 +422,7 @@ internal class SoloStore(
                 r.boardSize?.let { put("board", it.name) }
                 r.challenge?.let { put("challenge", it.name) }
                 r.quickPackId?.let { put("quickPack", it) }
+                if (r.bonusWordCount > 0) put("extraWords", r.bonusWordCount)
             })
         val daily = JSONArray()
         for (entry in value.dailyEntries) {
@@ -808,6 +822,39 @@ internal class SoloStore(
             flush() // save-before-confirmation; no loss of a newly discovered word
         }
         return claim
+    }
+
+    /** WS44: extra real words do not affect target claims or nearby authority.
+     * The source vocabulary is QA-only when present; public builds use only the
+     * original 3-theme built-in word set until content is separately approved.
+     */
+    private val sideWordDictionary: Set<String> by lazy {
+        (QuickPlayContent.mixed?.words?.map { it.answer }.orEmpty() +
+            WordTheme.entries.flatMap { it.words })
+            .filter { it.length in BonusWordRules.MIN_LENGTH..BonusWordRules.MAX_LENGTH }
+            .toSet()
+    }
+
+    fun claimSideWord(start: GridPoint, end: GridPoint, daily: Boolean): BonusWordClaim {
+        val invalid = BonusWordClaim(BonusClaimStatus.INVALID)
+        if (blocked) return invalid
+        val dailyEntry = if (daily) selectedDaily ?: return invalid else null
+        if (dailyEntry?.completed == true) return invalid
+        val run = dailyEntry?.run ?: profile.active
+        val board = SoloProgressRules.puzzle(run)
+        if (WordSearchRules.complete(board, run.foundIds)) return invalid
+        val match = BonusWordRules.select(board, run.bonusWords,
+            sideWordDictionary, start, end)
+        if (match.status != BonusClaimStatus.FOUND) return match
+        val next = run.copy(bonusWords = run.bonusWords + requireNotNull(match.word))
+        val updated = if (dailyEntry != null) profile.copy(
+            dailyEntries = profile.dailyEntries.map {
+                if (it.date == dailyEntry.date) dailyEntry.copy(run = next) else it
+            }
+        ) else profile.copy(active = next)
+        // Confirm only a durably saved find. Failed writes restore in-memory state.
+        if (!commitSession(updated)) return invalid
+        return match
     }
 
     fun hint(): Pair<SoloRun, com.playereden.gridmates.wordsearch.core.WordTarget?> {
