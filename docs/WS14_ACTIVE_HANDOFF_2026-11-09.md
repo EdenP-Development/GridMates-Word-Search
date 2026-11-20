@@ -1,3 +1,15 @@
+# Parallel Quality Lab WS46 — bonus availability audit (source-only, no gameplay changes)
+
+This Game Design chat's latest **isolated, draft** milestone is `feature/ws46-bonus-opportunity-audit-2026-11-19`, stacked on the WS45 bonus-journal branch ([PR #157](https://github.com/PlayerEden/GridMates-Word-Search/pull/157)) and ultimately Work's WS43 cumulative branch. Read [WS46 reproducible real-board opportunity study](devlog/2026-11-19_WS46_BONUS_OPPORTUNITY_AUDIT.md) and [journal](DEVELOPMENT_JOURNAL.md) before making changes. **This study has no production/gameplay changes and no new APK to install.**
+
+**Goal:** independently count real extra-word opportunities and +15 point ceiling across 339 deterministic generated boards (V5 12/15/20 all challenge levels plus legacy V1/V2/V3) and compare debug QA lexicon vs release fallback dictionary. Two GitHub Android/Art pipelines upload the full TSV as an artifact; **numeric findings and exact SHA/CI results must be inspected when complete**, not inferred. This is theoretical availability, **not actual player discovery rate**.
+
+**Last working QA fallback:** WS45 v106 [Android emulator run #44652880670](https://github.com/PlayerEden/GridMates-Word-Search/actions/runs/44652880670) passed with **18/18 executed instrumentation tests**; [independent art #44652880657](https://github.com/PlayerEden/GridMates-Word-Search/actions/runs/44652880657) passed, correct QA signing and 372/372 package-content agreement. The user's handset has not approved this scoring feature. No Work branch, book content, artwork or Nearby protocol was changed.
+
+**Next action:** Download both independent WS46 TSV report artifacts, compare their actual measured rows, report zero-opportunity rates, median/P90 and production-fallback drop-offs for each board size; then hand off to Work through issue #140. Keep this work read-only on gameplay policy until those findings are known.
+
+---
+
 # Parallel Game Design lab — WS45 v106 optional bonus journal + executed scoring QA candidate
 
 **Source lineage:** isolated `feature/ws45-bonus-android-reliability-2026-11-19` from [WS44 PR #156](https://github.com/PlayerEden/GridMates-Word-Search/pull/156), base SHA `9c7eddea7967a61f1d353f1466dcc9a0328dd636`; Work's active WS43 branch remains unchanged. [WS45 development entry](devlog/2026-11-19_WS45_BONUS_RUNTIME_QA_AND_DISCOVERY.md). **Full workflows/native test evidence pending** at time of writing; do not call v106 owner-tested or release-ready.
