@@ -1,3 +1,9 @@
+# WS48 owner clarification — naturally occurring bonus words (read first)
+
+The user clarified on November 19 that **bonus words should be recognized if they happen naturally during normal puzzle generation; they should not be planted or guaranteed**. This overrides WS47's speculative recommendation to make a new generator place 1–3 extra words. Do **not** treat WS47 fragment/crossing/free-path origin categories as eligibility filters. All valid traced incidental words can earn the same optional +15 when approved in the active dictionary, subject to ordinary uniqueness/12-word cap and target exclusion. QA's 670 candidate words are not release-approved. See [WS48 isolated test and policy](devlog/2026-11-19_WS48_NATURAL_BONUS_POLICY.md); no changes to Work's branch, production engine, saves, artwork, or Nearby. WS48 exact-head CI **pending**, while WS47's separately verified receipts remain as described below. Last executed gameplay regression is WS45 v106 (18/18 emulator tests), not a phone acceptance. **Next:** verify WS48 CI, then evaluate editorially reviewed dictionary coverage using ordinary generated boards.
+
+---
+
 # WS47 Quality Lab — verified independent side-word origin audit (read first)
 
 [Draft PR #159](https://github.com/PlayerEden/GridMates-Word-Search/pull/159) is a **non-gameplay** branch stacked on WS46→WS45; Work's active WS43 and `main` are untouched. The **executed/tested code SHA is `ae3ab61f6826a8535609736d0e910bf8126469f7`**; subsequent edits are documentation only and don't alter test code.

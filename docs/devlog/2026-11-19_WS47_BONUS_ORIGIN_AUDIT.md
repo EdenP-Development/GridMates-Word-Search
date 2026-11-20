@@ -1,5 +1,7 @@
 # WS47 — Physical bonus-word origins: fragments vs crossings vs independent routes
 
+> **Owner clarification after this study (WS48, Nov 19):** The owner does **not** want to force or plant extra words. Prefer recognizing valid real words already occurring naturally on normal boards. The proposal below to create a generator with 1–3 deliberately placed optional words is **superseded, not approved**. Fragment-only, crossing and free-path classifications are for analysis and do not restrict existing +15 eligibility. See [WS48 policy and test](2026-11-19_WS48_NATURAL_BONUS_POLICY.md).
+
 > **Status:** Reproducible Kotlin study is prepared in an isolated draft stacked on WS46, numerical results/CI pending. No changes to the playable app, released vocabulary, score amounts, APK, saves or Work's active branches.
 
 ## Why this pass / owner request
