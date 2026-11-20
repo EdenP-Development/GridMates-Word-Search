@@ -1,3 +1,17 @@
+# WS54 VERIFIED: Source-test curated stream chapter and six-chapter repetition audit
+
+**Owner product decision:** Purposeful chapter-specific target lists, generated with V5 but permanently frozen after owner/editor approval; random Quick Play remains repeatable and incidental extra words/bonus recognition are **never planted**. Do not change old page IDs behind existing saved progress.
+
+**Current QA branch:** [WS54 draft PR #166](https://github.com/PlayerEden/GridMates-Word-Search/pull/166), stacked on WS53. Source `1655d03cda06afd173d1e61e04fd8624f2bfc6ef` passed [Android/core #44764877945](https://github.com/PlayerEden/GridMates-Word-Search/actions/runs/44764877945) and [art/release #44764877878](https://github.com/PlayerEden/GridMates-Word-Search/actions/runs/44764877878); research artifacts internally byte-for-byte identical. [Full exact hashes and source-verification report](devlog/2026-11-20_WS54_STREAM_BOOKWIDE_EDITORIAL_QA.md) · [WS54 scope, content and release fences](WOODLAND_BOOKWIDE_EDITORIAL_PLAN_WS54.md).
+
+**Actual delivered research:** Three new test-only *By the Stream* frozen V5 candidate pages (*Water's Edge* 12×12/12 Relaxed, *Life Along the Bank* 15×15/16 Classic, *River Currents* 20×20/24 Expert), each exact same board digest on rebuild and verified all 52 unique required answers/word IDs. Manual 8-direction scan of archived grid rows confirms every required answer appears in exactly one straight path. The candidate uses 19 preexisting canonical Woodland QA terms and **33 original, explicitly NOT release-approved proposed streamlife words**, only in separate QA test manifest. Original 159-entry Woodland QA pack, natural bonus recognition, published lexicon and user-facing game remain unchanged.
+
+**All six Woodland Chapters 3–8 editorial word-list outcome:** 312 target slots, **168→202** unique answers and sum of all chapter-pair overlaps **204→139**. Current 202 answers comprise **146 existing QA words** and **56 unapproved new editorial proposals** total (23 Birdsong WS51 and 33 stream WS54). Ch6↔Along Trail **29→10**, ↔Quiet Clearings **21→3**, ↔Forest Discoveries **30→10**. Most persistent overlap remains **Under Canopy↔Quiet Clearings 26**, **Under Canopy↔Forest Discoveries 25**. The book is NOT editorially approved despite green QA; carefully review compound word displays and all new terms. Next research: distinguish Chapter 8's animals/forest discoveries more than repeated canopy/trees, while measuring holistic repetition.
+
+**Strict isolation:** Draft stacked on WS53/WS52/WS51; no merge to Work/main, app runtime, original 63 playable QA Book pages/IDs, saved progress/achievements, original WS50–53 frozen test board files, artworks, Nearby, bonuses, scored games or installed APK. Public release requires separate versioned and owner-reviewed book manifest, Android device/backup/upgrade QA, and explicitly granted word permissions. No work is published just from this pass.
+
+---
+
 # WS53 verified — revised Quiet Clearings distinguished, editorial publication still on hold
 
 **Owner's product direction:** Author meaningful chapter-specific words, generate once and freeze exact puzzle identities; leave Quick Play random and incidental bonus words unplanted. Saved Library pages must never silently change.
