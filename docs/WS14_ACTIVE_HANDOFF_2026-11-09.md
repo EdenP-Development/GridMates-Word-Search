@@ -1,3 +1,13 @@
+# WS50 chapter-specific puzzle manuscripts — current parallel priority
+
+**Owner decision:** A named book chapter must select targets from an editorially meaningful chapter subtopic pool; V5 then deterministically lays out the puzzle, whose exact word list/board/paths must freeze permanently after editorial signoff. **Quick Play remains random.** Do not rewrite the existing 63 QA page IDs or local saves; chapter-specific V5 pages need *new versioned IDs*, not on-the-fly modifications. Natural extra words remain optional with no planted bonus placements.
+
+**Development location:** Isolated `feature/ws50-chapter-recipe-and-birdsong-lab-2026-11-19` stacked on WS49, no Work branch changes. [WS50 blueprint](CHAPTER_CONTENT_MODEL_AND_EDITORIAL_PLAN_2026-11-19.md) defines 18 existing QA chapter-name/subtopic mappings, review gates and three stable sizes. [WS50 pass journal](devlog/2026-11-19_WS50_CHAPTER_RECIPE_BIRDSONG_LAB.md) details test-only Kotlin three-page *Birdsong* preview from Woodland's 29 existing bird words. Outputs 18 chapter pool counts and 3 inspectable puzzle definitions with stable digests in independent CI report artifacts. **WS50 exact-source CI pending** until actual results verified; no new runtime page or production approval. Note: 29 terms for 52 target slots requires cross-page repeats; measure overlap and expand vocabulary before promotion.
+
+**Next Work integration:** treat data as a *proposal*, coordinate with Work's editorial/Fall book pass, preserve existing QA/release isolation, protect BookCatalog.requireCompatibleUpgrade and full backups, and obtain Android input/owner book review before approved book publication.
+
+---
+
 # WS49 verified — the owner wants natural words, not planted bonuses (read first)
 
 **Verified research branch:** [WS49 draft PR #161](https://github.com/PlayerEden/GridMates-Word-Search/pull/161), stacked on WS48→WS47→WS46→WS45 (not main or Work's active branch). **Exact executed WS49 source:** `57632ca1e8b08ace516ae76e2e0a2ba13f89e970`. Standard Android/core [#44663712025](https://github.com/PlayerEden/GridMates-Word-Search/actions/runs/44663712025) and independent art/release [#44663712042](https://github.com/PlayerEden/GridMates-Word-Search/actions/runs/44663712042) succeeded, with **four byte-identical TSV report payloads across both jobs**. [Full results and SHA checks](devlog/2026-11-19_WS49_FALL_NATURAL_BONUS_COVERAGE.md).
