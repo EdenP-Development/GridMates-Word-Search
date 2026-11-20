@@ -30,7 +30,7 @@ class ChapterRecipeContract(unittest.TestCase):
             self.assertIn(r["primary_subtopic"], allowed)
             self.assertEqual(len(allowed), len(set(allowed)))
         self.assertIn('"Birdsong"', runtime)
-        self.assertIn('"birds"', MAP.read_text())
+        self.assertIn("\tBirdsong\tbirds\tbirds\n", MAP.read_text())
     def test_original_qa_books_and_release_not_modified(self):
         runtime = QA_RUNTIME.read_text()
         self.assertIn("(3..8).map { chapter ->", runtime)
