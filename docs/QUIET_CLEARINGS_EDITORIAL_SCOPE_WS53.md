@@ -1,6 +1,10 @@
 # WS53 — Distinguish Quiet Clearings from Along the Trail without changing old puzzles
 
-> **Status at authoring:** QA-only versioned editorial proposal and Kotlin board-generation regression committed. Exact-source CI **pending**, and nothing is playable or release approved.
+> **Status:** **Passed two independent exact-source technical QA pipelines, but remains a test-only editorial proposal.** Real frozen boards are in both matching artifact reports. No playable pages, saved progress, owner release approval or published book changed.
+
+## Verified result
+
+The actual three V5 candidate boards, metadata, exact target matches and frozen `BookCatalog` reconstruction passed in both [standard Android/core #44758251802](https://github.com/PlayerEden/GridMates-Word-Search/actions/runs/44758251802) and [independent art/release #44758251892](https://github.com/PlayerEden/GridMates-Word-Search/actions/runs/44758251892), tested source `4c11c0b15c9fe9feab6b0275292d9ec43da2a7d7`. The two 2,032-byte board TSV files and 353-byte word-overlap TSV files match byte-for-byte between workflows. [Exact SHA-256 digests and board hashes](devlog/2026-11-20_WS53_QUIET_CLEARINGS_EDITORIAL_DIVERSITY.md). The editorial distinction improvement is real, but full-book vocabulary still repeats: 312 targets use 168 answers across the six researched Woodland chapters including unapproved Birdsong proposals.
 
 ## Goal and why it matters
 The owner prefers real collectible books with distinctive, deliberately chosen chapter word lists and permanent page grids, while Quick Play remains random and natural incidental bonus words are never planted. The source-backed [WS52 manuscript audit](devlog/2026-11-20_WS52_WOODLAND_FIVE_CHAPTER_QA.md) found an editorial blocker: Woodland Chapter 3 **Along the Trail** and Chapter 7 **Quiet Clearings** shared **48 of their 52** required words because both were scoped to the same two categories, `habitats,trails`. The five-chapter combined book study had 260 required slots but only 124 distinct words. The generator had passed; the manuscript did not pass editorial distinctiveness.
