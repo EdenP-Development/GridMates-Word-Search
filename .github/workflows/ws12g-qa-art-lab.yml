@@ -198,6 +198,8 @@ jobs:
         run: python3 -m unittest discover -s tools/asset_pipeline -p 'test_ws50_chapter_map.py' -v
       - name: WS51 Guard exact Birdsong word sources, page sets and versioned QA isolation
         run: python3 -m unittest discover -s tools/asset_pipeline -p 'test_ws51_birdsong_manuscript.py' -v
+      - name: WS52 Validate five Woodland chapter manuscripts and existing QA source words
+        run: python3 -m unittest discover -s tools/asset_pipeline -p 'test_ws52_woodland_manuscript.py' -v
       - name: WS16BU compact gallery/pager and profile readability guards
         run: python3 -m unittest discover -s tools/asset_pipeline -p 'test_ws16bu_compact_gallery.py' -v
       - name: WS16BV compact bundled Fonts and license access guards
@@ -517,5 +519,16 @@ jobs:
         with:
           name: GridMates-WS51-Birdsong-Manuscript
           path: core/build/ws51-birdsong-diverse-frozen-pages.tsv
+          if-no-files-found: error
+          retention-days: 30
+
+      - name: WS52 Upload five Woodland chapter candidate puzzle manuscripts
+        if: ${{ always() && (github.head_ref || github.ref_name) == 'feature/ws52-woodland-five-chapter-manuscripts-2026-11-20' }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: GridMates-WS52-Woodland-Chapter-QA
+          path: |
+            core/build/ws52-woodland-five-chapter-frozen-boards.tsv
+            core/build/ws52-woodland-chapter-quality.tsv
           if-no-files-found: error
           retention-days: 30
