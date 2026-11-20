@@ -1,3 +1,17 @@
+# WS53 isolated proposed Quiet Clearings chapter redesign (read first)
+
+**Owner direction:** Book chapters need distinct, curated word sets with permanently frozen board hashes/IDs, not randomly pulled targets from an entire broad theme. Quick Play stays fresh; incidental bonus words remain unplanted. Never overwrite saved historical chapter pages.
+
+**Existing verified baseline:** WS52 [draft PR #164](https://github.com/PlayerEden/GridMates-Word-Search/pull/164) passed both [Android/core #44670927912](https://github.com/PlayerEden/GridMates-Word-Search/actions/runs/44670927912) and [art/release #44670927977](https://github.com/PlayerEden/GridMates-Word-Search/actions/runs/44670927977). Its 15 *test-only* Woodland pages are technically sound, but Ch3 Along Trail and Ch7 Quiet Clearings shared **48/52 words**, a book editorial blocker.
+
+**WS53 new isolated branch:** `feature/ws53-quiet-clearings-distinct-editorial-2026-11-20` stacked on WS52, **not main/Work**. [Design scope and editorial tradeoffs](QUIET_CLEARINGS_EDITORIAL_SCOPE_WS53.md) · [pass journal](devlog/2026-11-20_WS53_QUIET_CLEARINGS_EDITORIAL_DIVERSITY.md). New 52-row, three-page QA manuscript moves Quiet Clearings category focus to `habitats + trees`, still using only original 159 Woodland QA words and stable IDs; page length, primary-category quota, no intra-chapter repeats all checked. WS52 and WS50 manifests remain unchanged, as do all 63 old playable QA book pages and user saves.
+
+**Measured source comparison (not yet actual board QA at authoring):** Ch3 shared words **48→18**, Ch6 **33→21**, Ch4 **0→26**, Ch8 **12→20**; book-wide distinct words **124→129** across five 52-word chapters. That's better but still not a fully unique book: another editorial pass must consider word variety and actual title fit across all chapters.
+
+**Source-only Kotlin/CI:** three separate versioned V5 page QA packs with exact authored target IDs and fixed seeds; generate and regenerate actual frozen boards and BookCatalog paths, then publish full board report + numeric comparison from both independent Android pipelines. **CI pending**, no published/installed new pages or release permissions. Future integration needs a distinct, owner-approved edition and compatibility/physical device tests; never silently swap old page IDs.
+
+---
+
 # WS52 verified five Woodland chapter technical QA — BOOK EDITORIAL HOLD
 
 **Design direction:** User wants chapter-specific author-selected target lists, followed by reproducible/frozen V5 board placement. Book pages should have stable IDs and **never silently change behind existing saves**. Quick Play stays fresh, incidental bonus words stay natural and unplanted.

@@ -200,6 +200,8 @@ jobs:
         run: python3 -m unittest discover -s tools/asset_pipeline -p 'test_ws51_birdsong_manuscript.py' -v
       - name: WS52 Validate five Woodland chapter manuscripts and existing QA source words
         run: python3 -m unittest discover -s tools/asset_pipeline -p 'test_ws52_woodland_manuscript.py' -v
+      - name: WS53 Verify revised Quiet Clearings recipe and honest chapter overlap gains
+        run: python3 -m unittest discover -s tools/asset_pipeline -p 'test_ws53_quiet_clearings.py' -v
       - name: WS16BU compact gallery/pager and profile readability guards
         run: python3 -m unittest discover -s tools/asset_pipeline -p 'test_ws16bu_compact_gallery.py' -v
       - name: WS16BV compact bundled Fonts and license access guards
@@ -625,5 +627,16 @@ jobs:
           path: |
             core/build/ws52-woodland-five-chapter-frozen-boards.tsv
             core/build/ws52-woodland-chapter-quality.tsv
+          if-no-files-found: error
+          retention-days: 30
+
+      - name: WS53 Upload revised Quiet Clearings frozen boards and chapter-overlap deltas
+        if: ${{ always() && (github.head_ref || github.ref_name) == 'feature/ws53-quiet-clearings-distinct-editorial-2026-11-20' }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: GridMates-WS53-Quiet-Clearings-QA
+          path: |
+            core/build/ws53-quiet-clearings-frozen-boards.tsv
+            core/build/ws53-woodland-overlap-delta.tsv
           if-no-files-found: error
           retention-days: 30
