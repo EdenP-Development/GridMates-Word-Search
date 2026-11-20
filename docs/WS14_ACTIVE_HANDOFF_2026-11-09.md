@@ -1,3 +1,15 @@
+# WS51 Birdsong editorial chapter upgrade — isolated QA candidate
+
+**Owner requirement:** Named chapters must have meaningful page-specific vocabulary, fixed after publication; Quick Play stays replayable/random and extra words are incidental, not planted. The first WS50 Birdsong proof used only 29 bird names across 52 slots, causing repeated targets and hard words on Page 1.
+
+**WS51 branch:** `feature/ws51-birdsong-diverse-page-manuscript-2026-11-20` stacked on WS50 [PR #162](https://github.com/PlayerEden/GridMates-Word-Search/pull/162), **not merged** to main or Work. [WS51 editorial plan](BIRDSONG_CHAPTER_EDITORIAL_PLAN_WS51.md) and [journal](devlog/2026-11-20_WS51_BIRDSONG_DIVERSITY_QA.md) explain source, status and safeguards.
+
+**What was authored:** 3 distinct word lists: Page 1 **12×12/12 Relaxed**, Page 2 **15×15/16 Classic**, Page 3 **20×20/24 Expert**. Combined **52 distinct required words**, all bird/birdlife themed, no page repetitions; **29 existing QA birds**, 23 newly proposed QA-only words, never owner release approved. Page 1 favors familiar short words. Source-only Kotlin runs V5 twice with fixed page packs/seed per page, asserts valid frozen `BookPage`/catalog, and exports full target/board evidence in two independent CI runs.
+
+**Verification at creation:** WS51 source/CI **pending**; do not report actual successful V5 boards or artifact hashes until inspected. Existing WS50 candidate boards and all 63 playable QA pages **unchanged**; release pack, saves, score, Nearby and artwork untouched. Work should review/approve words and prepare new versioned volumes rather than silently replacing old pages. Parent WS50 passed [Android/core #44666632435](https://github.com/PlayerEden/GridMates-Word-Search/actions/runs/44666632435) and [art/release #44666632455](https://github.com/PlayerEden/GridMates-Word-Search/actions/runs/44666632455).
+
+---
+
 # WS50 verified — Chapter-specific word pools, permanent pages, Quick Play random (read first)
 
 **Owner-approved design direction (not published content):** Curate **chapter-specific** word pools rather than using an unrelated whole-book random subset. V5 can still place the targets; when a new authored page passes editorial/owner review, freeze word list, exact board rows, target paths and stable versioned IDs. Quick Play remains fresh/random; Daily stays deterministic. Extra words remain incidental and optional. Do NOT rewrite the preexisting 63 QA pages, their saved progress/awards or old book chapter IDs.
