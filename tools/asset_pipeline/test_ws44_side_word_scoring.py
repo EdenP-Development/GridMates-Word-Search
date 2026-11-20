@@ -51,7 +51,7 @@ class SideWordScoringContract(unittest.TestCase):
                   'store.claimSideWord(start, end, daily)',
                   'BonusClaimStatus.FOUND',
                   'BonusWordRules.points(',
-                  'Score ', 'bonus words'):
+                  'Score ', 'run.bonusWords.size'):
             self.assertIn(m,screen)
         self.assertIn("record.points",(SRC/"SoloRecordsScreen.kt").read_text())
         self.assertIn("run.bonusWords.size",(SRC/"PuzzleResultShare.kt").read_text())
