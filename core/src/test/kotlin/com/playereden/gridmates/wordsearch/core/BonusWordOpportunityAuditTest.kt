@@ -28,6 +28,14 @@ class BonusWordOpportunityAuditTest {
         reviewedPack.words.map { it.answer }.toSet() + inAppFallback
     }
 
+    // WS49: only a TEST resource sourced from the versioned Fall QA authoring
+    // rows. This is NOT the release dictionary, a new target pack or runtime data.
+    private val fallQaAnswers by lazy {
+        requireNotNull(javaClass.classLoader.getResource(
+            "research-packs/en-fall-v1-nonrelease-answers.txt"
+        )).readText().lineSequence().filter { it.isNotBlank() }.toSet()
+    }
+
     /**
      * Scan precisely the eight straight-line directions accepted by the
      * existing side-word rule. Unique words, not duplicate occurrences or
@@ -70,7 +78,8 @@ class BonusWordOpportunityAuditTest {
         val fallback: Set<String>,
         val listedTargetCount: Int,
         val qaOrigins: Map<String, SideWordOrigin>,
-        val fallbackOrigins: Map<String, SideWordOrigin>
+        val fallbackOrigins: Map<String, SideWordOrigin>,
+        val fallNewOrigins: Map<String, SideWordOrigin>
     )
 
     private fun trial(group: String, puzzle: WordSearchPuzzle): Trial {
@@ -86,7 +95,18 @@ class BonusWordOpportunityAuditTest {
         assertEquals("Exactly the same eligible QA words as WS46", qa, origin.keys)
         val fallbackOrigin = origin.filterKeys { it in inAppFallback }
         assertEquals("Exactly the same built-in eligibility as WS46", fallback, fallbackOrigin.keys)
-        return Trial(group, qa, fallback, puzzle.targets.size, origin, fallbackOrigin)
+        // WS49: add 150 Fall QA candidate answers ONLY for the research scan.
+        // Existing target placements, board bytes and QA eligibility must remain
+        // unchanged; no word is actually inserted into the grid.
+        val withFall = SideWordOriginStudy.classify(puzzle, qaDictionary + fallQaAnswers)
+        assertEquals("Adding Fall must not alter existing QA path classifications",
+            origin, withFall.filterKeys { it in qa })
+        val incrementalFall = withFall.filterKeys { it !in qa }
+        assertEquals("New Fall opportunities match actual physical trace validator",
+            qa + incrementalFall.keys,
+            eligibleSideWords(puzzle, qaDictionary + fallQaAnswers))
+        return Trial(group, qa, fallback, puzzle.targets.size, origin, fallbackOrigin,
+            incrementalFall)
     }
 
     private fun report(
@@ -172,6 +192,27 @@ class BonusWordOpportunityAuditTest {
         ).joinToString("\t")
     }
 
+    /** Only incremental, unlisted Fall QA answers physically present on boards. */
+    private fun fallIncrementReport(rows: List<Trial>): String {
+        val found = rows.flatMap { it.fallNewOrigins.entries }
+        val base = rows.sumOf { it.qa.size }
+        val gaining = rows.count { it.fallNewOrigins.isNotEmpty() }
+        val fragments = found.count { it.value == SideWordOrigin.TARGET_FRAGMENT_ONLY }
+        val crossing = found.count { it.value == SideWordOrigin.CROSSING_ONLY }
+        val free = found.count { it.value == SideWordOrigin.FREE_PATH_AVAILABLE }
+        val freq = found.groupingBy { it.key }.eachCount()
+        val top = freq.entries.sortedWith(compareByDescending<Map.Entry<String, Int>> { it.value }
+            .thenBy { it.key }).take(10)
+            .joinToString(",") { "${it.key}:${it.value}" }
+        fun fmt(x: Double) = "%.2f".format(Locale.ROOT, x)
+        return listOf(
+            rows.first().group, rows.size, base, found.size, base + found.size,
+            gaining, fmt(100.0 * gaining / rows.size),
+            fmt(found.size.toDouble() / rows.size),
+            fragments, crossing, free, freq.size, top
+        ).joinToString("\t")
+    }
+
     @Test fun exactScannerAgreesWithOriginalSideWordContract() {
         val puzzle = WordSearchPuzzle(
             id = "ws46-scanner-check", seed = 0L, contentVersion = 1,
@@ -253,5 +294,46 @@ class BonusWordOpportunityAuditTest {
         println("WS47 BONUS ORIGIN AUDIT: ${allTrials.size} real boards; TSV=$origins")
         originLines.drop(1).forEach { println("WS47 ${it}") }
         assertEquals(lines.size, originLines.size)
+
+        // WS49: same trials, no second board generation. This measures
+        // incremental natural recognition ONLY; nothing is placed into puzzles.
+        assertEquals("Fall source must remain 150 unique QA-only answers",
+            150, fallQaAnswers.size)
+        assertTrue("Only A-Z source answers",
+            fallQaAnswers.all { w -> w.all { it in 'A'..'Z' } })
+        val gainLines = mutableListOf(listOf(
+            "group", "boards", "baseline_qa_eligible", "new_fall_eligible",
+            "expanded_qa_eligible", "boards_gaining", "pct_boards_gaining",
+            "mean_new_per_board", "new_fragments", "new_crossings",
+            "new_independent", "distinct_new_words", "top_new_words"
+        ).joinToString("\t"))
+        for ((_, items) in allTrials.groupBy { it.group }.toSortedMap())
+            gainLines += fallIncrementReport(items)
+        val gainFile = File("build/ws49-fall-natural-increment.tsv")
+        gainFile.writeText(gainLines.joinToString("\n") + "\n")
+        assertEquals(19, gainLines.size)
+        println("WS49 FALL NATURAL RECOGNITION: 339 original boards; TSV=$gainFile")
+        gainLines.drop(1).forEach { println("WS49 ${it}") }
+
+        val wordOccurrences = allTrials.flatMap { trial ->
+            trial.fallNewOrigins.map { (word, kind) -> word to kind }
+        }
+        val wordLines = mutableListOf(listOf(
+            "word", "boards_with_word", "fragment_only", "crossing_only",
+            "free_path_available", "review_scope"
+        ).joinToString("\t"))
+        for ((word, matches) in wordOccurrences.groupBy { it.first }.toSortedMap()) {
+            wordLines += listOf(
+                word, matches.size,
+                matches.count { it.second == SideWordOrigin.TARGET_FRAGMENT_ONLY },
+                matches.count { it.second == SideWordOrigin.CROSSING_ONLY },
+                matches.count { it.second == SideWordOrigin.FREE_PATH_AVAILABLE },
+                "editorial_QA_only_not_release"
+            ).joinToString("\t")
+        }
+        val wordFile = File("build/ws49-fall-candidate-frequencies.tsv")
+        wordFile.writeText(wordLines.joinToString("\n") + "\n")
+        assertEquals(1 + wordOccurrences.map { it.first }.toSet().size, wordLines.size)
+        println("WS49 EDITORIAL TRIAGE CANDIDATES: ${wordLines.size - 1} distinct; TSV=$wordFile")
     }
 }
