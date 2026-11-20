@@ -42,8 +42,8 @@ class BonusWordRulesTest {
         assertEquals(BonusClaimStatus.ALREADY_FOUND,
             BonusWordRules.select(puzzle, setOf("DOGS"), dictionary,
                 GridPoint(1, 0), GridPoint(1, 3)).status)
-        val full = setOf("DOGS", "TREE", "BIRD", "FROG") +
-            (1..8).map { "WORD" + it }.toSet()
+        val full = setOf("DOGS", "BIRD", "FROG") +
+            (1..9).map { "WORD" + it }.toSet()
         assertEquals(BonusClaimStatus.FULL,
             BonusWordRules.select(puzzle, full, dictionary,
                 GridPoint(2, 0), GridPoint(2, 3)).status)
