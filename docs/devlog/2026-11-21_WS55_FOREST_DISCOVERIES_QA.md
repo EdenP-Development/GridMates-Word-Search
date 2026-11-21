@@ -60,8 +60,8 @@ The exact executed source SHA, both completed CI statuses, two independent artif
 
 
 - Source parent: verified WS54 [draft PR #166](https://github.com/PlayerEden/GridMates-Word-Search/pull/166), documented head `47214658a2cdbc803a82947bda79a62b80649edf`. Earlier source `1655d03cda06afd173d1e61e04fd8624f2bfc6ef` passed independent [Android/core #44764877945](https://github.com/PlayerEden/GridMates-Word-Search/actions/runs/44764877945) and [art/release #44764877878](https://github.com/PlayerEden/GridMates-Word-Search/actions/runs/44764877878).
-- **WS55 exact test SHA/build conclusion:** pending. Do not use previously passed WS54 QA as proof of WS55 board generation.
+- **WS55 exact test SHA/build conclusion:** source `59004f28bc7a0bcafcd15e876278e56ed1464215` passed both independent Android workflows (#44923963483 and #44923963465), with byte-identical frozen-board, overlap and frequency TSVs. Source-level WS55, Kotlin V5 frozen generation and BookCatalog restoration all passed.
 - **No physical phone/owner content approval:** not performed. No new installable edition is being produced for the new manuscript.
-- **Next:** read actual CI conclusions and inspect both independent frozen-board/overlap/frequency artifacts. If any 20×20 list cannot be placed with unchanged V5, revise only the new WS55 QA manuscript/seed and generate a *new* test-source digest. Then editorially review the remaining Chapter 4↔7 overlap and 30 proposed wildlife words.
+- **Next:** review the remaining Chapter 4↔7 overlap and the 30 proposed wildlife words with the owner, then prepare a separately versioned playable Woodland QA edition for Android device and save-upgrade acceptance without rewriting existing page IDs.
 
 [Full editorial and technical gate plan](../WOODLAND_FOREST_DISCOVERIES_EDITORIAL_PLAN_WS55.md) · [Work coordination](https://github.com/PlayerEden/GridMates-Word-Search/issues/140).
