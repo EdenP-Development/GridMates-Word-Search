@@ -1,6 +1,12 @@
 # WS55 — Forest Discoveries: wildlife observation chapter, full Woodland book QA
 
-> **Stage at authoring:** New test-only editorial manuscript and Kotlin/Python validation committed. Exact-source Android/core and independent art/release workflows **pending**. No playable/release content or old saved pages changed.
+> **Stage:** **Both independent Android/core and art/release QA workflows succeeded with actual reproducible V5 boards.** Research-only; word/editorial and playable release signoff withheld. Historic Library pages/saves untouched.
+
+## Verified WS55 research outcome
+
+Both [Android/core #44923963483](https://github.com/PlayerEden/GridMates-Word-Search/actions/runs/44923963483) and [independent art/release #44923963465](https://github.com/PlayerEden/GridMates-Word-Search/actions/runs/44923963465) passed on exact source `59004f28bc7a0bcafcd15e876278e56ed1464215`. All three real frozen grids, complete target words and source identity were verified, and three independent report payloads matched byte-for-byte. [Complete WS55 board SHA/report checksums and frequency audit](devlog/2026-11-21_WS55_FOREST_DISCOVERIES_QA.md).
+
+**Recommendation:** Finish the outstanding Chapter 4/7 overlap and review all 86 newly proposed words in a focused editorial pass; then build **one new playable QA versioned Woodland edition** and test on an actual phone. Continuing research indefinitely without owner device play is a weaker next use of effort.
 
 ## Why this milestone matters
 The owner wants collectible chapter books with intentionally chosen answer lists and permanent reproducible page layouts, not randomly selected whole-theme words under misleading chapter titles. In verified WS54 [draft PR #166](https://github.com/PlayerEden/GridMates-Word-Search/pull/166), the themed stream chapter reduced bookwide duplication and passed true V5 board QA. Yet Chapter 8 *Forest Discoveries* continued to repeat a lot of generic canopy/tree/stream vocabulary from other chapters: 25 required words also appeared in *Under the Canopy*, 20 in *Quiet Clearings* and 10 in *By the Stream*. Source overlap reports identified those words precisely.
