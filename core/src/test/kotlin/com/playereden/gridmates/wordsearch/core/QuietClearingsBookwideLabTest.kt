@@ -104,7 +104,7 @@ class QuietClearingsBookwideLabTest {
                 it.subtopic == word.subtopic && it.tier == word.tier })
         }
         assertTrue(proposals.all { it.id.startsWith("ws56q") &&
-            it.id !in original && it.subtopic == "wildlife-signs" })
+            it.id !in original && it.subtopic == "clearings" })
         assertTrue("No candidate words were silently imported into the base QA pack",
             original.keys.none { it.startsWith("ws56q") })
         val means = (1..3).map { page ->
