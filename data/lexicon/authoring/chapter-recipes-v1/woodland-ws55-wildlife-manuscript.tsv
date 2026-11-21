@@ -1,0 +1,53 @@
+chapter	chapter_title	page	page_title	answer	word_id	display	tier	subtopic	provenance
+8	Forest Discoveries	1	Woodland Neighbors	BEAR	gm000043	Bear	familiar	forest-animals	existing_woodland_QA_not_release
+8	Forest Discoveries	1	Woodland Neighbors	DEER	gm000044	Deer	familiar	forest-animals	existing_woodland_QA_not_release
+8	Forest Discoveries	1	Woodland Neighbors	WOLF	gm000046	Wolf	familiar	forest-animals	existing_woodland_QA_not_release
+8	Forest Discoveries	1	Woodland Neighbors	SKUNK	gm000061	Skunk	familiar	forest-animals	existing_woodland_QA_not_release
+8	Forest Discoveries	1	Woodland Neighbors	HARE	gm000045	Hare	familiar	forest-animals	existing_woodland_QA_not_release
+8	Forest Discoveries	1	Woodland Neighbors	MOUSE	gm000047	Mouse	familiar	forest-animals	existing_woodland_QA_not_release
+8	Forest Discoveries	1	Woodland Neighbors	MOOSE	gm000055	Moose	familiar	forest-animals	existing_woodland_QA_not_release
+8	Forest Discoveries	1	Woodland Neighbors	FROG	gm000064	Frog	familiar	forest-animals	existing_woodland_QA_not_release
+8	Forest Discoveries	1	Woodland Neighbors	RABBIT	gm000002	Rabbit	familiar	forest-animals	existing_woodland_QA_not_release
+8	Forest Discoveries	1	Woodland Neighbors	PAWS	ws55f001	Paws	familiar	wildlife-signs	ws55_wildlife_candidate_unapproved
+8	Forest Discoveries	1	Woodland Neighbors	HOOF	ws55f002	Hoof	familiar	wildlife-signs	ws55_wildlife_candidate_unapproved
+8	Forest Discoveries	1	Woodland Neighbors	CLAWS	ws55f003	Claws	familiar	wildlife-signs	ws55_wildlife_candidate_unapproved
+8	Forest Discoveries	2	Signs Along the Path	RACCOON	gm000050	Raccoon	familiar	forest-animals	existing_woodland_QA_not_release
+8	Forest Discoveries	2	Signs Along the Path	BOBCAT	gm000054	Bobcat	familiar	forest-animals	existing_woodland_QA_not_release
+8	Forest Discoveries	2	Signs Along the Path	OTTER	gm000049	Otter	familiar	forest-animals	existing_woodland_QA_not_release
+8	Forest Discoveries	2	Signs Along the Path	SHREW	gm000060	Shrew	familiar	forest-animals	existing_woodland_QA_not_release
+8	Forest Discoveries	2	Signs Along the Path	WEASEL	gm000057	Weasel	familiar	forest-animals	existing_woodland_QA_not_release
+8	Forest Discoveries	2	Signs Along the Path	LIZARD	gm000063	Lizard	familiar	forest-animals	existing_woodland_QA_not_release
+8	Forest Discoveries	2	Signs Along the Path	MOLE	gm000058	Mole	familiar	forest-animals	existing_woodland_QA_not_release
+8	Forest Discoveries	2	Signs Along the Path	VOLE	gm000059	Vole	familiar	forest-animals	existing_woodland_QA_not_release
+8	Forest Discoveries	2	Signs Along the Path	PAWPRINT	ws55f004	Pawprint	familiar	wildlife-signs	ws55_wildlife_candidate_unapproved
+8	Forest Discoveries	2	Signs Along the Path	ANTLERS	ws55f005	Antlers	familiar	wildlife-signs	ws55_wildlife_candidate_unapproved
+8	Forest Discoveries	2	Signs Along the Path	WHISKERS	ws55f006	Whiskers	familiar	wildlife-signs	ws55_wildlife_candidate_unapproved
+8	Forest Discoveries	2	Signs Along the Path	SCRATCH	ws55f007	Scratch	familiar	wildlife-signs	ws55_wildlife_candidate_unapproved
+8	Forest Discoveries	2	Signs Along the Path	GNAWING	ws55f008	Gnawing	familiar	wildlife-signs	ws55_wildlife_candidate_unapproved
+8	Forest Discoveries	2	Signs Along the Path	GRAZING	ws55f009	Grazing	familiar	wildlife-signs	ws55_wildlife_candidate_unapproved
+8	Forest Discoveries	2	Signs Along the Path	SCENT	ws55f010	Scent	familiar	wildlife-signs	ws55_wildlife_candidate_unapproved
+8	Forest Discoveries	2	Signs Along the Path	RUSTLE	ws55f011	Rustle	familiar	wildlife-signs	ws55_wildlife_candidate_unapproved
+8	Forest Discoveries	3	Wildlife Field Notes	PORCUPINE	gm000053	Porcupine	familiar	forest-animals	existing_woodland_QA_not_release
+8	Forest Discoveries	3	Wildlife Field Notes	HEDGEHOG	gm000051	Hedgehog	familiar	forest-animals	existing_woodland_QA_not_release
+8	Forest Discoveries	3	Wildlife Field Notes	CHIPMUNK	gm000052	Chipmunk	familiar	forest-animals	existing_woodland_QA_not_release
+8	Forest Discoveries	3	Wildlife Field Notes	SQUIRREL	gm000009	Squirrel	familiar	forest-animals	existing_woodland_QA_not_release
+8	Forest Discoveries	3	Wildlife Field Notes	SALAMANDER	gm000067	Salamander	familiar	forest-animals	existing_woodland_QA_not_release
+8	Forest Discoveries	3	Wildlife Field Notes	ANIMALTRACKS	ws55f012	Animal Tracks	intermediate	wildlife-signs	ws55_wildlife_candidate_unapproved
+8	Forest Discoveries	3	Wildlife Field Notes	WILDLIFESIGNS	ws55f013	Wildlife Signs	intermediate	wildlife-signs	ws55_wildlife_candidate_unapproved
+8	Forest Discoveries	3	Wildlife Field Notes	FOOTPRINTS	ws55f014	Footprints	intermediate	wildlife-signs	ws55_wildlife_candidate_unapproved
+8	Forest Discoveries	3	Wildlife Field Notes	DROPPINGS	ws55f015	Droppings	intermediate	wildlife-signs	ws55_wildlife_candidate_unapproved
+8	Forest Discoveries	3	Wildlife Field Notes	CAMOUFLAGE	ws55f016	Camouflage	intermediate	wildlife-signs	ws55_wildlife_candidate_unapproved
+8	Forest Discoveries	3	Wildlife Field Notes	HIBERNATION	ws55f017	Hibernation	intermediate	wildlife-signs	ws55_wildlife_candidate_unapproved
+8	Forest Discoveries	3	Wildlife Field Notes	NOCTURNAL	ws55f018	Nocturnal	intermediate	wildlife-signs	ws55_wildlife_candidate_unapproved
+8	Forest Discoveries	3	Wildlife Field Notes	FORAGING	ws55f019	Foraging	intermediate	wildlife-signs	ws55_wildlife_candidate_unapproved
+8	Forest Discoveries	3	Wildlife Field Notes	PREDATOR	ws55f020	Predator	intermediate	wildlife-signs	ws55_wildlife_candidate_unapproved
+8	Forest Discoveries	3	Wildlife Field Notes	HERBIVORE	ws55f021	Herbivore	intermediate	wildlife-signs	ws55_wildlife_candidate_unapproved
+8	Forest Discoveries	3	Wildlife Field Notes	CARNIVORE	ws55f022	Carnivore	intermediate	wildlife-signs	ws55_wildlife_candidate_unapproved
+8	Forest Discoveries	3	Wildlife Field Notes	OMNIVORE	ws55f023	Omnivore	intermediate	wildlife-signs	ws55_wildlife_candidate_unapproved
+8	Forest Discoveries	3	Wildlife Field Notes	SCAVENGER	ws55f024	Scavenger	intermediate	wildlife-signs	ws55_wildlife_candidate_unapproved
+8	Forest Discoveries	3	Wildlife Field Notes	FOODCHAIN	ws55f025	Food Chain	intermediate	wildlife-signs	ws55_wildlife_candidate_unapproved
+8	Forest Discoveries	3	Wildlife Field Notes	TERRITORY	ws55f026	Territory	intermediate	wildlife-signs	ws55_wildlife_candidate_unapproved
+8	Forest Discoveries	3	Wildlife Field Notes	SIGHTINGS	ws55f027	Sightings	intermediate	wildlife-signs	ws55_wildlife_candidate_unapproved
+8	Forest Discoveries	3	Wildlife Field Notes	CAMERATRAP	ws55f028	Camera Trap	intermediate	wildlife-signs	ws55_wildlife_candidate_unapproved
+8	Forest Discoveries	3	Wildlife Field Notes	ECHOLOCATION	ws55f029	Echolocation	intermediate	wildlife-signs	ws55_wildlife_candidate_unapproved
+8	Forest Discoveries	3	Wildlife Field Notes	NESTBUILDING	ws55f030	Nest Building	intermediate	wildlife-signs	ws55_wildlife_candidate_unapproved
