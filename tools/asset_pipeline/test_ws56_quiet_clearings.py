@@ -68,7 +68,8 @@ class QuietClearingsSourceGuard(unittest.TestCase):
         self.assertTrue(avg[0]<avg[1]<avg[2])
     def test_six_chapter_vocabulary_comparison(self):
         before=chapters()
-        new=dict(before,**{7:{r["answer"] for r in rows(CANON)}})
+        new=dict(before)
+        new[7]={r["answer"] for r in rows(CANON)}
         uniq=lambda x:len(set.union(*x.values()))
         pair=lambda x:sum(len(x[a]&x[b]) for a,b in combinations((3,4,5,6,7,8),2))
         self.assertEqual((233,264),(uniq(before),uniq(new)))
