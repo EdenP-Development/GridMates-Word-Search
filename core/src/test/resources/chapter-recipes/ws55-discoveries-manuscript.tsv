@@ -1,0 +1,53 @@
+chapter	chapter_title	page	page_title	answer	word_id	display	tier	subtopic	provenance
+8	Forest Discoveries	1	Tracks and Trails	BEAR	gm000043	Bear	familiar	forest-animals	existing_woodland_QA_not_release
+8	Forest Discoveries	1	Tracks and Trails	DEER	gm000044	Deer	familiar	forest-animals	existing_woodland_QA_not_release
+8	Forest Discoveries	1	Tracks and Trails	WOLF	gm000046	Wolf	familiar	forest-animals	existing_woodland_QA_not_release
+8	Forest Discoveries	1	Tracks and Trails	FOX	gm000041	Fox	familiar	forest-animals	existing_woodland_QA_not_release
+8	Forest Discoveries	1	Tracks and Trails	HARE	gm000045	Hare	familiar	forest-animals	existing_woodland_QA_not_release
+8	Forest Discoveries	1	Tracks and Trails	MOOSE	gm000055	Moose	familiar	forest-animals	existing_woodland_QA_not_release
+8	Forest Discoveries	1	Tracks and Trails	ELK	gm000056	Elk	familiar	forest-animals	existing_woodland_QA_not_release
+8	Forest Discoveries	1	Tracks and Trails	MOLE	gm000058	Mole	familiar	forest-animals	existing_woodland_QA_not_release
+8	Forest Discoveries	1	Tracks and Trails	VOLE	gm000059	Vole	familiar	forest-animals	existing_woodland_QA_not_release
+8	Forest Discoveries	1	Tracks and Trails	SHREW	gm000060	Shrew	familiar	forest-animals	existing_woodland_QA_not_release
+8	Forest Discoveries	1	Tracks and Trails	TRACK	ws55w001	Track	familiar	wildlife-signs	ws55_wildlife_signs_candidate_unapproved
+8	Forest Discoveries	1	Tracks and Trails	PAW	ws55w002	Paw	familiar	wildlife-signs	ws55_wildlife_signs_candidate_unapproved
+8	Forest Discoveries	2	Signs of Wildlife	RABBIT	gm000002	Rabbit	familiar	forest-animals	existing_woodland_QA_not_release
+8	Forest Discoveries	2	Signs of Wildlife	RACCOON	gm000050	Raccoon	familiar	forest-animals	existing_woodland_QA_not_release
+8	Forest Discoveries	2	Signs of Wildlife	MOUSE	gm000047	Mouse	familiar	forest-animals	existing_woodland_QA_not_release
+8	Forest Discoveries	2	Signs of Wildlife	LIZARD	gm000063	Lizard	familiar	forest-animals	existing_woodland_QA_not_release
+8	Forest Discoveries	2	Signs of Wildlife	SKUNK	gm000061	Skunk	familiar	forest-animals	existing_woodland_QA_not_release
+8	Forest Discoveries	2	Signs of Wildlife	BADGER	gm000048	Badger	familiar	forest-animals	existing_woodland_QA_not_release
+8	Forest Discoveries	2	Signs of Wildlife	BOBCAT	gm000054	Bobcat	familiar	forest-animals	existing_woodland_QA_not_release
+8	Forest Discoveries	2	Signs of Wildlife	FEATHER	gm000153	Feather	familiar	trails	existing_woodland_QA_not_release
+8	Forest Discoveries	2	Signs of Wildlife	FOOTPRINT	gm000151	Footprint	familiar	trails	existing_woodland_QA_not_release
+8	Forest Discoveries	2	Signs of Wildlife	SCRATCH	ws55w003	Scratch	familiar	wildlife-signs	ws55_wildlife_signs_candidate_unapproved
+8	Forest Discoveries	2	Signs of Wildlife	BURROW	gm000137	Burrow	familiar	habitats	existing_woodland_QA_not_release
+8	Forest Discoveries	2	Signs of Wildlife	DROPPING	ws55w004	Dropping	familiar	wildlife-signs	ws55_wildlife_signs_candidate_unapproved
+8	Forest Discoveries	2	Signs of Wildlife	ANTLER	ws55w005	Antler	familiar	wildlife-signs	ws55_wildlife_signs_candidate_unapproved
+8	Forest Discoveries	2	Signs of Wildlife	HOOFPRINT	ws55w006	Hoofprint	familiar	wildlife-signs	ws55_wildlife_signs_candidate_unapproved
+8	Forest Discoveries	2	Signs of Wildlife	PELT	ws55w007	Pelt	familiar	wildlife-signs	ws55_wildlife_signs_candidate_unapproved
+8	Forest Discoveries	2	Signs of Wildlife	TAIL	ws55w008	Tail	familiar	wildlife-signs	ws55_wildlife_signs_candidate_unapproved
+8	Forest Discoveries	3	Hidden in the Woods	PORCUPINE	gm000053	Porcupine	familiar	forest-animals	existing_woodland_QA_not_release
+8	Forest Discoveries	3	Hidden in the Woods	HEDGEHOG	gm000051	Hedgehog	familiar	forest-animals	existing_woodland_QA_not_release
+8	Forest Discoveries	3	Hidden in the Woods	CHIPMUNK	gm000052	Chipmunk	familiar	forest-animals	existing_woodland_QA_not_release
+8	Forest Discoveries	3	Hidden in the Woods	SQUIRREL	gm000009	Squirrel	familiar	forest-animals	existing_woodland_QA_not_release
+8	Forest Discoveries	3	Hidden in the Woods	SALAMANDER	gm000067	Salamander	familiar	forest-animals	existing_woodland_QA_not_release
+8	Forest Discoveries	3	Hidden in the Woods	CAMOUFLAGE	ws55w009	Camouflage	intermediate	wildlife-signs	ws55_wildlife_signs_candidate_unapproved
+8	Forest Discoveries	3	Hidden in the Woods	TERRITORY	ws55w010	Territory	intermediate	wildlife-signs	ws55_wildlife_signs_candidate_unapproved
+8	Forest Discoveries	3	Hidden in the Woods	HIBERNATE	ws55w011	Hibernate	intermediate	wildlife-signs	ws55_wildlife_signs_candidate_unapproved
+8	Forest Discoveries	3	Hidden in the Woods	NOCTURNAL	ws55w012	Nocturnal	intermediate	wildlife-signs	ws55_wildlife_signs_candidate_unapproved
+8	Forest Discoveries	3	Hidden in the Woods	FORAGING	ws55w013	Foraging	intermediate	wildlife-signs	ws55_wildlife_signs_candidate_unapproved
+8	Forest Discoveries	3	Hidden in the Woods	DENNING	ws55w014	Denning	intermediate	wildlife-signs	ws55_wildlife_signs_candidate_unapproved
+8	Forest Discoveries	3	Hidden in the Woods	NESTING	ws55w015	Nesting	intermediate	wildlife-signs	ws55_wildlife_signs_candidate_unapproved
+8	Forest Discoveries	3	Hidden in the Woods	PAWPRINTS	ws55w016	Pawprints	intermediate	wildlife-signs	ws55_wildlife_signs_candidate_unapproved
+8	Forest Discoveries	3	Hidden in the Woods	CLAWMARKS	ws55w017	Clawmarks	intermediate	wildlife-signs	ws55_wildlife_signs_candidate_unapproved
+8	Forest Discoveries	3	Hidden in the Woods	TRACKWAY	ws55w018	Trackway	intermediate	wildlife-signs	ws55_wildlife_signs_candidate_unapproved
+8	Forest Discoveries	3	Hidden in the Woods	BROWSE	ws55w019	Browse	intermediate	wildlife-signs	ws55_wildlife_signs_candidate_unapproved
+8	Forest Discoveries	3	Hidden in the Woods	GNAWING	ws55w020	Gnawing	intermediate	wildlife-signs	ws55_wildlife_signs_candidate_unapproved
+8	Forest Discoveries	3	Hidden in the Woods	SCRAPING	ws55w021	Scraping	intermediate	wildlife-signs	ws55_wildlife_signs_candidate_unapproved
+8	Forest Discoveries	3	Hidden in the Woods	MOLTING	ws55w022	Molting	intermediate	wildlife-signs	ws55_wildlife_signs_candidate_unapproved
+8	Forest Discoveries	3	Hidden in the Woods	SCENTMARK	ws55w023	Scentmark	intermediate	wildlife-signs	ws55_wildlife_signs_candidate_unapproved
+8	Forest Discoveries	3	Hidden in the Woods	WILDLIFE	gm000169	Wildlife	familiar	trails	existing_woodland_QA_not_release
+8	Forest Discoveries	3	Hidden in the Woods	TRAILCAMERA	ws55w024	Trailcamera	intermediate	wildlife-signs	ws55_wildlife_signs_candidate_unapproved
+8	Forest Discoveries	3	Hidden in the Woods	HABITAT	ws55w025	Habitat	intermediate	wildlife-signs	ws55_wildlife_signs_candidate_unapproved
+8	Forest Discoveries	3	Hidden in the Woods	TREEHOLE	ws55w026	Treehole	intermediate	wildlife-signs	ws55_wildlife_signs_candidate_unapproved
