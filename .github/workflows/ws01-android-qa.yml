@@ -206,6 +206,8 @@ jobs:
         run: python3 -m unittest discover -s tools/asset_pipeline -p 'test_ws54_stream_bookwide_quality.py' -v
       - name: WS55 Audit Forest Discoveries vocabulary and six-chapter identity
         run: python3 -m unittest discover -s tools/asset_pipeline -p 'test_ws55_forest_discoveries.py' -v
+      - name: WS56 Verify distinct quiet clearings words and untouched original Library
+        run: python3 -m unittest discover -s tools/asset_pipeline -p 'test_ws56_quiet_clearings.py' -v
       - name: WS16BU compact gallery/pager and profile readability guards
         run: python3 -m unittest discover -s tools/asset_pipeline -p 'test_ws16bu_compact_gallery.py' -v
       - name: WS16BV compact bundled Fonts and license access guards
@@ -666,5 +668,17 @@ jobs:
             core/build/ws55-forest-frozen-pages.tsv
             core/build/ws55-bookwide-overlap-delta.tsv
             core/build/ws55-bookwide-word-frequency.tsv
+          if-no-files-found: error
+          retention-days: 30
+
+      - name: WS56 Upload frozen clearings pages and six-chapter vocabulary frequency
+        if: ${{ always() && (github.head_ref || github.ref_name) == 'feature/ws56-quiet-clearings-groundcover-editorial-2026-11-21' }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: GridMates-WS56-Quiet-Clearings-QA
+          path: |
+            core/build/ws56-clearings-frozen-pages.tsv
+            core/build/ws56-bookwide-overlap-delta.tsv
+            core/build/ws56-bookwide-word-frequency.tsv
           if-no-files-found: error
           retention-days: 30
