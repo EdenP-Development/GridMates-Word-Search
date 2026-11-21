@@ -1,6 +1,10 @@
 # WS56 — Quiet Clearings: distinctive, peaceful woodland floor
 
-**Stage:** New versioned QA-only chapter manuscript and automated validation ready; **two independent CI executions pending**. No playable changes or release approval.
+**Stage:** **TECHNICAL QA VERIFIED across both independent Android pipelines; editorial release remains withheld.** Three reproducible source-hashed V5 QA candidate grids and two matching sets of evidence artifacts inspected; no playable or save changes.
+
+## Verified board-generation receipt
+
+Both [standard Android/core #44962609725](https://github.com/PlayerEden/GridMates-Word-Search/actions/runs/44962609725) and [independent art/release #44962609720](https://github.com/PlayerEden/GridMates-Word-Search/actions/runs/44962609720) passed at source `22b40df40b842d81bd7b4b5f675fbe91b244c1a0`. Three research reports were downloaded from each and confirmed byte-identical, and all 52 target strings had exactly one valid grid path. [Complete report checksums, board digests and release boundary](devlog/2026-11-21_WS56_CLEARINGS_BOOKWIDE_QA.md).
 
 ## Why the chapter needs a second pass
 
@@ -35,7 +39,7 @@ Baseline: WS52 Ch3–4, WS51 Birdsong Ch5, WS54 Stream Ch6, WS53 older Clearings
 | Quiet Clearings ↔ By the Stream | 3 | **1** |
 | Quiet Clearings ↔ Forest Discoveries | 0 | **0** |
 
-**262? No: 264 is a research manuscript count, not approved public words.** The 264 unique answers include **122 unapproved editorial proposals** (23 WS51 Birdsong + 33 WS54 Stream + 30 WS55 Forest Discoveries + 36 WS56 Clearings), assuming the baseline provenance is unchanged, and need actual editorial approval before publishing. The existing canon/release wordpack is not expanded.
+**264 is a research manuscript count, not approved public words.** The 264 unique answers include **122 unapproved editorial proposals** (23 WS51 Birdsong + 33 WS54 Stream + 30 WS55 Forest Discoveries + 36 WS56 Clearings), assuming the baseline provenance is unchanged, and need actual editorial approval before publishing. The existing canon/release wordpack is not expanded.
 
 ## Real V5 technical gates
 
