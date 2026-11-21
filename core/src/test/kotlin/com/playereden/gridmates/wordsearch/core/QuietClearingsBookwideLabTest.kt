@@ -8,7 +8,7 @@ import org.junit.Assert.assertTrue
 import org.junit.Test
 
 /**
- * WS55 source-only chapter/editorial lab. This test may build new frozen
+ * WS56 source-only Quiet Clearings chapter/editorial lab. This test may build new frozen
  * candidate pages, but MUST NEVER alter production or old QA Library pages,
  * game saves, V5, released vocab, Daily, bonus policy or physical APK.
  */
@@ -78,7 +78,7 @@ class QuietClearingsBookwideLabTest {
             }
         )
     }
-    @Test fun sourceWordsAndUnapprovedWildlifeSuggestionsAreExplicit() {
+    @Test fun sourceWordsAndUnapprovedClearingsSuggestionsAreExplicit() {
         val words = manuscript()
         val original = source().words.associateBy { it.id }
         assertEquals(159, original.size)
@@ -198,6 +198,15 @@ class QuietClearingsBookwideLabTest {
         assertEquals(264, unique(revised))
         assertEquals(82, pairwise(baseline))
         assertEquals(49, pairwise(revised))
+        val chapterIds = listOf(3,4,5,6,7,8)
+        val largestPair = chapterIds.indices.maxOf { i ->
+            (i+1 until chapterIds.size).maxOfOrNull { j ->
+                revised.getValue(chapterIds[i])
+                    .intersect(revised.getValue(chapterIds[j])).size
+            } ?: 0
+        }
+        assertEquals("All chapter pairs should stay below 15 shared targets",
+            14, largestPair)
         val diff = mutableListOf(
             "metric\tcomparison\tbaseline_WS55\tproposed_WS56\tdelta"
         )
