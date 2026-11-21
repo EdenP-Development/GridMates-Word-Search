@@ -1,3 +1,17 @@
+# WS55 Forest Discoveries: source-authored wildlife chapter & six-chapter bookwide identity
+
+**Owner direction:** Curated word-search paperback chapters that correspond to their actual word lists, with exact board/word/path IDs frozen after owner approval. Quick Play stays randomized, natural +15 bonus words never planted. Old saves/page IDs must never silently change.
+
+**WS55 isolated QA branch:** `feature/ws55-forest-discoveries-editorial-2026-11-21`, stacked on [WS54 draft PR #166](https://github.com/PlayerEden/GridMates-Word-Search/pull/166) and **not merged** into Work/main. [Full editorial plan](WOODLAND_FOREST_DISCOVERIES_EDITORIAL_PLAN_WS55.md) · [status/source receipt](devlog/2026-11-21_WS55_FOREST_DISCOVERIES_QA.md).
+
+**New Chapter 8 candidate:** *Woodland Neighbors* (12×12/12 Relaxed), *Signs Along the Path* (15×15/16 Classic), *Wildlife Field Notes* (20×20/24 Expert). 52 authored target slots, no duplicate required words, 22 exact original 159-word Woodland QA species entries and **30 new wildlife signs/ecology terms explicitly unapproved**. New separate pack/page IDs and hashes, no runtime/QA Library content edits. Source-only Kotlin generates and reproduces all three V5 puzzles with frozen BoardDigest/BookPageSession assertions, plus three independently uploaded TSV reports (grids, overlapping chapter-pairs, and per-word provenance/occurrence).
+
+**Audited manuscript improvement (CI not yet verified at authoring):** Six chapters 312 target slots, unique answers **202→233**, pairwise word intersections **139→82**, Ch8↔Ch4 Under Canopy **25→7**, Ch8↔Ch7 Quiet Clearings **20→0**, Ch8↔Ch6 Stream **10→3**, Ch8↔Ch3 Trail **12→0**. **Total proposed unapproved additions now 86** = 23 Birdsong + 33 Stream + 30 Forest; do NOT call 233 an approved released dictionary. Largest remaining pair overlap is **26 shared words between Under the Canopy and Quiet Clearings** and needs another editorial pass.
+
+**Next Work action:** Wait for *actual independently successful* WS55 QA reports and inspect all three frozen grids and source statuses. Human/owner review vocabulary semantics and compound display labels, then address Chapter 4↔7 while preserving old QA pages. Final Android playable edition requires separate versioned page publication, backup/save/restore regression and real device review. All original 63 QA Library pages, previous WS51–54 manuscript hashes, production code/generator, release/bonus dictionary, user saves, artwork, Nearby, Quick Play and Work/main unchanged.
+
+---
+
 # WS54 VERIFIED: Source-test curated stream chapter and six-chapter repetition audit
 
 **Owner product decision:** Purposeful chapter-specific target lists, generated with V5 but permanently frozen after owner/editor approval; random Quick Play remains repeatable and incidental extra words/bonus recognition are **never planted**. Do not change old page IDs behind existing saved progress.
