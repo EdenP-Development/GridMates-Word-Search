@@ -1,3 +1,15 @@
+# WS55 in progress — wildlife-signs Forest Discoveries research manuscript
+
+**Latest isolated draft branch:** `feature/ws55-forest-discoveries-wildlife-clues-2026-11-21`, stacked on **verified WS54 draft PR #166**, no merge to main/Work. [Editorial plan](WOODLAND_FOREST_DISCOVERIES_WS55.md) · [WS55 test journal](devlog/2026-11-21_WS55_FOREST_DISCOVERIES_EDITORIAL_QA.md).
+
+**Owner goal:** Chapters should be thematic and welcoming word-search puzzles with specifically authored words, not broad category soup. Once released, exact pages/IDs/target paths and progress remain immutable. Quick Play remains random and bonus words incidental/unplanted.
+
+**Current source-only research:** Chapter 8 *Forest Discoveries* gets three distinct QA pages: *Tracks and Trails* (12×12/12 Relaxed), *Signs of Wildlife* (15×15/16 Classic), *Hidden in the Woods* (20×20/24 Expert). Exactly 52 nonrepeated required targets: 26 original Woodland QA entries with stable IDs/tags and **26 new words expressly marked unapproved**. Word-list six-chapter study **202→231 distinct** out of 312 slots, 15-pair overlaps **139→86**; Ch8 vs Ch4 **25→7**, vs Ch7 **20→1**, vs Ch6 **10→1**. **Not yet CI-confirmed real V5 boards at authoring**; both Kotlin V5 test and Python guards plus two report upload workflows added.
+
+**Next:** Verify two independent Android workflows, inspect real grid/target reports and byte parity, human review 26 proposed words, then investigate Ch4 vs Ch7 26-word overlap. No release until owner approves vocabulary, new versioned IDs and Android/upgrade QA. Existing 63 QA Library pages, saves, artwork, production code/bonus lexicon and Work/main branch remain unchanged.
+
+---
+
 # WS54 VERIFIED: Source-test curated stream chapter and six-chapter repetition audit
 
 **Owner product decision:** Purposeful chapter-specific target lists, generated with V5 but permanently frozen after owner/editor approval; random Quick Play remains repeatable and incidental extra words/bonus recognition are **never planted**. Do not change old page IDs behind existing saved progress.
