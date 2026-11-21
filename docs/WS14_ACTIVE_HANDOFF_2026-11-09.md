@@ -1,3 +1,17 @@
+# WS56 proposed Quiet Clearings editorial separation — source V5 QA pending
+
+**Owner goal:** A welcoming puzzle GAME with chapter-specific meaningful required target lists, 3 progressive pages, deterministically frozen once approved. Quick Play remains random; bonus words must be natural incidental matches, not planted. Once saved, player pages/IDs/word placements must never change.
+
+**Isolated stacked branch:** `feature/ws56-quiet-clearings-groundcover-editorial-2026-11-21`, based on **verified WS55 PR #167** (not duplicate closed #168). No merge to main or Work. [Editorial plan](WOODLAND_QUIET_CLEARINGS_WS56.md) · [test journal](devlog/2026-11-21_WS56_CLEARINGS_BOOKWIDE_QA.md).
+
+**New chapter research:** Quiet Clearings now emphasizes moss, sunlit spaces and woodland ground-cover plants, not tree species. Pages *Open Glade* (12×12/12 Relaxed), *Sunlit Spaces* (15×15/16 Classic) and *Woodland Stillness* (20×20/24 Expert). Exactly **16 original QA words with stable source IDs/labels**, **36 new proposed words tagged `ws56_clearings_candidate_unapproved`** (never in runtime, bonus, release). 52 distinct required targets, no in-page substring conflicts, increasing length. Human review for flora semantics, accessibility, familiar words, spaced compound display labels still required.
+
+**Manuscript whole-book comparison:** six chapters ×52 =312 targets. Distinct **233→264**, pairwise sum **82→49**, max shared pair **26→14**; Quiet Clearings with Under Canopy **26→0**, Along Trail **18→14**, Birdsong **1→0**, Stream **3→1**, Forest Discoveries **0→0**. Current combined research contains **122 unapproved** original additions (23 Birdsong + 33 Stream + 30 Forest Discoveries + 36 Quiet Clearings); not a public/approved wordpack.
+
+**Automated tests:** Kotlin 3 real V5 frozen-board/regeneration/exact-IDs/book-page digest checks; Python source/canonical checks and independent Android/core + art/release TSV artifacts. **CI pending at creation**. Work must inspect true results, then do actual Android phone test, approve vocabulary/editing, publish *new versioned edition* only after migration/saves QA. All 63 current playable QA pages and old manuscript outputs untouched.
+
+---
+
 # WS55 verified — Forest Discoveries wildlife manuscripts and full six-chapter audit
 
 **Owner's game direction:** Curated purposeful word-search book chapters, target lists selected by topic then frozen with exact page IDs/hashes; random Quick Play persists, incidental bonus-word recognition remains unplanted. Never silently change a saved book page.
