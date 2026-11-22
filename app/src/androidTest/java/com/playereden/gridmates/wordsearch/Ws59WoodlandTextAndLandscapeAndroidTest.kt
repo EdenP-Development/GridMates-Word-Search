@@ -1,6 +1,8 @@
 package com.playereden.gridmates.wordsearch
 
+import android.content.pm.ActivityInfo
 import android.content.res.Configuration
+import androidx.activity.ComponentActivity
 import android.graphics.Bitmap
 import android.util.Log
 import androidx.compose.foundation.layout.Box
@@ -13,7 +15,7 @@ import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.getUnclippedBoundsInRoot
-import androidx.compose.ui.test.junit4.createComposeRule
+import androidx.compose.ui.test.junit4.createAndroidComposeRule
 import androidx.compose.ui.test.onNodeWithContentDescription
 import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.onNodeWithText
@@ -41,7 +43,7 @@ import java.io.File
  * unique and disposable. No production board IDs, vocabulary or save schema.
  */
 class Ws59WoodlandTextAndLandscapeAndroidTest {
-    @get:Rule val compose = createComposeRule()
+    @get:Rule val compose = createAndroidComposeRule<ComponentActivity>()
     private val context get() = InstrumentationRegistry.getInstrumentation().targetContext
     private val bookId = Ws57WoodlandPreview.BOOK_ID
 
@@ -123,6 +125,18 @@ class Ws59WoodlandTextAndLandscapeAndroidTest {
         try {
             val progress = BookLibraryStore(context, catalog, progressName)
             val sessions = BookPageSessionStore(context, catalog, sessionName)
+            // The system's user-rotation setting alone does not guarantee
+            // that the Compose test host Activity rotated. Explicitly request
+            // landscape on the *actual Android Activity* before setContent.
+            if (width > height) {
+                compose.activity.requestedOrientation =
+                    ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE
+                compose.waitUntil(timeoutMillis = 15000L) {
+                    compose.activity.resources.configuration.orientation ==
+                        Configuration.ORIENTATION_LANDSCAPE
+                }
+                Log.i("WS59_DIAG", "activity orientation confirmed LANDSCAPE for $captureName")
+            }
             compose.setContent {
                 val original = LocalDensity.current
                 CompositionLocalProvider(LocalDensity provides Density(original.density, 2f)) {

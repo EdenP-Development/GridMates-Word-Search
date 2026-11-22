@@ -31,6 +31,10 @@ fi
 # alone is not a valid landscape verification.
 adb shell wm user-rotation lock 1
 sleep 3
+# Log the system setting, but the test also requests/inspects the ACTUAL
+# Activity configuration. A user-rotation lock by itself may be ignored.
+adb shell wm user-rotation > "$report/system-rotation.txt" || true
+adb shell wm size >> "$report/system-rotation.txt" || true
 set +e
 adb shell am instrument -w -r -e class \
   "$test_class#at150PercentTextClassicLandscapeRetainsHintToolsAndGrid" \
