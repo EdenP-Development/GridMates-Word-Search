@@ -1,6 +1,6 @@
 # WS64 — Existing Woodland manuscript inventory and unsigned owner-review queue
 
-> **Status: code/doc review workflow authored; GitHub CI pending.** The exact four historical manuscripts were inspected. They contain **122 unique unapproved candidate answers** but **28 of those already exist as canonical words in the QA English/Fall source**. Only **94** are potentially new canonical entries. None is newly owner-approved, shipped or installed. The queue-builder result must be verified by actual GitHub Actions before calling this milestone tested.
+> **VERIFIED internal QA, no owner release approval.** [WS64 dedicated workflow #45080015449](https://github.com/PlayerEden/GridMates-Word-Search/actions/runs/45080015449) and [WS40 historical integrity #45080015518](https://github.com/PlayerEden/GridMates-Word-Search/actions/runs/45080015518) both SUCCESS at executed code SHA `8517a8ab991fd3485fd63846077965b7d04f3c08` (later docs-only updates don't change tested code). [Unsigned 122-row editorial CSV and checksum report #14777225148](https://github.com/PlayerEden/GridMates-Word-Search/actions/runs/45080015449/artifacts/14777225148) independently inspected. The exact four historical manuscripts were inspected. They contain **122 unique unapproved candidate answers** but **28 of those already exist as canonical words in the QA English/Fall source**. Only **94** are potentially new canonical entries. None is newly owner-approved, shipped or installed. The queue-builder result must be verified by actual GitHub Actions before calling this milestone tested.
 
 ## Why this matters
 
@@ -10,15 +10,15 @@ GridMates Word Search already has real research behind Woodland chapters. Blindl
 
 | Existing source manuscript | Chapter | Unapproved proposals in source | Existing approved-for-internal-QA answers reused | Candidate-only novel potential |
 | --- | --- | ---: | ---: | ---: |
-| [WS51 Birdsong](../data/lexicon/authoring/chapter-recipes-v1/birdsong-ws51-qa-manuscript.tsv) | Birdsong | 23 | To be confirmed by CI | To be confirmed |
-| [WS54 By the Stream](../data/lexicon/authoring/chapter-recipes-v1/woodland-ws54-stream-manuscript.tsv) | By the Stream | 33 | To be confirmed by CI | To be confirmed |
-| [WS55 Forest Discoveries](../data/lexicon/authoring/chapter-recipes-v1/woodland-ws55-wildlife-manuscript.tsv) | Forest Discoveries | 30 | To be confirmed by CI | To be confirmed |
-| [WS56 Quiet Clearings](../data/lexicon/authoring/chapter-recipes-v1/woodland-ws56-clearings-manuscript.tsv) | Quiet Clearings | 36 | To be confirmed by CI | To be confirmed |
+| [WS51 Birdsong](../data/lexicon/authoring/chapter-recipes-v1/birdsong-ws51-qa-manuscript.tsv) | Birdsong | 23 | **6** | **17** |
+| [WS54 By the Stream](../data/lexicon/authoring/chapter-recipes-v1/woodland-ws54-stream-manuscript.tsv) | By the Stream | 33 | **3** | **30** |
+| [WS55 Forest Discoveries](../data/lexicon/authoring/chapter-recipes-v1/woodland-ws55-wildlife-manuscript.tsv) | Forest Discoveries | 30 | **4** | **26** |
+| [WS56 Quiet Clearings](../data/lexicon/authoring/chapter-recipes-v1/woodland-ws56-clearings-manuscript.tsv) | Quiet Clearings | 36 | **15** | **21** |
 | **Total** | | **122** | **28** | **94 potential** |
 
 The full 52-row manuscript for each chapter includes many *already-existing* internal-QA words in addition to these newly suggested records. The above 122 includes **only rows whose exact provenance tag says candidate/unapproved**, not every answer used by a candidate page.
 
-### Verified by initial source inspection (awaiting automated audit)
+### Canonical ID examples confirmed by both source inspection and executed WS64 CI
 
 Selected original IDs which **must be reconciled** with the canonical word ID before any future import:
 - Birdsong proposal `ws51b002` WING → English QA `gm000453`; `ws51b003` NEST → `gm000136`; `ws51b007` FEATHER → `gm000153`.
