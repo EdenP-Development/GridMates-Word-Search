@@ -1,6 +1,6 @@
 # WS60 — Large-type book page readability and Android QA
 
-> **Status: SOURCE AUTHORED — CI PENDING.** Gameplay UI changed but untested at authoring. Do NOT claim a new APK is install-ready or owner phone approved before exact source workflows pass.
+> **FINAL AUTOMATED STATUS: VERIFIED.** [Exact WS60 signed code108 build, same v107 QA signer, four real Android UI tests and seven screenshots](2026-11-22_WS60_VERIFIED_ANDROID_QA.md). Executed source `0a546c2f99d0115eb4f9d30c00ef86598fe3b135`; [Android/core #45065450259](https://github.com/PlayerEden/GridMates-Word-Search/actions/runs/45065450259) and [independent art/release #45065450280](https://github.com/PlayerEden/GridMates-Word-Search/actions/runs/45065450280) both SUCCESS. **Physical phone, TalkBack, live saved-data upgrade and production release are still unapproved.**
 
 ## Who, what, where, why
 
@@ -20,7 +20,7 @@
 
 **Intentionally unchanged:** all 63 historical and 18 WS57 frozen QA pages/board hashes/saved IDs, V5 generator, scoring, hint engine, 122 unapproved Woodland editorial words, original QA save-journal bytes, Collection/reward policy, existing assets, Nearby/Daily/Quick Play, release-only catalog/signing isolation, Work and main.
 
-## QA receipt — PENDING
+## Original pre-run QA checklist (historical; superseded by exact verified receipt above)
 
 - **Code SHA:** to be recorded from exact PR workflow run (no build success claimed yet).
 - **Android/core:** pending; must pass core+app/lint, genuine API35 emulator `OK (3 tests)` 320dp/200%-font portrait and `OK (1 test)` real Android landscape 700×340dp/150%-font, including durable found IDs, spoken label semantics, 48dp actions, and screenshot capture.
