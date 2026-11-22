@@ -103,4 +103,68 @@ class Ws57PlayableWoodlandPreviewAndroidTest {
             }
         }
     }
+    @Test fun runtimeCopiesLegacyQaSavesToNewRollbackSafeFiles() {
+        // Four unique names: never read, modify or delete the owner's saves.
+        val nonce = System.nanoTime().toString()
+        val legacyProgressName = "ws57_old_progress_${nonce}.dat"
+        val legacySessionName = "ws57_old_sessions_${nonce}.dat"
+        val nextProgressName = "ws57_new_progress_${nonce}.dat"
+        val nextSessionName = "ws57_new_sessions_${nonce}.dat"
+        val names = listOf(legacyProgressName, legacySessionName,
+            nextProgressName, nextSessionName)
+        try {
+            val legacy = BookQaPilot.catalog()
+            val oldBook = legacy.books.first()
+            val oldPage = oldBook.chapters.first().pages.first()
+            val saved = BookLibraryStore(context, legacy, legacyProgressName)
+            assertTrue(saved.bookmark(oldBook.id, oldPage.id))
+            val unfinished = BookPageSessionStore(context, legacy, legacySessionName)
+            assertTrue(unfinished.open(oldBook.id, oldPage.id))
+            val previousProgressBytes =
+                File(context.filesDir, legacyProgressName).readBytes()
+            val previousSessionBytes =
+                File(context.filesDir, legacySessionName).readBytes()
+
+            val runtime = QaBookshelfRuntime(
+                context, legacyProgressName, legacySessionName,
+                nextProgressName, nextSessionName
+            )
+            val migratedProgress = requireNotNull(runtime.progressStore)
+            val migratedSession = requireNotNull(runtime.sessionStore)
+            assertFalse(migratedProgress.blocked)
+            assertFalse(migratedSession.blocked)
+            assertTrue(File(context.filesDir, nextProgressName).exists())
+            assertTrue(File(context.filesDir, nextSessionName).exists())
+            assertEquals(previousProgressBytes.toList(),
+                File(context.filesDir, legacyProgressName).readBytes().toList())
+            assertEquals(previousSessionBytes.toList(),
+                File(context.filesDir, legacySessionName).readBytes().toList())
+            assertEquals(oldPage.id,
+                migratedProgress.progress.volumes[oldBook.id]?.bookmarkedPageId)
+            assertNotNull(migratedSession.session(oldBook.id, oldPage.id))
+
+            val preview = requireNotNull(runtime.catalog.book(Ws57WoodlandPreview.BOOK_ID))
+            val newPage = preview.chapters.first().pages.first()
+            assertTrue(migratedProgress.bookmark(preview.id, newPage.id))
+            assertTrue(migratedSession.open(preview.id, newPage.id))
+            val again = QaBookshelfRuntime(
+                context, legacyProgressName, legacySessionName,
+                nextProgressName, nextSessionName
+            )
+            assertEquals(newPage.id, again.progressStore?.progress
+                ?.volumes?.get(preview.id)?.bookmarkedPageId)
+            assertNotNull(again.sessionStore?.session(preview.id, newPage.id))
+            assertNotNull(again.sessionStore?.session(oldBook.id, oldPage.id))
+            // Even after WS57 bookmarks and a new-store restart, the entire
+            // old QA journal is byte-for-byte untouched for APK rollback.
+            assertEquals(previousProgressBytes.toList(),
+                File(context.filesDir, legacyProgressName).readBytes().toList())
+            assertEquals(previousSessionBytes.toList(),
+                File(context.filesDir, legacySessionName).readBytes().toList())
+        } finally {
+            for (name in names) for (suffix in listOf("",".bak",".new"))
+                File(context.filesDir, name + suffix).delete()
+        }
+    }
+
 }

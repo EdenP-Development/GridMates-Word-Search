@@ -9,14 +9,17 @@ import java.io.File
  * unapproved preview book with NEW IDs; NEVER rewrite the old WS11 QA save
  * files just to show it. Older signed QA APKs must remain safely installable.
  */
-internal class QaBookshelfRuntime(context: Context) {
+internal class QaBookshelfRuntime(
+    context: Context,
+    // Optional QA test-only overrides let instrumentation prove migration
+    // using unique disposable filenames. Never test by modifying real saves.
+    private val previousProgress: String = "gridmates_wordsearch_ws11_qa_progress_v1.dat",
+    private val previousSessions: String = "gridmates_wordsearch_ws11_qa_sessions_v1.dat",
+    private val previewProgress: String = "gridmates_wordsearch_ws57_qa_progress_v1.dat",
+    private val previewSessions: String = "gridmates_wordsearch_ws57_qa_sessions_v1.dat"
+) {
     private val applicationContext = context.applicationContext
     val enabled: Boolean = BookQaPilot.enabled
-
-    private val previousProgress = "gridmates_wordsearch_ws11_qa_progress_v1.dat"
-    private val previousSessions = "gridmates_wordsearch_ws11_qa_sessions_v1.dat"
-    private val previewProgress = "gridmates_wordsearch_ws57_qa_progress_v1.dat"
-    private val previewSessions = "gridmates_wordsearch_ws57_qa_sessions_v1.dat"
 
     private val originalCatalog by lazy {
         if (enabled) BookQaPilot.catalog() else BookCatalog()

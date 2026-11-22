@@ -86,6 +86,9 @@ class Ws57PlayablePreviewContract(unittest.TestCase):
         self.assertIn("gridmates_wordsearch_ws11_qa_progress_v1.dat",runtime)
         self.assertIn("gridmates_wordsearch_ws11_qa_sessions_v1.dat",runtime)
         self.assertIn("BookQaPilot.catalog(applicationContext)",runtime)
+        self.assertIn("gridmates_wordsearch_ws57_qa_progress_v1.dat",runtime)
+        self.assertIn("gridmates_wordsearch_ws57_qa_sessions_v1.dat",runtime)
+        self.assertIn("importManualBackup(savedBytes)",runtime)
         self.assertIn("BookQaPilot.catalog()",debug)
         instrument=(ROOT/"app/src/androidTest/java/com/playereden/gridmates/wordsearch/Ws57PlayableWoodlandPreviewAndroidTest.kt").read_text()
         for needle in ("original.requireCompatibleUpgrade(added)",
