@@ -1,5 +1,6 @@
 package com.playereden.gridmates.wordsearch
 
+import android.content.Context
 import com.playereden.gridmates.wordsearch.core.BookBoardDigest
 import com.playereden.gridmates.wordsearch.core.BookCatalog
 import com.playereden.gridmates.wordsearch.core.BookChapter
@@ -25,6 +26,10 @@ internal object BookQaPilot {
 
     private val cachedCatalog by lazy { buildCatalog() }
     fun catalog(): BookCatalog = cachedCatalog
+
+    /** WS57 debug-only book, appended without modifying the 63 old QA pages. */
+    fun catalog(context: Context): BookCatalog =
+        Ws57WoodlandPreview.appendLegacy(context, cachedCatalog)
 
     private fun buildCatalog(): BookCatalog {
         fun page(

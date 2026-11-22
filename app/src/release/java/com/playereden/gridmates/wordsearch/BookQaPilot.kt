@@ -1,5 +1,6 @@
 package com.playereden.gridmates.wordsearch
 
+import android.content.Context
 import com.playereden.gridmates.wordsearch.core.BookCatalog
 
 /**
@@ -9,4 +10,6 @@ import com.playereden.gridmates.wordsearch.core.BookCatalog
 internal object BookQaPilot {
     const val enabled = false
     fun catalog(): BookCatalog = BookCatalog()
+    @Suppress("UNUSED_PARAMETER")
+    fun catalog(context: Context): BookCatalog = BookCatalog()
 }
