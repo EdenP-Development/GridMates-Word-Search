@@ -668,6 +668,47 @@ jobs:
           if-no-files-found: warn
           retention-days: 30
 
+      - name: WS61 Fetch exact signed WS57 v107 QA APK and pin its SHA-256
+        if: ${{ (github.head_ref || github.ref_name) == 'feature/ws61-real-signed-v107-to-v108-upgrade-2026-11-22' }}
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          mkdir -p qa-baseline
+          gh run download 44971601632 --repo "$GITHUB_REPOSITORY" --name GridMates-WordSearch-Android-QA --dir qa-baseline
+          echo '304b389d53935ceb8a8857666caf00fbc15e3c51a440ab3cced07f1f684e82f9  qa-baseline/app-debug.apk' | sha256sum -c
+          test -s qa-baseline/app-debug.apk
+
+      - name: WS61 Compile upgrade instrumentation and configure emulator
+        if: ${{ (github.head_ref || github.ref_name) == 'feature/ws61-real-signed-v107-to-v108-upgrade-2026-11-22' }}
+        run: |
+          gradle --no-daemon :app:assembleDebugAndroidTest
+          echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=static_node"' | sudo tee /etc/udev/rules.d/99-kvm4all.rules
+          sudo udevadm control --reload-rules
+          sudo udevadm trigger --name-match=kvm
+
+      - name: WS61 Real v107 to v108 APK install-over preserving 6 private files
+        if: ${{ (github.head_ref || github.ref_name) == 'feature/ws61-real-signed-v107-to-v108-upgrade-2026-11-22' }}
+        uses: reactivecircus/android-emulator-runner@v2
+        with:
+          api-level: 35
+          target: google_apis
+          arch: x86_64
+          profile: pixel_4
+          avd-name: ws61-signed-upgrade
+          ram-size: 3072M
+          disable-animations: true
+          emulator-options: -no-window -gpu swiftshader -no-snapshot -noaudio -no-boot-anim
+          script: bash scripts/ws61_signed_v107_v108_upgrade_emulator.sh
+
+      - name: WS61 Archive install logs, private save hashes and decode receipts
+        if: ${{ always() && (github.head_ref || github.ref_name) == 'feature/ws61-real-signed-v107-to-v108-upgrade-2026-11-22' }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: GridMates-WS61-Signed-v107-to-v108-Upgrade-Evidence
+          path: qa-ws61-signed-upgrade/
+          if-no-files-found: warn
+          retention-days: 30
+
       - name: WS45 Prepare focused score and save instrumentation
         if: ${{ (github.head_ref || github.ref_name) == 'feature/ws45-bonus-android-reliability-2026-11-19' }}
         run: |
