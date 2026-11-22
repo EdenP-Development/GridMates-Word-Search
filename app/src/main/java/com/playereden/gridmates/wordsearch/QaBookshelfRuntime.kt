@@ -13,7 +13,7 @@ internal class QaBookshelfRuntime(context: Context) {
     val enabled: Boolean = BookQaPilot.enabled
 
     val catalog: BookCatalog by lazy {
-        if (enabled) BookQaPilot.catalog() else BookCatalog()
+        if (enabled) BookQaPilot.catalog(applicationContext) else BookCatalog()
     }
 
     val progressStore: BookLibraryStore? by lazy {
@@ -37,7 +37,13 @@ internal class QaBookshelfRuntime(context: Context) {
         if (!enabled) return true
         val progress = progressStore ?: return true
         if (progress.blocked) return false
-        return solo.syncBookRewards(catalog, progress.progress)
+        // WS57 candidate editorial pages are playable for QA only: they MUST NOT
+        // grant permanent Solo collectibles or modify old profile rewards.
+        val awardable = progress.progress.copy(volumes =
+            progress.progress.volumes.filterKeys {
+                it != "woodland-ws57-qa-volume-two"
+            })
+        return solo.syncBookRewards(catalog, awardable)
     }
 
     fun setForeground(foreground: Boolean) {
