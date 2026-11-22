@@ -96,7 +96,7 @@ class Ws59WoodlandTextAndLandscapeAndroidTest {
     @Test fun at150PercentTextClassicLandscapeRetainsHintToolsAndGrid() {
         playViewport(
             chapter = 3, page = 1, cells = 15,
-            width = 700, height = 380, fontScale = 1.5f,
+            width = 700, height = 340, fontScale = 1.5f,
             captureName = "classic-landscape-150-percent"
         )
     }
