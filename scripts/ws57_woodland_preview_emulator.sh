@@ -19,9 +19,9 @@ code=${PIPESTATUS[0]}
 set -e
 
 adb logcat -d -s AndroidRuntime > "$report/android-runtime.txt" || true
-if [ "$code" -ne 0 ] || ! grep -Eq '^OK \(2 tests\)' "$report/instrumentation.txt" || \
+if [ "$code" -ne 0 ] || ! grep -Eq '^OK \(3 tests\)' "$report/instrumentation.txt" || \
   grep -Eq 'FAILURES!!!|INSTRUMENTATION_FAILED|Process crashed|INSTRUMENTATION_STATUS_CODE: -1' "$report/instrumentation.txt"; then
   echo "WS57: Android emulator execution failed; read the attached instrumentation and crash logs" >&2
   exit 1
 fi
-echo "WS57: both emulator tests PASSED; 63 original pages, 18 new pinned QA pages, save upgrade/restart"
+echo "WS57: all three emulator tests PASSED; 63 original pages, 18 new pinned QA pages, save upgrade/restart"
