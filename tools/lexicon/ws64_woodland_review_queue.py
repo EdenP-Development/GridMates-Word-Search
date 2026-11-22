@@ -70,7 +70,7 @@ def read_manuscripts(root: Path, canonical: dict) -> tuple[list, dict]:
     for file, tag, title, chapter, expected in MANUSCRIPTS:
         path = base / file
         hashes[str(path.relative_to(root))] = sha256(path)
-        with path.open(encoding="utf8-sig", newline="") as stream:
+        with path.open(encoding="utf-8-sig", newline="") as stream:
             reader = csv.DictReader(stream, delimiter="\t")
             required = {"page", "page_title", "answer", "word_id", "display", "tier", "provenance"}
             if not reader.fieldnames or not required.issubset(set(reader.fieldnames)):
