@@ -1,0 +1,66 @@
+name: WS64 Existing Woodland Candidate Reconciliation QA
+
+on:
+  workflow_dispatch:
+  pull_request:
+    paths:
+      - 'tools/lexicon/ws64_woodland_review_queue.py'
+      - 'tools/lexicon/test_ws64_woodland_review_queue.py'
+      - 'data/lexicon/authoring/chapter-recipes-v1/**'
+      - 'data/lexicon/authoring/en-v1/**'
+      - 'data/lexicon/authoring/fall-v1/**'
+      - 'docs/WS64_*'
+      - '.github/workflows/ws64-woodland-review.yml'
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ws64-review-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  prepare-owner-candidate-worksheet:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Preserve original recovered lexicon and approved-for-QA source identities
+        run: |
+          python3 tools/lexicon/audit_recovery.py
+          python3 tools/lexicon/validate.py --data-dir data/lexicon/authoring/en-v1
+          python3 tools/lexicon/validate.py --data-dir data/lexicon/authoring/fall-v1
+      - name: Execute source reconciliation regression tests
+        run: |
+          python3 -m unittest discover -s tools/lexicon -p 'test_ws63_quality_audit.py' -v
+          python3 -m unittest discover -s tools/lexicon -p 'test_ws64_woodland_review_queue.py' -v
+      - name: Produce exact 122-row unsigned Woodland owner review worksheet
+        run: |
+          python3 tools/lexicon/ws64_woodland_review_queue.py --out-dir qa-ws64-review
+          python3 - <<'PY'
+          import csv, json
+          from pathlib import Path
+          d=Path('qa-ws64-review')
+          with (d/'woodland-proposals-review.csv').open(newline='') as f:
+              rows=list(csv.DictReader(f))
+          r=json.loads((d/'source-reconciliation.json').read_text())
+          assert len(rows)==122
+          assert r['proposals']==122 and r['already_present_in_English_or_Fall_qa']==28
+          assert r['potential_new_canonical_after_review']==94
+          assert r['newly_owner_approved_words']==0 and r['newly_activated_android_words']==0
+          assert all(not x['owner_decision'] and not x['owner_reviewer'] for x in rows)
+          assert all(x['source_provenance'].endswith('candidate_unapproved') for x in rows)
+          print('WS64 SOURCE_QA_OK: 122 original proposed words, 28 canonical ID reuses, 94 still unapproved novel candidates; zero owner approval.')
+          PY
+          sha256sum qa-ws64-review/woodland-proposals-review.csv             qa-ws64-review/source-reconciliation.json qa-ws64-review/README.md             > qa-ws64-review/artifact-sha256.txt
+      - name: Archive source-traceable unsigned review sheets and exact checksums
+        if: ${{ always() }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: GridMates-WS64-Woodland-Unsigned-Review-Queue
+          path: qa-ws64-review/
+          if-no-files-found: warn
+          retention-days: 30
