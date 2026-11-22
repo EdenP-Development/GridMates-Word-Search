@@ -264,6 +264,9 @@ internal fun BookPageGameplayScreen(
         val contentWidthDp = maxWidth.value
         val landscape = maxWidth > maxHeight * 1.2f
         val enlarged = LocalDensity.current.fontScale >= 1.5f
+        // Narrow portrait at large type needs a true readable title and one-line count.
+        // Do not shrink touch targets or the native puzzle grid.
+        val compactReadability = enlarged && !landscape
         val viewport = if (landscape) {
             minOf(maxWidth * 0.50f, maxHeight * if (enlarged) 0.62f else 0.74f)
                 .coerceAtLeast(130.dp)
@@ -275,7 +278,12 @@ internal fun BookPageGameplayScreen(
         Column(Modifier.fillMaxSize(), verticalArrangement = Arrangement.spacedBy(5.dp)) {
             val pageNumber = catalog.pages(bookId).indexOfFirst { it.id == pageId } + 1
             PuzzleTitleBar(
-                title = book.title.removeSuffix(" · TEST BOOK"),
+                title = if (compactReadability) "Page $pageNumber"
+                    else book.title.removeSuffix(" · TEST BOOK"),
+                titleSpokenLabel = if (compactReadability)
+                    "${book.title.removeSuffix(" · TEST BOOK")}, " +
+                        "${board.displayTitle}, Page $pageNumber"
+                    else null,
                 compact = true,
                 subtitle = "Page $pageNumber" + when {
                     practice -> " · Practice (unsaved)"
@@ -292,7 +300,12 @@ internal fun BookPageGameplayScreen(
             }
             val elapsed = active?.elapsedSeconds ?: 0L
             PuzzleProgressPanel(
-                label = "${wordsFound.size} of ${board.targets.size} words found",
+                label = if (compactReadability)
+                    "${wordsFound.size} / ${board.targets.size} found"
+                    else "${wordsFound.size} of ${board.targets.size} words found",
+                spokenLabel = if (compactReadability)
+                    "${wordsFound.size} of ${board.targets.size} words found"
+                    else null,
                 detail = "Elapsed ${elapsed / 60}:${(elapsed % 60).toString().padStart(2, '0')}",
                 found = wordsFound.size,
                 total = board.targets.size
