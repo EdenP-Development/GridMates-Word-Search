@@ -12,7 +12,7 @@ adb logcat -c || true
 adb install -r app/build/outputs/apk/debug/app-debug.apk
 adb install -r -t app/build/outputs/apk/androidTest/debug/app-debug-androidTest.apk
 
-adb shell cmd window set-user-rotation lock 0
+adb shell wm user-rotation lock 0
 set +e
 adb shell am instrument -w -r -e class \
   "$test_class#at200PercentTextAllSixChaptersAndLastPageActionsStayReachable,$test_class#at200PercentTextExpertPortraitRetainsHintToolsAndGrid" \
@@ -28,7 +28,7 @@ fi
 
 # The phone is actually rotated here; a wide Compose box on a portrait device
 # alone is not a valid landscape verification.
-adb shell cmd window set-user-rotation lock 1
+adb shell wm user-rotation lock 1
 sleep 3
 set +e
 adb shell am instrument -w -r -e class \
