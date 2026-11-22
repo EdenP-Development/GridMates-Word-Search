@@ -125,18 +125,6 @@ class Ws59WoodlandTextAndLandscapeAndroidTest {
         try {
             val progress = BookLibraryStore(context, catalog, progressName)
             val sessions = BookPageSessionStore(context, catalog, sessionName)
-            // The system's user-rotation setting alone does not guarantee
-            // that the Compose test host Activity rotated. Explicitly request
-            // landscape on the *actual Android Activity* before setContent.
-            if (width > height) {
-                compose.activity.requestedOrientation =
-                    ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE
-                compose.waitUntil(timeoutMillis = 15000L) {
-                    compose.activity.resources.configuration.orientation ==
-                        Configuration.ORIENTATION_LANDSCAPE
-                }
-                Log.i("WS59_DIAG", "activity orientation confirmed LANDSCAPE for $captureName")
-            }
             compose.setContent {
                 val original = LocalDensity.current
                 CompositionLocalProvider(LocalDensity provides Density(original.density, 2f)) {
@@ -202,6 +190,18 @@ class Ws59WoodlandTextAndLandscapeAndroidTest {
         try {
             val progress = BookLibraryStore(context, catalog, progressName)
             val sessions = BookPageSessionStore(context, catalog, sessionName)
+            // The system's user-rotation setting alone does not guarantee
+            // that the Compose test host Activity rotated. Explicitly request
+            // landscape on the *actual Android Activity* before setContent.
+            if (width > height) {
+                compose.activity.requestedOrientation =
+                    ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE
+                compose.waitUntil(timeoutMillis = 15000L) {
+                    compose.activity.resources.configuration.orientation ==
+                        Configuration.ORIENTATION_LANDSCAPE
+                }
+                Log.i("WS59_DIAG", "activity orientation confirmed LANDSCAPE for $captureName")
+            }
             compose.setContent {
                 val original = LocalDensity.current
                 if (width > height) {
