@@ -1,5 +1,6 @@
 package com.playereden.gridmates.wordsearch
 
+import android.content.res.Configuration
 import android.graphics.Bitmap
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.height
@@ -7,6 +8,7 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.getUnclippedBoundsInRoot
@@ -118,6 +120,12 @@ class Ws59WoodlandTextAndLandscapeAndroidTest {
             val sessions = BookPageSessionStore(context, catalog, sessionName)
             compose.setContent {
                 val original = LocalDensity.current
+                if (width > height) {
+                    check(LocalConfiguration.current.orientation ==
+                        Configuration.ORIENTATION_LANDSCAPE) {
+                        "WS59 landscape case requires a physically rotated Android display"
+                    }
+                }
                 CompositionLocalProvider(
                     LocalDensity provides Density(original.density, fontScale)
                 ) {
