@@ -1,6 +1,17 @@
 # WS58 — Real Woodland chapter navigation and finger-trace Android UI QA
 
-> **Status: TESTS AUTHORED; CI NOT YET VERIFIED.** Never call an instrumentation test "passed" until its actual emulator report says so. This pass does not alter the signed WS57 build, puzzle words, content hashes, saved IDs or app runtime.
+> **FINAL AUTOMATED STATUS: VERIFIED — 3/3 REAL ANDROID COMPOSE TESTS PASS; OWNER PHONE ACCEPTANCE OPEN.** Executed source SHA `c41eaf73d0da9befc42a3e58e86c6e09ef6edce0`; both independent GitHub workflows completed SUCCESS. Docs-only receipts written afterward do not change executed source.
+
+## Exact tested receipt — Nov 22, 2026
+
+- **Standard Android/core workflow:** [#45028233366](https://github.com/PlayerEden/GridMates-Word-Search/actions/runs/45028233366), **SUCCESS** at `c41eaf73d0da9befc42a3e58e86c6e09ef6edce0`. Existing core/app unit tests, lint, instrumentation compilation and Android QA APK passed; branch-scoped API35 emulator **actually executed** `Ws58WoodlandPlayerJourneyAndroidTest` with explicit final output `OK (3 tests)`, 32.296 seconds, and no failed tests. Verified directly in the job's published log.
+- **Executed UI behaviors:** `twentyCellFrozenPreviewAcceptsRealDragHintAndRestart` (real 20×20 word trace, Hint and disk reload); `twelveCellFrozenPreviewAcceptsRealDragHintAndRestart` (12×12 equivalent); `sixChapterPickerScrollsToForestDiscoveriesInRealBookDetail` (actual scroll/jump to the sixth chapter on a 320dp book-detail viewport). Each passed `INSTRUMENTATION_STATUS_CODE: 0`.
+- **Dedicated emulator instrumentation + AndroidRuntime report:** [artifact #14756053893](https://github.com/PlayerEden/GridMates-Word-Search/actions/runs/45028233366/artifacts/14756053893), uploaded successfully. This artifact is **test evidence**, not an APK.
+- **Standard QA APK artifact:** [#14756229876](https://github.com/PlayerEden/GridMates-Word-Search/actions/runs/45028233366/artifacts/14756229876). An APK was built but **its internal binary SHA-256 was not independently rechecked** in this pass; no new build is required for owner testing because WS58 modifies **test harness only**.
+- **Independent art/debug/release workflow:** [#45028233360](https://github.com/PlayerEden/GridMates-Word-Search/actions/runs/45028233360), **SUCCESS**, exact same tested source SHA. No new release/content approval.
+- **Precise limitation:** 320dp Compose test container is not a full device-density matrix, TalkBack test, complete 18-page manual playthrough, or owner physical handset acceptance. WS57 signed tested QA v107 remains recommended phone fallback. All 122 novel terms still **editorially unapproved** and the entire new book is QA-only.
+
+This pass did not alter the signed WS57 gameplay, puzzle words, content hashes, saved IDs or production app runtime.
 
 ## Who, what, where, why
 
@@ -29,7 +40,7 @@
 - `.github/workflows/ws01-android-qa.yml`: WS58 branch-scoped Android emulator execution and evidence artifact; all standing source/core/lint/build checks still run.
 - No production Kotlin, V5 generator, word lists, SHA pins, old 63 QA pages, new 18 frozen WS57 pages, assets, saved-file schema, bonus recognition, UI layouts, Nearby or release catalogs were modified.
 
-## Build/QA receipt — pending
+## Pre-execution plan (historical; superseded by verified receipt above)
 
 - **Build triggered:** not at authoring time; draft PR opening should start both existing Android/core and art/release pipelines.
 - **Expected signed version:** unchanged WS57 v107 and QA package; only androidTest and CI test harness changed.
