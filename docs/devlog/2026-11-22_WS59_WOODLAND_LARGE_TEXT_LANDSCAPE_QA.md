@@ -1,6 +1,25 @@
 # WS59 — Woodland large-text, actual landscape and UI screenshots
 
-> **Status: SOURCE AUTHORED; ANDROID CI/PHONE REVIEW PENDING.** The tests and emulator runner have been written on a new unmerged draft branch. A successful Android test compilation alone does not establish UX acceptance.
+> **Actual status: PARTIAL DEVICE QA — 200% chapter navigation PASSED; 200% Expert gesture FAILED; rotated landscape NOT EXECUTED.** Latest exact tested code `0c05a0da74007ba03fba7f4b7d21ee5ed1293cb8`. Android/core [#45036801446](https://github.com/PlayerEden/GridMates-Word-Search/actions/runs/45036801446) failed during the dedicated UI emulator test; independent art/release [#45036801420](https://github.com/PlayerEden/GridMates-Word-Search/actions/runs/45036801420) **SUCCESS**. No owner phone acceptance or public editorial clearance.
+
+## WS59 actual Android results, November 22
+
+**Sequence of source-verified QA blockers:**
+1. The initial test source did not compile because `DpRect` lacks the assumed `.width`/`.height`; code corrected to subtract edge coordinates (test-only).
+2. The first corrected emulator attempt failed to connect ADB during boot; a targeted rerun **booted successfully** and installed both APKs, but stopped at unsupported `cmd window set-user-rotation`.
+3. The runner was corrected to AOSP-supported `adb shell wm user-rotation lock 0/1` and a separate Compose `LocalConfiguration` landscape check. Both production and instrumentation APK compiled successfully at final executed commit `0c05a0da74007ba03fba7f4b7d21ee5ed1293cb8`.
+4. The [Android/core run #45036801446](https://github.com/PlayerEden/GridMates-Word-Search/actions/runs/45036801446) **actually executed native instrumentation** on the Android API-35 emulator:
+   - `at200PercentTextAllSixChaptersAndLastPageActionsStayReachable`: **PASS**, six-chapter picker scroll/jump to Forest Discoveries, Play and Bookmark controls reachable at 320dp/200% text.
+   - `at200PercentTextExpertPortraitRetainsHintToolsAndGrid`: **FAIL** at test line 181. The actual frozen 20×20 V5 page, Back/Puzzle Tools, precise picker text, minimum grid geometry and persisted Hint assertions succeeded. After a simulated finger drag, the Compose semantics tree did not expose `1 of 24 words found`. **Root cause NOT established**: current test checks progress text before saved `foundIds`; cannot yet separate gesture rejection from inaccessible/unchanged progress text.
+   - `at150PercentTextClassicLandscapeRetainsHintToolsAndGrid`: **NOT RUN** because script fails fast after portrait test. No landscape pass claim.
+   - [Actual instrumentation and runtime artifact #14760148447](https://github.com/PlayerEden/GridMates-Word-Search/actions/runs/45036801446/artifacts/14760148447); signed QA APK build artifact [#14759353947](https://github.com/PlayerEden/GridMates-Word-Search/actions/runs/45036801446/artifacts/14759353947), **internal APK hash NOT rechecked**, no reinstall required.
+5. [Independent art/release run #45036801420](https://github.com/PlayerEden/GridMates-Word-Search/actions/runs/45036801420) completed **SUCCESS** from the identical tested source, zero production-release approval implied.
+
+**Safeguards kept intact:** No production Kotlin, 63 original QA page identities, 18 WS57 puzzle IDs/SHA pins, generator, any previous save, hint policy, bonus recognition, release lexicon, image asset, Daily/Quick Play, Nearby or Work/main modified. All 122 candidate words remain unapproved.
+
+**Next SINGLE corrective task:** Improve WS59 test diagnostics and failure screenshot retention in one combined commit: read/print saved `foundIds` directly after simulated drag *before* UI text assertion, capture test screenshots before/after gesture, export artifacts on failure, and run portrait and landscape groups independently so the 150% landscape case is actually checked. Add a separate row/column precise-picker accessibility test to establish fallback without silently exempting a failed finger trace. Only then repair a **demonstrated** UI touch issue or test geometry; avoid replacing frozen content, speculative aesthetics, and repeated blind full Actions rebuilds. Owner handset acceptance and 122 editorial approvals still open.
+
+
 
 ## Who, what, where, why
 
@@ -28,7 +47,7 @@
 - **No modifications to production game code, graphics, release assets, V5 generator/word placements, the 63 historical QA Library pages, 18 WS57 frozen page IDs/digests, reward/bonus logic, real AtomicFile save paths, backup/migration format, Quick Play, Daily, Nearby or Work/main.**
 - Unique disposable WS59 session/progress filenames are deleted after tests; no owner data accessed.
 
-## Build and QA receipt — awaiting actual runs
+## Original pre-execution checklist (historical; superseded by exact receipt above)
 
 - **Test source commit:** to be set from the PR's exact executed head after CI; this text alone is not proof.
 - **Both workflow conclusions and emulator report:** PENDING. No success claimed.
