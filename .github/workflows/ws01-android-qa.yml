@@ -709,6 +709,37 @@ jobs:
           if-no-files-found: warn
           retention-days: 30
 
+      - name: WS62 Compile live Nearby TCP Android instrumentation
+        if: ${{ (github.head_ref || github.ref_name) == 'feature/ws62-live-tcp-nearby-modes-qa-2026-11-22' }}
+        run: |
+          gradle --no-daemon :app:assembleDebugAndroidTest
+          echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=static_node"' | sudo tee /etc/udev/rules.d/99-kvm4all.rules
+          sudo udevadm control --reload-rules
+          sudo udevadm trigger --name-match=kvm
+
+      - name: WS62 Exercise real host and guest TCP in Co-op Race Duel
+        if: ${{ (github.head_ref || github.ref_name) == 'feature/ws62-live-tcp-nearby-modes-qa-2026-11-22' }}
+        uses: reactivecircus/android-emulator-runner@v2
+        with:
+          api-level: 35
+          target: google_apis
+          arch: x86_64
+          profile: pixel_4
+          avd-name: ws62-nearby-live-tcp
+          ram-size: 3072M
+          disable-animations: true
+          emulator-options: -no-window -gpu swiftshader -no-snapshot -noaudio -no-boot-anim
+          script: bash scripts/ws62_nearby_live_tcp_emulator.sh
+
+      - name: WS62 Upload TCP handshake, claim and emulator interface reports
+        if: ${{ always() && (github.head_ref || github.ref_name) == 'feature/ws62-live-tcp-nearby-modes-qa-2026-11-22' }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: GridMates-WS62-Nearby-Live-TCP-Emulator
+          path: qa-ws62-nearby-tcp/
+          if-no-files-found: warn
+          retention-days: 30
+
       - name: WS45 Prepare focused score and save instrumentation
         if: ${{ (github.head_ref || github.ref_name) == 'feature/ws45-bonus-android-reliability-2026-11-19' }}
         run: |
