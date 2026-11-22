@@ -1,5 +1,7 @@
 # WS63 — First evidence-backed Word Search vocabulary review queue
 
+**WS64 reconciliation update (verified):** [WS64 draft PR #177](https://github.com/PlayerEden/GridMates-Word-Search/pull/177) passed [WS64 QA #45080015449](https://github.com/PlayerEden/GridMates-Word-Search/actions/runs/45080015449): of **122** earlier Woodland unapproved source proposals, **28** already have QA canonical IDs in the English/Fall catalogs, leaving **94** candidate-new words that still require human/owner review. See [exact per-chapter 6/3/4/15 reuse table](WS64_WOODLAND_PROPOSAL_RECONCILIATION_2026-11-22.md) and [unsigned 122-row worksheet](https://github.com/PlayerEden/GridMates-Word-Search/actions/runs/45080015449/artifacts/14777225148). No new word released or approved. This augments rather than replaces the WS63 baseline's original chapter-pool metrics.
+
 **Verified against [WS63 Actions #45079091823](https://github.com/PlayerEden/GridMates-Word-Search/actions/runs/45079091823):** source `0f50e814e1dc5e667930011d9b5be862d4e7eb2b`; six tests passed. Original JSON/Markdown evidence: [artifact #14776092886](https://github.com/PlayerEden/GridMates-Word-Search/actions/runs/45079091823/artifacts/14776092886). This is an editorial queue **derived from existing English v1 QA words and proposed chapter map**, NOT from 18 freshly generated and played boards.
 
 ## Honest reference inventory
