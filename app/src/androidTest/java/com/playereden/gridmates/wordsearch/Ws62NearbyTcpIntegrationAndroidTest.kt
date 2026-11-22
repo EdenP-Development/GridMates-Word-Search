@@ -182,9 +182,8 @@ class Ws62NearbyTcpIntegrationAndroidTest {
                 host.state.snapshot?.duel?.ownFoundIds?.contains(target.id) == true &&
                     guest.state.snapshot?.duel?.hostCount == 1
             }
-            val guestBefore = requireNotNull(guest.state.snapshot).duel
-            assertNotNull(guestBefore)
-            assertFalse(requireNotNull(guestBefore).ownFoundIds.contains(target.id))
+            val guestBefore = requireNotNull(requireNotNull(guest.state.snapshot).duel)
+            assertFalse(guestBefore.ownFoundIds.contains(target.id))
             assertEquals(0, guestBefore.guestCount)
 
             // In Speed Duel BOTH players may find the SAME word privately.
