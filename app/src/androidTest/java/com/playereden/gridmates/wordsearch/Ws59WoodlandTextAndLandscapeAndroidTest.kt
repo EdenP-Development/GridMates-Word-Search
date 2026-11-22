@@ -165,8 +165,11 @@ class Ws59WoodlandTextAndLandscapeAndroidTest {
             Log.i("WS59_DIAG", "precise target=${target.id} first=$first last=$last found=$found")
             assertTrue("Precise picker did not persist ${target.id}: found=$found",
                 target.id in found)
-            compose.onNodeWithText("1 of ${puzzle.targets.size} words found", substring = true)
-                .assertExists()
+            compose.onNodeWithText("1 / ${puzzle.targets.size} found")
+                .assertIsDisplayed()
+            compose.onNodeWithContentDescription(
+                "1 of ${puzzle.targets.size} words found"
+            ).assertExists()
         } finally {
             listOf(progressName, sessionName).forEach { name ->
                 listOf("", ".bak", ".new").forEach { suffix ->
@@ -230,6 +233,15 @@ class Ws59WoodlandTextAndLandscapeAndroidTest {
                 }
             }
             compose.waitForIdle()
+            if (fontScale >= 1.5f && width <= height) {
+                val pageNumber = catalog.pages(bookId).indexOf(selected) + 1
+                compose.onNodeWithText("Page $pageNumber").assertIsDisplayed()
+                compose.onNodeWithContentDescription(
+                    "${requireNotNull(catalog.book(bookId)).title.removeSuffix(" · TEST BOOK")}, " +
+                        "${puzzle.displayTitle}, Page $pageNumber"
+                ).assertExists()
+                compose.onNodeWithText("0 / ${puzzle.targets.size} found").assertIsDisplayed()
+            }
             compose.onNodeWithContentDescription("Back to book").assertIsDisplayed()
             compose.onNodeWithContentDescription("Puzzle tools")
                 .assertIsDisplayed().performClick()
@@ -281,8 +293,16 @@ class Ws59WoodlandTextAndLandscapeAndroidTest {
                 target.id in found
             )
             assertEquals(1, saved?.hints?.values?.sum())
-            compose.onNodeWithText("1 of ${puzzle.targets.size} words found", substring = true)
-                .assertExists()
+            val compactReadability = fontScale >= 1.5f && width <= height
+            compose.onNodeWithText(
+                if (compactReadability) "1 / ${puzzle.targets.size} found"
+                else "1 of ${puzzle.targets.size} words found"
+            ).assertIsDisplayed()
+            if (compactReadability) {
+                compose.onNodeWithContentDescription(
+                    "1 of ${puzzle.targets.size} words found"
+                ).assertExists()
+            }
         } finally {
             listOf(progressName, sessionName).forEach { name ->
                 listOf("", ".bak", ".new").forEach { suffix ->
