@@ -43,13 +43,18 @@ internal fun PuzzleTitleBar(
     title: String,
     subtitle: String? = null,
     compact: Boolean = false,
+    /** Full spoken title when the large-text layout uses a shorter visible label. */
+    titleSpokenLabel: String? = null,
     leading: @Composable () -> Unit,
     actions: @Composable RowScope.() -> Unit = {}
 ) {
     val compactText = compact && LocalDensity.current.fontScale >= 1.5f
     val heading: @Composable (Modifier) -> Unit = { modifier ->
         Column(modifier, verticalArrangement = Arrangement.spacedBy(1.dp)) {
-            Text(title, color = Forest,
+            Text(title,
+                modifier = if (titleSpokenLabel.isNullOrBlank()) Modifier
+                    else Modifier.semantics { contentDescription = titleSpokenLabel },
+                color = Forest,
                 style = if (compactText) MaterialTheme.typography.titleSmall
                     else MaterialTheme.typography.titleLarge,
                 fontWeight = FontWeight.SemiBold, maxLines = if (compactText) 1 else 2,
@@ -90,6 +95,8 @@ internal fun PuzzleProgressPanel(
     detail: String?,
     found: Int,
     total: Int,
+    /** Full spoken progress for accessible compact visual wording. */
+    spokenLabel: String? = null,
     action: @Composable () -> Unit = {}
 ) {
     Column(
@@ -103,7 +110,10 @@ internal fun PuzzleProgressPanel(
             verticalAlignment = Alignment.CenterVertically
         ) {
             Column(Modifier.weight(1f)) {
-                Text(label, color = Forest, style = MaterialTheme.typography.titleSmall,
+                Text(label,
+                    modifier = if (spokenLabel.isNullOrBlank()) Modifier
+                        else Modifier.semantics { contentDescription = spokenLabel },
+                    color = Forest, style = MaterialTheme.typography.titleSmall,
                     fontWeight = FontWeight.Bold)
                 if (!detail.isNullOrBlank()) {
                     Text(detail, color = Muted, style = MaterialTheme.typography.labelSmall)
