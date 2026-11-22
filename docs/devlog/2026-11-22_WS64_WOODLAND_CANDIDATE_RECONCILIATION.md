@@ -1,6 +1,6 @@
 # WS64 — Unapproved Woodland manuscript → unsigned editorial queue
 
-> **CODE AUTHORED — CI PENDING.** No owner approval, content activation, APK, words newly shipped, app source mutation, or signed Android install. This is a reproducible editorial intake step following verified WS63 vocabulary quality audit.
+> **DRAFT PR #177 OPEN — CODE AUTHORED, EXACT CI PENDING.** No owner approval, content activation, APK, words newly shipped, app source mutation, or signed Android install. This is a reproducible editorial intake step following verified WS63 vocabulary quality audit.
 
 ## Starting verified baseline
 
@@ -25,7 +25,7 @@ Prior Word Search chapters contain more editorial material than the first 670-wo
 
 ## Exact pass contract — pending
 
-- New draft PR against WS63, exact tested source SHA and workflow IDs.
+- [New DRAFT PR #177](https://github.com/PlayerEden/GridMates-Word-Search/pull/177) stacked on WS63; exact tested source SHA and workflow IDs pending.
 - Python tooling/report must show `122/28/94`, origin breakdown `23/33/30/36`, `0` new owner approvals.
 - Every proposed answer appears once in review CSV with provenance and **blank owner reviewer/decision**. Existing canonical words link to current exact stable IDs; new candidates receive no fabricated global canonical ID.
 - Reconciler's proposed source SHA manifest and output CSV/JSON must be reproducible; inspect archived actual reports before claiming success.
