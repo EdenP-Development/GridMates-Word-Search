@@ -1,6 +1,6 @@
 # WS63 — Vocabulary roadmap and executable QA baseline
 
-> **Current status: CODE/DOCS AUTHORED, EXACT GitHub CI PENDING.** This is a read-only research/editorial improvement, not a new signed APK, new word pack, owner approval or release.
+> **Current status: DRAFT PR #176 OPEN; CODE/DOCS AUTHORED, EXACT GitHub CI PENDING.** This is a read-only research/editorial improvement, not a new signed APK, new word pack, owner approval or release.
 
 ## Owner directive
 
@@ -37,4 +37,4 @@ Start **WS64** with human-readable review queues from *actual lowest-depth chapt
 
 ## New-chat handoff line
 
-WS63 full 10K-word roadmap, editorial rubric, Grid Hunt crosswalk and read-only en-v1/Fall audit are written on `feature/ws63-lexicon-quality-roadmap-2026-11-22`, stacked on WS62 verified DRAFT #175. **Find WS63 draft PR and its exact CI status**. Verify 670/150/117/787 counts, 18 recipe coverage, then record exact status and pick WS64 chapter deficits. WS60 v108 is still last independent owner phone QA APK; no new installation needed; 122 Woodland candidates remain unapproved.
+[WS63 DRAFT PR #176](https://github.com/PlayerEden/GridMates-Word-Search/pull/176) contains the full 10K-word roadmap, editorial rubric, Grid Hunt crosswalk and read-only en-v1/Fall audit are written on `feature/ws63-lexicon-quality-roadmap-2026-11-22`, stacked on WS62 verified DRAFT #175. **Find WS63 draft PR and its exact CI status**. Verify 670/150/117/787 counts, 18 recipe coverage, then record exact status and pick WS64 chapter deficits. WS60 v108 is still last independent owner phone QA APK; no new installation needed; 122 Woodland candidates remain unapproved.
