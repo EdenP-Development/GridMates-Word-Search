@@ -147,8 +147,8 @@ class Ws59WoodlandTextAndLandscapeAndroidTest {
             val grid = compose.onNodeWithTag("word-grid-touch-area")
             grid.assertIsDisplayed()
             val bounds = grid.getUnclippedBoundsInRoot()
-            assertTrue("Grid must retain a usable width at enlarged text", bounds.width >= 130.dp)
-            assertTrue("Grid must retain a usable height at enlarged text", bounds.height >= 130.dp)
+            assertTrue("Grid must retain a usable width at enlarged text", bounds.right - bounds.left >= 130.dp)
+            assertTrue("Grid must retain a usable height at enlarged text", bounds.bottom - bounds.top >= 130.dp)
 
             compose.onNodeWithTag("ws14h-hint-lightbulb")
                 .assertIsDisplayed().performClick()
