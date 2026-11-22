@@ -541,6 +541,40 @@ jobs:
           if-no-files-found: ignore
           retention-days: 3
 
+      - name: WS57 Validate frozen page assets, source and previous 63-page safeguards
+        run: python3 -m unittest discover -s tools/asset_pipeline -p 'test_ws57_playable_woodland_preview.py' -v
+
+      - name: WS57 Prepare dedicated playable-preview emulator QA
+        if: ${{ (github.head_ref || github.ref_name) == 'feature/ws57-woodland-playable-preview-2026-11-21' }}
+        run: |
+          gradle --no-daemon :app:assembleDebugAndroidTest
+          echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=static_node"' | sudo tee /etc/udev/rules.d/99-kvm4all.rules
+          sudo udevadm control --reload-rules
+          sudo udevadm trigger --name-match=kvm
+
+      - name: WS57 Execute all 18 real frozen QA pages and saved-upgrade tests on Android
+        if: ${{ (github.head_ref || github.ref_name) == 'feature/ws57-woodland-playable-preview-2026-11-21' }}
+        uses: reactivecircus/android-emulator-runner@v2
+        with:
+          api-level: 35
+          target: google_apis
+          arch: x86_64
+          profile: pixel_4
+          avd-name: ws57-woodland-preview
+          ram-size: 3072M
+          disable-animations: true
+          emulator-options: -no-window -gpu swiftshader -no-snapshot -noaudio -no-boot-anim
+          script: bash scripts/ws57_woodland_preview_emulator.sh
+
+      - name: WS57 Upload device-executed QA preview regression
+        if: ${{ always() && (github.head_ref || github.ref_name) == 'feature/ws57-woodland-playable-preview-2026-11-21' }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: GridMates-WS57-Playable-Woodland-Emulator
+          path: qa-ws57-woodland-preview/
+          if-no-files-found: warn
+          retention-days: 30
+
       - name: WS45 Prepare focused score and save instrumentation
         if: ${{ (github.head_ref || github.ref_name) == 'feature/ws45-bonus-android-reliability-2026-11-19' }}
         run: |

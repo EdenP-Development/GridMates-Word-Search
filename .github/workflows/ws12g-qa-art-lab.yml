@@ -208,6 +208,8 @@ jobs:
         run: python3 -m unittest discover -s tools/asset_pipeline -p 'test_ws55_forest_discoveries.py' -v
       - name: WS56 Verify distinct quiet clearings words and untouched original Library
         run: python3 -m unittest discover -s tools/asset_pipeline -p 'test_ws56_quiet_clearings.py' -v
+      - name: WS57 Guard new playable QA fixtures against source or hash drift
+        run: python3 -m unittest discover -s tools/asset_pipeline -p 'test_ws57_playable_woodland_preview.py' -v
       - name: WS16BU compact gallery/pager and profile readability guards
         run: python3 -m unittest discover -s tools/asset_pipeline -p 'test_ws16bu_compact_gallery.py' -v
       - name: WS16BV compact bundled Fonts and license access guards
