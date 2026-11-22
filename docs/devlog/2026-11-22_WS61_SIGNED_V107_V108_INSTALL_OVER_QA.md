@@ -1,6 +1,24 @@
 # WS61 — Actual signed v107→v108 QA APK upgrade with existing puzzle progress
 
-> **Status: IMPLEMENTED / CI PENDING.** Do not claim upgrade/save success before the real Android emulator completes both pre- and post-upgrade instrumentation and raw-file comparisons.
+> **VERIFIED — BOTH AUTOMATED PIPELINES AND REAL ANDROID SIGNED UPGRADE PASSED.** Executed source `684d331387f6f5c10e84918086426ad7aeaa70dc`. [Android/core #45067303054](https://github.com/PlayerEden/GridMates-Word-Search/actions/runs/45067303054) SUCCESS, [art/release #45067303073](https://github.com/PlayerEden/GridMates-Word-Search/actions/runs/45067303073) SUCCESS. This verifies a synthetic-but-valid emulator save upgrade, **not** the owner's physical phone or personal data.
+
+## WS61 exact executed source and binary evidence
+
+- **Code/source commit executed:** `684d331387f6f5c10e84918086426ad7aeaa70dc`; both workflows ran the identical branch commit. Later journal/handoff edits are documentation only.
+- **Android/core run [#45067303054](https://github.com/PlayerEden/GridMates-Word-Search/actions/runs/45067303054): SUCCESS.** Standard core/app/lint/QA APK checks and two native `Ws61SignedUpgradeAndroidTest` test executions in an actual API35 emulator. The GitHub Actions job downloaded the v107 artifact from exact WS57 run #44971601632, enforced the pinned original SHA, compiled instrumentation and performed real signed install-over.
+- **Independent artwork/debug/release run [#45067303073](https://github.com/PlayerEden/GridMates-Word-Search/actions/runs/45067303073): SUCCESS.** No new game art or release-candidate word promotion.
+- **Full raw evidence [artifact #14771749415](https://github.com/PlayerEden/GridMates-Word-Search/actions/runs/45067303054/artifacts/14771749415)**: ZIP independently downloaded, extracted and inspected. Native v107 `seedRealCode107SoloLegacyAndWoodlandProgress` = `OK (1 test)`, Android instrumentation status 0. Native v108 `verifyIdenticalExistingSavesAfterCode108InstallOver` = `OK (1 test)`, status 0. The older version actually seeded WS11 book + Woodland partial pages, hints, bookmarks, elapsed and Solo found word + preferences, and v108 decoded them after launching.
+- **Six genuine app-private Android files** (old WS11 progress+sessions, WS57 migrated/new progress+sessions, Solo JSON, Solo haptics/sound XML): ZIP contains `before/` and `after/` versions, independently compared using exact bytes and SHA256. **All 6 matched byte-for-byte immediately after `adb install -r`**, no uninstall, no data clearing. `before-sha256.txt` vs `after-sha256.txt` identical. This is a stronger test than a certificate-only check. Raw files are intentionally synthetic QA emulator data, never the owner's data.
+- **On-device Android package evidence**: `versionCode=107` before, `versionCode=108` after; package `com.playereden.gridmates.wordsearch.qa`. Both APK v2 signing certificates show same SHA256 `75cc3c896247d71fbd51f7a3ed41f90c8218a8a5a70df8c0f6b494b5cc23d419`.
+- **Exact APK SHA256s in executed run:** old v107 `304b389d53935ceb8a8857666caf00fbc15e3c51a440ab3cced07f1f684e82f9`; newly rebuilt v108 `6d227bb1a594b4146ad756533d944f9965925a94709c17c0268451787f6428a8`. That latter SHA differs from WS60's previous signed code108 artifact `6a7d59e6fed8bd2524abd216027b3caf7445aa8afa79c7fa8f2f3600b65a3b3b`; APK binary bytes are **not claimed identical** across rebuilds. Same unchanged runtime/game source, versionCode/name, QA package and certificate; no new player-facing build recommendation for WS61.
+- **No production/runtime/save-schema, 63 original + 18 WS57 frozen board IDs/hashes, rendering/assets, Hint, scoring, rewards, Nearby/Quick Play/Daily or catalog release rights changes.** 122 Woodland candidates remain QA-only, editorial approval pending.
+
+## Outcome and limits
+
+**WS61 automated signed APK upgrade test is COMPLETE.** The private file byte preservation plus post-upgrade decode are independently verified in an isolated Android emulator; it does **not guarantee** preservation of any specific owner's prior installed app, older versions beyond v107, or a personalized phone state, and never justifies clearing/uninstalling data.
+
+**Next exact action:** owner runs existing verified WS60 v108 QA build on their handset and checks that their old books/Solo profile survive. After owner phone UX/upgrade feedback, complete two-real-phone Nearby Co-op/Race/Duel host/join/reconnect; editorial/rights approvals, TalkBack spoken behavior and store signing remain separate before public beta.
+
 
 ## Who, what, where, why
 - **Owner:** asked to continue GridMates: Word Search beta stabilization after verified WS60 v108. The device-based upgrade and saved-game acceptance gates were still open.
@@ -14,7 +32,7 @@
 - `.github/workflows/ws01-android-qa.yml`: WS61-branch-only original artifact download using GitHub Actions read token, **pinned old APK SHA256**, app code108/test compilation, preinstall `apksigner` certificate equality + manifest version checks, API35 Android emulator and report upload. Existing ordinary unit/lint/QA Android/core and independent art/release workflows continue unchanged.
 - **No production runtime source, code108 version, original 63+18 frozen QA page IDs/board SHA pins, save storage format, scoring/hints/bonus policy, art, Nearby/Daily/Quick Play, lexicon, production release or Play Store changes.** 122 Woodland candidate words remain unapproved.
 
-## Exact completion requirements (PENDING)
+## Initial pre-execution checklist (historical; superseded by exact receipt above)
 - [New DRAFT PR #174](https://github.com/PlayerEden/GridMates-Word-Search/pull/174) opened against WS60; still no merge/publication.
 - Source SHA tested: pending. Both standard Android/core and independent art/release Actions conclusions pending.
 - Baseline pinned v107 APK must be retrieved successfully from **WS57 Actions run #44971601632**, artifact named `GridMates-WordSearch-Android-QA`, SHA-256 match. New code108 is built from the WS61 source, which changes tests/scripts/docs only (not runtime).
