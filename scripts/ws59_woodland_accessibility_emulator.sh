@@ -15,15 +15,16 @@ adb install -r -t app/build/outputs/apk/androidTest/debug/app-debug-androidTest.
 adb shell wm user-rotation lock 0
 set +e
 adb shell am instrument -w -r -e class \
-  "$test_class#at200PercentTextAllSixChaptersAndLastPageActionsStayReachable,$test_class#at200PercentTextExpertPortraitRetainsHintToolsAndGrid" \
+  "$test_class#at200PercentTextAllSixChaptersAndLastPageActionsStayReachable,$test_class#at200PercentTextExpertPortraitRetainsHintToolsAndGrid,$test_class#at200PercentTextExpertPrecisePickerClaimsRealWord" \
   "$target" | tee "$report/portrait-200-percent.txt"
 portrait_code=${PIPESTATUS[0]}
 set -e
+portrait_failed=0
 if [ "$portrait_code" -ne 0 ] || \
-  ! grep -Eq '^OK \(2 tests\)' "$report/portrait-200-percent.txt" || \
+  ! grep -Eq '^OK \\(3 tests\\)' "$report/portrait-200-percent.txt" || \
   grep -Eq 'FAILURES!!!|INSTRUMENTATION_FAILED|Process crashed' "$report/portrait-200-percent.txt"; then
-  echo "WS59 portrait large-type tests failed; see report" >&2
-  exit 1
+  echo "WS59: portrait failed, still running independent landscape test" >&2
+  portrait_failed=1
 fi
 
 # The phone is actually rotated here; a wide Compose box on a portrait device
@@ -37,15 +38,30 @@ adb shell am instrument -w -r -e class \
 landscape_code=${PIPESTATUS[0]}
 set -e
 adb logcat -d -s AndroidRuntime > "$report/android-runtime.txt" || true
+landscape_failed=0
 if [ "$landscape_code" -ne 0 ] || \
-  ! grep -Eq '^OK \(1 test\)' "$report/landscape-150-percent.txt" || \
+  ! grep -Eq '^OK \\(1 test\\)' "$report/landscape-150-percent.txt" || \
   grep -Eq 'FAILURES!!!|INSTRUMENTATION_FAILED|Process crashed' "$report/landscape-150-percent.txt"; then
-  echo "WS59 rotated landscape test failed; see report" >&2
-  exit 1
+  echo "WS59: landscape failed, preserving evidence from both test groups" >&2
+  landscape_failed=1
 fi
 
-for name in chapter-200-percent expert-portrait-200-percent classic-landscape-150-percent; do
+# Export whatever screenshots exist, even when a previous assertion failed.
+for name in \
+  chapter-200-percent \
+  expert-portrait-200-percent-before \
+  expert-portrait-200-percent-after-swipe \
+  precise-portrait-200-percent-before \
+  precise-portrait-200-percent-after \
+  classic-landscape-150-percent-before \
+  classic-landscape-150-percent-after-swipe; do
   adb pull "/sdcard/Android/data/$package/files/ws59-$name.png" \
-    "$report/ws59-$name.png" || echo "Screenshot export unavailable: $name" >&2
+    "$report/ws59-$name.png" >/dev/null 2>&1 || \
+    echo "Screenshot not available: $name" >&2
 done
-echo "WS59: 2 portrait large-type tests + 1 rotated landscape V5 gesture test PASS; screenshots are QA only"
+adb logcat -d -s WS59_DIAG:I AndroidRuntime:E > "$report/diagnostics-logcat.txt" || true
+if [ "$portrait_failed" -ne 0 ] || [ "$landscape_failed" -ne 0 ]; then
+  echo "WS59: FAILED/INCOMPLETE; examine independent reports, saved-ID logs and screenshots" >&2
+  exit 1
+fi
+echo "WS59: 3 portrait 200% UI tests and 1 physically rotated landscape UI test PASS"

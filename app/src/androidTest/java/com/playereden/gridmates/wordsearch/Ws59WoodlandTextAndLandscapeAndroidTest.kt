@@ -2,6 +2,7 @@ package com.playereden.gridmates.wordsearch
 
 import android.content.res.Configuration
 import android.graphics.Bitmap
+import android.util.Log
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.width
@@ -26,6 +27,7 @@ import androidx.test.platform.app.InstrumentationRegistry
 import com.playereden.gridmates.wordsearch.core.BookPageSessionRules
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertTrue
+import kotlin.math.abs
 import org.junit.Rule
 import org.junit.Test
 import java.io.File
@@ -104,6 +106,74 @@ class Ws59WoodlandTextAndLandscapeAndroidTest {
         )
     }
 
+    /** Real row/column accessibility path; never directly claim via core store. */
+    @Test fun at200PercentTextExpertPrecisePickerClaimsRealWord() {
+        val catalog = BookQaPilot.catalog(context)
+        val selected = requireNotNull(catalog.book(bookId)).chapters[5].pages[2]
+        val puzzle = BookPageSessionRules.puzzle(catalog, bookId, selected.id)
+        assertEquals(20, puzzle.size)
+        val target = puzzle.targets.minByOrNull {
+            val a = it.positions.first()
+            val b = it.positions.last()
+            a.row + a.col + abs(b.row - a.row) + abs(b.col - a.col)
+        } ?: error("Expert board has no words")
+        val suffix = System.nanoTime()
+        val progressName = "ws59_precise_progress_$suffix.dat"
+        val sessionName = "ws59_precise_session_$suffix.dat"
+        try {
+            val progress = BookLibraryStore(context, catalog, progressName)
+            val sessions = BookPageSessionStore(context, catalog, sessionName)
+            compose.setContent {
+                val original = LocalDensity.current
+                CompositionLocalProvider(LocalDensity provides Density(original.density, 2f)) {
+                    GridMatesTheme {
+                        Box(Modifier.width(320.dp).height(740.dp)) {
+                            BookPageGameplayScreen(catalog = catalog, bookId = bookId,
+                                pageId = selected.id, sessionStore = sessions,
+                                progressStore = progress, boardFontId = "classic",
+                                onBack = {}, showPrototypeArt = true)
+                        }
+                    }
+                }
+            }
+            compose.waitForIdle()
+            compose.onNodeWithContentDescription("Puzzle tools").assertIsDisplayed().performClick()
+            compose.onNodeWithText("Select by row and column").performClick()
+            compose.onNodeWithText("Select letters precisely").assertExists()
+            capture("precise-portrait-200-percent-before")
+            fun move(axis: String, delta: Int) {
+                val direction = if (delta >= 0) "Next" else "Previous"
+                repeat(abs(delta)) {
+                    compose.onNodeWithContentDescription("$direction $axis")
+                        .performScrollTo().performClick()
+                }
+            }
+            val first = target.positions.first()
+            val last = target.positions.last()
+            move("row", first.row)
+            move("column", first.col)
+            compose.onNodeWithText("Set start").performClick()
+            move("row", last.row - first.row)
+            move("column", last.col - first.col)
+            compose.onNodeWithText("Mark word").performClick()
+            compose.waitForIdle()
+            capture("precise-portrait-200-percent-after")
+            val found = BookPageSessionStore(context, catalog, sessionName)
+                .session(bookId, selected.id)?.foundIds.orEmpty()
+            Log.i("WS59_DIAG", "precise target=${target.id} first=$first last=$last found=$found")
+            assertTrue("Precise picker did not persist ${target.id}: found=$found",
+                target.id in found)
+            compose.onNodeWithText("1 of ${puzzle.targets.size} words found", substring = true)
+                .assertExists()
+        } finally {
+            listOf(progressName, sessionName).forEach { name ->
+                listOf("", ".bak", ".new").forEach { suffix ->
+                    File(context.filesDir, name + suffix).delete()
+                }
+            }
+        }
+    }
+
     private fun playViewport(
         chapter: Int, page: Int, cells: Int,
         width: Int, height: Int, fontScale: Float, captureName: String
@@ -167,9 +237,16 @@ class Ws59WoodlandTextAndLandscapeAndroidTest {
             val target = puzzle.targets.first()
             val start = target.positions.first()
             val end = target.positions.last()
+            capture("$captureName-before")
+            var measuredGrid = "unmeasured"
             grid.performTouchInput {
-                val dx = width.toFloat() / puzzle.size
-                val dy = height.toFloat() / puzzle.size
+                // The enclosing function also has width/height Int parameters.
+                // Explicitly measure the REAL grid TouchInjectionScope.
+                val gridWidth = this.width.toFloat()
+                val gridHeight = this.height.toFloat()
+                measuredGrid = "${gridWidth}x${gridHeight}px"
+                val dx = gridWidth / puzzle.size
+                val dy = gridHeight / puzzle.size
                 swipe(
                     start = Offset((start.col + .5f) * dx, (start.row + .5f) * dy),
                     end = Offset((end.col + .5f) * dx, (end.row + .5f) * dy),
@@ -177,15 +254,21 @@ class Ws59WoodlandTextAndLandscapeAndroidTest {
                 )
             }
             compose.waitForIdle()
+            capture("$captureName-after-swipe")
+            val saved = BookPageSessionStore(context, catalog, sessionName)
+                .session(bookId, selected.id)
+            val found = saved?.foundIds.orEmpty()
+            Log.i("WS59_DIAG", "drag case=$captureName page=${selected.id} target=${target.id} " +
+                "start=$start end=$end grid=$measuredGrid screen=${width}x${height}dp " +
+                "font=$fontScale found=$found hints=${saved?.hints}")
+            assertTrue(
+                "Swipe did not persist target ${target.id}: found=$found, " +
+                    "grid=$measuredGrid, screen=${width}x${height}dp",
+                target.id in found
+            )
+            assertEquals(1, saved?.hints?.values?.sum())
             compose.onNodeWithText("1 of ${puzzle.targets.size} words found", substring = true)
                 .assertExists()
-            val saved = requireNotNull(
-                BookPageSessionStore(context, catalog, sessionName)
-                    .session(bookId, selected.id)
-            )
-            assertTrue(target.id in saved.foundIds)
-            assertEquals(1, saved.hints.values.sum())
-            capture(captureName)
         } finally {
             listOf(progressName, sessionName).forEach { name ->
                 listOf("", ".bak", ".new").forEach { suffix ->
