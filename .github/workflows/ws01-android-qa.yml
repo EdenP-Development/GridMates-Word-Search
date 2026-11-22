@@ -606,6 +606,37 @@ jobs:
           if-no-files-found: warn
           retention-days: 30
 
+      - name: WS59 Prepare large-type and landscape Android UI regression
+        if: ${{ (github.head_ref || github.ref_name) == 'feature/ws59-woodland-large-text-landscape-qa-2026-11-22' }}
+        run: |
+          gradle --no-daemon :app:assembleDebugAndroidTest
+          echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=static_node"' | sudo tee /etc/udev/rules.d/99-kvm4all.rules
+          sudo udevadm control --reload-rules
+          sudo udevadm trigger --name-match=kvm
+
+      - name: WS59 Execute 200% portrait and 150% landscape Woodland V5 UI tests
+        if: ${{ (github.head_ref || github.ref_name) == 'feature/ws59-woodland-large-text-landscape-qa-2026-11-22' }}
+        uses: reactivecircus/android-emulator-runner@v2
+        with:
+          api-level: 35
+          target: google_apis
+          arch: x86_64
+          profile: pixel_4
+          avd-name: ws59-woodland-layout
+          ram-size: 3072M
+          disable-animations: true
+          emulator-options: -no-window -gpu swiftshader -no-snapshot -noaudio -no-boot-anim
+          script: bash scripts/ws59_woodland_accessibility_emulator.sh
+
+      - name: WS59 Publish actual Android UI and screenshot evidence
+        if: ${{ always() && (github.head_ref || github.ref_name) == 'feature/ws59-woodland-large-text-landscape-qa-2026-11-22' }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: GridMates-WS59-Woodland-Accessibility-Emulator
+          path: qa-ws59-woodland-accessibility/
+          if-no-files-found: warn
+          retention-days: 30
+
       - name: WS45 Prepare focused score and save instrumentation
         if: ${{ (github.head_ref || github.ref_name) == 'feature/ws45-bonus-android-reliability-2026-11-19' }}
         run: |
