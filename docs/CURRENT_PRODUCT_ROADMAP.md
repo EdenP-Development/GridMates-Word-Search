@@ -1,5 +1,8 @@
 # Current product roadmap — November 18, 2026
 
+**Live development checkpoint — November 22 (supersedes historical WS42 baseline below):** [WS57 six-chapter playable Woodland QA preview](WOODLAND_PLAYABLE_PREVIEW_WS57.md) v107 added a fourth debug-only Library book with **18 new QA pages** to the existing **63** (81 total), preserving old save bytes and frozen board hashes. [WS58](devlog/2026-11-22_WS58_REAL_WOODLAND_UI_GESTURE_QA.md) verified normal-size 12×12 and 20×20 native input. [WS59](devlog/2026-11-22_WS59C_LANDSCAPE_ACTIVITY_ORIENTATION.md) then verified **four actual emulator UI tests** at 200% font portrait and 150% native landscape; exact code `89ffdc328a2219785ec2b7ec8083226ad22e7965`, [Android/core success #45060619654](https://github.com/PlayerEden/GridMates-Word-Search/actions/runs/45060619654) and [independent art/release success #45060619645](https://github.com/PlayerEden/GridMates-Word-Search/actions/runs/45060619645). **No player-facing build/runtime change after WS57; last hashed signed owner QA APK is WS57 v107.** All changes remain stacked DRAFT, not merged into main/Work. **Primary next:** phone-first readability/UX and real two-phone Nearby acceptance; 122 Woodland editorial words still unapproved, TalkBack and release work remain open. This live checkpoint takes precedence over the v104 snapshot preserved below for historical context.
+
+
 This is the working priority list. Historical design documents and issue
 checkboxes supply context. A newer tested implementation or owner decision
 supersedes an older "next task" paragraph. See the

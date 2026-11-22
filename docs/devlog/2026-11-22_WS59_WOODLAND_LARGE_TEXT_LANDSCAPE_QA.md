@@ -1,6 +1,8 @@
 # WS59 — Woodland large-text, actual landscape and UI screenshots
 
-> **Actual status: PARTIAL DEVICE QA — 200% chapter navigation PASSED; 200% Expert gesture FAILED; rotated landscape NOT EXECUTED.** Latest exact tested code `0c05a0da74007ba03fba7f4b7d21ee5ed1293cb8`. Android/core [#45036801446](https://github.com/PlayerEden/GridMates-Word-Search/actions/runs/45036801446) failed during the dedicated UI emulator test; independent art/release [#45036801420](https://github.com/PlayerEden/GridMates-Word-Search/actions/runs/45036801420) **SUCCESS**. No owner phone acceptance or public editorial clearance.
+> **FINAL AUTOMATED STATUS: VERIFIED.** Later WS59B and WS59C fixes passed four actual Android UI tests at source `89ffdc328a2219785ec2b7ec8083226ad22e7965`; [Android/core #45060619654](https://github.com/PlayerEden/GridMates-Word-Search/actions/runs/45060619654) and [art/release #45060619645](https://github.com/PlayerEden/GridMates-Word-Search/actions/runs/45060619645) both SUCCESS. The initial failure below is retained as a historical incident, **not** the current milestone result. [WS59B root-cause correction](2026-11-22_WS59B_EXPERT_TOUCH_DIAGNOSTIC.md) · [WS59C final receipt](2026-11-22_WS59C_LANDSCAPE_ACTIVITY_ORIENTATION.md).
+
+> **HISTORICAL WS59 FIRST RUN FAILURE — NOW SUPERSEDED BY VERIFIED WS59B/WS59C.** Latest exact tested code `0c05a0da74007ba03fba7f4b7d21ee5ed1293cb8`. Android/core [#45036801446](https://github.com/PlayerEden/GridMates-Word-Search/actions/runs/45036801446) failed during the dedicated UI emulator test; independent art/release [#45036801420](https://github.com/PlayerEden/GridMates-Word-Search/actions/runs/45036801420) **SUCCESS**. No owner phone acceptance or public editorial clearance.
 
 ## WS59 actual Android results, November 22
 
