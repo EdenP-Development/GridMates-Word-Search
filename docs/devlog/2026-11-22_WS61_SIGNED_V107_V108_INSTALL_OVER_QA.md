@@ -15,7 +15,7 @@
 - **No production runtime source, code108 version, original 63+18 frozen QA page IDs/board SHA pins, save storage format, scoring/hints/bonus policy, art, Nearby/Daily/Quick Play, lexicon, production release or Play Store changes.** 122 Woodland candidate words remain unapproved.
 
 ## Exact completion requirements (PENDING)
-- New DRAFT PR # to be created against WS60.
+- [New DRAFT PR #174](https://github.com/PlayerEden/GridMates-Word-Search/pull/174) opened against WS60; still no merge/publication.
 - Source SHA tested: pending. Both standard Android/core and independent art/release Actions conclusions pending.
 - Baseline pinned v107 APK must be retrieved successfully from **WS57 Actions run #44971601632**, artifact named `GridMates-WordSearch-Android-QA`, SHA-256 match. New code108 is built from the WS61 source, which changes tests/scripts/docs only (not runtime).
 - Emulator should show **`OK (1 test)`** seeding on installed code107 and **`OK (1 test)`** re-opening on installed code108, with exact raw byte equality of all six files, `Success` install -r, matching signer and versionCode 107→108. Artifact should include evidence and checksums.
