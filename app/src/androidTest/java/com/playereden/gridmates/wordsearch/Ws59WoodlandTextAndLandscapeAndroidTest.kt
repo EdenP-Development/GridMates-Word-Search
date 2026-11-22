@@ -76,6 +76,7 @@ class Ws59WoodlandTextAndLandscapeAndroidTest {
         compose.onNodeWithTag("book-chapter-jump-" + lastChapter.id)
             .performScrollTo().assertIsDisplayed().performClick()
         compose.onNodeWithText(lastChapter.title).assertIsDisplayed()
+        compose.onNodeWithTag("book-detail-list").assertExists()
         compose.onNodeWithContentDescription("Play page $lastPageNumber")
             .performScrollTo().assertIsDisplayed().performClick()
         compose.runOnIdle { assertEquals(lastChapterFirstPage.id, requestedPage) }
