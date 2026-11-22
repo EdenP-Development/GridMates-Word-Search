@@ -21,7 +21,7 @@ portrait_code=${PIPESTATUS[0]}
 set -e
 portrait_failed=0
 if [ "$portrait_code" -ne 0 ] || \
-  ! grep -Eq '^OK \\(3 tests\\)' "$report/portrait-200-percent.txt" || \
+  ! grep -Eq '^OK \(3 tests\)' "$report/portrait-200-percent.txt" || \
   grep -Eq 'FAILURES!!!|INSTRUMENTATION_FAILED|Process crashed' "$report/portrait-200-percent.txt"; then
   echo "WS59: portrait failed, still running independent landscape test" >&2
   portrait_failed=1
@@ -40,7 +40,7 @@ set -e
 adb logcat -d -s AndroidRuntime > "$report/android-runtime.txt" || true
 landscape_failed=0
 if [ "$landscape_code" -ne 0 ] || \
-  ! grep -Eq '^OK \\(1 test\\)' "$report/landscape-150-percent.txt" || \
+  ! grep -Eq '^OK \(1 test\)' "$report/landscape-150-percent.txt" || \
   grep -Eq 'FAILURES!!!|INSTRUMENTATION_FAILED|Process crashed' "$report/landscape-150-percent.txt"; then
   echo "WS59: landscape failed, preserving evidence from both test groups" >&2
   landscape_failed=1
