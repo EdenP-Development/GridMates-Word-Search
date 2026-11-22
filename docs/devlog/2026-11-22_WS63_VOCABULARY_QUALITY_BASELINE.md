@@ -1,6 +1,18 @@
 # WS63 — Vocabulary roadmap and executable QA baseline
 
-> **Current status: DRAFT PR #176 OPEN; CODE/DOCS AUTHORED, EXACT GitHub CI PENDING.** This is a read-only research/editorial improvement, not a new signed APK, new word pack, owner approval or release.
+> **VERIFIED SOURCE-BASED WS63 QA — DRAFT PR #176.** Both independent [WS63 quality #45079091823](https://github.com/PlayerEden/GridMates-Word-Search/actions/runs/45079091823) and [original WS40 lexical recovery #45079091757](https://github.com/PlayerEden/GridMates-Word-Search/actions/runs/45079091757) **SUCCESS**, exact tested source `0f50e814e1dc5e667930011d9b5be862d4e7eb2b`. Six new WS63 tests passed. **No signed new APK, words promoted, owner/public approval, existing game/save modification or actual player study.**
+
+## Actual verified baseline, inspected from independent CI artifact
+
+- [Original WS63 QA ZIP artifact #14776092886](https://github.com/PlayerEden/GridMates-Word-Search/actions/runs/45079091823/artifacts/14776092886), downloaded, ZIP contents independently inspected and SHA-256 verified. ZIP **`f9d8e877086cc541fd5e296a0db11a900ce9d53c37559a47bd6c13bef8e70df7`**; report JSON **`3fe8550c114b82e05c172f1fa550cae0f3ba1d042f219877a34cd6e2ec640ad5`**, Markdown **`eb90032fd24efefc90e4d91d28cb13f2067ef081b401fa716ea98d59ed768909`**. Artifact hash manifest matched both extracted files.
+- CI log: `Ran 6 tests in 0.151s` → `OK`; `WS63 QUALITY_AUDIT_OK: 787 unique QA English+Fall; 18 proposed chapter pools; zero newly owner-approved words`; separate source validator assertions also passed. Original WS40 recovery/intake QA succeeded unchanged (not a new dictionary production import).
+- **English v1 QA:** 670 unique; Woodland 159 (143 eligible in V5 12×12 Relaxed), Space 169 (144), Garden 174 (159), Everyday 200 (199). Numbers denote approved-for-internal-QA source assignments, **NOT public release**. Fall v1 has 150 QA approved with 112 eligible 12×12 Relaxed, 148 Classic 15×15 and 150 Expert 20×20; 33 overlap English, 117 new: **787** distinct union. English active topics 4; Fall+Seasons add two authoring topics, **six** total.
+- **18 proposed chapter source pools** (not actual frozen board measurement): critical **Woodland Birdsong** 29 distinct, V5 Relaxed 12 eligible 23, Classic/Expert 29, **minimum 23 unavoidable repeated slots** among 52 three-page answer slots; **Space Our Solar System** 44 distinct, 39/44/44 board eligible, **at least 8 reused slots**; **Garden Flower Borders** 44 distinct, 36/44/44 eligible, **at least 8 reused slots**. Next shallower **Night Sky** 54 distinct; **By the Stream** 65 **but old category is too broad**, not proof of chapter quality; Quiet Clearings 60 with broad category overlap concerns. All 18 complete results stored in report.
+- **190 substring-related QA canonical pairs** flagged for per-board/expert editorial review, not 190 invalid words. Zero simple plus-S plural pairs under a narrowly scoped heuristic, **not** proof no morphological variants or problems exist.
+- **Source-grounded next queue:** [WS63 first editorial priorities](../WS63_FIRST_EDITORIAL_PRIORITY_QUEUE_2026-11-22.md). Review existing **23 unapproved WS51 Birdsong**, **33 unapproved WS54 Stream**, and WS55/WS56 manuscripts before inventing replacements. Create dedicated high-quality candidate-only Solar System and Flower Borders lists; no owner-release authorization. Do not silently change current 81 frozen QA pages or WordSearch V5.
+- **Unchanged:** all original 63 historical + 18 WS57 frozen QA pages, QA v108 APK, saved games and generator versions, Daily, Quick Play, Nearby, images, bonus and reward system, root lexicon fixture, original SCOWL quarantine, 122 Woodland editorial candidates, production release rights. This is content analysis, not a physical Android or two-phone test.
+
+**Next exact development milestone:** WS64-A versioned reviewer worksheet for existing unapproved Woodland proposals and WS64-B new Solar System / Flower Borders candidate intake (source and duplicate checks, no automatic approvals). Then WS65 new QA-only versioned pack + actual V5 board generation and editor/owner reviews. Keep WS63 PR draft/unmerged.
 
 ## Owner directive
 
@@ -24,7 +36,7 @@ Expand GridMates: Word Search vocabulary **GOOD, VAST, ALL THE WORDS**, without 
 - `.github/workflows/ws63-lexicon-quality.yml`: isolated PR-triggered Python QA (no new external dictionary downloads), original WS10 recovery provenance audit, root+en+Fall schema/source validation, six explicit WS63 cases, JSON+Markdown report + SHA artifact. The older WS40 workflow can also run since `tools/lexicon` changed.
 - **No edit to:** candidate CSV values/approval states, any packaged wordpack, Android Kotlin, game modes, save schema, IDs/hashes/seed/frozen pages, assets or public release configuration.
 
-## Verification contract (pending exact run)
+## Original pre-run contract (historical; superseded by verified receipt above)
 
 1. WS63 GitHub action for same source SHA successful; existing WS40 lexical recovery workflow and normal application/art checks unaffected. Run targeted tests and archive `qa-ws63-quality/quality-baseline.json` and `.md`.
 2. Verify genuine source metrics: **English 670**, **Fall 150**, **Fall new 117**, **union 787**, **six active authoring topic families across these two editions**, **18 proposed chapter recipes**. 787 is **QA unique union**, NOT owner approved or currently playable in one version. If data differs, investigate source instead of silently changing numbers.
