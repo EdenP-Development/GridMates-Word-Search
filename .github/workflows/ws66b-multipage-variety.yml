@@ -1,0 +1,81 @@
+name: WS66-B V5 Multi-page Variety Lab (No APK)
+
+on:
+  workflow_dispatch:
+  pull_request:
+    paths:
+      - 'core/src/test/kotlin/com/playereden/gridmates/wordsearch/core/Ws66bMultiPageVarietyLabTest.kt'
+      - 'tools/lexicon/ws66b_variety_metrics.py'
+      - 'docs/WS66B_*'
+      - '.github/workflows/ws66b-multipage-variety.yml'
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ws66b-real-v5-replay-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  measured-three-page-replay:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Check exact scratch vocabulary identities and original catalogs
+        run: |
+          python3 tools/lexicon/audit_recovery.py
+          python3 tools/lexicon/ws66a_test_fixture_guard.py --out-dir qa-ws66b-variety
+          python3 tools/lexicon/validate.py --data-dir data/lexicon/authoring/en-v1
+          python3 tools/lexicon/validate.py --data-dir data/lexicon/authoring/fall-v1
+      - uses: actions/setup-java@v5
+        with:
+          distribution: temurin
+          java-version: '17'
+      - uses: gradle/actions/setup-gradle@v4
+        with:
+          gradle-version: '8.11.1'
+      - name: Generate ninety-six V5 trial seeds and preserve historical golden puzzles
+        shell: bash
+        run: |
+          set -euo pipefail
+          gradle --no-daemon :core:test \
+            --tests 'com.playereden.gridmates.wordsearch.core.Ws66bMultiPageVarietyLabTest' \
+            --tests 'com.playereden.gridmates.wordsearch.core.HistoricPuzzleGoldenTest' \
+            --console=plain
+          test -s core/build/ws66b-variety/all-seed-trials.tsv
+          test -s core/build/ws66b-variety/three-page-selections.tsv
+          test -s core/build/ws66b-variety/per-scenario-metrics.tsv
+      - name: Independently verify repeats against raw generated board words
+        run: |
+          python3 tools/lexicon/ws66b_variety_metrics.py \
+            --trial-dir core/build/ws66b-variety \
+            --out-dir qa-ws66b-variety
+          cp core/build/ws66b-variety/*.tsv qa-ws66b-variety/
+          python3 - <<'PY'
+          from pathlib import Path
+          import json
+          report = json.loads(Path('qa-ws66b-variety/bookwide-variety-report.json').read_text())
+          assert report['total_actual_seed_trials'] == 96
+          assert report['new_word_approvals'] == report['new_android_playable_words'] == 0
+          assert report['three_page_scenarios'] >= 3
+          print('WS66B_V5_REAL_MULTIPAGE_OK:',report['passed_generator_trials'],'of 96 working seeds;',
+                report['three_page_scenarios'],'3-page combinations;',
+                report['failed_generator_trials'],'logged failures')
+          PY
+          sha256sum qa-ws66b-variety/*.tsv qa-ws66b-variety/*.json \
+            qa-ws66b-variety/bookwide-variety-summary.md > qa-ws66b-variety/artifact-sha256.txt
+          cat qa-ws66b-variety/bookwide-variety-summary.md >> "$GITHUB_STEP_SUMMARY"
+      - name: Archive full source-checked real-grid variety experiment
+        if: ${{ always() }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: GridMates-WS66B-Actual-V5-Multipage-Variety
+          path: |
+            qa-ws66b-variety/
+            core/build/test-results/test/*.xml
+          if-no-files-found: warn
+          retention-days: 30

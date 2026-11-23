@@ -1,0 +1,49 @@
+{
+  "source_image": "sources/ws22_master_motifs_alpha.png",
+  "source_size_bytes": 3485649,
+  "source_sha256": "9de514db9f09ac9fa09fe5fa5a4b0a3c0a0f98ca9dbda6df8abf6ff3e5e7a70e",
+  "shards": [
+    {
+      "filename": "ws22_master_motifs_alpha.png.part01",
+      "bytes": 512000,
+      "git_blob_sha1": "8b11516c426a86ec2c531018103fb86d1d5da041",
+      "sha256": "ce544f8ee505da3d636f56c086b1363b7971dde02f681bcbceb8ba97d54d5426"
+    },
+    {
+      "filename": "ws22_master_motifs_alpha.png.part02",
+      "bytes": 512000,
+      "git_blob_sha1": "8cf4f7b9b27b29d37d64164d6264794927dcec48",
+      "sha256": "b5ef998b1eccea61a41956d30731add55271949a1084cf17cb2e6b7be35f9542"
+    },
+    {
+      "filename": "ws22_master_motifs_alpha.png.part03",
+      "bytes": 512000,
+      "git_blob_sha1": "deb44e136f201a8e7a8b869a065a0c22e49c712f",
+      "sha256": "cf8d6e0cd9eb82d2bf2e655a900dc68aa919dd80a238353b07c1ee0bc7724f0a"
+    },
+    {
+      "filename": "ws22_master_motifs_alpha.png.part04",
+      "bytes": 512000,
+      "git_blob_sha1": "27b78566f14065b2a38c578b422a1fc9a5ac0377",
+      "sha256": "9915f24ada21c54948befe1308587f3531ce57319d906b23fba500ecca1b42b4"
+    },
+    {
+      "filename": "ws22_master_motifs_alpha.png.part05",
+      "bytes": 512000,
+      "git_blob_sha1": "12ac7edc4d09aaeb70441dd53d41008458771867",
+      "sha256": "fe19d6db858a17ec2938d8ab58d5d756fddbde6d6ed410d7496edf18b4d216ca"
+    },
+    {
+      "filename": "ws22_master_motifs_alpha.png.part06",
+      "bytes": 512000,
+      "git_blob_sha1": "e1fe12efde3ea29cc695ac27f8526f117147293e",
+      "sha256": "7c9298a2d7b2448a26543a060fc6030689e65ffdddd084978b2250466501db86"
+    },
+    {
+      "filename": "ws22_master_motifs_alpha.png.part07",
+      "bytes": 413649,
+      "git_blob_sha1": "401794c4f6f173c1103d87053f0b9ed55090bd4f",
+      "sha256": "41d77e156f92434fa109ba50b068f41a5abd6cd314d402a5560fd7f1591362d1"
+    }
+  ]
+}

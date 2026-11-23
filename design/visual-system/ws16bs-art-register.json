@@ -1,0 +1,20 @@
+{
+  "schema_version": 1,
+  "pass": "WS16BS",
+  "date": "2026-11-14",
+  "debug_only": true,
+  "owner_approved": false,
+  "release_approved": false,
+  "authoring": "Original deterministic transparent SVG watercolor pigment/fibers. No text, external images or imported media.",
+  "source": {
+    "path": "design/visual-system/masters/ws16bs/home-parchment-wash-v1.svg",
+    "git_blob_sha1": "f0a89a6fbefa47d44a3b94f5aa66c9e9aa21eae6"
+  },
+  "export": {
+    "width": 640,
+    "height": 640,
+    "filename": "home-parchment-wash-v1.png",
+    "android_path": "app/src/debug/assets/ws16bs/home-parchment-wash-v1.png"
+  },
+  "usage": "Home only; tiled transparent alpha material over existing paper, absent in release, native background remains fallback"
+}

@@ -1,0 +1,62 @@
+{
+  "status": "VALIDATED_CANDIDATES_NOT_RELEASED",
+  "schema_version": 1,
+  "global_candidate_unique": 678,
+  "global_reviewed_unique": 670,
+  "global_approved_playable_unique": 670,
+  "candidate_topic_assignments": 751,
+  "approved_topic_assignments": 702,
+  "topic_families_proposed_or_active": 33,
+  "topics_active": 4,
+  "by_review_status": {
+    "approved": 670,
+    "candidate": 8
+  },
+  "eligible_approved_assignments_by_topic_tier": {
+    "everyday/familiar": 200,
+    "garden/familiar": 159,
+    "garden/intermediate": 15,
+    "space/familiar": 145,
+    "space/intermediate": 24,
+    "woodland/familiar": 143,
+    "woodland/intermediate": 16
+  },
+  "release_goal_unique_approved_words": 10000,
+  "gap_to_10000": 9330,
+  "notice": "No Android input or previously frozen generator changed.",
+  "approval_scope": "assistant-reviewed-qa-only",
+  "owner_release_approved": false,
+  "packs": [
+    {
+      "pack_id": "en-everyday-v1",
+      "entries": 200,
+      "sha256": "4144f4d62c1a013c4f93b90d36d11c67351d6ceef42aa26fafecc854658fb175",
+      "path": "data/lexicon/packs/qa-v1/en-everyday-v1.json"
+    },
+    {
+      "pack_id": "en-garden-v1",
+      "entries": 174,
+      "sha256": "68eb6c39c797ca6a3e22de9b167e104622c6f3f5258e896e15dbc2b8996fb92b",
+      "path": "data/lexicon/packs/qa-v1/en-garden-v1.json"
+    },
+    {
+      "pack_id": "en-space-v1",
+      "entries": 169,
+      "sha256": "37d2d4497e10ca4a0537a53594932706672a8880a3cf09b2f77ba654a937f18b",
+      "path": "data/lexicon/packs/qa-v1/en-space-v1.json"
+    },
+    {
+      "pack_id": "en-woodland-v1",
+      "entries": 159,
+      "sha256": "de16808a2876edaf4866bbfb35a9b9d85a21c163fa31894007c7a3c05149f36b",
+      "path": "data/lexicon/packs/qa-v1/en-woodland-v1.json"
+    },
+    {
+      "pack_id": "en-cozy-mixed-v1",
+      "entries": 670,
+      "sha256": "81d7221e28283d1295708fd601f138798133435db2e5dfc02973d814a53ad51e",
+      "path": "data/lexicon/packs/qa-v1/en-cozy-mixed-v1.json"
+    }
+  ],
+  "curated_assignments": 702
+}

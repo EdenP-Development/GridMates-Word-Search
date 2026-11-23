@@ -1,0 +1,2631 @@
+{
+  "schema_version": 1,
+  "observed_on": "2026-11-17",
+  "repository": "PlayerEden/GridMates-Word-Search",
+  "starting_head": "3eb481424d622c6c067326393934ffac6060ef14",
+  "default_head": "9043cf4c942da598b5841cc39c361c99abd9ef26",
+  "counts": {
+    "branch_heads": 179,
+    "open_draft_prs": 104,
+    "issue_search_records": 46,
+    "linked_pr_base_chain": 87,
+    "off_chain_prs": 17
+  },
+  "branch_heads": [
+    {
+      "name": "checkpoint/ws01-native-ci-green-2026-11-05",
+      "sha": "40f95d68a531f4782e7daacc29396cf8210735da"
+    },
+    {
+      "name": "checkpoint/ws02-first-playable-ci-green-2026-11-05",
+      "sha": "37a8b84e0be7428e13f010ff31ee4923954c2684"
+    },
+    {
+      "name": "checkpoint/ws02b-feel-polish-ci-green-2026-11-05",
+      "sha": "5de8550f2a2c915e4821cc057e1c258fc98b1ee2"
+    },
+    {
+      "name": "checkpoint/ws03-solo-beta-ci-green-2026-11-05",
+      "sha": "b7ff74037e5615fd840c0a16609b7f2229ec416b"
+    },
+    {
+      "name": "checkpoint/ws04a-daily-ci-green-2026-11-05",
+      "sha": "567af02d2fbc99bb2d7980333916590e0d4aa245"
+    },
+    {
+      "name": "checkpoint/ws04b-collection-ci-green-2026-11-05",
+      "sha": "5946d6cf99af6b2b00b3f6631f4a9af3942c8f2b"
+    },
+    {
+      "name": "checkpoint/ws04b-collections-safeguarded-ci-green-2026-11-05",
+      "sha": "fe448b6584326a1e3b241792584a3689d4de194c"
+    },
+    {
+      "name": "checkpoint/ws04c-approved-woodland-ci-green-2026-11-05",
+      "sha": "ec0a2a289bb5024d6fe04db4e68a5c9a096e9b58"
+    },
+    {
+      "name": "checkpoint/ws04c-woodland-originals-v042-ci-green-2026-11-05",
+      "sha": "e7fb045336b7a575ff3ace099eca2fcd7d6d65af"
+    },
+    {
+      "name": "checkpoint/ws04d-a-v2-setup-ci-green-2026-11-06",
+      "sha": "15401a7b3644c1b14a262335d5416db2bd0095ae"
+    },
+    {
+      "name": "checkpoint/ws04d-b2-workspace-v045-ci-green-2026-11-06",
+      "sha": "6a8f6426fb6df3cfa145643ecccd06e8a27aeb27"
+    },
+    {
+      "name": "checkpoint/ws04d-b3-hint-cap-board-fit-v046-ci-green-2026-11-06",
+      "sha": "5c7bdb478c4fa4bddeddd5895b63b54fdf0519ec"
+    },
+    {
+      "name": "checkpoint/ws04d-b4-v047-android-ci-green-2026-11-06",
+      "sha": "2f888a2ec63e71231c4e21d2bc9ae475a3b6b056"
+    },
+    {
+      "name": "checkpoint/ws04d-b4-v047-ci-emulator-green-2026-11-06",
+      "sha": "2f888a2ec63e71231c4e21d2bc9ae475a3b6b056"
+    },
+    {
+      "name": "checkpoint/ws04d-b5-v048-fonts-ci-emulator-green-2026-11-06",
+      "sha": "563ed69ead740f68f4866e96dcccd93d78ea8615"
+    },
+    {
+      "name": "checkpoint/ws04d-book-board-presets-v044-ci-green-2026-11-06",
+      "sha": "f74b91e27fe1abd029d89072a4eae0ac8152f7cf"
+    },
+    {
+      "name": "checkpoint/ws05a-v050-coop-android-ci-green-2026-11-06",
+      "sha": "fc1ca8992761fec402285775d193f326c13c27f4"
+    },
+    {
+      "name": "checkpoint/ws05b-v051-chat-ci-emulator-green-2026-11-06",
+      "sha": "2e787813c495001ceb17563af3f2fa0c7e442bf6"
+    },
+    {
+      "name": "checkpoint/ws05c-v052-chat-confirmation-ci-emulator-green-2026-11-06",
+      "sha": "e5055a4ee38a42b422667c9958a34521273b9531"
+    },
+    {
+      "name": "checkpoint/ws05d-v053-admission-lifecycle-android-ci-green-2026-11-06",
+      "sha": "ad447ddad5ccaadc023a36ba07f55f64563b07a6"
+    },
+    {
+      "name": "checkpoint/ws05e-v054-discovery-rejoin-full-qa-green-2026-11-06",
+      "sha": "738e4764d88fe3b241563d3f652746599a71a68f"
+    },
+    {
+      "name": "checkpoint/ws05f-v055-paperback-visual-android-green-2026-11-06",
+      "sha": "ded714aa5797fac98a17b8d5c1189b7c08be775e"
+    },
+    {
+      "name": "checkpoint/ws05g-v056-gameplay-results-full-qa-green-2026-11-06",
+      "sha": "e0a655cc3786ebf810766aa7b06d19275aa8b7e5"
+    },
+    {
+      "name": "checkpoint/ws05h-v057-collection-settings-visual-android-green-2026-11-06",
+      "sha": "a780f116208dd838175def08f7a8ecb18ee03656"
+    },
+    {
+      "name": "checkpoint/ws05i-v058-compact-font-landscape-full-qa-green-2026-11-06",
+      "sha": "8bd7acb67c1e8fe3eeda9b4befe3741a07efe970"
+    },
+    {
+      "name": "checkpoint/ws05j-v059-phone-screenshot-ui-full-qa-green-2026-11-06",
+      "sha": "8378264e35cfcf1667fa679395c7fa306d0e3f70"
+    },
+    {
+      "name": "checkpoint/ws05j-v059-stable-qa-upgrade-emulator-pass-2026-11-07",
+      "sha": "86529e93d30eac906cd62289fdeb714d0f8e50ec"
+    },
+    {
+      "name": "checkpoint/ws06a-v060-race-full-emulator-and-upgrade-green-2026-11-07",
+      "sha": "36b28a27e5288466bcc4b35c244cb46fb176d2d4"
+    },
+    {
+      "name": "checkpoint/ws06b-v061-versus-journal-52-android-tests-upgrade-green-2026-11-07",
+      "sha": "94157d3e0a4c5d82a7aaa44e39e527b49027b783"
+    },
+    {
+      "name": "checkpoint/ws06c-v070-speed-duel-57-android-tests-upgrade-green-2026-11-07",
+      "sha": "2e7545b9a2aa2ce9491183a2d57fe0ee687d21df"
+    },
+    {
+      "name": "checkpoint/ws06d-v071-duel-journal-60-android-tests-upgrade-green-2026-11-07",
+      "sha": "d27392dac5add770697ee995d5aa426146e30981"
+    },
+    {
+      "name": "checkpoint/ws06e-v072-nearby-presence-share-63-android-tests-upgrade-green-2026-11-07",
+      "sha": "5a49695309bc55148d6bb224ac869716223d554e"
+    },
+    {
+      "name": "checkpoint/ws06f-v073-native-postcard-67-android-tests-upgrade-green-2026-11-07",
+      "sha": "5daaad2bbaa24085bb697b47d96e83c9c5c6cc72"
+    },
+    {
+      "name": "checkpoint/ws06f-v073-postcard-67-android-tests-upgrade-green-2026-11-07",
+      "sha": "5daaad2bbaa24085bb697b47d96e83c9c5c6cc72"
+    },
+    {
+      "name": "checkpoint/ws06g-v074-shared-coop-board-71-android-tests-upgrade-green-2026-11-07",
+      "sha": "b919e5a2c2d730d80ba819b8ced3848ac395c354"
+    },
+    {
+      "name": "checkpoint/ws06h-v075-integration-audit-74-android-tests-upgrade-green-2026-11-07",
+      "sha": "0c958508468e987d1668da7feeaca104d7087c1d"
+    },
+    {
+      "name": "checkpoint/ws07a-v077-touch-78-tests-upgrade-green-2026-11-07",
+      "sha": "f9e451b1921b004d7cec45bc28501b852e0df942"
+    },
+    {
+      "name": "checkpoint/ws07b-v078-compact-80-tests-upgrade-green-2026-11-07",
+      "sha": "4702543400ef499885dea7a033943974323aacab"
+    },
+    {
+      "name": "checkpoint/ws07c-v079-precision-83-tests-upgrade-green-2026-11-07",
+      "sha": "113e5e51d44f77c2a4e1bd2dffe3cc0c9b0a8eb6"
+    },
+    {
+      "name": "checkpoint/ws07d-v080-claim-feedback-87-tests-upgrade-green-2026-11-07",
+      "sha": "7edb6cf01437b86767d3696a2a04b9e9f03d9e27"
+    },
+    {
+      "name": "checkpoint/ws07e-v081-daily-clues-90-tests-upgrade-green-2026-11-07",
+      "sha": "edcdc08c53d82dccca83ee1b3cf4255c662d08aa"
+    },
+    {
+      "name": "checkpoint/ws07f-v082-records-92-tests-upgrade-green-2026-11-07",
+      "sha": "85ee1c05a8d3f34c8486282ac74fb58b64e29927"
+    },
+    {
+      "name": "checkpoint/ws07g-v083-collections-93-tests-upgrade-green-2026-11-07",
+      "sha": "bc3c7e1c8eb5a062ba0d5a66f2d1476cfe822894"
+    },
+    {
+      "name": "checkpoint/ws07h-v084-profile-gallery-93-tests-upgrade-green-2026-11-07",
+      "sha": "d3e8724745a2577a55fdedc6b0643c6fb6cc55d3"
+    },
+    {
+      "name": "checkpoint/ws07i-v085-solo-history-94-tests-upgrade-green-2026-11-07",
+      "sha": "b3cd0ccd6ad09c1f610bb44cea597da7df091b38"
+    },
+    {
+      "name": "checkpoint/ws09a1-v086-historical-save-96-tests-upgrade-green-2026-11-07",
+      "sha": "d528afbfa157839a94813206b57b7b312f1af3d4"
+    },
+    {
+      "name": "checkpoint/ws09a2-v087-frozen-goldens-partial-upgrade-97-green-2026-11-07",
+      "sha": "2bd6b6a005d361ebc3304a5d46044b83b7b0c283"
+    },
+    {
+      "name": "checkpoint/ws09b-v088-multi-solo-100-tests-schema5-upgrade-green-2026-11-07",
+      "sha": "36ba64d3199cba8878de5126eb1c924f8b9ce897"
+    },
+    {
+      "name": "checkpoint/ws09c-v089-pregame-104-tests-upgrade-green-2026-11-08",
+      "sha": "8ca8d7bf6a80fbe750cbc6d617296bb84c414210"
+    },
+    {
+      "name": "checkpoint/ws09d-v090-square-book-106-tests-upgrade-green-2026-11-08",
+      "sha": "b3a7f8c7557ed41ca7f86b1d5c30d138634647bc"
+    },
+    {
+      "name": "checkpoint/ws09e-v091-v3-25-30-108-tests-upgrade-green-2026-11-08",
+      "sha": "10c1357110825da7819054b2b9a989f2e4ff58cc"
+    },
+    {
+      "name": "checkpoint/ws09f-a-v092-region-map-110-tests-upgrade-green-2026-11-08",
+      "sha": "d77a5a97c5017780da88d63ae1ec74ba0670eb0c"
+    },
+    {
+      "name": "checkpoint/ws09f-b2-v094-bookmark-114-tests-upgrade-green-2026-11-08",
+      "sha": "c85cbb58a2f7409830734686a40eeb88b870b137"
+    },
+    {
+      "name": "checkpoint/ws09f-b-v093-visible-culling-111-tests-upgrade-green-2026-11-08",
+      "sha": "57cd756a7811fb94da477367a51de70a8dd6a50c"
+    },
+    {
+      "name": "checkpoint/ws09f-c3-kotlin-v4-1800-seeds-goldens-editorial-audit-green-2026-11-08",
+      "sha": "8b45f35af7470e11d5887d1c2c953118a39c79c6"
+    },
+    {
+      "name": "checkpoint/ws09f-c4-v4-core-test-only-gradle-junit-green-2026-11-08",
+      "sha": "d8194c7f2fc0d5a5d52b964b9bc4df46200f51ac"
+    },
+    {
+      "name": "checkpoint/ws09f-c-python180-region-safe-7tests-2026-11-08",
+      "sha": "5d4302ba75e065d855d25c7e84826eb2e4425162"
+    },
+    {
+      "name": "checkpoint/ws09f-d-v4-core-preview-180-grids-historic-tests-green-2026-11-08",
+      "sha": "5a9efbf93e29cd3cc9f514bba6f0bc1f7547ca82"
+    },
+    {
+      "name": "checkpoint/ws09f-e-v4-tiers-1800-seeds-palindrome-safe-green-2026-11-08",
+      "sha": "fd95d710d999dd0795c188704a69828f4141168a"
+    },
+    {
+      "name": "checkpoint/ws09f-f-1800-balanced-distributed-layouts-core-junit-green-2026-11-08",
+      "sha": "bd40d0640caddf2833441386d79ddc760ef6c763"
+    },
+    {
+      "name": "checkpoint/ws09g-a-105-word-index-117-android-tests-upgrade-green-2026-11-08",
+      "sha": "a5d729d778dbf4c93a0ff0c22eb9a1e5427b71b1"
+    },
+    {
+      "name": "checkpoint/ws10-lexicon-33-themes-10k-capacity-8-tests-green-2026-11-08",
+      "sha": "5edfaf585d70a95db5ea3f55c42d9669c4e0ea8c"
+    },
+    {
+      "name": "checkpoint/ws10b1-esdb-36213-quarantine-14-tests-green-2026-11-08",
+      "sha": "2d0a3f0bdab4bbf196353fceb663b6e70e456e03"
+    },
+    {
+      "name": "checkpoint/ws10b2-532-review-rows-31-holds-19-tests-green-2026-11-08",
+      "sha": "449d27b2ace3a7eaf56b867641d6226fef316a3d"
+    },
+    {
+      "name": "checkpoint/ws12ab-three-book-concepts-8-tests-asset-guard-green-2026-11-08",
+      "sha": "becc40fa9d819a227aa77ab16983e5547cab6f78"
+    },
+    {
+      "name": "checkpoint/ws12c-quiet-paperback-seven-vector-previews-17-tests-green-2026-11-08",
+      "sha": "ab40b3e2a72c42c149ff824dfc02009265d21f4c"
+    },
+    {
+      "name": "design/ws33-open-shelf-2026-11-16",
+      "sha": "95a52a78097e88e6db57b4320c009457ba64b6a9"
+    },
+    {
+      "name": "feature/ws01-native-foundation-2026-11-05",
+      "sha": "a92c77ec4248ba9203d3c7121d00cc708ba15d06"
+    },
+    {
+      "name": "feature/ws02-word-engine-touch-prototype-2026-11-05",
+      "sha": "6e7fff0bc43dcf6caf7cc73043f4b7117af0caf2"
+    },
+    {
+      "name": "feature/ws02b-touch-highlights-layout-2026-11-05",
+      "sha": "992dca0ca37e99b31596e400e35896e41cb22682"
+    },
+    {
+      "name": "feature/ws03-solo-save-results-2026-11-05",
+      "sha": "02192993ea342dffff43eccd5558d7a38416eea2"
+    },
+    {
+      "name": "feature/ws04a-offline-daily-2026-11-05",
+      "sha": "e6874432bcb2f4ffa174c9ad194550605da7acf2"
+    },
+    {
+      "name": "feature/ws04b-profile-woodland-achievements-2026-11-05",
+      "sha": "feccf427a779639477ac604e1ba4b31dca39e510"
+    },
+    {
+      "name": "feature/ws04c-verified-woodland-assets-2026-11-05",
+      "sha": "9ea6f23f83b1599003d84f0232a0737c29fe78c5"
+    },
+    {
+      "name": "feature/ws04d-b2-true-zoom-compact-workspace-2026-11-06",
+      "sha": "4848ae3fe0ea4577ad980a8e4f88ae6477c12771"
+    },
+    {
+      "name": "feature/ws04d-b3-hints-budget-board-cell-fit-2026-11-06",
+      "sha": "06876f3c933b94ae3a226e1382a448d566e2a0fa"
+    },
+    {
+      "name": "feature/ws04d-b4-gamefeel-nav-audit-2026-11-06",
+      "sha": "8e73efe8ec1c998fc7a199bcb55cb0878556a775"
+    },
+    {
+      "name": "feature/ws04d-b5-board-fonts-free-achievements-2026-11-06",
+      "sha": "8104bc524c9abce7fb43cef3548240434311cc36"
+    },
+    {
+      "name": "feature/ws04d-book-size-presets-zoom-2026-11-06",
+      "sha": "cbcdac1285f3a9faf57abaa2d5a97622771040ae"
+    },
+    {
+      "name": "feature/ws04d-v2-puzzle-setup-2026-11-06",
+      "sha": "495da7e7d70080a4f09e9b555e3937287f9bdb05"
+    },
+    {
+      "name": "feature/ws05a-coop-session-engine-2026-11-06",
+      "sha": "113b93e58d64ea31ada68235132f22bf6b3fd3cb"
+    },
+    {
+      "name": "feature/ws05b-nearby-chat-and-presence-2026-11-06",
+      "sha": "5f34373026f379647bb4e17fcb9eccf83bebee48"
+    },
+    {
+      "name": "feature/ws05c-chat-delivery-and-connection-reliability-2026-11-06",
+      "sha": "12f1911c13f2def3828b83d93f8d9d7da9b3aacc"
+    },
+    {
+      "name": "feature/ws05d-host-admission-and-room-lifecycle-2026-11-06",
+      "sha": "103b27a1364f83eac0f6621a393ade8d103d6ba2"
+    },
+    {
+      "name": "feature/ws05e-nearby-discovery-and-rejoin-2026-11-06",
+      "sha": "df8b7178cdccd8e6a08e5abaed89f02dc64352f9"
+    },
+    {
+      "name": "feature/ws05f-paperback-app-polish-2026-11-06",
+      "sha": "d754507adc92ea1bd03833aff7170fc77c6c8e20"
+    },
+    {
+      "name": "feature/ws05g-gameplay-results-polish-2026-11-06",
+      "sha": "08bf454a6d0f084afcdfa858a9ca82a820890d04"
+    },
+    {
+      "name": "feature/ws05h-profile-collection-settings-polish-2026-11-06",
+      "sha": "43bb95d355cbe4cb322705501deba63ed35adbd8"
+    },
+    {
+      "name": "feature/ws05i-compact-landscape-large-text-qa-2026-11-06",
+      "sha": "942bcb64fe8a7ff8e65c352c189b57a4244ae7d2"
+    },
+    {
+      "name": "feature/ws05j-phone-screenshot-ui-repair-2026-11-06",
+      "sha": "c7fa6a81b7410e015833c88257fcd8bec95f145c"
+    },
+    {
+      "name": "feature/ws05j-stable-qa-signing-upgrade-protection-2026-11-07",
+      "sha": "2c38b19e99ffd9a47a4fbe3c5a0e6bd118162758"
+    },
+    {
+      "name": "feature/ws06a-shared-board-race-lan-2026-11-07",
+      "sha": "8eea9d02bd77d80450ab6fce406c2d21962218f0"
+    },
+    {
+      "name": "feature/ws06b-versus-journal-postmatch-2026-11-07",
+      "sha": "bc3c3896b40bac5a3983eb2bea643fd4f4a9582e"
+    },
+    {
+      "name": "feature/ws06c-speed-duel-private-ready-go-2026-11-07",
+      "sha": "2c8ead4138009486bc2a071b1afef57095d53be5"
+    },
+    {
+      "name": "feature/ws06d-duel-journal-and-results-2026-11-07",
+      "sha": "b3e316472b4750e74f444edf96ebd2353a6e95e9"
+    },
+    {
+      "name": "feature/ws06e-nearby-presence-and-share-preview-2026-11-07",
+      "sha": "684266ddf5a66d27988571a906c710bf026e297e"
+    },
+    {
+      "name": "feature/ws06f-result-postcard-images-2026-11-07",
+      "sha": "2669985538c0f70bdbb465695a8fbc87faa634d9"
+    },
+    {
+      "name": "feature/ws06g-shared-coop-board-style-2026-11-07",
+      "sha": "b693d817699bdf5a907ff3d3a5f465c5a8b5a43c"
+    },
+    {
+      "name": "feature/ws06h-integration-audit-and-hardening-2026-11-07",
+      "sha": "857636b8f6c35a8ea43bee7711459ad5515d695b"
+    },
+    {
+      "name": "feature/ws06i-fail-closed-solo-daily-2026-11-07",
+      "sha": "4250198aff1faaca510fde90569a3148db591f8a"
+    },
+    {
+      "name": "feature/ws07a-touch-input-and-compact-gameplay-2026-11-07",
+      "sha": "346e18133cf107374668ef9a45954b8dc8390358"
+    },
+    {
+      "name": "feature/ws07b-compact-home-nearby-2026-11-07",
+      "sha": "0f00e819e0b5b61fefbea9277801eb845ebd5a3e"
+    },
+    {
+      "name": "feature/ws07c-accessible-precision-picker-2026-11-07",
+      "sha": "eea8b7b0437af193cbba7c60756424d3d6b0ba95"
+    },
+    {
+      "name": "feature/ws07d-claim-confirmation-and-lan-regression-2026-11-07",
+      "sha": "415d4e454f7529471509a20106edcc5d849b89e0"
+    },
+    {
+      "name": "feature/ws07e-compact-daily-saved-clues-2026-11-07",
+      "sha": "e55d83abc02e166fd89fde2b06fe9e53e5544859"
+    },
+    {
+      "name": "feature/ws07f-compact-records-collections-2026-11-07",
+      "sha": "1753403f2ce3eb0d77754c3680485c7884e07600"
+    },
+    {
+      "name": "feature/ws07f-records-journal-navigation-2026-11-07",
+      "sha": "a4fa7e91314dadf0dbe7ef22639ec5be9725b7e0"
+    },
+    {
+      "name": "feature/ws07g-collection-pages-2026-11-07",
+      "sha": "bc3c7e1c8eb5a062ba0d5a66f2d1476cfe822894"
+    },
+    {
+      "name": "feature/ws07h-compact-profile-gallery-2026-11-07",
+      "sha": "d3e8724745a2577a55fdedc6b0643c6fb6cc55d3"
+    },
+    {
+      "name": "feature/ws07i-solo-history-integrity-2026-11-07",
+      "sha": "b3cd0ccd6ad09c1f610bb44cea597da7df091b38"
+    },
+    {
+      "name": "feature/ws09-foundations-roadmap-2026-11-07",
+      "sha": "6684e5a3b2e8c3fc175afa13795d64e09c22440f"
+    },
+    {
+      "name": "feature/ws09a1-save-compatibility-tests-2026-11-07",
+      "sha": "dc9ea65e8d47a8d2bbcde7b037820f5c52377062"
+    },
+    {
+      "name": "feature/ws09a2-frozen-goldens-partial-upgrade-2026-11-07",
+      "sha": "eda33212958697feaf87bba1c2a9d5ea4b01d01f"
+    },
+    {
+      "name": "feature/ws09b1-multisession-persistence-contract-2026-11-07",
+      "sha": "5658ca078761754bc09dd6a2ffcde9932cbb7041"
+    },
+    {
+      "name": "feature/ws09b-multiple-solo-sessions-2026-11-07",
+      "sha": "5d3f08f25e75feece535c7e783bfee71be5fdba6"
+    },
+    {
+      "name": "feature/ws09c-pregame-setup-2026-11-08",
+      "sha": "2ba50d2f8a87a94e242437c5cc91e00bfde7bd09"
+    },
+    {
+      "name": "feature/ws09d-square-board-book-margins-2026-11-08",
+      "sha": "87e2490f944f6c93d01f8b2613ed428996616e49"
+    },
+    {
+      "name": "feature/ws09e-versioned-large-boards-2026-11-08",
+      "sha": "0cdb084d29bc0d0a1a75be5c56028768c1f78b0b"
+    },
+    {
+      "name": "feature/ws09f-a-continuous-region-navigation-2026-11-08",
+      "sha": "a75daa1ed7a3af9c1f5e222e73141500d4ec022d"
+    },
+    {
+      "name": "feature/ws09f-b2-viewport-bookmark-foundation-2026-11-08",
+      "sha": "ca0dbb319c5173fcbc8529a7ece53c5efda81566"
+    },
+    {
+      "name": "feature/ws09f-b-visible-cell-renderer-2026-11-08",
+      "sha": "72ddef47bd443c52d0522b501e6bab2a7ff1b9f9"
+    },
+    {
+      "name": "feature/ws09f-c2-kotlin-generator-lab-2026-11-08",
+      "sha": "4c6346318f8b1f5d7221f326f921d2687d2809ed"
+    },
+    {
+      "name": "feature/ws09f-c3-giant-generator-stress-2026-11-08",
+      "sha": "55c66019e13336e8724aa13b7ac61f997db2ea56"
+    },
+    {
+      "name": "feature/ws09f-c4-core-model-compat-lab-2026-11-08",
+      "sha": "fba987a8d0bfa5e14def25c96d020d1e0b115af2"
+    },
+    {
+      "name": "feature/ws09f-c-content-supply-audit-2026-11-08",
+      "sha": "aee9286bf69146136e0d59519033a20ce0bdc429"
+    },
+    {
+      "name": "feature/ws09f-d-v4-preview-placement-core-2026-11-08",
+      "sha": "da2674de8051a40d0d0132b57b99fcf37b57e870"
+    },
+    {
+      "name": "feature/ws09f-e-v4-tiered-corpus-preview-2026-11-08",
+      "sha": "1f36ec70c2f2e71bb28a9513acb64292e1010faa"
+    },
+    {
+      "name": "feature/ws09f-f-spatial-and-variation-audit-2026-11-08",
+      "sha": "77fdd2f9c6eab612960984cb211e7e8058e1384f"
+    },
+    {
+      "name": "feature/ws09g-a-large-word-list-index-2026-11-08",
+      "sha": "218fa77cbe1128e782827658b8aebf1d20126242"
+    },
+    {
+      "name": "feature/ws10-thousands-word-lexicon-foundation-2026-11-08",
+      "sha": "2b4208b33d2ac184f485707417ca6b76124b3eac"
+    },
+    {
+      "name": "feature/ws10b1-pinned-esdb-intake-2026-11-08",
+      "sha": "15f26cfdcc0ee212da80ffaab927e5daddc79e88"
+    },
+    {
+      "name": "feature/ws10b2-v4-three-theme-review-queue-2026-11-08",
+      "sha": "fb023af6c31323961760439ff1f62b0226ec57a2"
+    },
+    {
+      "name": "feature/ws11ab-book-catalog-progress-foundation-2026-11-08",
+      "sha": "17d49b4404b9907b565025939561846188f63dbb"
+    },
+    {
+      "name": "feature/ws11c-offline-book-journal-persistence-2026-11-08",
+      "sha": "4f75009ba9968f61ce510110542abfaf1d2622c1"
+    },
+    {
+      "name": "feature/ws11d2a-book-page-session-and-resume-2026-11-08",
+      "sha": "412ac744300d6c93afa650aea131dafb8aeaca75"
+    },
+    {
+      "name": "feature/ws11d2b-book-page-ui-integration-2026-11-08",
+      "sha": "da671b51a6f68da48ffdbaf7e5f3feacbf040cbb"
+    },
+    {
+      "name": "feature/ws11d-bookshelf-compose-ui-2026-11-08",
+      "sha": "fd333369c18dcb17369689d7e3b17c77a9f76a51"
+    },
+    {
+      "name": "feature/ws11e2-owner-first-playtest-layout-refine-2026-11-08",
+      "sha": "14b67265ecafd6baa243112e306c63ee95265699"
+    },
+    {
+      "name": "feature/ws11e-qa-playable-bookshelf-2026-11-08",
+      "sha": "518b0be21bbc6b539b13d2f4982f0ad0e0cfbb4c"
+    },
+    {
+      "name": "feature/ws12a-b-pilot-cover-concepts-and-review-qa-2026-11-08",
+      "sha": "73cddf4715fb18011fc5412ec470227c12e16c65"
+    },
+    {
+      "name": "feature/ws12c-reproducible-paperback-art-system-2026-11-08",
+      "sha": "d01456eef176a1ad29d12b440d5a6eb4e2280848"
+    },
+    {
+      "name": "feature/ws12d-paperback-chapter-bookmark-seal-proof-2026-11-08",
+      "sha": "d03702a741832bb4e052f1dcdd625b36167a5bd0"
+    },
+    {
+      "name": "feature/ws12e-visual-production-system-and-ai-art-qa-2026-11-08",
+      "sha": "cb7a247d771814bed2e9fe7a44f77aaac8e97539"
+    },
+    {
+      "name": "feature/ws12f-three-theme-spines-and-visual-review-2026-11-08",
+      "sha": "6e02e229861ecacbd202ae071cb61125f66a7980"
+    },
+    {
+      "name": "feature/ws12g-qa-art-lab-android-v51-2026-11-08",
+      "sha": "12d5808a89e365db2c7409e312b17fa5b77f7a0e"
+    },
+    {
+      "name": "feature/ws12h-owner-art-lab-insets-gallery-refine-2026-11-08",
+      "sha": "036b56e46e39b02dd1d5f1445ec884c70207e92e"
+    },
+    {
+      "name": "feature/ws12i-qa-bookshelf-art-end-to-end-v53-2026-11-08",
+      "sha": "ffa80cad8c02c328f084f0e07ca463bfa588896b"
+    },
+    {
+      "name": "feature/ws12j-owner-book-navigation-and-compact-pages-v54-2026-11-08",
+      "sha": "eb9826a65135210902a7932f8627dfff56c1903c"
+    },
+    {
+      "name": "feature/ws12k-cohesive-illustrated-book-variants-qa-v55-2026-11-08",
+      "sha": "3628d363a018a27da0e6ac7c4d1793e31af9b45a"
+    },
+    {
+      "name": "feature/ws13a-real-mobile-bookcase-v56-2026-11-08",
+      "sha": "12b52bb22f979e9245ed7a2be726a58d37423144"
+    },
+    {
+      "name": "feature/ws14-unified-production-visual-system-plan-2026-11-08",
+      "sha": "604a6553dd45f1f26f5b4ded7f8481c82363c964"
+    },
+    {
+      "name": "feature/ws14a-visual-tokens-and-native-component-kit-2026-11-08",
+      "sha": "b18ecc1b6567a03d0eb4e1d54a0261fbd6b62a3b"
+    },
+    {
+      "name": "feature/ws14b-style-anchor-and-art-direction-2026-11-08",
+      "sha": "28ad2e8ad8039db181f9d919bc1706f2ec4d78db"
+    },
+    {
+      "name": "feature/ws25-home-collection-visual-integration-2026-11-15",
+      "sha": "d0090bee3787f7444eb2717789dfdce91c34a1db"
+    },
+    {
+      "name": "feature/ws26-portrait-gallery-profile-polish-2026-11-15",
+      "sha": "917947db55827d885897829da52f24327b9395a0"
+    },
+    {
+      "name": "feature/ws27-collection-first-screen-density-2026-11-15",
+      "sha": "be5271ea7bcbb6f8b710cb35502c491d385a2925"
+    },
+    {
+      "name": "feature/ws28-profile-overlap-fix-2026-11-15",
+      "sha": "10721fb7120fe95e3e0ccd02bcb3f2e1af35028e"
+    },
+    {
+      "name": "feature/ws29-achievement-medals-2026-11-16",
+      "sha": "7eb68a904e27a57c5645f9eab850b8983cfa8528"
+    },
+    {
+      "name": "feature/ws30-achievement-medal-native-symbols-2026-11-16",
+      "sha": "a8021b42badd1c4c38db609e6777173793f4b13a"
+    },
+    {
+      "name": "feature/ws31-achievement-rank-polish-2026-11-16",
+      "sha": "77eb131ffd23fe60622bb0b76a87249d807884e9"
+    },
+    {
+      "name": "feature/ws31-milestone-rewards-saved-puzzle-polish-2026-11-16",
+      "sha": "a3c5e48156dfe192774247dc1aef066619191fe7"
+    },
+    {
+      "name": "feature/ws32-illustrated-my-puzzles-2026-11-16",
+      "sha": "59fc485018ab18b217c9ea2eb66ee116f1e49b5f"
+    },
+    {
+      "name": "feature/ws33-packed-library-2026-11-16",
+      "sha": "de69ca3d6b8e523ac28a4ee812a3e39c7db10903"
+    },
+    {
+      "name": "feature/ws34-phone-polish-2026-11-17",
+      "sha": "fc387ca49d607d2eba574f010e10bdfcdcc2f516"
+    },
+    {
+      "name": "feature/ws35-library-binding-depth-2026-11-17",
+      "sha": "e697fa5bb784b29bede72d0f5f26eef598dfad47"
+    },
+    {
+      "name": "feature/ws36-matched-book-bindings-2026-11-17",
+      "sha": "ccdb8d5a3039e53fd9140935642f5c6b22ab042a"
+    },
+    {
+      "name": "feature/ws37-visual-cohesion-2026-11-17",
+      "sha": "286e0a1adff7181acd36ebf50ab004e8bf26ff84"
+    },
+    {
+      "name": "feature/ws38-handset-visual-fixes-2026-11-17",
+      "sha": "2b97cb65f9883130c3d4814f701167db86f5236d"
+    },
+    {
+      "name": "feature/ws39-replay-and-book-backups-2026-11-17",
+      "sha": "3eb481424d622c6c067326393934ffac6060ef14"
+    },
+    {
+      "name": "main",
+      "sha": "9043cf4c942da598b5841cc39c361c99abd9ef26"
+    },
+    {
+      "name": "qa/ws31-v93-baseline-audit-2026-11-16",
+      "sha": "de3712d551a5acdedecc13ed9f2e78f24dad490c"
+    },
+    {
+      "name": "qa/ws32-my-puzzles-emulator-2026-11-16",
+      "sha": "183b8845b247a0ca40541f06e517999961600bc9"
+    },
+    {
+      "name": "qa/ws33-library-layout-2026-11-16",
+      "sha": "de7d481283e16ee47049e1bb4c1e07a1f7353a4f"
+    },
+    {
+      "name": "qa/ws34-phone-polish-2026-11-17",
+      "sha": "03f317f528fd662f0dcff5f44e290c157864ef54"
+    },
+    {
+      "name": "qa/ws35-library-art-2026-11-17",
+      "sha": "6b83e7172e45042c868218ee2f73ae702fa245f2"
+    },
+    {
+      "name": "qa/ws37-puzzle-review-2026-11-17-b",
+      "sha": "855f4080b52bf3c983a1d4f108772d68037fbea4"
+    },
+    {
+      "name": "qa/ws37-puzzle-review-2026-11-17",
+      "sha": "09d1007838a7c4d666d216e657b7df0090d6f715"
+    },
+    {
+      "name": "qa/ws38-handset-review-2026-11-17",
+      "sha": "a25cc9c4801df060a5c8538c7e4d43b67453a860"
+    },
+    {
+      "name": "qa/ws39-phone-review-2026-11-17",
+      "sha": "ef7c9f9228ea2826fd1a4afbe1373abd02111f35"
+    }
+  ],
+  "open_prs": [
+    {
+      "number": 150,
+      "title": "WS39: replayable Quick Play and complete book backups",
+      "head": "feature/ws39-replay-and-book-backups-2026-11-17",
+      "head_sha": "3eb481424d622c6c067326393934ffac6060ef14",
+      "base": "feature/ws38-handset-visual-fixes-2026-11-17",
+      "draft": true,
+      "in_current_base_chain": true
+    },
+    {
+      "number": 149,
+      "title": "WS38 \u00b7 Fix handset word wrapping and visual consistency",
+      "head": "feature/ws38-handset-visual-fixes-2026-11-17",
+      "head_sha": "2b97cb65f9883130c3d4814f701167db86f5236d",
+      "base": "feature/ws37-visual-cohesion-2026-11-17",
+      "draft": true,
+      "in_current_base_chain": true
+    },
+    {
+      "number": 148,
+      "title": "WS37 \u00b7 Unify the puzzle flow and results",
+      "head": "feature/ws37-visual-cohesion-2026-11-17",
+      "head_sha": "286e0a1adff7181acd36ebf50ab004e8bf26ff84",
+      "base": "feature/ws36-matched-book-bindings-2026-11-17",
+      "draft": true,
+      "in_current_base_chain": true
+    },
+    {
+      "number": 147,
+      "title": "WS36 matching cover and Library bindings",
+      "head": "feature/ws36-matched-book-bindings-2026-11-17",
+      "head_sha": "ccdb8d5a3039e53fd9140935642f5c6b22ab042a",
+      "base": "feature/ws35-library-binding-depth-2026-11-17",
+      "draft": true,
+      "in_current_base_chain": true
+    },
+    {
+      "number": 146,
+      "title": "WS35 tactile Library bindings and shelf depth",
+      "head": "feature/ws35-library-binding-depth-2026-11-17",
+      "head_sha": "e697fa5bb784b29bede72d0f5f26eef598dfad47",
+      "base": "feature/ws34-phone-polish-2026-11-17",
+      "draft": true,
+      "in_current_base_chain": true
+    },
+    {
+      "number": 145,
+      "title": "WS34 handset polish for Solo and Collection",
+      "head": "feature/ws34-phone-polish-2026-11-17",
+      "head_sha": "fc387ca49d607d2eba574f010e10bdfcdcc2f516",
+      "base": "feature/ws33-packed-library-2026-11-16",
+      "draft": true,
+      "in_current_base_chain": true
+    },
+    {
+      "number": 144,
+      "title": "WS33 packed Library, Woodland resume, and large-text layout (v96 QA)",
+      "head": "feature/ws33-packed-library-2026-11-16",
+      "head_sha": "de69ca3d6b8e523ac28a4ee812a3e39c7db10903",
+      "base": "feature/ws32-illustrated-my-puzzles-2026-11-16",
+      "draft": true,
+      "in_current_base_chain": true
+    },
+    {
+      "number": 143,
+      "title": "WS32 installed My Puzzles layout and v93 upgrade QA",
+      "head": "qa/ws32-my-puzzles-emulator-2026-11-16",
+      "head_sha": "183b8845b247a0ca40541f06e517999961600bc9",
+      "base": "feature/ws32-illustrated-my-puzzles-2026-11-16",
+      "draft": true,
+      "in_current_base_chain": false
+    },
+    {
+      "number": 142,
+      "title": "WS32 illustrated My Puzzles journal",
+      "head": "feature/ws32-illustrated-my-puzzles-2026-11-16",
+      "head_sha": "59fc485018ab18b217c9ea2eb66ee116f1e49b5f",
+      "base": "feature/ws31-achievement-rank-polish-2026-11-16",
+      "draft": true,
+      "in_current_base_chain": true
+    },
+    {
+      "number": 141,
+      "title": "WS31 v93 baseline audit and WS32 readiness plan",
+      "head": "qa/ws31-v93-baseline-audit-2026-11-16",
+      "head_sha": "de3712d551a5acdedecc13ed9f2e78f24dad490c",
+      "base": "feature/ws31-achievement-rank-polish-2026-11-16",
+      "draft": true,
+      "in_current_base_chain": false
+    },
+    {
+      "number": 139,
+      "title": "WS31 \u2014 Distinct advanced achievement medals (v93 QA)",
+      "head": "feature/ws31-achievement-rank-polish-2026-11-16",
+      "head_sha": "77eb131ffd23fe60622bb0b76a87249d807884e9",
+      "base": "feature/ws30-achievement-medal-native-symbols-2026-11-16",
+      "draft": true,
+      "in_current_base_chain": true
+    },
+    {
+      "number": 138,
+      "title": "WS31 \u2014 Advanced milestone medals + illustrated My Puzzles (QA v93)",
+      "head": "feature/ws31-milestone-rewards-saved-puzzle-polish-2026-11-16",
+      "head_sha": "a3c5e48156dfe192774247dc1aef066619191fe7",
+      "base": "feature/ws30-achievement-medal-native-symbols-2026-11-16",
+      "draft": true,
+      "in_current_base_chain": false
+    },
+    {
+      "number": 137,
+      "title": "WS30 \u2014 Fix Android locked-achievement emoji color mismatch (QA v92)",
+      "head": "feature/ws30-achievement-medal-native-symbols-2026-11-16",
+      "head_sha": "a8021b42badd1c4c38db609e6777173793f4b13a",
+      "base": "feature/ws29-achievement-medals-2026-11-16",
+      "draft": true,
+      "in_current_base_chain": true
+    },
+    {
+      "number": 136,
+      "title": "WS29 \u2014 Source-backed collectible achievement medals (QA v91)",
+      "head": "feature/ws29-achievement-medals-2026-11-16",
+      "head_sha": "7eb68a904e27a57c5645f9eab850b8983cfa8528",
+      "base": "feature/ws28-profile-overlap-fix-2026-11-15",
+      "draft": true,
+      "in_current_base_chain": true
+    },
+    {
+      "number": 135,
+      "title": "WS28 \u2014 Fix overlapping Profile progress and identity (QA v90)",
+      "head": "feature/ws28-profile-overlap-fix-2026-11-15",
+      "head_sha": "10721fb7120fe95e3e0ccd02bcb3f2e1af35028e",
+      "base": "feature/ws27-collection-first-screen-density-2026-11-15",
+      "draft": true,
+      "in_current_base_chain": true
+    },
+    {
+      "number": 134,
+      "title": "WS27 \u2014 Collection first-screen density + large-text fallback (QA v89)",
+      "head": "feature/ws27-collection-first-screen-density-2026-11-15",
+      "head_sha": "be5271ea7bcbb6f8b710cb35502c491d385a2925",
+      "base": "feature/ws26-portrait-gallery-profile-polish-2026-11-15",
+      "draft": true,
+      "in_current_base_chain": true
+    },
+    {
+      "number": 133,
+      "title": "WS26 \u2014 Responsive collectible gallery + player dossier (QA v88)",
+      "head": "feature/ws26-portrait-gallery-profile-polish-2026-11-15",
+      "head_sha": "917947db55827d885897829da52f24327b9395a0",
+      "base": "feature/ws25-home-collection-visual-integration-2026-11-15",
+      "draft": true,
+      "in_current_base_chain": true
+    },
+    {
+      "number": 132,
+      "title": "WS25 \u2014 Illustrated Home + Collection integration (QA v87, draft)",
+      "head": "feature/ws25-home-collection-visual-integration-2026-11-15",
+      "head_sha": "d0090bee3787f7444eb2717789dfdce91c34a1db",
+      "base": "feature/ws14b-style-anchor-and-art-direction-2026-11-08",
+      "draft": true,
+      "in_current_base_chain": true
+    },
+    {
+      "number": 131,
+      "title": "WS-16A \u2014 Carousel-first Home, shared GridMates branding and book QA (draft)",
+      "head": "feature/ws14b-style-anchor-and-art-direction-2026-11-08",
+      "head_sha": "28ad2e8ad8039db181f9d919bc1706f2ec4d78db",
+      "base": "feature/ws14a-visual-tokens-and-native-component-kit-2026-11-08",
+      "draft": true,
+      "in_current_base_chain": true
+    },
+    {
+      "number": 130,
+      "title": "WS-14A1 \u2014 Start native Storybook visual kit across Play, Bookshelf, Collection + art approval QA (v57)",
+      "head": "feature/ws14a-visual-tokens-and-native-component-kit-2026-11-08",
+      "head_sha": "b18ecc1b6567a03d0eb4e1d54a0261fbd6b62a3b",
+      "base": "feature/ws14-unified-production-visual-system-plan-2026-11-08",
+      "draft": true,
+      "in_current_base_chain": true
+    },
+    {
+      "number": 129,
+      "title": "WS-14 \u2014 Plan unified illustrated full-app UI, generated sprites, native component kit and release gates",
+      "head": "feature/ws14-unified-production-visual-system-plan-2026-11-08",
+      "head_sha": "604a6553dd45f1f26f5b4ded7f8481c82363c964",
+      "base": "feature/ws13a-real-mobile-bookcase-v56-2026-11-08",
+      "draft": true,
+      "in_current_base_chain": true
+    },
+    {
+      "number": 122,
+      "title": "WS-13A \u2014 Real interactive puzzle bookshelf: standing volumes, wooden shelves, pulled-book view (QA v56)",
+      "head": "feature/ws13a-real-mobile-bookcase-v56-2026-11-08",
+      "head_sha": "12b52bb22f979e9245ed7a2be726a58d37423144",
+      "base": "feature/ws12k-cohesive-illustrated-book-variants-qa-v55-2026-11-08",
+      "draft": true,
+      "in_current_base_chain": true
+    },
+    {
+      "number": 116,
+      "title": "WS-12K \u2014 Source-controlled Field Notes art variant and real in-app A/B Bookshelf comparison (QA v55)",
+      "head": "feature/ws12k-cohesive-illustrated-book-variants-qa-v55-2026-11-08",
+      "head_sha": "3628d363a018a27da0e6ac7c4d1793e31af9b45a",
+      "base": "feature/ws12j-owner-book-navigation-and-compact-pages-v54-2026-11-08",
+      "draft": true,
+      "in_current_base_chain": true
+    },
+    {
+      "number": 115,
+      "title": "WS-12J \u2014 Book-first UI refinement: global pages, larger covers, compact chapter actions (QA v54)",
+      "head": "feature/ws12j-owner-book-navigation-and-compact-pages-v54-2026-11-08",
+      "head_sha": "eb9826a65135210902a7932f8627dfff56c1903c",
+      "base": "feature/ws12i-qa-bookshelf-art-end-to-end-v53-2026-11-08",
+      "draft": true,
+      "in_current_base_chain": true
+    },
+    {
+      "number": 113,
+      "title": "WS-12I \u2014 Wire all six existing art pieces into playable QA Bookshelf (v53, install-over)",
+      "head": "feature/ws12i-qa-bookshelf-art-end-to-end-v53-2026-11-08",
+      "head_sha": "ffa80cad8c02c328f084f0e07ca463bfa588896b",
+      "base": "feature/ws12h-owner-art-lab-insets-gallery-refine-2026-11-08",
+      "draft": true,
+      "in_current_base_chain": true
+    },
+    {
+      "number": 112,
+      "title": "WS-12H \u2014 Real phone screenshot refinements: fix Art Lab status-bar overlap and compact gallery (QA v52)",
+      "head": "feature/ws12h-owner-art-lab-insets-gallery-refine-2026-11-08",
+      "head_sha": "036b56e46e39b02dd1d5f1445ec884c70207e92e",
+      "base": "feature/ws12g-qa-art-lab-android-v51-2026-11-08",
+      "draft": true,
+      "in_current_base_chain": true
+    },
+    {
+      "number": 110,
+      "title": "WS-12F \u2014 Actual first art pack: 18 matching book graphics, spines, and owner visual review",
+      "head": "feature/ws12f-three-theme-spines-and-visual-review-2026-11-08",
+      "head_sha": "6e02e229861ecacbd202ae071cb61125f66a7980",
+      "base": "feature/ws12e-visual-production-system-and-ai-art-qa-2026-11-08",
+      "draft": true,
+      "in_current_base_chain": false
+    },
+    {
+      "number": 111,
+      "title": "WS-12G \u2014 Installable QA Art Lab v51: review 18 cohesive book graphics on Android",
+      "head": "feature/ws12g-qa-art-lab-android-v51-2026-11-08",
+      "head_sha": "12d5808a89e365db2c7409e312b17fa5b77f7a0e",
+      "base": "feature/ws11e2-owner-first-playtest-layout-refine-2026-11-08",
+      "draft": true,
+      "in_current_base_chain": true
+    },
+    {
+      "number": 109,
+      "title": "WS-12E \u2014 Intentional art system: style bible, AI asset pipeline, 3 book families & Collections roadmap",
+      "head": "feature/ws12e-visual-production-system-and-ai-art-qa-2026-11-08",
+      "head_sha": "cb7a247d771814bed2e9fe7a44f77aaac8e97539",
+      "base": "feature/ws12d-paperback-chapter-bookmark-seal-proof-2026-11-08",
+      "draft": true,
+      "in_current_base_chain": false
+    },
+    {
+      "number": 101,
+      "title": "WS-11E2 \u2014 Owner screenshot refinements: continuous book word list, compact gameplay heading",
+      "head": "feature/ws11e2-owner-first-playtest-layout-refine-2026-11-08",
+      "head_sha": "14b67265ecafd6baa243112e306c63ee95265699",
+      "base": "feature/ws11e-qa-playable-bookshelf-2026-11-08",
+      "draft": true,
+      "in_current_base_chain": true
+    },
+    {
+      "number": 100,
+      "title": "WS-11E \u2014 First installable QA Bookshelf: 3 test volumes, 9 playable pages",
+      "head": "feature/ws11e-qa-playable-bookshelf-2026-11-08",
+      "head_sha": "518b0be21bbc6b539b13d2f4982f0ad0e0cfbb4c",
+      "base": "feature/ws11d2b-book-page-ui-integration-2026-11-08",
+      "draft": true,
+      "in_current_base_chain": true
+    },
+    {
+      "number": 99,
+      "title": "WS-11D2B \u2014 Shared Word Search board UI for resumable book pages",
+      "head": "feature/ws11d2b-book-page-ui-integration-2026-11-08",
+      "head_sha": "da671b51a6f68da48ffdbaf7e5f3feacbf040cbb",
+      "base": "feature/ws11d2a-book-page-session-and-resume-2026-11-08",
+      "draft": true,
+      "in_current_base_chain": true
+    },
+    {
+      "number": 98,
+      "title": "WS-11D2A \u2014 Exact-hash resumable book-page gameplay state and crash recovery",
+      "head": "feature/ws11d2a-book-page-session-and-resume-2026-11-08",
+      "head_sha": "412ac744300d6c93afa650aea131dafb8aeaca75",
+      "base": "feature/ws11d-bookshelf-compose-ui-2026-11-08",
+      "draft": true,
+      "in_current_base_chain": true
+    },
+    {
+      "number": 97,
+      "title": "WS-11D1 \u2014 Native paperback Bookshelf and chapter screens, empty-safe UI",
+      "head": "feature/ws11d-bookshelf-compose-ui-2026-11-08",
+      "head_sha": "fd333369c18dcb17369689d7e3b17c77a9f76a51",
+      "base": "feature/ws11c-offline-book-journal-persistence-2026-11-08",
+      "draft": true,
+      "in_current_base_chain": true
+    },
+    {
+      "number": 96,
+      "title": "WS-11C \u2014 Safe offline book journal, backups and AtomicFile recovery foundation",
+      "head": "feature/ws11c-offline-book-journal-persistence-2026-11-08",
+      "head_sha": "4f75009ba9968f61ce510110542abfaf1d2622c1",
+      "base": "feature/ws11ab-book-catalog-progress-foundation-2026-11-08",
+      "draft": true,
+      "in_current_base_chain": true
+    },
+    {
+      "number": 95,
+      "title": "WS-11A/B \u2014 Offline book catalog, verified chapters and bookmark/progress core",
+      "head": "feature/ws11ab-book-catalog-progress-foundation-2026-11-08",
+      "head_sha": "17d49b4404b9907b565025939561846188f63dbb",
+      "base": "feature/ws09f-f-spatial-and-variation-audit-2026-11-08",
+      "draft": true,
+      "in_current_base_chain": true
+    },
+    {
+      "number": 94,
+      "title": "WS-12D \u2014 9 matching paperback chapter/bookmark/seal prototype SVGs",
+      "head": "feature/ws12d-paperback-chapter-bookmark-seal-proof-2026-11-08",
+      "head_sha": "d03702a741832bb4e052f1dcdd625b36167a5bd0",
+      "base": "feature/ws12c-reproducible-paperback-art-system-2026-11-08",
+      "draft": true,
+      "in_current_base_chain": false
+    },
+    {
+      "number": 93,
+      "title": "WS-12C \u2014 Quiet paperback style, reproducible SVG books and 17/17 design QA",
+      "head": "feature/ws12c-reproducible-paperback-art-system-2026-11-08",
+      "head_sha": "d01456eef176a1ad29d12b440d5a6eb4e2280848",
+      "base": "feature/ws12a-b-pilot-cover-concepts-and-review-qa-2026-11-08",
+      "draft": true,
+      "in_current_base_chain": false
+    },
+    {
+      "number": 92,
+      "title": "WS-12A/B \u2014 Three generated book-cover concepts + 8/8 asset approval guard",
+      "head": "feature/ws12a-b-pilot-cover-concepts-and-review-qa-2026-11-08",
+      "head_sha": "73cddf4715fb18011fc5412ec470227c12e16c65",
+      "base": "main",
+      "draft": true,
+      "in_current_base_chain": false
+    },
+    {
+      "number": 89,
+      "title": "WS-10B2 \u2014 532 themed word review candidates + 31 holds, 19 tests green",
+      "head": "feature/ws10b2-v4-three-theme-review-queue-2026-11-08",
+      "head_sha": "fb023af6c31323961760439ff1f62b0226ec57a2",
+      "base": "feature/ws10b1-pinned-esdb-intake-2026-11-08",
+      "draft": true,
+      "in_current_base_chain": false
+    },
+    {
+      "number": 88,
+      "title": "WS-10B1 \u2014 36,213 licensed-source word candidates quarantined, 14/14 tests green",
+      "head": "feature/ws10b1-pinned-esdb-intake-2026-11-08",
+      "head_sha": "15f26cfdcc0ee212da80ffaab927e5daddc79e88",
+      "base": "feature/ws10-thousands-word-lexicon-foundation-2026-11-08",
+      "draft": true,
+      "in_current_base_chain": false
+    },
+    {
+      "number": 86,
+      "title": "WS-10A \u2014 10,000+ word lexicon foundation, 33 themes and safe editorial pipeline",
+      "head": "feature/ws10-thousands-word-lexicon-foundation-2026-11-08",
+      "head_sha": "2b4208b33d2ac184f485707417ca6b76124b3eac",
+      "base": "main",
+      "draft": true,
+      "in_current_base_chain": false
+    },
+    {
+      "number": 85,
+      "title": "WS-09F-F \u2014 Balanced giant-board layouts: 1,800/1,800 spread and variety QA",
+      "head": "feature/ws09f-f-spatial-and-variation-audit-2026-11-08",
+      "head_sha": "77fdd2f9c6eab612960984cb211e7e8058e1384f",
+      "base": "feature/ws09f-e-v4-tiered-corpus-preview-2026-11-08",
+      "draft": true,
+      "in_current_base_chain": true
+    },
+    {
+      "number": 84,
+      "title": "WS-09F-E \u2014 Palindrome-safe V4 tier preview, 1,800/1,800 stress green",
+      "head": "feature/ws09f-e-v4-tiered-corpus-preview-2026-11-08",
+      "head_sha": "1f36ec70c2f2e71bb28a9513acb64292e1010faa",
+      "base": "feature/ws09f-d-v4-preview-placement-core-2026-11-08",
+      "draft": true,
+      "in_current_base_chain": true
+    },
+    {
+      "number": 83,
+      "title": "WS-09F-D \u2014 Internal 40\u00d740/50\u00d750 placement in core, frozen goldens green",
+      "head": "feature/ws09f-d-v4-preview-placement-core-2026-11-08",
+      "head_sha": "da2674de8051a40d0d0132b57b99fcf37b57e870",
+      "base": "feature/ws09g-a-large-word-list-index-2026-11-08",
+      "draft": true,
+      "in_current_base_chain": true
+    },
+    {
+      "number": 82,
+      "title": "WS-09G-A \u2014 A\u2013Z navigation for future 105-word lists (117/117 Android QA)",
+      "head": "feature/ws09g-a-large-word-list-index-2026-11-08",
+      "head_sha": "218fa77cbe1128e782827658b8aebf1d20126242",
+      "base": "feature/ws09f-b2-viewport-bookmark-foundation-2026-11-08",
+      "draft": true,
+      "in_current_base_chain": true
+    },
+    {
+      "number": 81,
+      "title": "WS-09F-C4 \u2014 Green core JUnit compatibility for hidden 40/50 generator laboratory",
+      "head": "feature/ws09f-c4-core-model-compat-lab-2026-11-08",
+      "head_sha": "fba987a8d0bfa5e14def25c96d020d1e0b115af2",
+      "base": "feature/ws09f-c3-giant-generator-stress-2026-11-08",
+      "draft": true,
+      "in_current_base_chain": false
+    },
+    {
+      "number": 74,
+      "title": "WS-09F-B2 \u2014 Persist and resume per-puzzle large-board zoom safely (v0.9.4 QA candidate)",
+      "head": "feature/ws09f-b2-viewport-bookmark-foundation-2026-11-08",
+      "head_sha": "ca0dbb319c5173fcbc8529a7ece53c5efda81566",
+      "base": "feature/ws09f-b-visible-cell-renderer-2026-11-08",
+      "draft": true,
+      "in_current_base_chain": true
+    },
+    {
+      "number": 80,
+      "title": "WS-09F-C3 \u2014 1,800/1,800 Kotlin giant-board stress and editorial buffer audit",
+      "head": "feature/ws09f-c3-giant-generator-stress-2026-11-08",
+      "head_sha": "55c66019e13336e8724aa13b7ac61f997db2ea56",
+      "base": "feature/ws09f-c2-kotlin-generator-lab-2026-11-08",
+      "draft": true,
+      "in_current_base_chain": false
+    },
+    {
+      "number": 79,
+      "title": "WS-09F-C2 \u2014 Kotlin 40/50 giant-board engine lab, 180/180 QA",
+      "head": "feature/ws09f-c2-kotlin-generator-lab-2026-11-08",
+      "head_sha": "4c6346318f8b1f5d7221f326f921d2687d2809ed",
+      "base": "feature/ws09f-c-content-supply-audit-2026-11-08",
+      "draft": true,
+      "in_current_base_chain": false
+    },
+    {
+      "number": 78,
+      "title": "WS-09F-C \u2014 180-grid region-safe 40/50 generator lab + pinned Python QA",
+      "head": "feature/ws09f-c-content-supply-audit-2026-11-08",
+      "head_sha": "aee9286bf69146136e0d59519033a20ce0bdc429",
+      "base": "feature/ws09f-b-visible-cell-renderer-2026-11-08",
+      "draft": true,
+      "in_current_base_chain": false
+    },
+    {
+      "number": 73,
+      "title": "WS-09F-B \u2014 Visible-only glyph, rule and marker rendering for large boards",
+      "head": "feature/ws09f-b-visible-cell-renderer-2026-11-08",
+      "head_sha": "72ddef47bd443c52d0522b501e6bab2a7ff1b9f9",
+      "base": "feature/ws09f-a-continuous-region-navigation-2026-11-08",
+      "draft": true,
+      "in_current_base_chain": true
+    },
+    {
+      "number": 72,
+      "title": "WS-09F-A \u2014 Continuous-board region navigation and readable zoom foundation",
+      "head": "feature/ws09f-a-continuous-region-navigation-2026-11-08",
+      "head_sha": "a75daa1ed7a3af9c1f5e222e73141500d4ec022d",
+      "base": "feature/ws09e-versioned-large-boards-2026-11-08",
+      "draft": true,
+      "in_current_base_chain": true
+    },
+    {
+      "number": 71,
+      "title": "WS-09E \u2014 Versioned 25\u00d725 / 30\u00d730 Solo boards, curated v3 content and safe saves",
+      "head": "feature/ws09e-versioned-large-boards-2026-11-08",
+      "head_sha": "0cdb084d29bc0d0a1a75be5c56028768c1f78b0b",
+      "base": "feature/ws09d-square-board-book-margins-2026-11-08",
+      "draft": true,
+      "in_current_base_chain": true
+    },
+    {
+      "number": 70,
+      "title": "WS-09D \u2014 Square paperback grid, larger margins and edge-safe word list",
+      "head": "feature/ws09d-square-board-book-margins-2026-11-08",
+      "head_sha": "87e2490f944f6c93d01f8b2613ed428996616e49",
+      "base": "feature/ws09c-pregame-setup-2026-11-08",
+      "draft": true,
+      "in_current_base_chain": true
+    },
+    {
+      "number": 69,
+      "title": "WS-09C \u2014 Solo pre-game setup, remembered choices and save-safe navigation",
+      "head": "feature/ws09c-pregame-setup-2026-11-08",
+      "head_sha": "2ba50d2f8a87a94e242437c5cc91e00bfde7bd09",
+      "base": "feature/ws09b-multiple-solo-sessions-2026-11-07",
+      "draft": true,
+      "in_current_base_chain": true
+    },
+    {
+      "number": 68,
+      "title": "WS-09B \u2014 Multiple resumable Solo puzzles with schema-5 migration and My Puzzles",
+      "head": "feature/ws09b-multiple-solo-sessions-2026-11-07",
+      "head_sha": "5d3f08f25e75feece535c7e783bfee71be5fdba6",
+      "base": "feature/ws09a2-frozen-goldens-partial-upgrade-2026-11-07",
+      "draft": true,
+      "in_current_base_chain": true
+    },
+    {
+      "number": 67,
+      "title": "WS-09B1 \u2014 No-loss multi-puzzle persistence contract and migration plan",
+      "head": "feature/ws09b1-multisession-persistence-contract-2026-11-07",
+      "head_sha": "5658ca078761754bc09dd6a2ffcde9932cbb7041",
+      "base": "feature/ws09a2-frozen-goldens-partial-upgrade-2026-11-07",
+      "draft": true,
+      "in_current_base_chain": false
+    },
+    {
+      "number": 66,
+      "title": "WS-09A2 \u2014 Frozen historical puzzle goldens and signed partial-save upgrade",
+      "head": "feature/ws09a2-frozen-goldens-partial-upgrade-2026-11-07",
+      "head_sha": "eda33212958697feaf87bba1c2a9d5ea4b01d01f",
+      "base": "feature/ws09a1-save-compatibility-tests-2026-11-07",
+      "draft": true,
+      "in_current_base_chain": true
+    },
+    {
+      "number": 65,
+      "title": "WS-09A1 \u2014 Historical Partial-Puzzle Save and Upgrade Regression",
+      "head": "feature/ws09a1-save-compatibility-tests-2026-11-07",
+      "head_sha": "dc9ea65e8d47a8d2bbcde7b037820f5c52377062",
+      "base": "feature/ws09-foundations-roadmap-2026-11-07",
+      "draft": true,
+      "in_current_base_chain": true
+    },
+    {
+      "number": 64,
+      "title": "WS-09 \u2014 Foundation-first roadmap for saved puzzles, pregame UX and 100\u00d7100 Marathon",
+      "head": "feature/ws09-foundations-roadmap-2026-11-07",
+      "head_sha": "6684e5a3b2e8c3fc175afa13795d64e09c22440f",
+      "base": "feature/ws07i-solo-history-integrity-2026-11-07",
+      "draft": true,
+      "in_current_base_chain": true
+    },
+    {
+      "number": 63,
+      "title": "WS-07I \u2014 Fail-Closed Solo History and Backup Integrity",
+      "head": "feature/ws07i-solo-history-integrity-2026-11-07",
+      "head_sha": "b3cd0ccd6ad09c1f610bb44cea597da7df091b38",
+      "base": "feature/ws07h-compact-profile-gallery-2026-11-07",
+      "draft": true,
+      "in_current_base_chain": true
+    },
+    {
+      "number": 62,
+      "title": "WS-07H \u2014 Compact Profile and First-Screen Portrait Gallery",
+      "head": "feature/ws07h-compact-profile-gallery-2026-11-07",
+      "head_sha": "d3e8724745a2577a55fdedc6b0643c6fb6cc55d3",
+      "base": "feature/ws07g-collection-pages-2026-11-07",
+      "draft": true,
+      "in_current_base_chain": true
+    },
+    {
+      "number": 61,
+      "title": "WS-07G \u2014 Paged Portraits and Achievements without lost unlocks",
+      "head": "feature/ws07g-collection-pages-2026-11-07",
+      "head_sha": "bc3c7e1c8eb5a062ba0d5a66f2d1476cfe822894",
+      "base": "feature/ws07f-records-journal-navigation-2026-11-07",
+      "draft": true,
+      "in_current_base_chain": true
+    },
+    {
+      "number": 60,
+      "title": "WS-07F \u2014 Records tabs and complete paged history",
+      "head": "feature/ws07f-records-journal-navigation-2026-11-07",
+      "head_sha": "a4fa7e91314dadf0dbe7ef22639ec5be9725b7e0",
+      "base": "feature/ws07e-compact-daily-saved-clues-2026-11-07",
+      "draft": true,
+      "in_current_base_chain": true
+    },
+    {
+      "number": 59,
+      "title": "WS-07F \u2014 Compact Records tabs and paged Collections",
+      "head": "feature/ws07f-compact-records-collections-2026-11-07",
+      "head_sha": "1753403f2ce3eb0d77754c3680485c7884e07600",
+      "base": "feature/ws07e-compact-daily-saved-clues-2026-11-07",
+      "draft": true,
+      "in_current_base_chain": false
+    },
+    {
+      "number": 58,
+      "title": "WS-07E \u2014 Compact Daily Journal and reviewable saved hints",
+      "head": "feature/ws07e-compact-daily-saved-clues-2026-11-07",
+      "head_sha": "e55d83abc02e166fd89fde2b06fe9e53e5544859",
+      "base": "feature/ws07d-claim-confirmation-and-lan-regression-2026-11-07",
+      "draft": true,
+      "in_current_base_chain": true
+    },
+    {
+      "number": 57,
+      "title": "WS-07D \u2014 Guest word-claim confirmation and LAN safety regressions",
+      "head": "feature/ws07d-claim-confirmation-and-lan-regression-2026-11-07",
+      "head_sha": "415d4e454f7529471509a20106edcc5d849b89e0",
+      "base": "feature/ws07c-accessible-precision-picker-2026-11-07",
+      "draft": true,
+      "in_current_base_chain": true
+    },
+    {
+      "number": 56,
+      "title": "WS-07C \u2014 Accessible precision word picker and simpler board semantics",
+      "head": "feature/ws07c-accessible-precision-picker-2026-11-07",
+      "head_sha": "eea8b7b0437af193cbba7c60756424d3d6b0ba95",
+      "base": "feature/ws07b-compact-home-nearby-2026-11-07",
+      "draft": true,
+      "in_current_base_chain": true
+    },
+    {
+      "number": 55,
+      "title": "WS-07B \u2014 Compact Home and one-step Nearby Host/Join",
+      "head": "feature/ws07b-compact-home-nearby-2026-11-07",
+      "head_sha": "0f00e819e0b5b61fefbea9277801eb845ebd5a3e",
+      "base": "feature/ws07a-touch-input-and-compact-gameplay-2026-11-07",
+      "draft": true,
+      "in_current_base_chain": true
+    },
+    {
+      "number": 54,
+      "title": "WS-07A \u2014 P0 two-phone touch input and compact no-scroll gameplay",
+      "head": "feature/ws07a-touch-input-and-compact-gameplay-2026-11-07",
+      "head_sha": "346e18133cf107374668ef9a45954b8dc8390358",
+      "base": "feature/ws06i-fail-closed-solo-daily-2026-11-07",
+      "draft": true,
+      "in_current_base_chain": true
+    },
+    {
+      "number": 51,
+      "title": "WS-06I \u2014 Fail-closed Solo/Daily save fields and source-matched v0.7.6 upgrade QA",
+      "head": "feature/ws06i-fail-closed-solo-daily-2026-11-07",
+      "head_sha": "4250198aff1faaca510fde90569a3148db591f8a",
+      "base": "feature/ws06h-integration-audit-and-hardening-2026-11-07",
+      "draft": true,
+      "in_current_base_chain": true
+    },
+    {
+      "number": 49,
+      "title": "WS-06H \u2014 Cumulative integration audit, bounded backup import and save/share hardening",
+      "head": "feature/ws06h-integration-audit-and-hardening-2026-11-07",
+      "head_sha": "857636b8f6c35a8ea43bee7711459ad5515d695b",
+      "base": "feature/ws06g-shared-coop-board-style-2026-11-07",
+      "draft": true,
+      "in_current_base_chain": true
+    },
+    {
+      "number": 48,
+      "title": "WS-06G \u2014 Shared Co-op board looks: temporary room palette, first-join freeze and local contrast override",
+      "head": "feature/ws06g-shared-coop-board-style-2026-11-07",
+      "head_sha": "b693d817699bdf5a907ff3d3a5f465c5a8b5a43c",
+      "base": "feature/ws06f-result-postcard-images-2026-11-07",
+      "draft": true,
+      "in_current_base_chain": true
+    },
+    {
+      "number": 47,
+      "title": "WS-06F \u2014 Native 4:5 GridMates result postcards with secure offline image sharing",
+      "head": "feature/ws06f-result-postcard-images-2026-11-07",
+      "head_sha": "2669985538c0f70bdbb465695a8fbc87faa634d9",
+      "base": "feature/ws06e-nearby-presence-and-share-preview-2026-11-07",
+      "draft": true,
+      "in_current_base_chain": true
+    },
+    {
+      "number": 46,
+      "title": "WS-06E \u2014 Friend presence and privacy-safe result sharing, informed by Sudoku design docs",
+      "head": "feature/ws06e-nearby-presence-and-share-preview-2026-11-07",
+      "head_sha": "684266ddf5a66d27988571a906c710bf026e297e",
+      "base": "feature/ws06d-duel-journal-and-results-2026-11-07",
+      "draft": true,
+      "in_current_base_chain": true
+    },
+    {
+      "number": 45,
+      "title": "WS-06D \u2014 Save Speed Duel wins/losses separately, with protected backup and stats",
+      "head": "feature/ws06d-duel-journal-and-results-2026-11-07",
+      "head_sha": "b3e316472b4750e74f444edf96ebd2353a6e95e9",
+      "base": "feature/ws06c-speed-duel-private-ready-go-2026-11-07",
+      "draft": true,
+      "in_current_base_chain": true
+    },
+    {
+      "number": 44,
+      "title": "WS-06C \u2014 Speed Duel: separate private boards, Ready/GO and host-confirmed first finish",
+      "head": "feature/ws06c-speed-duel-private-ready-go-2026-11-07",
+      "head_sha": "2c8ead4138009486bc2a071b1afef57095d53be5",
+      "base": "feature/ws06b-versus-journal-postmatch-2026-11-07",
+      "draft": true,
+      "in_current_base_chain": true
+    },
+    {
+      "number": 43,
+      "title": "WS-06B \u2014 Durable Versus journal and Shared Board Race post-match comparison",
+      "head": "feature/ws06b-versus-journal-postmatch-2026-11-07",
+      "head_sha": "bc3c3896b40bac5a3983eb2bea643fd4f4a9582e",
+      "base": "feature/ws06a-shared-board-race-lan-2026-11-07",
+      "draft": true,
+      "in_current_base_chain": true
+    },
+    {
+      "number": 42,
+      "title": "WS-06A \u2014 Shared Board Race: first real competitive Nearby mode",
+      "head": "feature/ws06a-shared-board-race-lan-2026-11-07",
+      "head_sha": "8eea9d02bd77d80450ab6fce406c2d21962218f0",
+      "base": "feature/ws05j-stable-qa-signing-upgrade-protection-2026-11-07",
+      "draft": true,
+      "in_current_base_chain": true
+    },
+    {
+      "number": 41,
+      "title": "WS-05J \u2014 Stable QA updates and offline save preservation",
+      "head": "feature/ws05j-stable-qa-signing-upgrade-protection-2026-11-07",
+      "head_sha": "2c38b19e99ffd9a47a4fbe3c5a0e6bd118162758",
+      "base": "feature/ws05j-phone-screenshot-ui-repair-2026-11-06",
+      "draft": true,
+      "in_current_base_chain": true
+    },
+    {
+      "number": 40,
+      "title": "WS-05J \u2014 Fix clipped paperback art and context-sensitive Find/Move guidance",
+      "head": "feature/ws05j-phone-screenshot-ui-repair-2026-11-06",
+      "head_sha": "c7fa6a81b7410e015833c88257fcd8bec95f145c",
+      "base": "feature/ws05i-compact-landscape-large-text-qa-2026-11-06",
+      "draft": true,
+      "in_current_base_chain": true
+    },
+    {
+      "number": 39,
+      "title": "WS-05I \u2014 Compact-phone, landscape and 200% text usability refinement",
+      "head": "feature/ws05i-compact-landscape-large-text-qa-2026-11-06",
+      "head_sha": "942bcb64fe8a7ff8e65c352c189b57a4244ae7d2",
+      "base": "feature/ws05h-profile-collection-settings-polish-2026-11-06",
+      "draft": true,
+      "in_current_base_chain": true
+    },
+    {
+      "number": 38,
+      "title": "WS-05H \u2014 Polished profiles, honest collection progress, achievements and safe backups",
+      "head": "feature/ws05h-profile-collection-settings-polish-2026-11-06",
+      "head_sha": "43bb95d355cbe4cb322705501deba63ed35adbd8",
+      "base": "feature/ws05g-gameplay-results-polish-2026-11-06",
+      "draft": true,
+      "in_current_base_chain": true
+    },
+    {
+      "number": 37,
+      "title": "WS-05G \u2014 Polished gameplay feedback, responsive word index and shareable results",
+      "head": "feature/ws05g-gameplay-results-polish-2026-11-06",
+      "head_sha": "08bf454a6d0f084afcdfa858a9ca82a820890d04",
+      "base": "feature/ws05f-paperback-app-polish-2026-11-06",
+      "draft": true,
+      "in_current_base_chain": true
+    },
+    {
+      "number": 36,
+      "title": "WS-05F \u2014 Paperback home, app polish, navigation safety and adaptive icon",
+      "head": "feature/ws05f-paperback-app-polish-2026-11-06",
+      "head_sha": "d754507adc92ea1bd03833aff7170fc77c6c8e20",
+      "base": "feature/ws05e-nearby-discovery-and-rejoin-2026-11-06",
+      "draft": true,
+      "in_current_base_chain": true
+    },
+    {
+      "number": 35,
+      "title": "WS-05E \u2014 Reliable nearby-room discovery, refresh and interrupted-join recovery",
+      "head": "feature/ws05e-nearby-discovery-and-rejoin-2026-11-06",
+      "head_sha": "df8b7178cdccd8e6a08e5abaed89f02dc64352f9",
+      "base": "feature/ws05d-host-admission-and-room-lifecycle-2026-11-06",
+      "draft": true,
+      "in_current_base_chain": true
+    },
+    {
+      "number": 34,
+      "title": "WS-05D \u2014 Two-phase guest admission and rotation-safe Nearby rooms",
+      "head": "feature/ws05d-host-admission-and-room-lifecycle-2026-11-06",
+      "head_sha": "103b27a1364f83eac0f6621a393ade8d103d6ba2",
+      "base": "feature/ws05c-chat-delivery-and-connection-reliability-2026-11-06",
+      "draft": true,
+      "in_current_base_chain": true
+    },
+    {
+      "number": 33,
+      "title": "WS-05C \u2014 Confirmed chat delivery, safe resend and LAN reconnect lifecycle",
+      "head": "feature/ws05c-chat-delivery-and-connection-reliability-2026-11-06",
+      "head_sha": "12f1911c13f2def3828b83d93f8d9d7da9b3aacc",
+      "base": "feature/ws05b-nearby-chat-and-presence-2026-11-06",
+      "draft": true,
+      "in_current_base_chain": true
+    },
+    {
+      "number": 32,
+      "title": "WS-05B \u2014 Nearby partner chat, recent activity and LAN admission resilience",
+      "head": "feature/ws05b-nearby-chat-and-presence-2026-11-06",
+      "head_sha": "5f34373026f379647bb4e17fcb9eccf83bebee48",
+      "base": "feature/ws05a-coop-session-engine-2026-11-06",
+      "draft": true,
+      "in_current_base_chain": true
+    },
+    {
+      "number": 31,
+      "title": "WS-05A \u2014 Nearby Co-op host/join alpha, authoritative shared board and reconnect",
+      "head": "feature/ws05a-coop-session-engine-2026-11-06",
+      "head_sha": "113b93e58d64ea31ada68235132f22bf6b3fd3cb",
+      "base": "feature/ws04d-b5-board-fonts-free-achievements-2026-11-06",
+      "draft": true,
+      "in_current_base_chain": true
+    },
+    {
+      "number": 30,
+      "title": "WS-04D-B5 \u2014 Font-neutral board centering and free achievement unlocks",
+      "head": "feature/ws04d-b5-board-fonts-free-achievements-2026-11-06",
+      "head_sha": "8104bc524c9abce7fb43cef3548240434311cc36",
+      "base": "feature/ws04d-b4-gamefeel-nav-audit-2026-11-06",
+      "draft": true,
+      "in_current_base_chain": true
+    },
+    {
+      "number": 28,
+      "title": "WS-04D-B4 \u2014 Game feel, Move pinch/fit, completion review and pre-playtest audit",
+      "head": "feature/ws04d-b4-gamefeel-nav-audit-2026-11-06",
+      "head_sha": "8e73efe8ec1c998fc7a199bcb55cb0878556a775",
+      "base": "feature/ws04d-b3-hints-budget-board-cell-fit-2026-11-06",
+      "draft": true,
+      "in_current_base_chain": true
+    },
+    {
+      "number": 27,
+      "title": "WS-04D-B3 \u2014 Finite puzzle hints and exact-fit 20\u00d720 cell rows",
+      "head": "feature/ws04d-b3-hints-budget-board-cell-fit-2026-11-06",
+      "head_sha": "06876f3c933b94ae3a226e1382a448d566e2a0fa",
+      "base": "feature/ws04d-b2-true-zoom-compact-workspace-2026-11-06",
+      "draft": true,
+      "in_current_base_chain": true
+    },
+    {
+      "number": 25,
+      "title": "WS-04D-B2 \u2014 Repair actual board zoom, compact Solo HUD and keep targets visible",
+      "head": "feature/ws04d-b2-true-zoom-compact-workspace-2026-11-06",
+      "head_sha": "4848ae3fe0ea4577ad980a8e4f88ae6477c12771",
+      "base": "feature/ws04d-book-size-presets-zoom-2026-11-06",
+      "draft": true,
+      "in_current_base_chain": true
+    },
+    {
+      "number": 22,
+      "title": "WS-04D-B1 \u2014 Paperback-sized puzzles (12\u00d712, 15\u00d715, 20\u00d720) with Move/Find zoom",
+      "head": "feature/ws04d-book-size-presets-zoom-2026-11-06",
+      "head_sha": "cbcdac1285f3a9faf57abaa2d5a97622771040ae",
+      "base": "feature/ws04d-v2-puzzle-setup-2026-11-06",
+      "draft": true,
+      "in_current_base_chain": true
+    },
+    {
+      "number": 20,
+      "title": "WS-04D-A \u2014 Independent board size & challenge, v2 saved puzzles, focused Home",
+      "head": "feature/ws04d-v2-puzzle-setup-2026-11-06",
+      "head_sha": "495da7e7d70080a4f09e9b555e3937287f9bdb05",
+      "base": "feature/ws04c-verified-woodland-assets-2026-11-05",
+      "draft": true,
+      "in_current_base_chain": true
+    },
+    {
+      "number": 15,
+      "title": "WS-04C \u2014 Verified original Woodland art in CI-built APK",
+      "head": "feature/ws04c-verified-woodland-assets-2026-11-05",
+      "head_sha": "9ea6f23f83b1599003d84f0232a0737c29fe78c5",
+      "base": "feature/ws04b-profile-woodland-achievements-2026-11-05",
+      "draft": true,
+      "in_current_base_chain": true
+    },
+    {
+      "number": 12,
+      "title": "WS-04B \u2014 Local profiles, Woodland collection and earned achievements",
+      "head": "feature/ws04b-profile-woodland-achievements-2026-11-05",
+      "head_sha": "feccf427a779639477ac604e1ba4b31dca39e510",
+      "base": "feature/ws04a-offline-daily-2026-11-05",
+      "draft": true,
+      "in_current_base_chain": true
+    },
+    {
+      "number": 9,
+      "title": "WS-04A \u2014 Offline Daily Puzzle and dated progress history",
+      "head": "feature/ws04a-offline-daily-2026-11-05",
+      "head_sha": "e6874432bcb2f4ffa174c9ad194550605da7acf2",
+      "base": "feature/ws03-solo-save-results-2026-11-05",
+      "draft": true,
+      "in_current_base_chain": true
+    },
+    {
+      "number": 7,
+      "title": "WS-03 \u2014 Solo beta: saved puzzles, records, hints and backup/restore",
+      "head": "feature/ws03-solo-save-results-2026-11-05",
+      "head_sha": "02192993ea342dffff43eccd5558d7a38416eea2",
+      "base": "feature/ws02b-touch-highlights-layout-2026-11-05",
+      "draft": true,
+      "in_current_base_chain": true
+    },
+    {
+      "number": 6,
+      "title": "WS-02B \u2014 Smooth drag, marker highlights and compact phone layout",
+      "head": "feature/ws02b-touch-highlights-layout-2026-11-05",
+      "head_sha": "992dca0ca37e99b31596e400e35896e41cb22682",
+      "base": "feature/ws02-word-engine-touch-prototype-2026-11-05",
+      "draft": true,
+      "in_current_base_chain": true
+    },
+    {
+      "number": 4,
+      "title": "WS-02 \u2014 Playable Word Search generator and touch-grid prototype",
+      "head": "feature/ws02-word-engine-touch-prototype-2026-11-05",
+      "head_sha": "6e7fff0bc43dcf6caf7cc73043f4b7117af0caf2",
+      "base": "feature/ws01-native-foundation-2026-11-05",
+      "draft": true,
+      "in_current_base_chain": true
+    },
+    {
+      "number": 3,
+      "title": "WS-01 \u2014 Native Android GridMates Word Search scaffold",
+      "head": "feature/ws01-native-foundation-2026-11-05",
+      "head_sha": "a92c77ec4248ba9203d3c7121d00cc708ba15d06",
+      "base": "main",
+      "draft": true,
+      "in_current_base_chain": true
+    }
+  ],
+  "issue_records": [
+    {
+      "number": 140,
+      "title": "WORK HANDOFF \u2014 GridMates Word Search WS31/v93 consolidation, QA and V1 beta readiness",
+      "url": "https://github.com/PlayerEden/GridMates-Word-Search/issues/140"
+    },
+    {
+      "number": 125,
+      "title": "WS-14B \u2014 Generate curated production illustration masters and isolated UI sprites (not screenshot crops)",
+      "url": "https://github.com/PlayerEden/GridMates-Word-Search/issues/125"
+    },
+    {
+      "number": 124,
+      "title": "WS-14A \u2014 Lock illustrated style bible, design tokens and production asset registry",
+      "url": "https://github.com/PlayerEden/GridMates-Word-Search/issues/124"
+    },
+    {
+      "number": 119,
+      "title": "WS-13C \u2014 Genuine illustrated generated paperback covers and matching six-piece collectible art families",
+      "url": "https://github.com/PlayerEden/GridMates-Word-Search/issues/119"
+    },
+    {
+      "number": 117,
+      "title": "WS-13 \u2014 The actual GridMates puzzle bookshelf: physical shelves, pulled-out books and curated generated art",
+      "url": "https://github.com/PlayerEden/GridMates-Word-Search/issues/117"
+    },
+    {
+      "number": 128,
+      "title": "WS-14E \u2014 Visual QA, sprite provenance, Android performance and production-release readiness",
+      "url": "https://github.com/PlayerEden/GridMates-Word-Search/issues/128"
+    },
+    {
+      "number": 127,
+      "title": "WS-14D \u2014 Extend the unified visual system across puzzle play, results and every supporting screen",
+      "url": "https://github.com/PlayerEden/GridMates-Word-Search/issues/127"
+    },
+    {
+      "number": 126,
+      "title": "WS-14C \u2014 Integrate polished Play/Home, physical Bookshelf and Collection as one native Android vertical slice",
+      "url": "https://github.com/PlayerEden/GridMates-Word-Search/issues/126"
+    },
+    {
+      "number": 123,
+      "title": "WS-14 \u2014 Production-quality illustrated UI and cohesive asset system across the entire Word Search app",
+      "url": "https://github.com/PlayerEden/GridMates-Word-Search/issues/123"
+    },
+    {
+      "number": 114,
+      "title": "WS-12J \u2014 Make Puzzle Books feel like collectible books, not plain menu cards (owner v53 feedback)",
+      "url": "https://github.com/PlayerEden/GridMates-Word-Search/issues/114"
+    },
+    {
+      "number": 121,
+      "title": "WS-13E \u2014 Complete bookshelf QA, real-device acceptance, production asset gates and release rollback",
+      "url": "https://github.com/PlayerEden/GridMates-Word-Search/issues/121"
+    },
+    {
+      "number": 120,
+      "title": "WS-13D \u2014 Grow a real offline puzzle book library using publishable content only",
+      "url": "https://github.com/PlayerEden/GridMates-Word-Search/issues/120"
+    },
+    {
+      "number": 118,
+      "title": "WS-13B \u2014 Opening a book: table of contents, bookmarks and readable page-turn navigation",
+      "url": "https://github.com/PlayerEden/GridMates-Word-Search/issues/118"
+    },
+    {
+      "number": 107,
+      "title": "WS-12E6 \u2014 Integrate approved visual assets in QA-only Android Bookshelf & Collection",
+      "url": "https://github.com/PlayerEden/GridMates-Word-Search/issues/107"
+    },
+    {
+      "number": 91,
+      "title": "WS-12 \u2014 Generated sprites + Adobe refinement: bookshelf covers, cosmetics and approved art pipeline",
+      "url": "https://github.com/PlayerEden/GridMates-Word-Search/issues/91"
+    },
+    {
+      "number": 90,
+      "title": "WS-11 \u2014 Puzzle Bookshelf: themed books, fixed chapters, bookmarks and progress",
+      "url": "https://github.com/PlayerEden/GridMates-Word-Search/issues/90"
+    },
+    {
+      "number": 105,
+      "title": "WS-12E4 \u2014 Additive Collection portrait art system and first curated expansion batch",
+      "url": "https://github.com/PlayerEden/GridMates-Word-Search/issues/105"
+    },
+    {
+      "number": 104,
+      "title": "WS-12E3 \u2014 Review matching Space/Garden paperback book families",
+      "url": "https://github.com/PlayerEden/GridMates-Word-Search/issues/104"
+    },
+    {
+      "number": 102,
+      "title": "WS-12E1 \u2014 Lock prototype style and review Woodland anchor as a complete family",
+      "url": "https://github.com/PlayerEden/GridMates-Word-Search/issues/102"
+    },
+    {
+      "number": 103,
+      "title": "WS-12E2 \u2014 Complete the reusable spine treatment and three-book contact sheet",
+      "url": "https://github.com/PlayerEden/GridMates-Word-Search/issues/103"
+    },
+    {
+      "number": 108,
+      "title": "WS-12E7 \u2014 Signoff, licensed asset manifest and immutable art release gate",
+      "url": "https://github.com/PlayerEden/GridMates-Word-Search/issues/108"
+    },
+    {
+      "number": 106,
+      "title": "WS-12E5 \u2014 Consistent achievement emblems, book rewards and native font cards",
+      "url": "https://github.com/PlayerEden/GridMates-Word-Search/issues/106"
+    },
+    {
+      "number": 18,
+      "title": "Research \u2014 massive curated Word Library, themed puzzle books and frequency-aware generator",
+      "url": "https://github.com/PlayerEden/GridMates-Word-Search/issues/18"
+    },
+    {
+      "number": 87,
+      "title": "WS-10 \u2014 Curate 10,000+ unique playable words across 30+ themes (not raw dictionary imports)",
+      "url": "https://github.com/PlayerEden/GridMates-Word-Search/issues/87"
+    },
+    {
+      "number": 77,
+      "title": "WS-09H \u2014 Full integration, backup/signer safety, long-session and launch readiness QA",
+      "url": "https://github.com/PlayerEden/GridMates-Word-Search/issues/77"
+    },
+    {
+      "number": 75,
+      "title": "WS-09F-C \u2014 Isolated version-4 40\u00d740/50\u00d750 giant-board laboratory",
+      "url": "https://github.com/PlayerEden/GridMates-Word-Search/issues/75"
+    },
+    {
+      "number": 76,
+      "title": "WS-09G \u2014 Compact paperback UX for Home, Records, Collections, Fonts and Settings",
+      "url": "https://github.com/PlayerEden/GridMates-Word-Search/issues/76"
+    },
+    {
+      "number": 52,
+      "title": "WS-07 \u2014 Whole-game quality audit: gameplay, UX, saves, Nearby and beta gates",
+      "url": "https://github.com/PlayerEden/GridMates-Word-Search/issues/52"
+    },
+    {
+      "number": 53,
+      "title": "WS-07A P0 \u2014 Connected two-phone game cannot mark words; replace zoom/move UI and scrolling layout",
+      "url": "https://github.com/PlayerEden/GridMates-Word-Search/issues/53"
+    },
+    {
+      "number": 50,
+      "title": "WS-06I \u2014 Fail-closed save parsing for malformed Solo/Daily progress fields",
+      "url": "https://github.com/PlayerEden/GridMates-Word-Search/issues/50"
+    },
+    {
+      "number": 29,
+      "title": "WS-04D-B5 \u2014 Font-ready board lettering and future unlockable typefaces",
+      "url": "https://github.com/PlayerEden/GridMates-Word-Search/issues/29"
+    },
+    {
+      "number": 24,
+      "title": "P0 Android playtest: zoom enlarges glyphs without proper cells; compact puzzle HUD and visible word list",
+      "url": "https://github.com/PlayerEden/GridMates-Word-Search/issues/24"
+    },
+    {
+      "number": 26,
+      "title": "WS-04D-B3 \u2014 Hints per puzzle, 20\u00d720 last-row fit and owner phone QA",
+      "url": "https://github.com/PlayerEden/GridMates-Word-Search/issues/26"
+    },
+    {
+      "number": 23,
+      "title": "WS-04D Book Boards \u2014 verify 12\u00d712, 15\u00d715, 20\u00d720 and mobile zoom/panning UX",
+      "url": "https://github.com/PlayerEden/GridMates-Word-Search/issues/23"
+    },
+    {
+      "number": 21,
+      "title": "WS-04D-B \u2014 Tactile gameplay polish, finished-app UX and executed Android QA",
+      "url": "https://github.com/PlayerEden/GridMates-Word-Search/issues/21"
+    },
+    {
+      "number": 19,
+      "title": "FUTURE \u2014 Spanish language pack, multilingual app localization and Unicode-safe puzzle generator",
+      "url": "https://github.com/PlayerEden/GridMates-Word-Search/issues/19"
+    },
+    {
+      "number": 17,
+      "title": "Parity-first gate: achieve Sudoku-level quality and multiplayer before new collections",
+      "url": "https://github.com/PlayerEden/GridMates-Word-Search/issues/17"
+    },
+    {
+      "number": 16,
+      "title": "Art proof-of-style \u2014 coordinated Ocean and Bugs character sample batch",
+      "url": "https://github.com/PlayerEden/GridMates-Word-Search/issues/16"
+    },
+    {
+      "number": 14,
+      "title": "WS-04C \u2014 Import original Woodland PNGs and establish coordinated generated art packs",
+      "url": "https://github.com/PlayerEden/GridMates-Word-Search/issues/14"
+    },
+    {
+      "number": 13,
+      "title": "WS-04B \u2014 Profiles, achievements, Woodland catalogue and real-art integration QA",
+      "url": "https://github.com/PlayerEden/GridMates-Word-Search/issues/13"
+    },
+    {
+      "number": 11,
+      "title": "QA release safety \u2014 establish stable Word Search APK signing and data-preserving upgrades",
+      "url": "https://github.com/PlayerEden/GridMates-Word-Search/issues/11"
+    },
+    {
+      "number": 10,
+      "title": "WS-04A \u2014 Offline Daily, safe save migration and dated journal QA",
+      "url": "https://github.com/PlayerEden/GridMates-Word-Search/issues/10"
+    },
+    {
+      "number": 8,
+      "title": "WS-03 \u2014 Solo beta: local saves, records, hints, backup and phone acceptance",
+      "url": "https://github.com/PlayerEden/GridMates-Word-Search/issues/8"
+    },
+    {
+      "number": 5,
+      "title": "WS-02 UX refinement \u2014 compact gameplay layout, visible word list and touch QA",
+      "url": "https://github.com/PlayerEden/GridMates-Word-Search/issues/5"
+    },
+    {
+      "number": 2,
+      "title": "WS-02 \u2014 Deterministic word-search engine and tactile selection prototype",
+      "url": "https://github.com/PlayerEden/GridMates-Word-Search/issues/2"
+    },
+    {
+      "number": 1,
+      "title": "WS-01 \u2014 Bootstrap native Android foundation and audit Sudoku reuse",
+      "url": "https://github.com/PlayerEden/GridMates-Word-Search/issues/1"
+    }
+  ],
+  "off_chain_path_audit": [
+    {
+      "pr": 143,
+      "files": [
+        {
+          "path": ".github/scripts/ws32_my_puzzles_emulator.py",
+          "status": "added",
+          "present_in_v102_tree": false
+        },
+        {
+          "path": ".github/workflows/ws32-my-puzzles-emulator.yml",
+          "status": "added",
+          "present_in_v102_tree": false
+        }
+      ]
+    },
+    {
+      "pr": 141,
+      "files": [
+        {
+          "path": ".github/scripts/ws31_archived_apk_upgrade.py",
+          "status": "added",
+          "present_in_v102_tree": false
+        },
+        {
+          "path": ".github/workflows/ws31-v93-apk-audit.yml",
+          "status": "added",
+          "present_in_v102_tree": false
+        },
+        {
+          "path": ".github/workflows/ws31-v93-apk-upgrade.yml",
+          "status": "added",
+          "present_in_v102_tree": false
+        },
+        {
+          "path": "README.md",
+          "status": "modified",
+          "present_in_v102_tree": true
+        },
+        {
+          "path": "docs/DEVELOPMENT_JOURNAL.md",
+          "status": "modified",
+          "present_in_v102_tree": true
+        },
+        {
+          "path": "docs/START_HERE.md",
+          "status": "modified",
+          "present_in_v102_tree": true
+        },
+        {
+          "path": "docs/WS14_ACTIVE_HANDOFF_2026-11-09.md",
+          "status": "modified",
+          "present_in_v102_tree": true
+        },
+        {
+          "path": "docs/devlog/2026-11-16_WS31_BASELINE_AUDIT_AND_WS32_PLAN.md",
+          "status": "added",
+          "present_in_v102_tree": true
+        }
+      ]
+    },
+    {
+      "pr": 138,
+      "files": [
+        {
+          "path": ".github/workflows/ws01-android-qa.yml",
+          "status": "modified",
+          "present_in_v102_tree": true
+        },
+        {
+          "path": ".github/workflows/ws12g-qa-art-lab.yml",
+          "status": "modified",
+          "present_in_v102_tree": true
+        },
+        {
+          "path": "app/build.gradle.kts",
+          "status": "modified",
+          "present_in_v102_tree": true
+        },
+        {
+          "path": "app/src/androidTest/java/com/playereden/gridmates/wordsearch/CollectionSettingsPolishAndroidTest.kt",
+          "status": "modified",
+          "present_in_v102_tree": true
+        },
+        {
+          "path": "app/src/androidTest/java/com/playereden/gridmates/wordsearch/MyPuzzlesNavigationAndroidTest.kt",
+          "status": "modified",
+          "present_in_v102_tree": true
+        },
+        {
+          "path": "app/src/main/java/com/playereden/gridmates/wordsearch/CollectionScreen.kt",
+          "status": "modified",
+          "present_in_v102_tree": true
+        },
+        {
+          "path": "app/src/main/java/com/playereden/gridmates/wordsearch/GridMatesShell.kt",
+          "status": "modified",
+          "present_in_v102_tree": true
+        },
+        {
+          "path": "docs/DEVELOPMENT_JOURNAL.md",
+          "status": "modified",
+          "present_in_v102_tree": true
+        },
+        {
+          "path": "docs/devlog/2026-11-16_WS31_MILESTONES_MY_PUZZLES.md",
+          "status": "added",
+          "present_in_v102_tree": false
+        },
+        {
+          "path": "tools/asset_pipeline/render_ws29_achievement_medals.py",
+          "status": "modified",
+          "present_in_v102_tree": true
+        },
+        {
+          "path": "tools/asset_pipeline/test_ws31_milestones_saved_puzzles.py",
+          "status": "added",
+          "present_in_v102_tree": false
+        }
+      ]
+    },
+    {
+      "pr": 110,
+      "files": [
+        {
+          "path": ".github/workflows/ws12f-family-art-review.yml",
+          "status": "added",
+          "present_in_v102_tree": false
+        },
+        {
+          "path": "design/asset-pipeline/production-queue-v1.json",
+          "status": "modified",
+          "present_in_v102_tree": false
+        },
+        {
+          "path": "docs/WS12F_FIRST_COMPLETE_BOOK_ART_REVIEW_2026-11-08.md",
+          "status": "added",
+          "present_in_v102_tree": false
+        },
+        {
+          "path": "tools/asset_pipeline/render_family_review.py",
+          "status": "added",
+          "present_in_v102_tree": true
+        },
+        {
+          "path": "tools/asset_pipeline/render_review_png.py",
+          "status": "added",
+          "present_in_v102_tree": false
+        },
+        {
+          "path": "tools/asset_pipeline/test_family_review.py",
+          "status": "added",
+          "present_in_v102_tree": false
+        },
+        {
+          "path": "tools/asset_pipeline/test_production_queue.py",
+          "status": "modified",
+          "present_in_v102_tree": false
+        }
+      ]
+    },
+    {
+      "pr": 109,
+      "files": [
+        {
+          "path": ".github/workflows/ws12e-art-production-gates.yml",
+          "status": "added",
+          "present_in_v102_tree": false
+        },
+        {
+          "path": "design/asset-pipeline/README.md",
+          "status": "added",
+          "present_in_v102_tree": false
+        },
+        {
+          "path": "design/asset-pipeline/production-queue-v1.json",
+          "status": "added",
+          "present_in_v102_tree": false
+        },
+        {
+          "path": "docs/DEVELOPMENT_ROADMAP.md",
+          "status": "modified",
+          "present_in_v102_tree": true
+        },
+        {
+          "path": "docs/WS12_AI_ASSET_PRODUCTION_PLAYBOOK.md",
+          "status": "added",
+          "present_in_v102_tree": false
+        },
+        {
+          "path": "docs/WS12_ANCHOR_ASSET_PLAN.md",
+          "status": "added",
+          "present_in_v102_tree": false
+        },
+        {
+          "path": "docs/WS12_ART_DIRECTION_STYLE_BIBLE.md",
+          "status": "added",
+          "present_in_v102_tree": false
+        },
+        {
+          "path": "docs/WS12_BOOKS_COLLECTIONS_INTEGRATION_PLAN.md",
+          "status": "added",
+          "present_in_v102_tree": false
+        },
+        {
+          "path": "docs/WS12_VISUAL_ASSET_PRODUCTION_PLAN.md",
+          "status": "modified",
+          "present_in_v102_tree": false
+        },
+        {
+          "path": "docs/WS12_VISUAL_QA_AND_APPROVAL_CHECKLIST.md",
+          "status": "added",
+          "present_in_v102_tree": false
+        },
+        {
+          "path": "tools/asset_pipeline/test_production_queue.py",
+          "status": "added",
+          "present_in_v102_tree": false
+        },
+        {
+          "path": "tools/asset_pipeline/validate_production_queue.py",
+          "status": "added",
+          "present_in_v102_tree": false
+        }
+      ]
+    },
+    {
+      "pr": 94,
+      "files": [
+        {
+          "path": ".github/workflows/ws12d-paperback-accents.yml",
+          "status": "added",
+          "present_in_v102_tree": false
+        },
+        {
+          "path": "docs/DEVELOPMENT_ROADMAP.md",
+          "status": "modified",
+          "present_in_v102_tree": true
+        },
+        {
+          "path": "docs/WS12D_MATCHING_PAPERBACK_ACCENTS_PLAN_2026-11-08.md",
+          "status": "added",
+          "present_in_v102_tree": false
+        },
+        {
+          "path": "tools/asset_pipeline/render_paperback_accents.py",
+          "status": "added",
+          "present_in_v102_tree": true
+        },
+        {
+          "path": "tools/asset_pipeline/test_paperback_accents.py",
+          "status": "added",
+          "present_in_v102_tree": false
+        }
+      ]
+    },
+    {
+      "pr": 93,
+      "files": [
+        {
+          "path": ".github/workflows/ws12c-paperback-style.yml",
+          "status": "added",
+          "present_in_v102_tree": false
+        },
+        {
+          "path": "design/asset-pipeline/paperback-v1-tokens.json",
+          "status": "added",
+          "present_in_v102_tree": true
+        },
+        {
+          "path": "docs/WS12C_QUIET_PAPERBACK_STYLE_SPEC_2026-11-08.md",
+          "status": "added",
+          "present_in_v102_tree": false
+        },
+        {
+          "path": "tools/asset_pipeline/render_paperback.py",
+          "status": "added",
+          "present_in_v102_tree": true
+        },
+        {
+          "path": "tools/asset_pipeline/test_paperback.py",
+          "status": "added",
+          "present_in_v102_tree": false
+        }
+      ]
+    },
+    {
+      "pr": 92,
+      "files": [
+        {
+          "path": ".github/workflows/ws12a-b-asset-guard.yml",
+          "status": "added",
+          "present_in_v102_tree": false
+        },
+        {
+          "path": "design/asset-pipeline/approved-assets.json",
+          "status": "added",
+          "present_in_v102_tree": false
+        },
+        {
+          "path": "design/asset-pipeline/pilot-concept-register.json",
+          "status": "added",
+          "present_in_v102_tree": false
+        },
+        {
+          "path": "docs/WS12A_PILOT_BOOK_ART_BIBLE_2026-11-08.md",
+          "status": "added",
+          "present_in_v102_tree": false
+        },
+        {
+          "path": "tools/asset_pipeline/test_validate.py",
+          "status": "added",
+          "present_in_v102_tree": false
+        },
+        {
+          "path": "tools/asset_pipeline/validate.py",
+          "status": "added",
+          "present_in_v102_tree": false
+        }
+      ]
+    },
+    {
+      "pr": 89,
+      "files": [
+        {
+          "path": ".github/workflows/ws10b2-review-queues.yml",
+          "status": "added",
+          "present_in_v102_tree": false
+        },
+        {
+          "path": "data/lexicon/intake/v4_three_theme_research_seed_suggestions.csv",
+          "status": "added",
+          "present_in_v102_tree": false
+        },
+        {
+          "path": "docs/WS10B2_THREE_THEME_REVIEW_QA_2026-11-08.md",
+          "status": "added",
+          "present_in_v102_tree": false
+        },
+        {
+          "path": "tools/lexicon/prepare_theme_review.py",
+          "status": "added",
+          "present_in_v102_tree": false
+        },
+        {
+          "path": "tools/lexicon/test_prepare_theme_review.py",
+          "status": "added",
+          "present_in_v102_tree": false
+        }
+      ]
+    },
+    {
+      "pr": 88,
+      "files": [
+        {
+          "path": ".github/workflows/ws10b1-esdb-quarantine.yml",
+          "status": "added",
+          "present_in_v102_tree": false
+        },
+        {
+          "path": "data/lexicon/intake/esdb_us_2026_02_25.json",
+          "status": "added",
+          "present_in_v102_tree": false
+        },
+        {
+          "path": "data/lexicon/licenses/ESDB_SCOWL_COPYRIGHT_2026_02_25.txt",
+          "status": "added",
+          "present_in_v102_tree": false
+        },
+        {
+          "path": "docs/WS10B1_PINNED_SOURCE_INTAKE_QA_2026-11-08.md",
+          "status": "added",
+          "present_in_v102_tree": false
+        },
+        {
+          "path": "tools/lexicon/import_esdb_quarantine.py",
+          "status": "added",
+          "present_in_v102_tree": false
+        },
+        {
+          "path": "tools/lexicon/test_import_esdb_quarantine.py",
+          "status": "added",
+          "present_in_v102_tree": false
+        }
+      ]
+    },
+    {
+      "pr": 86,
+      "files": [
+        {
+          "path": ".github/workflows/ws10-lexicon-validation.yml",
+          "status": "added",
+          "present_in_v102_tree": false
+        },
+        {
+          "path": "data/lexicon/sources.json",
+          "status": "added",
+          "present_in_v102_tree": false
+        },
+        {
+          "path": "data/lexicon/topics.json",
+          "status": "added",
+          "present_in_v102_tree": false
+        },
+        {
+          "path": "data/lexicon/word_topics_candidate.csv",
+          "status": "added",
+          "present_in_v102_tree": false
+        },
+        {
+          "path": "data/lexicon/words_candidate.csv",
+          "status": "added",
+          "present_in_v102_tree": false
+        },
+        {
+          "path": "docs/WS10A_LEXICON_FOUNDATION_QA_2026-11-08.md",
+          "status": "added",
+          "present_in_v102_tree": false
+        },
+        {
+          "path": "docs/WS10_TEN_THOUSAND_WORD_LEXICON_ROADMAP_2026-11-08.md",
+          "status": "added",
+          "present_in_v102_tree": false
+        },
+        {
+          "path": "tools/lexicon/test_validate.py",
+          "status": "added",
+          "present_in_v102_tree": false
+        },
+        {
+          "path": "tools/lexicon/validate.py",
+          "status": "added",
+          "present_in_v102_tree": false
+        }
+      ]
+    },
+    {
+      "pr": 81,
+      "files": [
+        {
+          "path": ".github/workflows/ws09f-c4-core-model-compat.yml",
+          "status": "added",
+          "present_in_v102_tree": false
+        },
+        {
+          "path": "core/src/test/kotlin/com/playereden/gridmates/wordsearch/core/V4ResearchCoreCompatibilityTest.kt",
+          "status": "added",
+          "present_in_v102_tree": false
+        },
+        {
+          "path": "core/src/test/kotlin/ws09fc/lab/V4EngineLab.kt",
+          "status": "added",
+          "present_in_v102_tree": false
+        },
+        {
+          "path": "core/src/test/resources/ws09fc_v4_test_only_candidates.txt",
+          "status": "added",
+          "present_in_v102_tree": true
+        },
+        {
+          "path": "docs/WS09F_C4_CORE_MODEL_COMPAT_QA_2026-11-08.md",
+          "status": "added",
+          "present_in_v102_tree": false
+        },
+        {
+          "path": "labs/ws09f_c_kotlin/CoreModelCompatibility.kt",
+          "status": "added",
+          "present_in_v102_tree": false
+        },
+        {
+          "path": "tools/ws09f_c4_core_test_mirror_audit.py",
+          "status": "added",
+          "present_in_v102_tree": false
+        }
+      ]
+    },
+    {
+      "pr": 80,
+      "files": [
+        {
+          "path": ".github/workflows/ws09f-c3-kotlin-stress.yml",
+          "status": "added",
+          "present_in_v102_tree": false
+        },
+        {
+          "path": "design/marathon/v4_editorial_triage_proposal.json",
+          "status": "added",
+          "present_in_v102_tree": true
+        },
+        {
+          "path": "docs/WS09F_C3_STRESS_EDITORIAL_GATE_2026-11-08.md",
+          "status": "added",
+          "present_in_v102_tree": false
+        },
+        {
+          "path": "labs/ws09f_c_kotlin/Stress.kt",
+          "status": "added",
+          "present_in_v102_tree": false
+        },
+        {
+          "path": "tools/ws09f_c_editorial_supply_report.py",
+          "status": "added",
+          "present_in_v102_tree": false
+        }
+      ]
+    },
+    {
+      "pr": 79,
+      "files": [
+        {
+          "path": ".github/workflows/ws09f-c2-kotlin-lab.yml",
+          "status": "added",
+          "present_in_v102_tree": false
+        },
+        {
+          "path": "docs/WS09F_C2_KOTLIN_ENGINE_LAB_QA_2026-11-08.md",
+          "status": "added",
+          "present_in_v102_tree": false
+        },
+        {
+          "path": "labs/ws09f_c_kotlin/Smoke.kt",
+          "status": "added",
+          "present_in_v102_tree": false
+        },
+        {
+          "path": "labs/ws09f_c_kotlin/V4EngineLab.kt",
+          "status": "added",
+          "present_in_v102_tree": false
+        },
+        {
+          "path": "labs/ws09f_c_kotlin/candidates_test_only.txt",
+          "status": "added",
+          "present_in_v102_tree": false
+        },
+        {
+          "path": "tools/ws09f_c_kotlin_fixture_audit.py",
+          "status": "added",
+          "present_in_v102_tree": false
+        }
+      ]
+    },
+    {
+      "pr": 78,
+      "files": [
+        {
+          "path": ".github/workflows/ws09f-c-content-audit.yml",
+          "status": "added",
+          "present_in_v102_tree": false
+        },
+        {
+          "path": "design/marathon/v4_candidate_additions.json",
+          "status": "added",
+          "present_in_v102_tree": false
+        },
+        {
+          "path": "docs/WS09F_C_CONTENT_SUPPLY_AUDIT_2026-11-08.md",
+          "status": "added",
+          "present_in_v102_tree": false
+        },
+        {
+          "path": "docs/WS09F_C_PYTHON_GENERATOR_LAB_QA_2026-11-08.md",
+          "status": "added",
+          "present_in_v102_tree": false
+        },
+        {
+          "path": "tools/test_ws09f_c_generator_lab.py",
+          "status": "added",
+          "present_in_v102_tree": false
+        },
+        {
+          "path": "tools/ws09f_c_content_audit.py",
+          "status": "added",
+          "present_in_v102_tree": false
+        },
+        {
+          "path": "tools/ws09f_c_generator_lab.py",
+          "status": "added",
+          "present_in_v102_tree": false
+        }
+      ]
+    },
+    {
+      "pr": 67,
+      "files": [
+        {
+          "path": "docs/DEVELOPMENT_ROADMAP.md",
+          "status": "modified",
+          "present_in_v102_tree": true
+        },
+        {
+          "path": "docs/WS09B_MULTI_SESSION_PERSISTENCE_CONTRACT_2026-11-07.md",
+          "status": "added",
+          "present_in_v102_tree": false
+        }
+      ]
+    },
+    {
+      "pr": 59,
+      "files": [
+        {
+          "path": ".github/workflows/ws07f-records-collections-android-qa.yml",
+          "status": "added",
+          "present_in_v102_tree": false
+        },
+        {
+          "path": "app/build.gradle.kts",
+          "status": "modified",
+          "present_in_v102_tree": true
+        },
+        {
+          "path": "app/src/androidTest/java/com/playereden/gridmates/wordsearch/CollectionSettingsPolishAndroidTest.kt",
+          "status": "modified",
+          "present_in_v102_tree": true
+        },
+        {
+          "path": "app/src/androidTest/java/com/playereden/gridmates/wordsearch/CompactRecordsAndCollectionAndroidTest.kt",
+          "status": "added",
+          "present_in_v102_tree": false
+        },
+        {
+          "path": "app/src/main/java/com/playereden/gridmates/wordsearch/CollectionScreen.kt",
+          "status": "modified",
+          "present_in_v102_tree": true
+        },
+        {
+          "path": "app/src/main/java/com/playereden/gridmates/wordsearch/SoloRecordsScreen.kt",
+          "status": "modified",
+          "present_in_v102_tree": true
+        },
+        {
+          "path": "docs/WS07F_RECORDS_COLLECTIONS_ACCEPTANCE_2026-11-07.md",
+          "status": "added",
+          "present_in_v102_tree": false
+        },
+        {
+          "path": "scripts/ws07f_upgrade_emulator.sh",
+          "status": "added",
+          "present_in_v102_tree": true
+        }
+      ]
+    }
+  ],
+  "notes": [
+    "Base-chain membership is not a merge instruction or proof of patch equivalence.",
+    "Issue search returned records; unreturned state fields were not invented.",
+    "Issue 53 was independently fetched: open, zero comments.",
+    "No issue states or PR merges were changed."
+  ],
+  "main_only_before_recovery": [
+    {
+      "path": ".github/workflows/manage-qa-artifact-storage.yml",
+      "git_blob_sha1": "7d78ce89c6e4ea8645598535d3cfed6ac53365b0",
+      "size_bytes": 4340,
+      "restored_reference": false
+    },
+    {
+      "path": "design/asset-pipeline/asset-manifest.schema.json",
+      "git_blob_sha1": "372609d75b2aeda42742aacf21c00ed51963d8c5",
+      "size_bytes": 4900,
+      "restored_reference": false
+    },
+    {
+      "path": "design/font-library-candidates.json",
+      "git_blob_sha1": "dd5541d23addae6f37c659933c6c7e6a17a7628b",
+      "size_bytes": 8800,
+      "restored_reference": false
+    },
+    {
+      "path": "docs/CI_ACTIONS_ARTIFACT_RETENTION.md",
+      "git_blob_sha1": "ed220091709a405f4ee371aae16eaa0e04ed0570",
+      "size_bytes": 1002,
+      "restored_reference": true
+    },
+    {
+      "path": "docs/COMPETITOR_WORD_SEARCH_UX_RESEARCH_2026-11-06.md",
+      "git_blob_sha1": "32555d67b8170dad0fa11c4b8f6d6fa50dfdfc5f",
+      "size_bytes": 15250,
+      "restored_reference": true
+    },
+    {
+      "path": "docs/FONT_LIBRARY_LICENSE_RESEARCH_2026-11-06.md",
+      "git_blob_sha1": "c8b18cba296af6058f06b7d30e41f859674eb0c6",
+      "size_bytes": 14225,
+      "restored_reference": true
+    },
+    {
+      "path": "docs/MULTILINGUAL_SPANISH_RESEARCH_AND_DEV_PLAN.md",
+      "git_blob_sha1": "4a7e720549e0a6009c873b1dad7d1dcc535233e5",
+      "size_bytes": 28049,
+      "restored_reference": true
+    },
+    {
+      "path": "docs/PARITY_FIRST_QUALITY_PLAN.md",
+      "git_blob_sha1": "79a88616511fd4670ba4d97fca4219c50e4e3005",
+      "size_bytes": 9737,
+      "restored_reference": true
+    },
+    {
+      "path": "docs/WORD_LIBRARY_STATUS_2026-11-08.md",
+      "git_blob_sha1": "633c420d3cb6cdb44be1f28f7998425b4350a96e",
+      "size_bytes": 15204,
+      "restored_reference": true
+    },
+    {
+      "path": "docs/WORD_SEARCH_GENRE_MASTER_RESEARCH_2026-11-08.md",
+      "git_blob_sha1": "5807a1b94b192f26b4ba053b56552920a3a51235",
+      "size_bytes": 30300,
+      "restored_reference": true
+    },
+    {
+      "path": "docs/WS04D_B2_P0_PUZZLE_WORKSPACE_PLAN.md",
+      "git_blob_sha1": "8768e6e27efecbd552c3cab1ac9e26720e0a95c0",
+      "size_bytes": 8611,
+      "restored_reference": false
+    },
+    {
+      "path": "docs/WS04D_B4_PREPLAYTEST_AUDIT_AND_QA_PLAN.md",
+      "git_blob_sha1": "d36a7507ee148bc1d172db23421b9eb17161b03b",
+      "size_bytes": 9076,
+      "restored_reference": false
+    },
+    {
+      "path": "docs/WS12_VISUAL_ASSET_PRODUCTION_PLAN.md",
+      "git_blob_sha1": "aa62a25faa4fc8b5c17144cd53e13ef0bb861eac",
+      "size_bytes": 8174,
+      "restored_reference": false
+    }
+  ],
+  "research_recovery_source": "9043cf4c942da598b5841cc39c361c99abd9ef26"
+}

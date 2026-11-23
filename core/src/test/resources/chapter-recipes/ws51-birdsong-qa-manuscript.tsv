@@ -1,0 +1,53 @@
+page	page_title	answer	display	word_id	tier	provenance
+1	Forest Friends	ROBIN	Robin	gm000068	familiar	existing_woodland_birds_QA
+1	Forest Friends	CROW	Crow	gm000075	familiar	existing_woodland_birds_QA
+1	Forest Friends	WREN	Wren	gm000076	familiar	existing_woodland_birds_QA
+1	Forest Friends	HAWK	Hawk	gm000071	familiar	existing_woodland_birds_QA
+1	Forest Friends	FINCH	Finch	gm000077	familiar	existing_woodland_birds_QA
+1	Forest Friends	BEAK	Beak	ws51b001	familiar	ws51_editorial_candidate_unapproved
+1	Forest Friends	WING	Wing	ws51b002	familiar	ws51_editorial_candidate_unapproved
+1	Forest Friends	NEST	Nest	ws51b003	familiar	ws51_editorial_candidate_unapproved
+1	Forest Friends	EGGS	Eggs	ws51b004	familiar	ws51_editorial_candidate_unapproved
+1	Forest Friends	CHIRP	Chirp	ws51b005	familiar	ws51_editorial_candidate_unapproved
+1	Forest Friends	FLOCK	Flock	ws51b006	familiar	ws51_editorial_candidate_unapproved
+1	Forest Friends	FEATHER	Feather	ws51b007	familiar	ws51_editorial_candidate_unapproved
+2	Feathers and Flight	SPARROW	Sparrow	gm000069	familiar	existing_woodland_birds_QA
+2	Feathers and Flight	BLUEBIRD	Bluebird	gm000003	familiar	existing_woodland_birds_QA
+2	Feathers and Flight	CARDINAL	Cardinal	gm000078	familiar	existing_woodland_birds_QA
+2	Feathers and Flight	EAGLE	Eagle	gm000072	familiar	existing_woodland_birds_QA
+2	Feathers and Flight	RAVEN	Raven	gm000074	familiar	existing_woodland_birds_QA
+2	Feathers and Flight	QUAIL	Quail	gm000085	familiar	existing_woodland_birds_QA
+2	Feathers and Flight	ORIOLE	Oriole	gm000079	familiar	existing_woodland_birds_QA
+2	Feathers and Flight	SWALLOW	Swallow	gm000081	familiar	existing_woodland_birds_QA
+2	Feathers and Flight	PHEASANT	Pheasant	gm000084	familiar	existing_woodland_birds_QA
+2	Feathers and Flight	GROUSE	Grouse	gm000086	familiar	existing_woodland_birds_QA
+2	Feathers and Flight	SONG	Song	ws51b008	familiar	ws51_editorial_candidate_unapproved
+2	Feathers and Flight	FLIGHT	Flight	ws51b009	familiar	ws51_editorial_candidate_unapproved
+2	Feathers and Flight	PERCH	Perch	ws51b010	familiar	ws51_editorial_candidate_unapproved
+2	Feathers and Flight	ROOST	Roost	ws51b011	familiar	ws51_editorial_candidate_unapproved
+2	Feathers and Flight	TALON	Talon	ws51b012	familiar	ws51_editorial_candidate_unapproved
+2	Feathers and Flight	HATCH	Hatch	ws51b013	familiar	ws51_editorial_candidate_unapproved
+3	Birdsong Challenge	WOODPECKER	Woodpecker	gm000010	familiar	existing_woodland_birds_QA
+3	Birdsong Challenge	BLACKBIRD	Blackbird	gm000070	familiar	existing_woodland_birds_QA
+3	Birdsong Challenge	FALCON	Falcon	gm000073	familiar	existing_woodland_birds_QA
+3	Birdsong Challenge	WARBLER	Warbler	gm000080	familiar	existing_woodland_birds_QA
+3	Birdsong Challenge	KINGFISHER	Kingfisher	gm000082	familiar	existing_woodland_birds_QA
+3	Birdsong Challenge	HUMMINGBIRD	Hummingbird	gm000083	familiar	existing_woodland_birds_QA
+3	Birdsong Challenge	CHICKADEE	Chickadee	gm000087	familiar	existing_woodland_birds_QA
+3	Birdsong Challenge	NUTHATCH	Nuthatch	gm000088	familiar	existing_woodland_birds_QA
+3	Birdsong Challenge	NIGHTINGALE	Nightingale	gm000182	intermediate	existing_woodland_birds_QA
+3	Birdsong Challenge	KESTREL	Kestrel	gm000183	intermediate	existing_woodland_birds_QA
+3	Birdsong Challenge	WAXWING	Waxwing	gm000184	intermediate	existing_woodland_birds_QA
+3	Birdsong Challenge	SAPSUCKER	Sapsucker	gm000185	intermediate	existing_woodland_birds_QA
+3	Birdsong Challenge	FLYCATCHER	Flycatcher	gm000186	intermediate	existing_woodland_birds_QA
+3	Birdsong Challenge	TREECREEPER	Treecreeper	gm000187	intermediate	existing_woodland_birds_QA
+3	Birdsong Challenge	PLUMAGE	Plumage	ws51b014	intermediate	ws51_editorial_candidate_unapproved
+3	Birdsong Challenge	MIGRATE	Migrate	ws51b015	intermediate	ws51_editorial_candidate_unapproved
+3	Birdsong Challenge	WINGSPAN	Wingspan	ws51b016	intermediate	ws51_editorial_candidate_unapproved
+3	Birdsong Challenge	BIRDHOUSE	Birdhouse	ws51b017	intermediate	ws51_editorial_candidate_unapproved
+3	Birdsong Challenge	BIRDBATH	Birdbath	ws51b018	intermediate	ws51_editorial_candidate_unapproved
+3	Birdsong Challenge	FLEDGLING	Fledgling	ws51b019	intermediate	ws51_editorial_candidate_unapproved
+3	Birdsong Challenge	FEEDER	Feeder	ws51b020	intermediate	ws51_editorial_candidate_unapproved
+3	Birdsong Challenge	BIRDSONG	Birdsong	ws51b021	intermediate	ws51_editorial_candidate_unapproved
+3	Birdsong Challenge	HATCHLING	Hatchling	ws51b022	intermediate	ws51_editorial_candidate_unapproved
+3	Birdsong Challenge	NESTLING	Nestling	ws51b023	intermediate	ws51_editorial_candidate_unapproved

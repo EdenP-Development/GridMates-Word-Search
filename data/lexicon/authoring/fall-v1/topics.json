@@ -1,0 +1,29 @@
+{
+  "schema_version": 1,
+  "topics": [
+    {
+      "id": "fall",
+      "label": "Fall",
+      "status": "active",
+      "subtopics": [
+        "turning-leaves",
+        "crisp-air",
+        "harvest",
+        "woodland-season",
+        "autumn-kitchen",
+        "fall-traditions"
+      ]
+    },
+    {
+      "id": "seasons",
+      "label": "Four Seasons",
+      "status": "active",
+      "subtopics": [
+        "spring",
+        "summer",
+        "autumn",
+        "winter"
+      ]
+    }
+  ]
+}

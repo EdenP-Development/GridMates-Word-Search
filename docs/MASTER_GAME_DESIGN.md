@@ -1,13 +1,9 @@
-**Expanded word-library ambition (November 8, 2026):** Owner target is **10,000+ unique, approved words across 30+ themes**. New independently validated candidate/editorial pipeline in [draft PR #86](https://github.com/PlayerEden/GridMates-Word-Search/pull/86), full tracking in [WS-10 issue #87](https://github.com/PlayerEden/GridMates-Word-Search/issues/87). Existing generators, seeds, APK, and saved puzzles remain unchanged; 10K words have **not** been added yet.
-
-**Genre research reference (Nov 8, 2026):** [Word Search — History, Audience, Rules, Stats & Design](./WORD_SEARCH_GENRE_MASTER_RESEARCH_2026-11-08.md) · [Word Library Inventory and Editorial Audit](./WORD_LIBRARY_STATUS_2026-11-08.md). These are living **research/reference documents**, not new Android build or release claims.
-
-**Current cosmetic policy (Nov 6, 2026):** All portraits, board fonts and marker styles are **free unlockables earned through gameplay/achievements**; a usable, legible default remains free. No font shop, paid fonts, billing integration, watch-to-unlock ads or gacha in the active development plan. Future monetization references elsewhere in this specification are optional possibilities only and require a separate explicit decision. Keep earned entitlements idempotent and persisted across restart; unknown equipped font IDs must safely fall back to the default.
+> **Current implementation and priorities:** [Current Product Roadmap](CURRENT_PRODUCT_ROADMAP.md). This master remains the design reference; dated historical statuses below do not supersede the live handoff or later owner decisions.
 
 # GridMates: Word Search — Master Game Design Document
 
-**Version:** Design baseline 0.1 — November 5, 2026  
-**Status:** Living design / pre-implementation; not a claim that features are built or tested  
+**Version:** Living master design — WS-07 owner-playtest research addendum, November 7, 2026  
+**Status:** [WS-07E v0.8.1 automated QA receipt](WS07E_BUILD_QA_2026-11-07.md): **90/90 API35 tests PASS**, signed install-over preserves Solo/Daily/identity/Race/Duel. The first WS-07E pass reduces Daily Journal scrolling and lets players review already purchased clues without spending more. **Two actual phones' Co-op P0 and human accessibility checks remain untested/deferred**. [Roadmap](DEVELOPMENT_ROADMAP.md) tracks remaining UX, stacked draft branches are unmerged, no production release.  
 **Repository:** https://github.com/PlayerEden/GridMates-Word-Search  
 **Companion plan:** [Development Roadmap](DEVELOPMENT_ROADMAP.md)  
 **Planning rule:** Preserve accepted decisions, clearly label proposals, and revise this document when playtesting changes our mind.
@@ -16,12 +12,28 @@
 
 ---
 
+## WS-14H2 — Regular illustrated book size ceiling (Nov 9, 2026)
+
+**Owner-directed product decision:** Regular Puzzle Books use **12×12, 15×15 and 20×20 maximum**; screenshots of the compact bulb header on 12/15/20 support this layout. Boards **25×25 and 30×30** are intentional **optional large-board Free Play** choices, not required paperback progression. The existing V2 `bookPresets` and V3 `largePresets` / Solo `soloPresets` support exactly this without engine changes. Future UI may group these large options under **Large Puzzles**, but they are not a new generator or new save format. Keep existing published IDs/hashes/saves and any historical content intact. 100×100 Marathon remains a separate future R&D concept.
+
+**WS-14I source follow-up (Nov 9):** The original total 4-step hint quota on 20×20 was removed in favor of **3 progressive clues per remaining word** (maximum 3 × published targets). [Green exact-source Android/art QA](devlog/2026-11-09_WS14I_HINT_RELIABILITY_AND_20X20_TRACE_TEST_RECEIPT.md) confirms core tests, compiled 20×20 gesture test and a QA APK; **physical word tracing, 5-tap hint use and save/reopen are still pending owner confirmation**. No hint-schema or saved puzzle ID migration. Earlier observation below is historical.
+
+**Important unresolved gameplay QA:** the new 20×20 Hint bulb displays “No hints available” at 0/24 in one owner screenshot. Current rule allows four total 20×20 hint steps before returning null, and storage failures can also produce null; investigate actual reason, then improve feedback and consider hint accessibility without silently changing scoring. Positive visual layout reaction does not prove successful word tracing, precision selection, zoom or persistence. Source/playtest detail: [WS-14H2 device review](devlog/2026-11-09_WS14H2_PHONE_SPACING_AND_BOOK_SIZE_CEILING.md).
+
+## WS-09 owner playtest direction — foundation before expansion (November 7, 2026)
+
+The owner and a family player reviewed **15 actual v0.8.5 Android phone screenshots**. Agreed direction: zero-radius **square actual grid** without clipped corner letters, responsive book-style side margins, calm/readable paperback presentation, and simpler pre-game mode/theme/board/challenge selection instead of configuring the puzzle after entering it. Support multiple unfinished Solo puzzles and eventually one **continuous** 100×100 Marathon board with optional regional navigation (regions are not separate puzzles). Improve giant-board panning, 2-tap selection, word-list accessibility, Home, Records, Collections, Fonts and Settings. Preserve small puzzles, content/difficulty independence, and readable typography. **Do not treat 100×100 as already feasible/implemented.**
+
+**Critical release priority:** A family tester is actively playing an older APK; identify exact version/signer and verify portable export before any destructive migration. Freeze legacy puzzle seed-to-layout behavior, make new generators versioned and verify genuine signed upgrade/restore of partial found words, hints, timers, Daily/profile/match journals. Default QA only; all drafts unmerged. Existing WS-08 beta gate and physical Co-op P0 stay open. Work and exact acceptance criteria live in **[WS-09 foundation plan](WS09_FOUNDATIONS_GAMEPLAY_SAVE_MARATHON_2026-11-07.md)** and the [master roadmap](DEVELOPMENT_ROADMAP.md).
+
+---
+
 ## 0. Status key and decision authority
 
 - **DECIDED** = directly agreed in the planning conversation or inherited as an established GridMates series direction.
 - **BASELINE PROPOSAL** = recommended starting behavior; implementation and playtesting may change it.
 - **FUTURE / OPEN** = deliberately deferred or requires an explicit later design decision.
-- **IMPLEMENTED / TESTED** = may be used only after verified Word Search source/build/QA evidence exists. Nothing in this document is currently marked implemented.
+- **IMPLEMENTED / TESTED** = use only when a verified Word Search source/build/QA receipt supports it. See the current linked receipts and dated implementation appendix rather than assuming historical 2026-11-05 design descriptions are current implementation claims.
 
 **Decided on November 5, 2026:**
 1. Word Search is a **separate Android app and separate GitHub repository**, part of the GridMates family.
@@ -134,7 +146,6 @@ Initial themed pack candidates: Animals, Nature, Food, Places, Seasons, Space, H
 - Distinguish family-friendly themes from material requiring age/content consideration. Avoid accidentally offensive filler strings.
 - Expand content packs incrementally; deduplicate recent puzzles locally where practical, but do not claim globally unique endless puzzles.
 - Future localization requires its own alphabet, word segmentation, input, clue display, and content-quality review; do not assume English A–Z works for every language.
-- **Research completed for future expansion (November 6, 2026):** [Multilingual & Spanish Research and Development Plan](MULTILINGUAL_SPANISH_RESEARCH_AND_DEV_PLAN.md), [future issue #19](https://github.com/PlayerEden/GridMates-Word-Search/issues/19). **App language and puzzle language must be independent**. Spanish content gets versioned locale-specific packs, preserved Ñ and accents, grapheme-aware grid representation and real editorial/licensing review. Do not modify v1 seeded English saves/Daily during this preparation. Spanish implementation is **deferred** until the Sudoku-parity gameplay/Android QA and multiplayer goals; this is a guardrail, not a shipped feature.
 
 ---
 
@@ -332,26 +343,6 @@ For Word Search:
 - Rewards, if implemented, must be atomic, idempotent per dated challenge, and persisted safely.
 - Decide later whether GridMates titles share a common wallet; **assume they do not** for first release.
 
-### 7.4 Puzzle Bookshelf / thematic book collections — WS-11
-
-**Previously designed under [word-library research #18](https://github.com/PlayerEden/GridMates-Word-Search/issues/18) and restored as [dedicated WS-11 milestone #90](https://github.com/PlayerEden/GridMates-Word-Search/issues/90). This is NOT implemented in the current Android Collection tab.** The app's profile Collection currently focuses on portraits, fonts and earned cosmetics; these are distinct from content-filled, playable puzzle books.
-
-The **Library / Bookshelf** is a familiar paperback-inspired place to browse collections of curated, reproducible word-search *chapters*, with covers, chapter progress and a clear Continue Reading/bookmark action. First thematic pilots could be Woodland Vol. I, Space Vol. I and Garden Vol. I, pending editorial/content/visual approval. Books sit **alongside** endless randomly generated Free Play and deterministic Daily; none replaces another. Keep basic content accessible, offline and low-pressure; no forced login or paid/randomized entitlement for essential gameplay.
-
-Each chapter must pin a published `book_id`, `chapter_id`, fixed word/puzzle manifest or seed, approved lexicon/corpus version, generator version, size/difficulty and content hash. Chapter identity/selection must survive app upgrades; source-control actual golden puzzles and backup/recovery tests. A progress store tracks completed chapters, optional book completion and the current bookmark without rewriting existing Solo/Daily/puzzle-save schemas. **Research-only V4 PREVIEW IDs are not valid published book IDs.**
-
-**Roadmap:** WS-11A UX/metadata design; B immutable book/chapter schema; C curated approved pilot; D Android browsing/continue/play and persistence; E real-phone readability, offline/signed upgrade, chapter uniqueness and saved-book reconstruction QA. WS-10C/D approved themed content and stable IDs are dependencies for real chapters, but bookshelf design and isolated metadata tests can proceed sooner.
-
----
-
-### 7.5 Generated art, Adobe refinement and production asset approval — WS-12
-
-**[WS-12 issue #91](https://github.com/PlayerEden/GridMates-Word-Search/issues/91)** formalizes generated art and Adobe-supported cleanup/refinement for the playable **WS-11 Bookshelf** and *separate* cosmetic Collections. See [visual production plan](WS12_VISUAL_ASSET_PRODUCTION_PLAN.md) and [draft asset manifest](../design/asset-pipeline/asset-manifest.schema.json).
-
-**Design principle:** create/select concepts, refine in Adobe Express and appropriate image/vector tools, conduct a human visual and rights review, then freeze approved exact source files/optimized exports with stable identifiers and SHA-256. Bookshelf pilots target Woodland/Space/Garden cover, spine, emblem and chapter/stamp identities. Real titles/progress/buttons stay native UI text; readability and touch accuracy outrank decorative sprites. Existing original Woodland portraits and their IDs are never casually replaced. Fonts and third-party Adobe/Stock assets require distribution-license review. The availability of plugins is not automatic clearance to ship any asset.
-
-**WS-11C/D depends on approved WS-12C pilot visuals** for its finished presentation, and WS-10 approved content for playable fixed chapters. Planning and manifests alone do **not** mean any art or Android feature is already built.
-
 ---
 
 ## 8. Monetization and publication boundaries
@@ -513,3 +504,87 @@ These are intentionally **not** silently decided by this document:
 5. Deliver verifiable result: commit/branch, what changed, tests and Android install QA, unresolved issues, artifact/checksum if built, rollback point.
 6. Update roadmap status and this document when decisions change. Do not replace player feedback with speculative polish.
 7. Never edit Sudoku's repo to complete Word Search work without explicit separate authorization.
+
+
+---
+
+## November 7, 2026 — implementation and QA status (supersedes original planning-only header)
+
+The original master design is preserved as a decision/reference document; it is not a current list of unimplemented features. For source-matched implementation evidence, start at [START HERE](START_HERE.md), the [roadmap](DEVELOPMENT_ROADMAP.md), and the [WS-06A full QA receipt](WS06A_BUILD_QA_2026-11-07.md).
+
+**Implemented in stacked draft code:** actual Solo/Daily word-search gameplay, active puzzle saves, profiles/achievements, free earned Woodland portraits and collectible board fonts, manual JSON backup/restore, same-Wi-Fi Nearby Co-op with discovery/admission/reconnect and partner chat, screenshot-driven visual/accessibility polish, and **Shared Board Race** (single shared board, first host-accepted word earns a point, match ends after every word, winner/tie). LAN protocol is v5; the QA build is v0.6.0 versionCode 22 with stable public test-only signing.
+
+**Automated evidence:** [49 real API35 Android emulator tests passed](https://github.com/PlayerEden/GridMates-Word-Search/actions/runs/42343699693); original stable-signed v0.5.9→v0.6.0 APK update preserved existing local Solo/profile JSON. Exact SHA, artifact, checksum and rollback branch are in the [receipt](WS06A_BUILD_QA_2026-11-07.md). Physical two-phone Wi-Fi/race/rotation/TalkBack acceptance still deferred; an emulator cannot replace real devices.
+
+**Still future:** separately playable Speed Duel with coordinated ready/start and private boards; idempotently persisted Versus records and post-match comparison; production Play release/signing; online accounts/servers. Do not imply these are already implemented merely because they are in this master design.
+
+All PRs #30–#42 are still **DRAFT and UNMERGED** while the owner defers physical testing. The live feature stack is PR #42 on #41 on #40 on #39 and older; never develop from the tiny default main tree without reading the current handoff.
+
+
+## November 7, 2026 — WS-06B local Versus journal update
+
+Shared Board Race completed outcomes are now stored once per room in the existing local atomic profile (schema 4 optional races field) and in exported/restored backup JSON. Nearby Versus Stats show win/loss/tie and recent results without changing Solo/Daily; after each verified finish there is a player-relative comparison of points and word ownership. [Exact source and 52-test Android verification](WS06B_BUILD_QA_2026-11-07.md). A real two-phone Wi-Fi race and actual-device recovery test remain open. Speed Duel still needs a separate private-board authority and coordinated ready/start.
+
+
+## November 7, 2026 — WS-06C independent Speed Duel
+
+Speed Duel is now implemented separately from Shared Board Race in cumulative [draft PR #44](https://github.com/PlayerEden/GridMates-Word-Search/pull/44), with its own host-owned private word ledgers, per-player readiness and simultaneous GO broadcast, personal word highlights only, public opponent progress counts, and first host-accepted complete board deciding the winner. Near-simultaneous finishes have a deterministic order rather than a forced tie. Original Co-op/Race modes and Solo/Daily/Versus journal remain intact. LAN protocol increases from v5 to v6. [Verified 57-test API35 QA receipt](WS06C_BUILD_QA_2026-11-07.md) includes an install-over from real signed v0.6.1 preserving prior local race journal. Both real phones and anti-cheat security remain unverified; the opponent cannot see a list of discovered words through ordinary client state, but deterministic puzzle seed and unencrypted LAN are not adversarially secure. A distinct Speed Duel persistent result journal is deferred to WS-06D.
+
+
+## November 7, 2026 — WS-06D Speed Duel records
+
+Speed Duel now has a **distinct persistent winner/loser journal**, not a subset of Shared Board Race history. Only completed, recipient-scoped, host-verified outcomes are recorded. The first record for each hosted room remains immutable across retries and reconnections. Player Stats show separate Duel Played/Wins/Losses and recent matches; backup Export/preview/Restore include Duel history as an optional schema-4 array, with older backups supported and invalid/duplicate awards rejected. No opponent word IDs are exposed or stored as history. The final Duel card shows both counts and save status. [Source-matched 60-test QA receipt](WS06D_BUILD_QA_2026-11-07.md) proves an install-over from original v0.7.0 preserving Solo/Daily/profile and prior Race history. Owner two-device fairness, Wi-Fi loss and actual handset acceptance remain open; LAN traffic is not cryptographically secure. Next is UX/presence polish and potential sharing in WS-06E.
+
+
+## November 7, 2026 — WS-06E friendly presence and optional sharing
+
+Cumulative [draft PR #46](https://github.com/PlayerEden/GridMates-Word-Search/pull/46) adds a compact, accessible "Playing with someone nearby" panel using real friend connection, local display name, personal contributions and mode-specific stage, with **Speed Duel showing only the opponent count**. Completed, host-verified Co-op, Race and Duel have a player-relative, spoiler-safe optional Share result text preview; competitive result must be persisted before sharing. Solo/Daily's pre-existing share action now also previews exact text before Android Sharesheet. There are no room codes, IP addresses, chat logs, private word IDs, online services or invented Play URL in the exported text. This is **text sharing, not PNG card export**. [63-test exact-source Android QA](WS06E_BUILD_QA_2026-11-07.md) verified a v0.7.1→v0.7.2 install-over retaining Race and Duel journals. The latest Nov 6–7 [Sudoku design briefs](WS06E_NEARBY_PRESENCE_SHARE_QA_PLAN_2026-11-07.md) helped set privacy, preview and co-op cosmetic future design boundaries. Shared cosmetic tiers and no-router/Bluetooth transport remain future proposals. Real two-phone LAN fairness, large text and actual share targets still require owner acceptance.
+
+
+## November 7, 2026 — WS-06F image result postcards
+
+Cumulative [draft PR #47](https://github.com/PlayerEden/GridMates-Word-Search/pull/47) adds an optional, fully offline **1080×1350 (4:5) result postcard** for completed Solo/Daily/Co-op/Shared Board Race/Speed Duel, based only on already validated spoiler-safe share text. A visible preview gives independent **Share text / Share image / Cancel** choices; image sending uses a read-only scoped Android FileProvider content URI, not permission to other app-private data. The paper/forest/gold styling, bundled Atkinson/Plex fonts, and abstract empty grid match the Word Search aesthetic. No usernames, room credentials, private found-word lists, real puzzle answers or fake stats enter a shared card. [Exact-source 67-test Android QA](WS06F_BUILD_QA_2026-11-07.md) passed including actual signed v0.7.2→v0.7.3 update preserving both Race and Duel histories. The owner's physical Android Sharesheet target-app/scale testing remains OPEN. A future shared Co-op board-theme feature needs its own catalog/selection and accessibility policy; Sudoku's technical display-rank proposal does not establish Word Search entitlements.
+
+
+## November 7, 2026 — WS-06G Shared Co-op Board Appearance (free preview)
+
+Cumulative [draft PR #48](https://github.com/PlayerEden/GridMates-Word-Search/pull/48) now offers three baked-in free **Word Search** grid looks: Classic Paper, Linen Sketch and Blueprint Study. These have an explicit technical display priority **but no rarity, achievement requirement, paid item or unlock entitlement**. During Nearby **Co-op only**, host and guest can each choose before joining; a host-authoritative common look is resolved at the first acknowledged guest admission and frozen for the whole room, including reconnect. Per-phone board font and personal **Use Classic on my phone** visual override remain independent, as do public green/blue claim markers. Solo/Daily/Shared Board Race/Speed Duel remain Classic and do not borrow temporary looks. The change introduces allowlisted room `look` with **LAN v7**, preserving schema-4 saves. [Exact-source 71-test Android QA receipt](WS06G_BUILD_QA_2026-11-07.md) includes a real signed v0.7.3→v0.7.4 update retaining both competitive journals. The original inspiration was [Sudoku's Co-op themes design proposal](https://github.com/PlayerEden/SudokuTogether/blob/development/docs/GRIDMATES_SHARED_COOP_BOARD_THEMES_DESIGN.md), not a copy of Sudoku's cosmetic IDs or ownership. Real two-phone room-theme synchronization, accessibility at 200% font and hardware network testing remain OPEN.
+
+---
+
+## WS-07 — Owner playtest-driven design correction (November 7, 2026)
+
+**Supersedes earlier provisional touch/layout patterns when they conflict.** Nine real-phone screenshots and a two-phone Nearby session revealed a severe puzzle interaction failure: both phones could connect, yet neither player could mark a word. The pictures additionally showed cropped default zoom, tiny Expert 20×20 touch targets and heavy scrolling through gameplay information. Do not conflate session connectivity with game playability.
+
+### Revised locked UX outcomes
+
+- **Play must feel as natural as drawing a line through a paper book.** Default word drag uses one finger, accurately registers the first pressed cell and the final released cell, previews a straight/diagonal/reversed path and offers understandable invalid/accepted feedback. A second tap to select the last letter is a non-dragging alternative. Never rely on an undiscoverable Find/Move switch.
+- **Make zoom optional rather than compulsory.** On opening any 12×12/15×15/20×20 puzzle, show the entire board. Two-finger pinch and two-finger pan are navigation gestures and never submit a word; +/− and Fit are visible, single-pointer alternatives. At 20×20, the fit view is an overview rather than a claim of comfortable precision: research/try a loupe, center crosshair, or non-drag cell navigator. Selected-cell previews, labels and lines must match validated board coordinates.
+- **No whole-page gameplay scrolling.** Active Solo/Daily/Co-op/Race/Duel screen uses a stable grid, minimal progress/connection/partner HUD, small visible target preview and accessible actions for full word list, chat, room details and results. Word-list/chat/history/collection/settings sheets or separate views can scroll when deliberately opened; active gameplay never disappears above/below a scrolling page. Adaptive landscape and 200%-font screens must not squeeze a board into unreadable cells.
+- **Multiplayer trust remains grounded.** Co-op first valid shared claim, Race one host-confirmed owner and word-by-word final comparison, Duel independent private boards and Ready/GO. Both players must be able to mark a word on real phones before any mode is labeled accepted. Friendly presence uses truthful connection state. Do not reveal partner's private Duel word IDs or paths.
+- **Accessibility is not merely enlarged text.** Standard controls should have Android-recommended 48dp touch areas; the 20×20 grid itself is a special spatial input surface and needs alternatives. Avoid requiring screen reader users to navigate 400 ungrouped cells as the sole selection path. Test TalkBack, Switch Access, 200% text, contrast, keyboard access and motor-accessible non-drag equivalents. Celebrate completed words without requiring color-only identification.
+- **Ease over additional options.** Keep simple Home > Continue Solo, Daily, Host/Join; optional room codes and styles under secondary options. Settings, profiles, collections, achievements, sharing and saved records remain reachable but do not interrupt a puzzle.
+- **Hint and content review remains planned, not an accidental redesign.** The master’s intended hint ladder is generous and should help at the last word; actual shipped Solo/Daily budgets are stricter and must be evaluated. Curated themes, replay variety, and reward/cosmetic presentation should follow usability measurements. Avoid purchasing/ads/online services until independently approved.
+
+### Technical acceptance gates (MUST pass before release candidacy)
+
+1. Finger-down/move/up/cancel, direction lock, coordinate mapping, clipping/scaling, pan/zoom matrix and 2-finger interruption pass deterministic tests on multiple board sizes and orientations; test via actual Compose pointer injection, not only core word validation.
+2. **Owner two-phone P0:** each phone finds at least a horizontal, diagonal/reversed, edge and two-tap target; both receive the correct host-approved updated board; no accidental claims on pinch/pan.
+3. Whole gameplay view fits in the available viewport without scroll and exposes progress, board and words; mode setup, word list, chat and information use clearly summoned subordinate surfaces.
+4. Check width/height adaptation, 320dp and common screen sizes, orientation, 200% system text, TalkBack/Switch Access, feedback, failure/reconnect and back navigation.
+5. Full standard CI + API35 emulator + actual same-signer v0.7.6→candidate signed install-over; preserve Solo/Daily/profile/Race/Duel and recorded finished results; real owner acceptance still required.
+6. Rollback to verified source and signing identities, review stacked drafts before any merge, and do not publish QA app as a store production release.
+
+### Research references / evidence
+
+The complete evidence, Android and W3C source links, proposed metrics and execution order are in [WS-07 Playtest Research & UX Spec](WS07_PLAYTEST_RESEARCH_AND_UX_SPEC_2026-11-07.md) and the [WS-07A physical checklist](WS07A_REAL_PHONE_TOUCH_ACCEPTANCE_2026-11-07.md). The original WS-06G and WS-06I source records remain historical facts, not evidence the current P0 is fixed.
+
+
+### WS-07A automated QA result, November 7 (does not supersede physical gate)
+
+The [complete v0.7.7 receipt](WS07A_BUILD_QA_2026-11-07.md) records **78/78 emulator tests passing** following touch geometry/direction correction, same-signer v0.7.6→v0.7.7 preserved save, APK checksum and pinned rollback. The initially failed 15×15/20×20 host/guest swipe tests are green in this distinct run. **No human-operated two-phone Co-op success is claimed.** Continue [WS-07B–G](DEVELOPMENT_ROADMAP.md) only with that distinction and current physical acceptance checklist.
+
+
+### WS-07B compact first-time entry, automated gate (November 7)
+
+[Verified WS-07B QA receipt](WS07B_BUILD_QA_2026-11-07.md): new compact paperback Home keeps saved Solo/Daily/Together actions readily visible; Nearby places Host and Join before optional look/theme/room code, with manual join disclosed on request. The actual API35 suite passed **80/80 tests** including the 360×720dp primary CTA visibility tests and all previous gesture/regression checks. Live active gameplay remains a fixed board scene; advanced sheets and secondary history screens may still scroll. **Do not claim the owner's two-phone P0 is fixed until the real pair succeeds**. No gameplay rules, LAN v7, schema4, package ID or signer changed.

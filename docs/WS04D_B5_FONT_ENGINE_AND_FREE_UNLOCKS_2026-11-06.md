@@ -1,43 +1,50 @@
-# WS-04D-B5 — Font-neutral word grid and free achievements (implementation plan)
+# WS-04D-B5 — Font engine, free unlocks and Android acceptance
 
-**Started:** November 6, 2026. **Source work:** [draft PR #30](https://github.com/PlayerEden/GridMates-Word-Search/pull/30), stacked on green B4 [PR #28](https://github.com/PlayerEden/GridMates-Word-Search/pull/28). **Owner phone approval and source CI at the new B5 commit still separate.**
+**Checkpoint:** November 6, 2026  
+**Implementation:** [Draft PR #30](https://github.com/PlayerEden/GridMates-Word-Search/pull/30), stacked on B4 draft PR #28.  
+**Owner decision:** All current cosmetic fonts are **free achievement unlocks**. No shop, ads-for-rewards, paid currency, IAP, purchase entitlement or monetization gate.
 
-## Product decision and player experience
+## Intended experience
 
-Every cosmetic typeface is **free**, not purchasable; the existing achievement records decide access. No store, Google Play Billing, ads, reward watching, gacha or separate currency. Always provide a readable font from first launch. The player opens **Collection → Fonts** to preview a short letter grid in the real rendering style, then equips an earned font. Choosing a font changes no existing seeded letters, solution coordinates, hint allowance, scoring or saved completion.
+Letter *ink* must sit in equal cells with visually balanced free space, even for narrow `I`, wide `W/M`, round `O/Q` and handwriting fonts. The player can preview and equip a bundled font without changing puzzle generation, positions, board sizes, hint allowance, saved puzzle identity, completed results or touch mapping.
 
-Initial source-backed candidate set (each licensed under its publisher's **OFL-1.1**; exact binaries imported at Android build time):
+The default remains a free accessible font. Unlocks derive from persistent achievement evidence and should reappear retroactively when prior completion records are loaded. Unknown or locked equipped-font IDs fall back to the default.
 
-| In-game style | Upstream typeface | Access |
+## B5 implementation under review
+
+- `BoardGlyphPainter` draws glyphs on the same Canvas as the grid and found/highlight paths. It measures each font's uppercase ink rectangle, chooses a common safe text size per cell, and centers the actual bounds rather than centering a variable-width text layout box. The existing *whole-board* graphics-layer transform applies to the letter paint, lines and touch hit regions together.
+- Font files are built **offline into the Android APK**. The CI importer checks a pinned `google/fonts` revision, exact Git blob identity, byte length, SHA-256 and uppercase A–Z coverage before copying each font and its matching full OFL notice into app resources/assets. See `design/font-library-approved-b5.json`.
+- `Collection → Fonts` provides a sample puzzle-letter preview, earned/locked/equipped status, an equip action and a full-license dialog; `SoloStore` remembers the equipped font separately from the JSON gameplay save.
+- The chosen fonts affect **puzzle letters only**. Independent UI typeface selection is not shipped in B5.
+
+### Bundled styles and unlocks
+
+| Style / font | Registry ID | Unlock evidence |
 | --- | --- | --- |
-| Readable Print | Atkinson Hyperlegible | Always available |
-| Classic Typewriter | IBM Plex Mono | **First Page**: complete first Solo or Daily |
-| Modern Print | DM Mono | **Puzzle Regular**: complete five Solo/Daily puzzles |
-| Pencil Notes | Patrick Hand | **Today Counts**: finish first Daily |
+| Readable Print — Atkinson Hyperlegible | `atkinson` | Available by default |
+| Classic Typewriter — IBM Plex Mono | `plex` | First completed puzzle (`first_puzzle`) |
+| Modern Print — DM Mono | `dmmono` | Five completed puzzles (`five_puzzles`) |
+| Pencil Notes — Patrick Hand | `patrick` | First completed Daily (`one_daily`) |
 
-All achievements are already represented in durable Word Search profile/record data. Unlocks derive from those facts, including older completions. There is no extra inventory counter to duplicate or desynchronize.
+Names and counts above describe the draft B5 implementation, not owner acceptance of font readability.
 
-## Implementation and font supply chain
+## Quality gates before next owner phone playtest
 
-- App renderer uses a single drawing surface with equal-width/height grid cells and computes visual ink bounds separately for each glyph. It chooses a **per-font safe size** from the widest/tallest A–Z glyph at 100-px sample scale and places each glyph by its actual ink center rather than Android's device-default text linebox.
-- It retains the existing whole-board scale, marker drawings, cell drag/tap coordinates and accessible per-letter semantics. At 12×12/15×15/20×20 and zoom 100/145/185/250%, no glyph should cross a cell edge or appear stuck against a grid line.
-- Android builds import TTF binaries and full OFL copyright/license text from **google/fonts commit `24ddc1f324cac5d9f5aedca126d298f56e3f1640`**, using four sparse family directories. The manifest [design/font-library-approved-b5.json](https://github.com/PlayerEden/GridMates-Word-Search/blob/feature/ws04d-b5-board-fonts-free-achievements-2026-11-06/design/font-library-approved-b5.json) pins original Git blob hashes, sizes, and source paths, and the importer computes SHA-256. The SHA values must also be pinned once verified in CI.
-- Fonts are packaged inside the **APK** in `res/font/`, and full `OFL.txt` notices inside `assets/font_licenses/`; an in-app **License** dialog makes them accessible even when an unlock is still locked. None requires a network connection at runtime.
-- The first approved source set is intentionally limited to four. Nunito, Lexend, Literata, JetBrains Mono and others remain *research candidates*, not shipped/approved just because their license text was located.
-- Equipped font ID persists privately on this device. If an unknown or locked ID appears after a restore, the game falls back to the readable default without altering puzzles or granting a hidden unlock.
+1. **Build:** Android CI succeeds on the exact PR head for core tests, app unit tests, lint, instrumentation-source compilation and QA APK assembly. Include identity `com.playereden.gridmates.wordsearch.qa`, versionCode 11, SHA-256 and 12 **original** Woodland assets.
+2. **Font provenance:** The pinned upstream four .ttf files, their four original OFL notices, A–Z coverage and resource packaging pass verification. Store the exact resulting hashes and package evidence in the final B5 QA receipt.
+3. **Actual Android execution:** The API-35 emulator must execute tests with reported counts and zero failures. A compile-only pass is insufficient. Runtime tests must check typeface ink bounds, font package/notice access, old progress, unlocks and equip-after-relaunch. Record the Android job/run URL.
+4. **Physical visual review (owner):** Photograph Short 12×12, Standard 15×15 and Extended 20×20 at **100%, 145%, 185% and 250%** in Find and Move modes. Look especially at `I/W/M/O/Q`: equal cell margins, no neighboring ink collision, last row and column fully visible at 100%, no disappearing letters after zoom. Confirm selection highlights, tap endpoints and long diagonal drag stay aligned.
+5. **Accessibility:** Test portrait, landscape, smaller/narrow screens, Android 200% system font and different display densities. UI labels must not cover the board, and the player can always revert to Readable Print. Previewed style must match on-board style on at least two actual phones.
+6. **Gameplay regression:** Existing v1/v2 seeded Solo and Daily identifiers, achievements, hint budgets, current profile saves and original Woodland art must be unchanged. Repeat a completion, relaunch, switch fonts and verify no duplicate achievements or seed changes.
 
-## QA gates and rollback
+## Known boundaries / audit notes
 
-- [ ] Standard Android CI source build, AAPT package identity, 12 approved original Woodland assets, four verified TTF resources and all four OFL notices.
-- [ ] All Kotlin JVM tests including real-achievement unlock logic, no false grants and puzzle-ID stability.
-- [ ] Actual **API 35 Android emulator** execution of all instrumented tests (not merely source compilation): glyph ink centering for each A–Z at 20/32/48/72px; offline font/license presence; locked ID rejection, achievement award, equip and restart; Collection tab UI.
-- [ ] Check original B4 Solo/Daily save and result screens still work; no changes to English puzzle generator versions or separate GridMates: Sudoku install.
-- [ ] Record exact commit SHA, successful workflow run IDs, font and APK SHA-256 hashes, APK file size and protected checkpoint.
-- [ ] On user's phone, compare **I, M, W, O, Q** across 12×12, 15×15, 20×20 and 100/145/185/250% at both Find and Move; ensure no clipped text, no off-center letters, and all rows visible at 100%.
-- [ ] Compare Collection preview and the equipped real board with two phones, font scales/landscape, and older-reader accessibility. Decorative handwriting can be rejected for dense 20×20 if it fails readability.
+- **Measured bounds are not physical screenshot proof.** The test asserts geometric ink centering; owner judgment is still required for optical balance, legibility and how small high-density 20×20 letters feel.
+- **Native Android font scaling** changes the surrounding UI but intentionally should not change cell hit geometry or the bundled puzzle glyph's chosen safe size. Verify visual comfort and accessible alternatives on a physical phone.
+- **Offline first.** No dynamic download, account or device-installed font should be required to use equipped fonts.
+- **Privacy and purchases:** No new analytics, network requirement, purchases, ad-watch gates or virtual economy are introduced.
+- **No merge yet.** PR #30 is deliberately stacked/draft while B4 owner-device acceptance is still open. Keep the QA package separately installed; stable signing/Google Play update migration belongs to WS-08.
 
-## After B5
+## Next milestone after B5 approval
 
-Verify B5 on the owner's phone, then continue with **WS-05 Nearby Co-op** (open-by-default same-Wi-Fi host/join and optional room code). WS-06 adds Shared Board Race and Speed Duel, then WS-07 brings final game/profile/content polishing, and WS-08 handles Google Play release readiness. Large word-library research, additional collections, Spanish and monetization remain future scope.
-
-**Do not merge draft PRs or call this game Play-ready from a green build alone.** Keep source checks, emulator results and owner phone acceptance separate.
+Nearby Co-op (WS-05): two phones on the same Wi-Fi, clear host/join, visibly present teammate, authoritative shared-grid claims and reconnect. Do not widen art/font collections before this core playability milestone.

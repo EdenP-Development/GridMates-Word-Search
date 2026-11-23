@@ -1,0 +1,53 @@
+chapter	chapter_title	page	page_title	answer	word_id	display	tier	subtopic	provenance
+7	Quiet Clearings	1	Open Glade	MOSS	gm000139	Moss	familiar	habitats	existing_woodland_QA_not_release
+7	Quiet Clearings	1	Open Glade	FERN	gm000140	Fern	familiar	habitats	existing_woodland_QA_not_release
+7	Quiet Clearings	1	Open Glade	GLADE	gm000146	Glade	familiar	habitats	existing_woodland_QA_not_release
+7	Quiet Clearings	1	Open Glade	GROVE	gm000131	Grove	familiar	habitats	existing_woodland_QA_not_release
+7	Quiet Clearings	1	Open Glade	MEADOW	gm000119	Meadow	familiar	habitats	existing_woodland_QA_not_release
+7	Quiet Clearings	1	Open Glade	MIST	ws56q001	Mist	familiar	clearings	ws56_clearings_candidate_unapproved
+7	Quiet Clearings	1	Open Glade	SHADE	gm000155	Shade	familiar	trails	existing_woodland_QA_not_release
+7	Quiet Clearings	1	Open Glade	DAISY	ws56q002	Daisy	familiar	clearings	ws56_clearings_candidate_unapproved
+7	Quiet Clearings	1	Open Glade	GRASS	ws56q003	Grass	familiar	clearings	ws56_clearings_candidate_unapproved
+7	Quiet Clearings	1	Open Glade	CLOVER	ws56q004	Clover	familiar	clearings	ws56_clearings_candidate_unapproved
+7	Quiet Clearings	1	Open Glade	PETAL	ws56q005	Petal	familiar	clearings	ws56_clearings_candidate_unapproved
+7	Quiet Clearings	1	Open Glade	BLOOM	ws56q006	Bloom	familiar	clearings	ws56_clearings_candidate_unapproved
+7	Quiet Clearings	2	Sunlit Spaces	SUNSHINE	ws56q007	Sunshine	familiar	clearings	ws56_clearings_candidate_unapproved
+7	Quiet Clearings	2	Sunlit Spaces	BREEZE	gm000159	Breeze	familiar	trails	existing_woodland_QA_not_release
+7	Quiet Clearings	2	Sunlit Spaces	CLEARING	gm000132	Clearing	familiar	habitats	existing_woodland_QA_not_release
+7	Quiet Clearings	2	Sunlit Spaces	LICHEN	gm000141	Lichen	familiar	habitats	existing_woodland_QA_not_release
+7	Quiet Clearings	2	Sunlit Spaces	THICKET	gm000134	Thicket	familiar	habitats	existing_woodland_QA_not_release
+7	Quiet Clearings	2	Sunlit Spaces	BRAMBLE	gm000142	Bramble	familiar	habitats	existing_woodland_QA_not_release
+7	Quiet Clearings	2	Sunlit Spaces	WILDFLOWER	gm000007	Wildflower	familiar	habitats	existing_woodland_QA_not_release
+7	Quiet Clearings	2	Sunlit Spaces	BUTTERFLY	ws56q008	Butterfly	familiar	clearings	ws56_clearings_candidate_unapproved
+7	Quiet Clearings	2	Sunlit Spaces	DAYLIGHT	ws56q009	Daylight	familiar	clearings	ws56_clearings_candidate_unapproved
+7	Quiet Clearings	2	Sunlit Spaces	SUNBEAM	ws56q010	Sunbeam	familiar	clearings	ws56_clearings_candidate_unapproved
+7	Quiet Clearings	2	Sunlit Spaces	BLUEBELLS	ws56q011	Bluebells	familiar	clearings	ws56_clearings_candidate_unapproved
+7	Quiet Clearings	2	Sunlit Spaces	DAPPLED	ws56q012	Dappled	familiar	clearings	ws56_clearings_candidate_unapproved
+7	Quiet Clearings	2	Sunlit Spaces	PICNIC	ws56q013	Picnic	familiar	clearings	ws56_clearings_candidate_unapproved
+7	Quiet Clearings	2	Sunlit Spaces	POLLEN	ws56q014	Pollen	familiar	clearings	ws56_clearings_candidate_unapproved
+7	Quiet Clearings	2	Sunlit Spaces	RUSTLING	ws56q015	Rustling	familiar	clearings	ws56_clearings_candidate_unapproved
+7	Quiet Clearings	2	Sunlit Spaces	WARMTH	ws56q016	Warmth	familiar	clearings	ws56_clearings_candidate_unapproved
+7	Quiet Clearings	3	Woodland Stillness	UNDERGROWTH	gm000145	Undergrowth	familiar	habitats	existing_woodland_QA_not_release
+7	Quiet Clearings	3	Woodland Stillness	BLACKBERRY	gm000143	Blackberry	familiar	habitats	existing_woodland_QA_not_release
+7	Quiet Clearings	3	Woodland Stillness	BLUEBERRY	gm000144	Blueberry	familiar	habitats	existing_woodland_QA_not_release
+7	Quiet Clearings	3	Woodland Stillness	MUSHROOM	gm000005	Mushroom	familiar	habitats	existing_woodland_QA_not_release
+7	Quiet Clearings	3	Woodland Stillness	GREENERY	ws56q017	Greenery	intermediate	clearings	ws56_clearings_candidate_unapproved
+7	Quiet Clearings	3	Woodland Stillness	DANDELION	ws56q018	Dandelion	intermediate	clearings	ws56_clearings_candidate_unapproved
+7	Quiet Clearings	3	Woodland Stillness	HONEYSUCKLE	ws56q019	Honeysuckle	intermediate	clearings	ws56_clearings_candidate_unapproved
+7	Quiet Clearings	3	Woodland Stillness	CHAMOMILE	ws56q020	Chamomile	intermediate	clearings	ws56_clearings_candidate_unapproved
+7	Quiet Clearings	3	Woodland Stillness	FIREFLIES	ws56q021	Fireflies	intermediate	clearings	ws56_clearings_candidate_unapproved
+7	Quiet Clearings	3	Woodland Stillness	THISTLEDOWN	ws56q022	Thistledown	intermediate	clearings	ws56_clearings_candidate_unapproved
+7	Quiet Clearings	3	Woodland Stillness	BUTTERCUP	ws56q023	Buttercup	intermediate	clearings	ws56_clearings_candidate_unapproved
+7	Quiet Clearings	3	Woodland Stillness	BLOODROOT	ws56q024	Bloodroot	intermediate	clearings	ws56_clearings_candidate_unapproved
+7	Quiet Clearings	3	Woodland Stillness	FOXGLOVE	ws56q025	Foxglove	intermediate	clearings	ws56_clearings_candidate_unapproved
+7	Quiet Clearings	3	Woodland Stillness	TRILLIUM	ws56q026	Trillium	intermediate	clearings	ws56_clearings_candidate_unapproved
+7	Quiet Clearings	3	Woodland Stillness	PRIMROSE	ws56q027	Primrose	intermediate	clearings	ws56_clearings_candidate_unapproved
+7	Quiet Clearings	3	Woodland Stillness	VIOLET	ws56q028	Violet	intermediate	clearings	ws56_clearings_candidate_unapproved
+7	Quiet Clearings	3	Woodland Stillness	WOODSORREL	ws56q029	Wood Sorrel	intermediate	clearings	ws56_clearings_candidate_unapproved
+7	Quiet Clearings	3	Woodland Stillness	GOLDENROD	ws56q030	Goldenrod	intermediate	clearings	ws56_clearings_candidate_unapproved
+7	Quiet Clearings	3	Woodland Stillness	SWEETGRASS	ws56q031	Sweetgrass	intermediate	clearings	ws56_clearings_candidate_unapproved
+7	Quiet Clearings	3	Woodland Stillness	WILDGINGER	ws56q032	Wild Ginger	intermediate	clearings	ws56_clearings_candidate_unapproved
+7	Quiet Clearings	3	Woodland Stillness	FIREWEED	ws56q033	Fireweed	intermediate	clearings	ws56_clearings_candidate_unapproved
+7	Quiet Clearings	3	Woodland Stillness	DEWDROPS	ws56q034	Dewdrops	intermediate	clearings	ws56_clearings_candidate_unapproved
+7	Quiet Clearings	3	Woodland Stillness	WOODANEMONE	ws56q035	Wood Anemone	intermediate	clearings	ws56_clearings_candidate_unapproved
+7	Quiet Clearings	3	Woodland Stillness	MEADOWSWEET	ws56q036	Meadowsweet	intermediate	clearings	ws56_clearings_candidate_unapproved

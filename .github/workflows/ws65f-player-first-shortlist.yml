@@ -1,0 +1,71 @@
+name: WS65-F Player-First Vocabulary Shortlist and Concept Page QA
+
+on:
+  workflow_dispatch:
+  pull_request:
+    paths:
+      - 'data/lexicon/intake/ws65f-*'
+      - 'tools/lexicon/ws65f_*'
+      - 'tools/lexicon/test_ws65f_*'
+      - 'docs/WS65F_*'
+      - '.github/workflows/ws65f-player-first-shortlist.yml'
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ws65f-player-first-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  validate-unsigned-player-first:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Verify immutable recovery and English/Fall sources
+        run: |
+          python3 tools/lexicon/audit_recovery.py
+          python3 tools/lexicon/validate.py --data-dir data/lexicon/authoring/en-v1
+          python3 tools/lexicon/validate.py --data-dir data/lexicon/authoring/fall-v1
+      - name: Run all lexicon editorial integrity tests WS63–WS65F
+        run: |
+          python3 -m unittest discover -s tools/lexicon -p 'test_ws63_quality_audit.py' -v
+          python3 -m unittest discover -s tools/lexicon -p 'test_ws64_woodland_review_queue.py' -v
+          python3 -m unittest discover -s tools/lexicon -p 'test_ws65_specialist_review_audit.py' -v
+          python3 -m unittest discover -s tools/lexicon -p 'test_ws65b_editorial_triage.py' -v
+          python3 -m unittest discover -s tools/lexicon -p 'test_ws65c_source_evidence.py' -v
+          python3 -m unittest discover -s tools/lexicon -p 'test_ws65d_second_pass.py' -v
+          python3 -m unittest discover -s tools/lexicon -p 'test_ws65e_held_reference_closeout.py' -v
+          python3 -m unittest discover -s tools/lexicon -p 'test_ws65f_player_first_shortlist.py' -v
+      - name: Generate reproducible unsigned editorial and page-concept artifact
+        run: |
+          python3 tools/lexicon/ws65f_player_first_shortlist.py --out-dir qa-ws65f-player-first
+          python3 - <<'PY'
+          from pathlib import Path
+          import csv,json
+          d=Path('qa-ws65f-player-first')
+          report=json.loads((d/'player-first-receipt.json').read_text())
+          with (d/'unsigned-player-shortlist.csv').open(newline='') as f:
+              shortlist=list(csv.DictReader(f))
+          with (d/'concept-only-opening-pages.csv').open(newline='') as f:
+              samples=list(csv.DictReader(f))
+          assert len(shortlist)==80 and len(samples)==36
+          assert report['remaining_promising_without_individual_context']==82
+          assert report['new_owner_release_approvals']==0 and report['new_android_words']==0
+          assert all(not x['human_editor_decision'] and not x['owner_release_decision'] for x in shortlist)
+          assert all(x['sample_status']=='UNSIGNED_WORD_LIST_CONCEPT_NOT_GENERATED_BOARD' for x in samples)
+          print('WS65F_UNSIGNED_PLAYER_FIRST_OK: 80 contextual word candidates, 36 not-played page concept slots, 0 signoffs')
+          PY
+          sha256sum qa-ws65f-player-first/*.csv qa-ws65f-player-first/player-first-receipt.json qa-ws65f-player-first/README.md > qa-ws65f-player-first/artifact-sha256.txt
+      - name: Archive inspectable editorial and concept exports
+        if: ${{ always() }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: GridMates-WS65F-Unsigned-Player-First-Review
+          path: qa-ws65f-player-first/
+          if-no-files-found: warn
+          retention-days: 30
