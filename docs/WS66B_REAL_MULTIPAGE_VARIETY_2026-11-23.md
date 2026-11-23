@@ -32,6 +32,8 @@ The GitHub Action archives:
 - The selected 3-page test-only recipes, a machine-checked JSON summary, concise human-readable table, checksums, and JUnit XML.
 - Historical **WS66-A source-provenance guard** and **unchanged historic V1/V2/V3 golden puzzle checks**.
 
+The November 23 follow-up reproduced the archived metrics and tightened the independent checks. It derives eligible answers from the pinned fixture, validates the reported pool against that source, and requires chronological seeds for the selected pages. [Follow-up receipt](devlog/2026-11-23_WS66_HANDOFF_AND_EVIDENCE_REVIEW.md)
+
 This is *mechanical and content-variety research* on unapproved candidate words. It does not measure actual screen readability, family-friendliness, chapter artwork, in-game reward systems, touch interaction, commercial vocabulary permissions, or genuine device bookmarks.
 
 **No new editor/owner/public approval, no change to the 787 internal-QA English/Fall word baseline, no activation of any of the hypothetical 200 additional spellings, and no app/source, active pack, board ID, frozen 63+18 research pages or saved-game mutation.**

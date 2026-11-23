@@ -5,7 +5,7 @@ The data are mechanical test results from unapproved, unit-test-only inputs.
 No authorization to publish new content or alter existing saved boards.
 """
 import argparse
-from collections import Counter, defaultdict
+from collections import defaultdict
 import csv
 import hashlib
 from itertools import combinations
@@ -13,6 +13,9 @@ import json
 from pathlib import Path
 import re
 import sys
+
+from ws65g_editorial_coverage import BOARD_SPECS, eligible
+from ws66a_test_fixture_guard import FIXTURE, ROOT
 
 SCENARIOS = {
     ("Flower Borders", "BOOK_SHORT", "RELAXED"): 12,
@@ -24,6 +27,7 @@ SCENARIOS = {
     ("Quiet Clearings", "BOOK_CLASSIC", "CLASSIC"): 16,
     ("Quiet Clearings", "BOOK_BIG", "EXPERT"): 24,
 }
+BOARD_PROFILE = {"RELAXED": "relaxed12", "CLASSIC": "classic15", "EXPERT": "expert20"}
 KNOWN_WORKING = {
     ("Flower Borders", "BOOK_SHORT", "RELAXED"),
     ("Our Solar System", "BOOK_CLASSIC", "CLASSIC"),
@@ -53,6 +57,16 @@ def analyze(directory):
     candidates = read_tab(directory / "all-seed-trials.tsv")
     selected = read_tab(directory / "three-page-selections.tsv")
     metrics = read_tab(directory / "per-scenario-metrics.tsv")
+    fixture = read_tab(ROOT / FIXTURE)
+    eligible_answers = {}
+    for key in SCENARIOS:
+        chapter, _, challenge = key
+        grid_size, allowed_tiers = BOARD_SPECS[BOARD_PROFILE[challenge]]
+        eligible_answers[key] = {
+            row["answer"] for row in fixture
+            if row["chapter"] == chapter
+            and eligible(row["answer"], row["tier"], grid_size, allowed_tiers)
+        }
 
     if len(candidates) != 96 or len(metrics) != 8:
         raise ValueError("Missing per-seed evidence or scenarios")
@@ -66,8 +80,12 @@ def analyze(directory):
         if row["status"] == "PASS":
             if not re.fullmatch("[0-9a-f]{64}", row["sha256"]) or row["failure"]:
                 raise ValueError(f"Missing trial board digest {key}")
-            if len(words(row["answers"])) != SCENARIOS[key]:
+            targets = words(row["answers"])
+            if len(targets) != SCENARIOS[key]:
                 raise ValueError(f"Wrong word count for {key}")
+            if not targets <= eligible_answers[key]:
+                raise ValueError(f"Targets outside the eligible fixture for {key}: "
+                                 f"{sorted(targets - eligible_answers[key])}")
         elif row["sha256"] or row["answers"] or not row["failure"]:
             raise ValueError(f"Missing failure evidence {key}")
         case_rows[key].append(row)
@@ -88,7 +106,9 @@ def analyze(directory):
         key = (row["chapter"], row["board"], row["challenge"])
         if key not in SCENARIOS or key in summaries:
             raise ValueError(f"Duplicate or unknown metrics row {key}")
-        pool = int(row["eligible_pool"])
+        pool = len(eligible_answers[key])
+        if int(row["eligible_pool"]) != pool:
+            raise ValueError(f"Reported eligible pool differs from the fixture for {key}")
         expected_floor = max(0, 2 * SCENARIOS[key] - pool)
         if (int(row["per_board_targets"]) != SCENARIOS[key] or
                 int(row["unavoidable_pair_overlap_floor"]) != expected_floor):
@@ -112,6 +132,9 @@ def analyze(directory):
             matches = {x["seed"]: x for x in passes}
             if [x["page"] for x in chosen] != ["1", "2", "3"]:
                 raise ValueError(f"Bad page ordering {key}")
+            chosen_seeds = [int(x["seed"]) for x in chosen]
+            if chosen_seeds != sorted(set(chosen_seeds)):
+                raise ValueError(f"Selected seeds are not chronological for {key}")
             if len({x["sha256"] for x in chosen}) != 3:
                 raise ValueError(f"Duplicate selected board layout {key}")
             for pos, item in enumerate(chosen):
@@ -133,12 +156,9 @@ def analyze(directory):
                     or int(row["baseline_distinct_answers"]) != len(set.union(*baseline))
                     or int(row["selected_distinct_answers"]) != len(set.union(*actual))):
                 raise ValueError(f"Reported 3-page metrics mismatch {key}")
-            possible = [
-                (adjacent([words(a["answers"]), words(b["answers"]), words(c["answers"])]),
-                 len(words(a["answers"]) | words(b["answers"]) | words(c["answers"])),
-                 (a["seed"], b["seed"], c["seed"]))
-                for a,b,c in combinations(passes, 3)
-            ]
+            pass_answers = [words(trial["answers"]) for trial in passes]
+            possible = [(adjacent(triple), len(set.union(*triple)))
+                        for triple in combinations(pass_answers, 3)]
             optimal_repeats = min(x[0] for x in possible)
             optimal_coverage = max(x[1] for x in possible if x[0] == optimal_repeats)
             if (adjacent(actual) != optimal_repeats or
