@@ -180,7 +180,9 @@ internal fun HorizontalBookBrowserScreen(
                         modifier = Modifier.testTag("ws14d-selected-name")
                     )
                     Text(
-                        "${selectedBook.chapters.size} chapters · $completed of $total pages completed",
+                        "${selectedBook.chapters.size} " +
+                            (if (selectedBook.chapters.size == 1) "chapter" else "chapters") +
+                            " · $completed of $total pages completed",
                         color = Muted, style = MaterialTheme.typography.bodyMedium,
                         textAlign = TextAlign.Center
                     )

@@ -1,3 +1,7 @@
+# WS66 v110 chapter preview
+
+**WS66 v110 preview download recovery (November 23).** Rebuilt the two QA chapters from the verified WS66-B base. The branch packages six new snapshots and carries forward v108 progress through separate journals. Check the draft for the signed APK, install-over evidence, and release isolation. [Recovery receipt](devlog/2026-11-23_WS66_V110_DOWNLOAD_RECOVERY.md)
+
 # WS66 handoff checkpoint — November 23
 
 Use the WS66-B branch in draft #186. The source before the evidence tightening was `539e752e78638c774370b01d3b412189d2b47f68`. All 96 original V5 trials were reproduced from archived output. Get the latest ref and checks from the draft. Use signed v108 as the GitHub fallback. A separate signed v109 exists in the previous Work handoff and needs its exact Git bundle restored. [WS66-B draft](https://github.com/PlayerEden/GridMates-Word-Search/pull/186) · [Current receipt and integration order](devlog/2026-11-23_WS66_HANDOFF_AND_EVIDENCE_REVIEW.md) · [Signed v108 fallback](https://github.com/PlayerEden/GridMates-Word-Search/actions/runs/45065450259/artifacts/14771725725)

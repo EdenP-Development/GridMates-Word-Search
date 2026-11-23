@@ -23,6 +23,8 @@ import com.playereden.gridmates.wordsearch.core.WordSearchGeneratorV5
  */
 internal object BookQaPilot {
     const val enabled = true
+    val editorialBookIds = setOf(Ws57WoodlandPreview.BOOK_ID,
+        Ws66ChapterPreview.SOLAR, Ws66ChapterPreview.CLEARINGS)
 
     private val cachedCatalog by lazy { buildCatalog() }
     fun catalog(): BookCatalog = cachedCatalog
@@ -30,6 +32,9 @@ internal object BookQaPilot {
     /** WS57 debug-only book, appended without modifying the 63 old QA pages. */
     fun catalog(context: Context): BookCatalog =
         Ws57WoodlandPreview.appendLegacy(context, cachedCatalog)
+
+    fun appendChapterPreview(context: Context, legacy: BookCatalog): BookCatalog =
+        Ws66ChapterPreview.append(context, legacy)
 
     private fun buildCatalog(): BookCatalog {
         fun page(

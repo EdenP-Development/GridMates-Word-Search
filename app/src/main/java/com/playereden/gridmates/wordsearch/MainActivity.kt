@@ -17,7 +17,7 @@ import androidx.lifecycle.ViewModelProvider
 class MainActivity : ComponentActivity() {
     private val soloStore by lazy { SoloStore(applicationContext) }
     private val nearbyRooms by lazy { ViewModelProvider(this)[NearbyRoomViewModel::class.java] }
-    private val qaBookshelf by lazy { QaBookshelfRuntime(applicationContext) }
+    private val qaBookshelf by lazy { QaBookshelfRuntime.installed(applicationContext) }
 
     private var displayMode by mutableStateOf(DisplayMode.FULLSCREEN)
 

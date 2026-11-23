@@ -72,8 +72,7 @@ internal fun GridMatesShell(
     onDisplayModeChange: (DisplayMode) -> Unit = {}
 ) {
     val context = LocalContext.current
-    val defaultQaRuntime = remember(context) { QaBookshelfRuntime(context) }
-    val qa = qaBookshelf ?: defaultQaRuntime
+    val qa = qaBookshelf ?: remember(context) { QaBookshelfRuntime.installed(context) }
     val backups = remember(soloStore, qa) {
         GameBackupManager(context, soloStore, books = {
             if (!qa.enabled) null else BookBackupStores(qa.catalog,

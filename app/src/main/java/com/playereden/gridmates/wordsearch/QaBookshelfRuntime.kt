@@ -16,16 +16,35 @@ internal class QaBookshelfRuntime(
     private val previousProgress: String = "gridmates_wordsearch_ws11_qa_progress_v1.dat",
     private val previousSessions: String = "gridmates_wordsearch_ws11_qa_sessions_v1.dat",
     private val previewProgress: String = "gridmates_wordsearch_ws57_qa_progress_v1.dat",
-    private val previewSessions: String = "gridmates_wordsearch_ws57_qa_sessions_v1.dat"
+    private val previewSessions: String = "gridmates_wordsearch_ws57_qa_sessions_v1.dat",
+    private val chapterProgress: String? = null,
+    private val chapterSessions: String? = null
 ) {
+    init {
+        require((chapterProgress == null) == (chapterSessions == null))
+    }
+
     private val applicationContext = context.applicationContext
     val enabled: Boolean = BookQaPilot.enabled
 
     private val originalCatalog by lazy {
         if (enabled) BookQaPilot.catalog() else BookCatalog()
     }
-    val catalog: BookCatalog by lazy {
+    private val woodlandCatalog by lazy {
         if (enabled) BookQaPilot.catalog(applicationContext) else BookCatalog()
+    }
+    val catalog: BookCatalog by lazy {
+        if (enabled && chapterProgress != null)
+            BookQaPilot.appendChapterPreview(applicationContext, woodlandCatalog)
+        else woodlandCatalog
+    }
+
+    companion object {
+        fun installed(context: Context) = QaBookshelfRuntime(
+            context,
+            chapterProgress = "gridmates_wordsearch_ws66_v110_qa_progress_v1.dat",
+            chapterSessions = "gridmates_wordsearch_ws66_v110_qa_sessions_v1.dat"
+        )
     }
 
     private fun alreadySaved(name: String): Boolean {
@@ -34,10 +53,14 @@ internal class QaBookshelfRuntime(
     }
 
     private fun copiedProgress(): BookLibraryStore? {
-        val newer = BookLibraryStore(applicationContext, catalog, previewProgress)
-        if (newer.blocked || alreadySaved(previewProgress)) return newer
-        if (!alreadySaved(previousProgress)) return newer
-        val older = BookLibraryStore(applicationContext, originalCatalog, previousProgress)
+        val destination = chapterProgress ?: previewProgress
+        val newer = BookLibraryStore(applicationContext, catalog, destination)
+        if (newer.blocked || alreadySaved(destination)) return newer
+        val useWoodland = chapterProgress != null && alreadySaved(previewProgress)
+        val source = if (useWoodland) previewProgress else previousProgress
+        if (!alreadySaved(source)) return newer
+        val older = BookLibraryStore(applicationContext,
+            if (useWoodland) woodlandCatalog else originalCatalog, source)
         // Fail closed: a corrupt/unknown legacy journal must be preserved for
         // recovery, not replaced by a silent blank new journal.
         val savedBytes = older.exportForManualBackup() ?: return null
@@ -45,10 +68,14 @@ internal class QaBookshelfRuntime(
     }
 
     private fun copiedSessions(): BookPageSessionStore? {
-        val newer = BookPageSessionStore(applicationContext, catalog, previewSessions)
-        if (newer.blocked || alreadySaved(previewSessions)) return newer
-        if (!alreadySaved(previousSessions)) return newer
-        val older = BookPageSessionStore(applicationContext, originalCatalog, previousSessions)
+        val destination = chapterSessions ?: previewSessions
+        val newer = BookPageSessionStore(applicationContext, catalog, destination)
+        if (newer.blocked || alreadySaved(destination)) return newer
+        val useWoodland = chapterSessions != null && alreadySaved(previewSessions)
+        val source = if (useWoodland) previewSessions else previousSessions
+        if (!alreadySaved(source)) return newer
+        val older = BookPageSessionStore(applicationContext,
+            if (useWoodland) woodlandCatalog else originalCatalog, source)
         val savedBytes = older.exportForManualBackup() ?: return null
         return newer.takeIf { it.importManualBackup(savedBytes) }
     }
@@ -68,11 +95,10 @@ internal class QaBookshelfRuntime(
         if (!enabled) return true
         val progress = progressStore ?: return true
         if (progress.blocked) return false
-        // Candidate WS57 word lists can be explored but never award permanent
-        // Solo cosmetic/collection rewards while editorially unapproved.
+        // Candidate books use the real playing flow with QA-only progress.
         val awardable = progress.progress.copy(volumes =
             progress.progress.volumes.filterKeys {
-                it != "woodland-ws57-qa-volume-two"
+                it !in BookQaPilot.editorialBookIds
             })
         return solo.syncBookRewards(catalog, awardable)
     }

@@ -334,7 +334,8 @@ internal fun PuzzleBookDetailScreen(
                                     fontWeight = FontWeight.Bold)
                                 Text(
                                     "Volume " + book.volume + " · " +
-                                        book.chapters.size + " chapters",
+                                        book.chapters.size +
+                                        (if (book.chapters.size == 1) " chapter" else " chapters"),
                                     style = MaterialTheme.typography.bodyMedium,
                                     color = Muted
                                 )
