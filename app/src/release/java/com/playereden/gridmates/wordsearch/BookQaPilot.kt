@@ -9,7 +9,10 @@ import com.playereden.gridmates.wordsearch.core.BookCatalog
  */
 internal object BookQaPilot {
     const val enabled = false
+    val editorialBookIds = emptySet<String>()
     fun catalog(): BookCatalog = BookCatalog()
     @Suppress("UNUSED_PARAMETER")
     fun catalog(context: Context): BookCatalog = BookCatalog()
+    @Suppress("UNUSED_PARAMETER")
+    fun appendChapterPreview(context: Context, legacy: BookCatalog): BookCatalog = legacy
 }

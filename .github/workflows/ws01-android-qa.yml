@@ -678,6 +678,69 @@ jobs:
           echo '304b389d53935ceb8a8857666caf00fbc15e3c51a440ab3cced07f1f684e82f9  qa-baseline/app-debug.apk' | sha256sum -c
           test -s qa-baseline/app-debug.apk
 
+      - name: WS66 Build upgrade tests and verify QA and release packages
+        if: ${{ (github.head_ref || github.ref_name) == 'feature/ws66-chapter-preview-v110-2026-11-23' }}
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh run download 45065450259 --repo "$GITHUB_REPOSITORY" --name GridMates-WordSearch-Android-QA --dir qa-ws66-baseline
+          echo '6a7d59e6fed8bd2524abd216027b3caf7445aa8afa79c7fa8f2f3600b65a3b3b  qa-ws66-baseline/app-debug.apk' | sha256sum -c
+          gradle --no-daemon :app:assembleDebugAndroidTest :app:assembleRelease
+          mkdir -p qa-ws66-preview
+          DEBUG=app/build/outputs/apk/debug/app-debug.apk
+          RELEASE=app/build/outputs/apk/release/app-release-unsigned.apk
+          "$ANDROID_HOME/build-tools/35.0.0/aapt" dump badging "$DEBUG" > qa-ws66-preview/debug-badging.txt
+          "$ANDROID_HOME/build-tools/35.0.0/aapt" dump badging "$RELEASE" > qa-ws66-preview/release-badging.txt
+          grep -F "name='com.playereden.gridmates.wordsearch.qa' versionCode='110'" qa-ws66-preview/debug-badging.txt
+          grep -F "name='com.playereden.gridmates.wordsearch' versionCode='108'" qa-ws66-preview/release-badging.txt
+          "$ANDROID_HOME/build-tools/35.0.0/apksigner" verify --print-certs "$DEBUG" > qa-ws66-preview/signer.txt
+          grep -F '75cc3c896247d71fbd51f7a3ed41f90c8218a8a5a70df8c0f6b494b5cc23d419' qa-ws66-preview/signer.txt
+          sha256sum "$DEBUG" > qa-ws66-preview/apk-sha256.txt
+          python3 - "$DEBUG" "$RELEASE" <<'PY'
+          import sys
+          from pathlib import Path
+          from zipfile import ZipFile
+          prefix = 'assets/ws66-v110/'
+          directory = Path('core/build/generated/ws66-preview/assets/ws66-v110')
+          with ZipFile(sys.argv[1]) as debug, ZipFile(sys.argv[2]) as release:
+              expected = {prefix + p.name: p.read_bytes() for p in directory.iterdir()}
+              assert len(expected) == 7
+              assert {name for name in debug.namelist() if name.startswith(prefix)} == set(expected)
+              assert all(debug.read(name) == data for name, data in expected.items())
+              assert all(not name.startswith(prefix) for name in release.namelist())
+              assert all(b'Ws66ChapterPreview' not in release.read(name)
+                         for name in release.namelist() if name.endswith('.dex'))
+          print('WS66 preview snapshots match the debug asset source and are absent from release.')
+          PY
+          echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=static_node"' | sudo tee /etc/udev/rules.d/99-kvm4all.rules
+          sudo udevadm control --reload-rules
+          sudo udevadm trigger --name-match=kvm
+
+      - name: WS66 Real signed v108 to v110 upgrade and chapter play
+        if: ${{ (github.head_ref || github.ref_name) == 'feature/ws66-chapter-preview-v110-2026-11-23' }}
+        uses: reactivecircus/android-emulator-runner@v2
+        with:
+          api-level: 35
+          target: google_apis
+          arch: x86_64
+          profile: pixel_4
+          avd-name: ws66-chapter-preview
+          ram-size: 3072M
+          disable-animations: true
+          emulator-options: -no-window -gpu swiftshader -no-snapshot -noaudio -no-boot-anim
+          script: bash scripts/ws66_preview_emulator.sh
+
+      - name: WS66 Archive board snapshots and device evidence
+        if: ${{ always() && (github.head_ref || github.ref_name) == 'feature/ws66-chapter-preview-v110-2026-11-23' }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: GridMates-WS66-v110-Chapter-Preview-Evidence
+          path: |
+            qa-ws66-preview/
+            core/build/generated/ws66-preview/
+          retention-days: 30
+          if-no-files-found: warn
+
       - name: WS61 Compile upgrade instrumentation and configure emulator
         if: ${{ (github.head_ref || github.ref_name) == 'feature/ws61-real-signed-v107-to-v108-upgrade-2026-11-22' }}
         run: |

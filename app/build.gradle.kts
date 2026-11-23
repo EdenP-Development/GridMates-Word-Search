@@ -44,6 +44,9 @@ android {
     buildFeatures {
         compose = true
     }
+    sourceSets.getByName("debug").assets.srcDir(
+        project(":core").layout.buildDirectory.dir("generated/ws66-preview/assets")
+    )
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_17
         targetCompatibility = JavaVersion.VERSION_17
@@ -51,6 +54,17 @@ android {
     kotlinOptions {
         jvmTarget = "17"
     }
+}
+
+androidComponents.onVariants(androidComponents.selector().withBuildType("debug")) { debug ->
+    debug.outputs.forEach {
+        it.versionCode.set(providers.gradleProperty("qaVersionCode").map(String::toInt).orElse(110))
+        it.versionName.set("0.9.65-ws66-chapter-preview-r2-qa")
+    }
+}
+
+tasks.matching { it.name == "mergeDebugAssets" }.configureEach {
+    dependsOn(":core:generateWs66Preview")
 }
 
 dependencies {
