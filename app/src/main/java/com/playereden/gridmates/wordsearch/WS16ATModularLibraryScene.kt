@@ -20,7 +20,6 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.graphics.ColorMatrix
@@ -139,7 +138,8 @@ private fun WS16ATCabinetLayers(
                     contentScale = ContentScale.FillBounds,
                     colorFilter = woodFilter,
                     modifier = Modifier.align(Alignment.BottomCenter)
-                        .fillMaxWidth().height(baseHeight))
+                        .fillMaxWidth().height(baseHeight)
+                        .testTag("ws16at-cabinet-base"))
             }
         }
     }
@@ -244,9 +244,10 @@ internal fun WS16ATModularLibraryScene(
         val pagerGap = if (density.fontScale >= 1.65f) 8.dp else 12.dp
         val pagerRailBudget = 62.dp
         val showPager = pages > 1
-        val pagerBayHeight = shelfOverhang +
-            if (showPager || !packedCatalog) pagerGap + pagerRailBudget else 0.dp
-        // Reserve carved shelf overhang and pager rail clearance first.
+        val pagerControlsHeight = if (showPager || !packedCatalog) pagerGap + pagerRailBudget else 0.dp
+        // The pager extends behind the base artwork, but the entire painted
+        // shelf and its brackets need to end above that join.
+        val pagerBayHeight = shelfOverhang + maxOf(pagerControlsHeight, pagerDrop + 6.dp)
         val shelfTierSpace = (available - pagerBayHeight).coerceAtLeast(1.dp)
         val tierHeights = if (usePackedRows) {
             // Preserve the pager bay with three live shelves too; a raw
@@ -258,24 +259,9 @@ internal fun WS16ATModularLibraryScene(
             shelfTierSpace * 0.54f, shelfTierSpace * 0.46f
         ) else List(tierCount) { available / tierCount }
 
-        // Backdrop and real shelves/books are independent; hide nothing in a bitmap.
+        // Preserve the lighting shared by the backboard, crown, and base.
         WS16ATCabinetLayers(foreground = false, modifier = Modifier.fillMaxSize(),
             woodFilter = woodFilter)
-        if (bindingArt != null) {
-            Canvas(Modifier.fillMaxSize().padding(
-                start = leftWidth, end = rightWidth, top = top, bottom = bottom
-            )) {
-                val recess = Color(0xFF201209)
-                drawRect(Brush.horizontalGradient(
-                    0f to recess.copy(alpha = .58f), .24f to Color.Transparent,
-                    .69f to Color.Transparent, 1f to recess.copy(alpha = .46f)
-                ))
-                drawRect(Brush.verticalGradient(
-                    0f to recess.copy(alpha = .12f), .44f to recess.copy(alpha = .22f),
-                    1f to recess.copy(alpha = .47f)
-                ))
-            }
-        }
         HorizontalPager(
             state = pager,
             modifier = Modifier.fillMaxSize()

@@ -1,5 +1,7 @@
 # Current product roadmap
 
+**WS69 Library polish.** The painted cabinet now supplies continuous shading across its joints. The layout reserves room for the lower shelf brackets above the base. Check the signed v111-to-v112 upgrade and the Home, library and resumed puzzle screen at 320dp and 393dp. The next content pass deepens Quiet Clearings Expert and Our Solar System Familiar. [Pass record](devlog/2026-11-23_WS69_LIBRARY_POLISH.md)
+
 **WS68 beta integration.** Validate the cumulative v111 source against `main`, including the signed v108 → v110 → v111 path, frozen pages, all three Nearby modes in the emulator, and release isolation. The next player-facing pass starts with the bookcase edge and clipped brackets, followed by handset playthroughs and vocabulary work on the shallowest chapter pools. [Integration and acceptance record](devlog/2026-11-23_WS68_BETA_INTEGRATION.md)
 
 **November 23 checkpoint.** Signed v110 restored existing saves and added six preview pages. WS67 addresses feedback from that phone build with a smaller Solo tap target, cleaner green controls, and three themed books. A later full visual audit should check clipping, artwork crops, reuse, and consistency across screens. The integration draft and its save-upgrade and Nearby checks still precede a merge. [Current pass](devlog/2026-11-23_WS67_HOME_CONTROLS_AND_BOOK_GROUPING.md) · [Signed v110](https://github.com/PlayerEden/GridMates-Word-Search/pull/187)

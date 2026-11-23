@@ -1,0 +1,14 @@
+# November 23, 2026 — WS69 library polish
+
+The owner asked to continue after the v111 integration. The v111 native library capture showed a rectangular dark edge across the wood and cut-off lower shelf brackets. The source is based on [draft #189](https://github.com/PlayerEden/GridMates-Word-Search/pull/189) at `dbe0448ac1f8f7a46e24ea204e2b387049bfe15b`. The previous integration passed 14 workflows. The [signed v111 APK](https://github.com/PlayerEden/GridMates-Word-Search/actions/runs/45273861695/artifacts/14866208722) is the fallback. [Previous pass](2026-11-23_WS68_BETA_INTEGRATION.md)
+
+## Changes
+
+- The cabinet renderer uses the contiguous source shading across its crown, pilasters, backboard and base. The extra overlay on only the backboard caused the abrupt visible edge.
+- The shelf stage reserves the painted bracket depth plus clearance above the base. Book positioning at the shelf contact plane and pager control positions stay aligned.
+- A native Android check uses the actual bookcase and shelf raster bounds at 320dp and approximately 393dp. It also checks Home navigation and resumes a real Solar System save, then scrolls to a target in the word list.
+- The QA build is version code 112. The app uses the existing source-pinned art, frozen boards and compatible QA signature.
+
+## Build and follow-through
+
+The signed v112 build and checks are pending. Capture the v111 library and the v112 Home, library and puzzle at both widths. Verify the saved book journal bytes and the resumed found word. Record the source, build, comparison and remaining handset checks in the draft. The next content pass is deeper tested pools for Quiet Clearings Expert and Our Solar System Familiar.
