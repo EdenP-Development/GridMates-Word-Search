@@ -154,12 +154,8 @@ def build(root=ROOT):
         original = previous_by_key[key]
         if original["original_chapter"] != entry["chapter"]:
             raise ValueError(f"Changed source chapter without decision {key}")
-        tier = original["preflight_reason"]  # only here to affirm the original row exists
-        if not tier:
-            raise ValueError(f"Missing original preflight context {key}")
-        # WS65-E's original row retains preflight-related tier in upstream
-        # metadata; use the checked initial WS65-B tier directly via a
-        # read-only lookup, never silently upgrade a source word.
+        # Preserve the original chapter and canonical identity. Tier is
+        # resolved separately from the WS65-B preflight review snapshot.
         counts[entry["chapter"]] += 1
         caution_counts[entry["caution_code"]] += 1
         grouped[entry["chapter"]].append(entry["answer"])
