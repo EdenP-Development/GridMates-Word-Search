@@ -6,9 +6,12 @@ The owner asked to continue after the v111 integration. The v111 native library 
 
 - The cabinet renderer uses the contiguous source shading across its crown, pilasters, backboard and base. The extra overlay on only the backboard caused the abrupt visible edge.
 - The shelf stage reserves the painted bracket depth plus clearance above the base. Book positioning at the shelf contact plane and pager control positions stay aligned.
+- The full library title moves below the controls when its measured width exceeds the space between them. At Home, the cover painter trims transparent rows below the image and aligns the visible cover with the shelf. Covers retain the same bottom pivot while swiping.
 - A native Android check uses the actual bookcase and shelf raster bounds at 320dp and approximately 393dp. It also checks Home navigation and resumes a real Solar System save, then scrolls to a target in the word list.
 - The QA build is version code 112. The app uses the existing source-pinned art, frozen boards and compatible QA signature.
 
 ## Build and follow-through
 
-The signed v112 build and checks are pending. Capture the v111 library and the v112 Home, library and puzzle at both widths. Verify the saved book journal bytes and the resumed found word. Record the source, build, comparison and remaining handset checks in the draft. The next content pass is deeper tested pools for Quiet Clearings Expert and Our Solar System Familiar.
+The first v112 candidate at `5219bd62c7b74ef75dfe67cf1ef95f936bfff3aa` passed the signed upgrade and bracket checks. Its 320dp captures revealed a truncated library title and a visible gap below the Home cover. The revised checks require the full title and book contact at both widths. [Initial Android run](https://github.com/PlayerEden/GridMates-Word-Search/actions/runs/45290364448) · [Initial release isolation](https://github.com/PlayerEden/GridMates-Word-Search/actions/runs/45290364419) · [Initial APK](https://github.com/PlayerEden/GridMates-Word-Search/actions/runs/45290364448/artifacts/14874915241)
+
+The revised build is pending. Capture the v111 library and revised v112 Home, library and puzzle at both widths. Verify the saved book journal bytes and the resumed found word. The next content pass is deeper tested pools for Quiet Clearings Expert and Our Solar System Familiar.

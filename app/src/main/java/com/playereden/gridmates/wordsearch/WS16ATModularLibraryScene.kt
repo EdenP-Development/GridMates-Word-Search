@@ -28,11 +28,14 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.layout.onSizeChanged
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
+import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.rememberTextMeasurer
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
@@ -224,7 +227,18 @@ internal fun WS16ATModularLibraryScene(
             22.dp.coerceAtMost((bottom - 32.dp).coerceAtLeast(0.dp))
             else 0.dp
         val titleTop = (top - 88.dp).coerceAtLeast(12.dp)
-        val wideTitle = packedCatalog && density.fontScale >= 1.65f
+        val libraryTitle = "Your Library"
+        val titleSideInset = 66.dp
+        val direction = LocalLayoutDirection.current
+        val titleLane = maxWidth - safeContentPadding.calculateLeftPadding(direction) -
+            safeContentPadding.calculateRightPadding(direction) - titleSideInset * 2
+        val titleTextWidth = rememberTextMeasurer().measure(
+            text = AnnotatedString(libraryTitle),
+            style = MaterialTheme.typography.titleLarge.copy(fontWeight = FontWeight.Bold),
+            maxLines = 1, softWrap = false
+        ).size.width
+        val titleWidth = with(density) { titleTextWidth.toDp() } + CarvedTitleSidePadding * 2
+        val wideTitle = packedCatalog && (density.fontScale >= 1.65f || titleWidth > titleLane)
         val plaqueTop = if (wideTitle) 70.dp else titleTop
         var titleHeightPx by remember { mutableIntStateOf(0) }
         val headerBottom = safeContentPadding.calculateTopPadding() + plaqueTop +
@@ -370,15 +384,15 @@ internal fun WS16ATModularLibraryScene(
         Box(Modifier.fillMaxSize().padding(safeContentPadding)
             .testTag("ws16aw-safe-overlays")) {
         WS16BIAdaptivePlaque(
-            label = "Your Library", title = true, styled = cabinetPortrait || wideTitle,
+            label = libraryTitle, title = true, styled = cabinetPortrait || wideTitle,
             modifier = Modifier.align(Alignment.TopCenter)
                 .then(
                     if (wideTitle) {
-                        // Keep the enlarged title below the 54dp Back and menu buttons.
+                        // Allow the full title below the Back and menu buttons.
                         Modifier.padding(start = 16.dp, top = plaqueTop, end = 16.dp)
                             .fillMaxWidth()
                     } else {
-                        Modifier.padding(start = 66.dp, end = 66.dp, top = plaqueTop)
+                        Modifier.padding(start = titleSideInset, end = titleSideInset, top = plaqueTop)
                     }
                 )
                 .onSizeChanged { titleHeightPx = it.height }

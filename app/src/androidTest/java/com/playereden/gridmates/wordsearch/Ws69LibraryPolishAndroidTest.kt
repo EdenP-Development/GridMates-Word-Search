@@ -3,6 +3,7 @@ package com.playereden.gridmates.wordsearch
 import android.graphics.Bitmap
 import android.util.Log
 import androidx.compose.ui.graphics.asAndroidBitmap
+import androidx.compose.ui.semantics.SemanticsActions
 import androidx.compose.ui.test.assertCountEquals
 import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.captureToImage
@@ -14,6 +15,8 @@ import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.onRoot
 import androidx.compose.ui.test.performClick
 import androidx.compose.ui.test.performScrollTo
+import androidx.compose.ui.test.performSemanticsAction
+import androidx.compose.ui.text.TextLayoutResult
 import androidx.compose.ui.unit.dp
 import androidx.test.platform.app.InstrumentationRegistry
 import com.playereden.gridmates.wordsearch.core.BookPageSessionRules
@@ -43,9 +46,21 @@ class Ws69LibraryPolishAndroidTest {
 
         compose.onNodeWithTag("ws41-home-title").assertIsDisplayed()
         capture("$capturePrefix-home.png")
+        val cover = compose.onNodeWithTag("ws14d-cover-woodland-qa-volume-one")
+            .assertIsDisplayed().getUnclippedBoundsInRoot()
+        val homeShelf = compose.onNodeWithTag("ws16e-storybook-shelf")
+            .assertIsDisplayed().getUnclippedBoundsInRoot()
+        val coverGap = homeShelf.top - cover.bottom
+        assertTrue("Home cover misses shelf contact by $coverGap", abs(coverGap.value) <= 1f)
+        Log.i("WS69_LAYOUT", "Home cover contact $coverGap")
         compose.onNodeWithTag("ws16-resume-solo").performScrollTo().assertIsDisplayed()
         openLibrary()
         capture("$capturePrefix-library.png")
+        val titleLayouts = mutableListOf<TextLayoutResult>()
+        compose.onNodeWithText("Your Library").assertIsDisplayed()
+            .performSemanticsAction(SemanticsActions.GetTextLayoutResult) { it(titleLayouts) }
+        assertTrue("Library plaque must show its full title",
+            titleLayouts.isNotEmpty() && titleLayouts.none { it.hasVisualOverflow })
 
         val base = compose.onNodeWithTag("ws16at-cabinet-base", useUnmergedTree = true)
             .getUnclippedBoundsInRoot()

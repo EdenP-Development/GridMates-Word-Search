@@ -19,6 +19,8 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 
+internal val CarvedTitleSidePadding = 29.dp
+
 /**
  * WS16BJ: a fitted, hand-carved library nameplate inside the top cabinet arch.
  *
@@ -152,7 +154,7 @@ internal fun WS16BJCarvedTitlePlaque(
         }
         Text(
             text = label,
-            modifier = Modifier.padding(horizontal = if (largeText) 10.dp else 29.dp,
+            modifier = Modifier.padding(horizontal = if (largeText) 10.dp else CarvedTitleSidePadding,
                 vertical = 4.dp),
             color = Color(0xFFFFEAD0),
             style = MaterialTheme.typography.titleLarge,

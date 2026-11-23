@@ -47,7 +47,7 @@ class ModularLibraryTests(unittest.TestCase):
         self.assertLess(code.index("HorizontalPager("),
                         code.index("WS16ATCabinetLayers(foreground = true"))
         self.assertLess(code.index("WS16ATCabinetLayers(foreground = true"),
-                        code.index('label = "Your Library"'))
+                        code.index('label = libraryTitle'))
         self.assertIn("Ws16BIMountedCabinetShelf(colorFilter = woodFilter)",code)
         self.assertIn("Ws16EStorybookShelf()",code)
         self.assertIn("val shelfContactDepth = 42.dp",code)
@@ -127,7 +127,8 @@ class ModularLibraryTests(unittest.TestCase):
         self.assertIn("size(48.dp)", kit)
         self.assertIn("Role.Button", kit)
         self.assertIn("contentDescription = description", kit)
-        self.assertIn('label = "Your Library"', scene)
+        self.assertIn('val libraryTitle = "Your Library"', scene)
+        self.assertIn('label = libraryTitle', scene)
         self.assertNotIn('testTag("ws16at-real-count")', scene)
         pager=(APP/"WS16BKBookcasePager.kt").read_text()
         for part in ("BACK", "ART_OPTIONS"):
