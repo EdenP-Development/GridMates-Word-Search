@@ -1,4 +1,6 @@
-# Current product roadmap — November 18, 2026
+# Current product roadmap
+
+**November 23 checkpoint.** The repository build to use as a fallback is signed v108. WS66-B has 96 validated research boards and a separate v109 Work preview has six playable QA pages. Recover the v109 bundle and compare handset startup with v108. Review the six merge conflicts on a single integration draft and run its signed-upgrade and Nearby checks before considering a merge. [Build choices and integration order](devlog/2026-11-23_WS66_HANDOFF_AND_EVIDENCE_REVIEW.md)
 
 **WS64 Woodland editorial intake (source authored, CI pending):** [Source reconciliation & exact 122/28/94 method](WS64_WOODLAND_PROPOSAL_RECONCILIATION_2026-11-22.md) · [devlog](devlog/2026-11-22_WS64_WOODLAND_CANDIDATE_RECONCILIATION.md). Four historic chapter manuscripts contain **122 separate unapproved proposed answers**: Birdsong 23, By the Stream 33, Forest Discoveries 30 and Quiet Clearings 36. Direct comparison against English/Fall internal QA already found **28 canonical answer reuses**, leaving **94 potential new canonical words** (all still unapproved). New read-only script/test/CI generates an unsigned editor worksheet with source/page/provenance, existing canonical ID, flags and blank owner review fields. No catalog, pack, frozen 63+18 boards, Android runtime, saves or published content changed; zero new owner approval. **VERIFIED:** [WS64 #45080015449](https://github.com/PlayerEden/GridMates-Word-Search/actions/runs/45080015449) and [WS40 recovery #45080015518](https://github.com/PlayerEden/GridMates-Word-Search/actions/runs/45080015518) both SUCCESS at executed SHA `8517a8ab991fd3485fd63846077965b7d04f3c08`, WS63 6/6 + WS64 5/5 tests. [Archived 122-row unsigned CSV #14777225148](https://github.com/PlayerEden/GridMates-Word-Search/actions/runs/45080015449/artifacts/14777225148) independently verified: **Birdsong 23=6 existing/17 potential new; Stream 33=3/30; Wildlife 30=4/26; Clearings 36=15/21**.; keep this milestone draft/unmerged.
 
@@ -24,7 +26,7 @@ supersedes an older "next task" paragraph. See the
 [GitHub recovery audit](audits/2026-11-17_WS40_GITHUB_PLAN_RECOVERY.md) for the
 source crosswalk and the [development journal](DEVELOPMENT_JOURNAL.md) for receipts.
 
-## Current playable baseline
+## November 18 v104 milestone
 
 **v104 / WS42 QA**, tested source `f2304c5d81a57cc1a29197277702d92645460c96` on the feature branch in [draft PR #153](https://github.com/PlayerEden/GridMates-Word-Search/pull/153).
 [Build and Android receipt](devlog/2026-11-18_WS42_HANDSET_VERIFICATION.md) · [signed APK](https://github.com/PlayerEden/GridMates-Word-Search/actions/runs/44252800362/artifacts/14404433051).
@@ -86,6 +88,6 @@ source crosswalk and the [development journal](DEVELOPMENT_JOURNAL.md) for recei
 
 ## Next exact implementation
 
-Plan page recipes for the first Fall volume using the versioned [150-word Fall authoring pack](https://github.com/PlayerEden/GridMates-Word-Search/pull/154). Check 12×12, 15×15 and 20×20 placement, repeated stems, difficulty and target coverage before integrating a playable QA volume and matched artwork.
+Recover the v109 branch and test the six preview pages on a handset. Check signed install-over, first launch, and the two-phone Nearby flow. In parallel, rehearse a single integration draft for the current runtime with the save and packaging checks enabled on that branch. [Current receipt and order](devlog/2026-11-23_WS66_HANDOFF_AND_EVIDENCE_REVIEW.md)
 
-Before using new packs in Custom or Nearby, distinguish play mode from pack identity in portable saves and results and version LAN content compatibility. Preserve existing boards and support the current LAN behavior during that migration. Owner v104 review and two-phone acceptance remain parallel work. Production content, artwork, app bundle and store promotion remain open.
+The [150-word Fall authoring pack](https://github.com/PlayerEden/GridMates-Word-Search/pull/154) can supply the later Fall volume, with fixed page recipes and matching artwork. Before using new packs in Custom or Nearby, distinguish play mode from pack identity in portable saves and results and version LAN content compatibility. Preserve existing boards and support current LAN behavior during that migration. Production content, artwork, app bundle and store promotion remain open.
