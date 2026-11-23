@@ -86,12 +86,12 @@ object Ws66PreviewFixture {
             }
         }
         val manifest = index.joinToString("\n", postfix = "\n")
-        javaClass.getResource("/ws66-preview/expected-boards.tsv")?.readText()?.let { expected ->
-            check(manifest == expected) { "WS66 pinned page digest changed" }
-        }
+        val expected = requireNotNull(javaClass.getResource("/ws66-preview/expected-boards.tsv")).readText()
+        check(manifest == expected) { "WS66 pinned page digest changed" }
         File(assets, "boards.tsv").writeText(manifest)
-        File(assets.parentFile, "trial-boards.tsv").writeText(trials.joinToString("\n", postfix = "\n"))
-        File(assets.parentFile, "variety.tsv").writeText(metrics.joinToString("\n", postfix = "\n"))
+        val evidence = assets.parentFile.parentFile
+        File(evidence, "trial-boards.tsv").writeText(trials.joinToString("\n", postfix = "\n"))
+        File(evidence, "variety.tsv").writeText(metrics.joinToString("\n", postfix = "\n"))
         println(metrics.joinToString("\n"))
     }
 

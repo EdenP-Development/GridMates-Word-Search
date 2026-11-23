@@ -82,7 +82,8 @@ class Ws57PlayablePreviewContract(unittest.TestCase):
                        "woodland-ws57-qa-volume-two"):
             self.assertIn(needle,code)
         runtime=(MAIN/"QaBookshelfRuntime.kt").read_text()
-        self.assertIn('it != "woodland-ws57-qa-volume-two"',runtime)
+        self.assertIn("val editorialBookIds = setOf(Ws57WoodlandPreview.BOOK_ID,",debug)
+        self.assertIn("it !in BookQaPilot.editorialBookIds",runtime)
         self.assertIn("gridmates_wordsearch_ws11_qa_progress_v1.dat",runtime)
         self.assertIn("gridmates_wordsearch_ws11_qa_sessions_v1.dat",runtime)
         self.assertIn("BookQaPilot.catalog(applicationContext)",runtime)

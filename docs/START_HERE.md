@@ -2,7 +2,7 @@
 
 Read [current roadmap](CURRENT_PRODUCT_ROADMAP.md), the top of [active handoff](WS14_ACTIVE_HANDOFF_2026-11-09.md), [development journal](DEVELOPMENT_JOURNAL.md) and its latest dated pass. Inspect live GitHub PR/CI heads; `main` and historical APK banners are not the current source.
 
-**The GitHub-verified Android fallback is signed v108.** WS66-B contains the latest replicated vocabulary results. The separate signed v109 chapter preview still needs its original source bundle restored and published. Start with the current build, content, and integration status. [WS66 handoff and evidence review](devlog/2026-11-23_WS66_HANDOFF_AND_EVIDENCE_REVIEW.md) · [Signed v108 APK](https://github.com/PlayerEden/GridMates-Word-Search/actions/runs/45065450259/artifacts/14771725725)
+**The latest chapter preview is WS66 v110.** Its source and Android QA runs are in draft #187. The GitHub-verified fallback is signed v108. For the replacement download and build verdict, see the draft. [v110 draft #187](https://github.com/PlayerEden/GridMates-Word-Search/pull/187) · [Download recovery receipt](devlog/2026-11-23_WS66_V110_DOWNLOAD_RECOVERY.md) · [Signed v108 APK](https://github.com/PlayerEden/GridMates-Word-Search/actions/runs/45065450259/artifacts/14771725725)
 
 Root lexicon data remains the historical negative-test fixture. The English and Fall internal-QA inventories total 787 distinct words. The 10,000-word goal across 30-plus topics requires curated and approved vocabulary. [WS40 recovery audit](audits/2026-11-17_WS40_GITHUB_PLAN_RECOVERY.md) · [Vocabulary expansion issue #87](https://github.com/PlayerEden/GridMates-Word-Search/issues/87)
 

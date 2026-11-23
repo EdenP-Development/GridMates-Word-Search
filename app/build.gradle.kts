@@ -1,3 +1,5 @@
+import javax.inject.Inject
+
 plugins {
     id("com.android.application")
     kotlin("android")
@@ -44,9 +46,6 @@ android {
     buildFeatures {
         compose = true
     }
-    sourceSets.getByName("debug").assets.srcDir(
-        project(":core").layout.buildDirectory.dir("generated/ws66-preview/assets")
-    )
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_17
         targetCompatibility = JavaVersion.VERSION_17
@@ -56,15 +55,31 @@ android {
     }
 }
 
+abstract class StageWs66PreviewAssets : DefaultTask() {
+    @get:InputDirectory abstract val snapshots: DirectoryProperty
+    @get:OutputDirectory abstract val output: DirectoryProperty
+    @get:Inject abstract val files: FileSystemOperations
+
+    @TaskAction fun stage() {
+        files.sync {
+            from(snapshots)
+            into(output)
+        }
+    }
+}
+
+val stageWs66PreviewAssets = tasks.register<StageWs66PreviewAssets>("stageWs66PreviewAssets") {
+    dependsOn(":core:generateWs66Preview")
+    snapshots.set(project(":core").layout.buildDirectory.dir("generated/ws66-preview/assets"))
+    output.convention(layout.buildDirectory.dir("generated/assets/ws66Preview"))
+}
+
 androidComponents.onVariants(androidComponents.selector().withBuildType("debug")) { debug ->
+    debug.sources.assets?.addGeneratedSourceDirectory(stageWs66PreviewAssets, StageWs66PreviewAssets::output)
     debug.outputs.forEach {
         it.versionCode.set(providers.gradleProperty("qaVersionCode").map(String::toInt).orElse(110))
         it.versionName.set("0.9.65-ws66-chapter-preview-r2-qa")
     }
-}
-
-tasks.matching { it.name == "mergeDebugAssets" }.configureEach {
-    dependsOn(":core:generateWs66Preview")
 }
 
 dependencies {
