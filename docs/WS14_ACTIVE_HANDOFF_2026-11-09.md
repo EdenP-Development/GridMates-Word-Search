@@ -1,3 +1,7 @@
+# WS67 Home and library v111
+
+**WS67 Home controls and grouped books (November 23).** The green Solo action has its own tap target, the shared green buttons have cleaner edges, and the shelf groups preview pages under Woodland, Space, and Garden. Apply the signed Android and upgrade checks on the draft head. The tested v110 APK remains the fallback. [Pass receipt](devlog/2026-11-23_WS67_HOME_CONTROLS_AND_BOOK_GROUPING.md) · [v110 baseline](https://github.com/PlayerEden/GridMates-Word-Search/pull/187)
+
 # WS66 v110 chapter preview
 
 **WS66 v110 preview download recovery (November 23).** Rebuilt the two QA chapters from the verified WS66-B base. The branch packages six new snapshots and carries forward v108 progress through separate journals. Check the draft for the signed APK, install-over evidence, and release isolation. [Recovery receipt](devlog/2026-11-23_WS66_V110_DOWNLOAD_RECOVERY.md)

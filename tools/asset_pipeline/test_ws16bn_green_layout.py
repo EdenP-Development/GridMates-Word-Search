@@ -40,7 +40,9 @@ class GreenNavigationTests(unittest.TestCase):
         chrome = (APP / "WS16BICabinetChrome.kt").read_text()
         pager = (APP / "WS16BKBookcasePager.kt").read_text()
         self.assertIn("val opacity = if (greenIcon) 1f else", paint)
-        self.assertIn("if (!enabled) {", paint)
+        self.assertIn("if (greenIcon && !enabled) {", paint)
+        green_finish = paint.split("if (greenSurface) {", 1)[1].split("return", 1)[0]
+        self.assertNotIn("drawLine(", green_finish)
         self.assertIn("Color(0x2A0A2118)", paint)
         self.assertIn("alpha = if (enabled) 1f else .38f", chrome)
         self.assertIn("enabled = selected > 0", pager)

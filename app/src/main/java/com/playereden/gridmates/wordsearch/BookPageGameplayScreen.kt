@@ -82,11 +82,14 @@ internal fun BookPageGameplayScreen(
     onNextPage: ((bookId: String, pageId: String) -> Unit)? = null,
     showPrototypeArt: Boolean = false,
     fieldNotesArt: Boolean = false,
-    onBookProgressSaved: () -> Unit = {}
+    onBookProgressSaved: () -> Unit = {},
+    presentation: BookShelfPresentation? = null
 ) {
     BackHandler(onBack = onBack)
     val book = catalog.book(bookId)
     val page = catalog.page(bookId, pageId)
+    val visibleCatalog = presentation?.catalog ?: catalog
+    val visibleBook = presentation?.displayBookId(bookId) ?: bookId
     val board = remember(catalog, bookId, pageId) {
         runCatching { BookPageSessionRules.puzzle(catalog, bookId, pageId) }.getOrNull()
     }
@@ -251,7 +254,9 @@ internal fun BookPageGameplayScreen(
 
     val next = if (committed) {
         runCatching {
-            BookProgressRules.continuePage(catalog, progressStore.progress, bookId)
+            val raw = progressStore.progress
+            BookProgressRules.continuePage(visibleCatalog,
+                presentation?.progress(raw, preferredEdition = bookId) ?: raw, visibleBook)
         }.getOrNull()
     } else null
 
@@ -276,12 +281,13 @@ internal fun BookPageGameplayScreen(
         }
         val choose: (GridPoint, GridPoint) -> Unit = { start, end -> select(start, end) }
         Column(Modifier.fillMaxSize(), verticalArrangement = Arrangement.spacedBy(5.dp)) {
-            val pageNumber = catalog.pages(bookId).indexOfFirst { it.id == pageId } + 1
+            val pageNumber = visibleCatalog.pages(visibleBook).indexOfFirst { it.id == pageId } + 1
+            val bookTitle = (visibleCatalog.book(visibleBook)?.title ?: book.title).removeSuffix(" · TEST BOOK")
             PuzzleTitleBar(
                 title = if (compactReadability) "Page $pageNumber"
-                    else book.title.removeSuffix(" · TEST BOOK"),
+                    else bookTitle,
                 titleSpokenLabel = if (compactReadability)
-                    "${book.title.removeSuffix(" · TEST BOOK")}, " +
+                    "$bookTitle, " +
                         "${board.displayTitle}, Page $pageNumber"
                     else null,
                 compact = true,
@@ -356,7 +362,7 @@ internal fun BookPageGameplayScreen(
                     if (next != null && onNextPage != null) {
                         GridMatesIllustratedPill(
                             label = "Next page",
-                            onClick = { onNextPage(bookId, next.id) },
+                            onClick = { onNextPage(presentation?.ownerOf(next.id) ?: bookId, next.id) },
                             modifier = Modifier.weight(1f)
                         )
                     }

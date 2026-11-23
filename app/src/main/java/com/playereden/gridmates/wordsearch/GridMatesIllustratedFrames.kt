@@ -175,22 +175,8 @@ internal fun DrawScope.drawGridMatesPaperFrame(
     )
 
     if (greenSurface) {
-        // Same fine antique-gold specular as the Home Play pill. Icon-sized
-        // faces carry a short top glint and an inset bevel; no new sprite art.
-        val edge = if (greenIcon) 9f*u else 15f*u
-        drawLine(Color(0xFFFFD987).copy(alpha=if (enabled) .65f else .27f),
-            Offset(edge,3.5f*u), Offset((w-edge).coerceAtLeast(edge),3.5f*u),
-            strokeWidth=.8f*u,cap=StrokeCap.Round)
-        if (greenIcon) {
-            drawLine(Color(0xFF0B2E23).copy(alpha=.38f),
-                Offset(10f*u,h-4.2f*u),Offset(w-10f*u,h-4.2f*u),
-                strokeWidth=1.1f*u,cap=StrokeCap.Round)
-            if (!enabled) {
-                // Muting the enamel slightly keeps unavailable arrows obvious
-                // without a gray/translucent parchment ghost.
-                drawRoundRect(color=Color(0x2A0A2118),
-                    cornerRadius=CornerRadius(rad))
-            }
+        if (greenIcon && !enabled) {
+            drawRoundRect(color=Color(0x2A0A2118), cornerRadius=CornerRadius(rad))
         }
         return
     }

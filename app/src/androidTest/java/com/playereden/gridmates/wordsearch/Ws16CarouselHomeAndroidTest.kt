@@ -2,6 +2,7 @@ package com.playereden.gridmates.wordsearch
 
 import androidx.compose.ui.test.junit4.createAndroidComposeRule
 import androidx.compose.ui.test.assertHasClickAction
+import androidx.compose.ui.test.assertHasNoClickAction
 import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.onNodeWithContentDescription
 import androidx.compose.ui.test.onNodeWithText
@@ -66,8 +67,8 @@ class Ws16CarouselHomeAndroidTest {
         compose.onNodeWithText("Close").performClick()
         compose.onNodeWithTag("ws15-back").performClick()
         compose.onNodeWithTag("ws16-continue-solo")
-            .performScrollTo().assertHasClickAction()
-        compose.onNodeWithTag("ws16-resume-solo", useUnmergedTree = true).assertExists()
+            .performScrollTo().assertHasNoClickAction()
+        compose.onNodeWithTag("ws16-resume-solo").assertHasClickAction()
     }
     @Test fun asymmetricAssetsAndQuickPlayHaveHonestRouting() {
         compose.onNodeWithTag("ws16-action-daily").performScrollTo().assertExists()
@@ -95,9 +96,8 @@ class Ws16CarouselHomeAndroidTest {
         compose.onNodeWithTag("ws16-full-shelf").performScrollTo().assertExists()
         compose.onNodeWithTag("ws16d-home-collection").assertExists()
         compose.onNodeWithTag("ws16-continue-solo")
-            .performScrollTo().assertHasClickAction()
-        compose.onNodeWithTag("ws16-resume-solo", useUnmergedTree = true).assertExists()
-        compose.onNodeWithTag("ws16-resume-solo", useUnmergedTree = true).assertExists()
+            .performScrollTo().assertHasNoClickAction()
+        compose.onNodeWithTag("ws16-resume-solo").assertHasClickAction()
         compose.onNodeWithContentDescription("Open Daily Puzzle")
             .performScrollTo().assertExists()
         compose.onNodeWithContentDescription("Open Together on local Wi-Fi")

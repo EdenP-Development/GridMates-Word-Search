@@ -52,10 +52,17 @@ internal class BookLibraryStore(
         }
     }
 
-    fun bookmark(bookId: String, pageId: String): Boolean {
+    fun bookmark(bookId: String, pageId: String): Boolean = bookmark(bookId, pageId, emptySet())
+
+    /** An explicit bookmark selection replaces the other markers in the same displayed book. */
+    fun bookmark(bookId: String, pageId: String, editions: Set<String>): Boolean {
         if (blocked) return false
         return try {
-            commit(BookProgressRules.bookmark(catalog, current, bookId, pageId))
+            val next = BookProgressRules.bookmark(catalog, current, bookId, pageId)
+            if (editions.size <= 1) commit(next)
+            else commit(next.copy(volumes = next.volumes.mapValues { (id, saved) ->
+                if (id != bookId && id in editions) saved.copy(bookmarkedPageId = null) else saved
+            }))
         } catch (_: IllegalArgumentException) { false }
     }
 

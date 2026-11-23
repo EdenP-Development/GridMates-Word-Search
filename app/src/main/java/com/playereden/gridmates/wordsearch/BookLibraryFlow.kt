@@ -41,18 +41,21 @@ internal fun BookLibraryFlow(
     /** Home may send an existing catalog book straight into the next safe page. */
     initialBookId: String? = null,
     safeContentPadding: PaddingValues = PaddingValues(0.dp),
-    onBookProgressSaved: () -> Unit = {}
+    onBookProgressSaved: () -> Unit = {},
+    presentation: BookShelfPresentation? = null
 ) {
-    val initialBook = initialBookId?.takeIf { catalog.book(it) != null }
+    val shelf = presentation ?: remember(catalog) { BookShelfPresentation(catalog, BookQaPilot.editorialBookIds) }
+    val initialBook = initialBookId?.let(shelf::displayBookId)
     val directFromHome = initialBook != null
     // Reuse published book and local progress validation; a fully solved book
     // enters details for replay/page choice instead of silently resetting.
-    val initialPage = remember(catalog, initialBook, progressStore, sessionStore) {
+    val initialPage = remember(shelf, initialBook, progressStore, sessionStore) {
         initialBook?.takeUnless { progressStore.blocked || sessionStore.blocked }
             ?.let { book ->
                 runCatching {
+                    val started = sessionStore.journal.sessions.mapTo(mutableSetOf()) { it.pageId }
                     BookProgressRules.continuePage(
-                        catalog, progressStore.progress, book, sessionStore.startedPageIds(book)
+                        shelf.catalog, shelf.progress(progressStore.progress, started), book, started
                     )
                 }.getOrNull()?.id
             }
@@ -73,11 +76,16 @@ internal fun BookLibraryFlow(
     // to its shelf; never persist a decorative future-book state to a save file.
     var cabinetPage by rememberSaveable { mutableIntStateOf(0) }
     var focusedBookId by remember(catalog) {
-        mutableStateOf(catalog.books.firstOrNull()?.id)
+        mutableStateOf(shelf.catalog.books.firstOrNull()?.id)
     }
 
     val unavailable = progressStore.blocked || sessionStore.blocked
     val snapshot = remember(update, pageId, bookId) { progressStore.progress }
+    val started = remember(update, pageId, bookId) {
+        sessionStore.journal.sessions.mapTo(mutableSetOf()) { it.pageId }
+    }
+    val displayProgress = remember(shelf, snapshot, started) { shelf.progress(snapshot, started) }
+    val shownBook = bookId?.let(shelf::displayBookId)
 
     if (unavailable) {
         BackHandler(onBack = onExit)
@@ -92,13 +100,14 @@ internal fun BookLibraryFlow(
     }
 
     when {
-        pageId != null && bookId != null -> {
-            val activeBook = requireNotNull(bookId)
+        pageId != null && shownBook != null -> {
             val activePage = requireNotNull(pageId)
+            val owner = shelf.ownerOf(activePage)?.takeIf { shelf.displayBookId(it) == shownBook }
+                ?: shownBook
             Box(Modifier.fillMaxSize().padding(safeContentPadding)) {
             BookPageGameplayScreen(
                 catalog = catalog,
-                bookId = activeBook,
+                bookId = owner,
                 pageId = activePage,
                 sessionStore = sessionStore,
                 progressStore = progressStore,
@@ -106,6 +115,7 @@ internal fun BookLibraryFlow(
                 showPrototypeArt = showPrototypeArt,
                 fieldNotesArt = fieldNotesArt,
                 onBookProgressSaved = onBookProgressSaved,
+                presentation = shelf,
                 onBack = {
                     if (directFromHome) onExit()
                     else {
@@ -114,7 +124,7 @@ internal fun BookLibraryFlow(
                     }
                 },
                 onNextPage = { nextBook, nextPage ->
-                    if (nextBook == activeBook &&
+                    if (shelf.displayBookId(nextBook) == shownBook &&
                         catalog.page(nextBook, nextPage) != null) {
                         pageId = nextPage
                         update++
@@ -123,21 +133,18 @@ internal fun BookLibraryFlow(
             )
             }
         }
-        bookId != null -> {
+        shownBook != null -> {
             BackHandler {
                 if (directFromHome) onExit() else bookId = null
             }
-            val currentBook = requireNotNull(bookId)
-            val startedPageIds = remember(currentBook, update) {
-                sessionStore.startedPageIds(currentBook)
-            }
+            val currentBook = shownBook
             Column(Modifier.fillMaxSize().padding(safeContentPadding)) {
                 if (feedback != null) {
                     Text(feedback.orEmpty(), modifier = Modifier.padding(12.dp))
                 }
                 PuzzleBookDetailScreen(
-                    catalog = catalog,
-                    progress = snapshot,
+                    catalog = shelf.catalog,
+                    progress = displayProgress,
                     bookId = currentBook,
                     onBack = {
                         if (directFromHome) onExit()
@@ -145,14 +152,16 @@ internal fun BookLibraryFlow(
                     },
                     onPlayPage = { selectedBook, selectedPage ->
                         if (selectedBook == currentBook &&
-                            catalog.page(selectedBook, selectedPage) != null) {
+                            shelf.catalog.page(currentBook, selectedPage) != null) {
                             pageId = selectedPage
                             feedback = null
                         }
                     },
                     onBookmarkPage = { selectedBook, selectedPage ->
-                        if (selectedBook == currentBook &&
-                            progressStore.bookmark(selectedBook, selectedPage)) {
+                        val owner = shelf.ownerOf(selectedPage)
+                        if (selectedBook == currentBook && owner != null &&
+                            shelf.displayBookId(owner) == currentBook &&
+                            progressStore.bookmark(owner, selectedPage, shelf.editionIds(currentBook))) {
                             update++
                             feedback = "Bookmark saved for this book."
                         } else {
@@ -163,15 +172,16 @@ internal fun BookLibraryFlow(
                     modifier = Modifier.weight(1f),
                     showPrototypeArt = showPrototypeArt,
                     fieldNotesArt = fieldNotesArt,
-                    startedPageIds = startedPageIds
+                    startedPageIds = started,
+                    bookmarkedPageIds = shelf.bookmarks(snapshot, currentBook)
                 )
             }
         }
         else -> {
             BackHandler(onBack = onExit)
             PuzzleBookshelfScreen(
-                catalog = catalog,
-                progress = snapshot,
+                catalog = shelf.catalog,
+                progress = displayProgress,
                 showPrototypeArt = showPrototypeArt,
                 fieldNotesArt = fieldNotesArt,
                 onToggleArt = if (showPrototypeArt) {
@@ -188,7 +198,7 @@ internal fun BookLibraryFlow(
                 onBack = onExit,
                 safeContentPadding = safeContentPadding,
                 onOpenBook = { selectedBook ->
-                    if (catalog.book(selectedBook) != null) {
+                    if (shelf.catalog.book(selectedBook) != null) {
                         bookId = selectedBook
                         feedback = null
                     }
