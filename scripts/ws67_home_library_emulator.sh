@@ -25,7 +25,8 @@ done
 echo 'Signed v110 to v111 update kept both journals byte-identical.' | tee "$report/install-over.txt"
 adb shell am instrument -w -r -e class "$tests.Ws67HomeLibraryAndroidTest" "$runner" \
   | tee "$report/v111-ui.txt"
-for screen in home library resumed-solar; do
-  adb exec-out run-as "$package" cat "files/ws67-$screen.png" > "$report/$screen.png" || true
-done
 grep -Eq '^OK \(2 tests\)' "$report/v111-ui.txt"
+for screen in home library resumed-solar; do
+  adb exec-out run-as "$package" cat "files/ws67-$screen.png" > "$report/$screen.png"
+  test -s "$report/$screen.png"
+done

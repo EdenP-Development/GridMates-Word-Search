@@ -2,11 +2,14 @@ package com.playereden.gridmates.wordsearch
 
 import android.graphics.Bitmap
 import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.graphics.asAndroidBitmap
 import androidx.compose.ui.test.assertHasClickAction
 import androidx.compose.ui.test.assertHasNoClickAction
 import androidx.compose.ui.test.assertIsDisplayed
+import androidx.compose.ui.test.captureToImage
 import androidx.compose.ui.test.click
 import androidx.compose.ui.test.junit4.createAndroidComposeRule
+import androidx.compose.ui.test.onRoot
 import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
@@ -76,21 +79,21 @@ class Ws67HomeLibraryAndroidTest {
 
         compose.onNodeWithText("1 of 3").assertExists()
         compose.onNodeWithTag("ws16-full-shelf").performScrollTo().performClick()
-        screenshot("ws67-library.png")
         compose.onNodeWithTag("ws16bh-spine-$SOLAR").assertDoesNotExist()
-        compose.onNodeWithTag("ws16bh-spine-$SPACE").assertIsDisplayed().performClick()
+        val spaceSpine = compose.onNodeWithTag("ws16bh-spine-$SPACE").assertIsDisplayed()
+        screenshot("ws67-library.png")
+        spaceSpine.performClick()
         compose.onNodeWithTag("library-view-pages").assertIsDisplayed().performClick()
         compose.onNodeWithText("Resume page $visibleNumber").assertExists()
         compose.onNodeWithTag("book-continue").performScrollTo().performClick()
         compose.onNodeWithText("Space").assertIsDisplayed()
-        compose.onNodeWithText("1 of 12 words found", substring = true).assertExists()
+        compose.onNodeWithText("1 of 12 words found", substring = true).assertIsDisplayed()
         screenshot("ws67-resumed-solar.png")
     }
 
     private fun screenshot(name: String) {
-        compose.waitForIdle()
         val instrumentation = InstrumentationRegistry.getInstrumentation()
-        val bitmap = checkNotNull(instrumentation.uiAutomation.takeScreenshot())
+        val bitmap = compose.onRoot().captureToImage().asAndroidBitmap()
         try {
             instrumentation.targetContext.openFileOutput(name, 0).use {
                 check(bitmap.compress(Bitmap.CompressFormat.PNG, 100, it))

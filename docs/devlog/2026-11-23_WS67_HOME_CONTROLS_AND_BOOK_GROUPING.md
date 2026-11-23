@@ -10,6 +10,8 @@ The owner tested v110 and supplied phone screenshots of Home, the library, and a
 
 ## Verification and continuing work
 
-The QA draft targets the tested v110 branch. The Android run checks the package and signer, seeds real v110 bookmarks and a found word, installs v111 over it, compares the saved bytes, and exercises the native Home and Space routes. The draft records the tested commit, APK, and visual evidence.
+The QA draft targets the tested v110 branch. At `199a04d0cf8ef3cce3f48608ded707b6b04f0e7b`, Android QA passed one v110 seed test and two v111 UI tests. The same-signer upgrade kept both v110 journals byte-identical, and the Space book resumed the saved Solar System page with its found word. Release isolation also passed. The signed v111 APK SHA-256 is `b2b966ee60d529d7f45fdcaf6db96f17326eafa62abb298401abcc26ab20bf0f`. [Android QA](https://github.com/PlayerEden/GridMates-Word-Search/actions/runs/45273861695) · [Release isolation](https://github.com/PlayerEden/GridMates-Word-Search/actions/runs/45273861732) · [v111 APK ZIP](https://github.com/PlayerEden/GridMates-Word-Search/actions/runs/45273861695/artifacts/14866208722)
+
+Android's first-run full-screen tip obscured the initial screen captures. The evidence follow-up captures the app window after confirming each screen is visible and requires all three PNGs to be exported. The exact capture result will be recorded on the [WS67 draft](https://github.com/PlayerEden/GridMates-Word-Search/pull/188).
 
 Carry the requested full visual and asset audit forward as a separate pass. Cover clipping at the Home scroll boundaries and across puzzle word lists, artwork crop and safe areas, asset reuse versus accidental duplication, and consistency of color, outlines, typography, and illustration style across Home, library, gameplay, and secondary screens.
