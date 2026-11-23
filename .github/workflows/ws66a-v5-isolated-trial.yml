@@ -1,0 +1,78 @@
+name: WS66-A Actual Isolated V5 Generator Trial (No APK)
+
+on:
+  workflow_dispatch:
+  pull_request:
+    paths:
+      - 'core/src/test/resources/ws66a/**'
+      - 'core/src/test/kotlin/com/playereden/gridmates/wordsearch/core/Ws66aV5ScratchTrialTest.kt'
+      - 'tools/lexicon/ws66a_*'
+      - 'tools/lexicon/test_ws66a_*'
+      - 'docs/WS66A_*'
+      - '.github/workflows/ws66a-v5-isolated-trial.yml'
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ws66a-v5-scratch-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  actual-v5-qa-only-trials:
+    runs-on: ubuntu-latest
+    timeout-minutes: 18
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Confirm exact historical authoring and scratch source provenance
+        run: |
+          python3 tools/lexicon/audit_recovery.py
+          python3 tools/lexicon/validate.py --data-dir data/lexicon/authoring/en-v1
+          python3 tools/lexicon/validate.py --data-dir data/lexicon/authoring/fall-v1
+          python3 -m unittest discover -s tools/lexicon -p 'test_ws66a_test_fixture_guard.py' -v
+          python3 tools/lexicon/ws66a_test_fixture_guard.py --out-dir qa-ws66a-v5-trial
+      - uses: actions/setup-java@v5
+        with:
+          distribution: temurin
+          java-version: '17'
+      - uses: gradle/actions/setup-gradle@v4
+        with:
+          gradle-version: '8.11.1'
+      - name: Run REAL V5 Kotlin test boards and frozen snapshot checks
+        shell: bash
+        run: |
+          set -euo pipefail
+          gradle --no-daemon :core:test --tests 'com.playereden.gridmates.wordsearch.core.Ws66aV5ScratchTrialTest' --console=plain
+          test -s core/build/ws66a-v5-trial-evidence.tsv
+          python3 - <<'PY'
+          from collections import Counter
+          import csv
+          from pathlib import Path
+          f=Path('core/build/ws66a-v5-trial-evidence.tsv')
+          with f.open(newline='') as stream:
+              rows=list(csv.DictReader(stream,delimiter='\t'))
+          counts=Counter(r['status'] for r in rows)
+          assert len(rows)==9, f"expected nine seeded trials, got {len(rows)}"
+          assert counts['PASS']>=3, counts
+          chapters={r['chapter'] for r in rows if r['status']=='PASS'}
+          assert chapters=={'Flower Borders','Our Solar System','Quiet Clearings'}, chapters
+          for row in rows:
+              if row['status']=='PASS':
+                  assert len(row['sha256'])==64 and row['answers']
+          print('WS66A_REAL_V5_GRID_TRIALS_OK:', dict(counts), 'three board sizes covered')
+          PY
+          cp core/build/ws66a-v5-trial-evidence.tsv qa-ws66a-v5-trial/
+          sha256sum qa-ws66a-v5-trial/*.json qa-ws66a-v5-trial/*.tsv > qa-ws66a-v5-trial/artifact-sha256.txt
+      - name: Archive actual V5 test results and source integrity
+        if: ${{ always() }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: GridMates-WS66A-Actual-V5-Internal-Trial
+          path: |
+            qa-ws66a-v5-trial/
+            core/build/test-results/test/*.xml
+          if-no-files-found: warn
+          retention-days: 30
