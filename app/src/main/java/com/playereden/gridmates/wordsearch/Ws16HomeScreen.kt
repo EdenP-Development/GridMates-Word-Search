@@ -28,8 +28,10 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
+import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.liveRegion
+import androidx.compose.ui.semantics.role
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -166,25 +168,19 @@ internal fun Ws16HomeScreen(
                 onCollection = onCollection
             )
 
-            // The entire paper card is one accessible action. The green Play pill
-            // is a visual affordance, not a second overlapping tap target.
             val soloAction: () -> Unit = if (soloComplete) onNewSolo else onSolo
             GridMatesIllustratedFrame(
                 modifier = Modifier.fillMaxWidth().heightIn(min = 68.dp)
                     .qaTrackBounds("Continue Solo")
-                    .testTag("ws16-continue-solo")
-                    .semantics { contentDescription = if (soloComplete)
-                        "Start a new solo word search" else "Continue saved solo word search" },
-                variant = GridMatesFrameVariant.FEATURE,
-                onClick = soloAction
+                    .testTag("ws16-continue-solo"),
+                variant = GridMatesFrameVariant.FEATURE
             ) {
                 Row(Modifier.fillMaxWidth().heightIn(min = 68.dp)
                     .padding(horizontal = 11.dp, vertical = 4.dp),
                     verticalAlignment = Alignment.CenterVertically,
                     horizontalArrangement = Arrangement.spacedBy(8.dp)) {
                     Ws16BActionArt(Ws16BArt.CONTINUE, iconSize = 42.dp)
-                    // Separate bookmark art from the actual saved Solo progress.
-                    // The whole card responds to taps, including the Play pill.
+                    // Visually separate the bookmark art from the saved Solo progress.
                     Spacer(Modifier.width(1.dp).height(31.dp)
                         .background(Color(0x77B78F47)))
                     Column(Modifier.weight(1f), verticalArrangement = Arrangement.spacedBy(2.dp)) {
@@ -201,8 +197,12 @@ internal fun Ws16HomeScreen(
                     }
                     GridMatesIllustratedPill(
                         label = if (soloComplete) "New" else "Play",
-                        onClick = null,
-                        modifier = Modifier.testTag("ws16-resume-solo")
+                        onClick = soloAction,
+                        modifier = Modifier.testTag("ws16-resume-solo").semantics {
+                            role = Role.Button
+                            contentDescription = if (soloComplete) "Start a new solo word search"
+                                else "Continue saved solo word search"
+                        }
                     )
                 }
             }

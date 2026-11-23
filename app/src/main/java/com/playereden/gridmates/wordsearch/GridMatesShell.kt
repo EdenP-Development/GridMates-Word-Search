@@ -185,6 +185,7 @@ internal fun GridMatesShell(
                         showPrototypeArt = qa.enabled,
                         safeContentPadding = contentPadding,
                         initialBookId = homeBookIntent,
+                        presentation = qa.shelf,
                         onBookProgressSaved = { qa.syncBookRewards(soloStore) }
                     )
                 }
@@ -278,14 +279,17 @@ internal fun GridMatesShell(
                         qa.progressStore != null && qa.sessionStore != null &&
                         qa.progressStore?.blocked == false &&
                         qa.sessionStore?.blocked == false
+                    val shelf = if (booksAvailable) qa.shelf else null
                     Ws16HomeScreen(
                         store = soloStore,
-                        catalog = if (booksAvailable) qa.catalog else null,
-                        bookProgress = if (booksAvailable) qa.progressStore?.progress else null,
-                        initialFocusedBookId = homeFocusedBookId,
+                        catalog = shelf?.catalog,
+                        bookProgress = shelf?.let { display ->
+                            qa.progressStore?.progress?.let { raw -> display.progress(raw) }
+                        },
+                        initialFocusedBookId = homeFocusedBookId?.let { shelf?.displayBookId(it) },
                         onFocusedBookChanged = { homeFocusedBookId = it },
                         onPlayBook = { book ->
-                            if (booksAvailable && qa.catalog.book(book) != null) {
+                            if (shelf?.catalog?.book(book) != null) {
                                 homeFocusedBookId = book
                                 homeBookIntent = book
                                 pageName = Page.BOOKS_QA.name

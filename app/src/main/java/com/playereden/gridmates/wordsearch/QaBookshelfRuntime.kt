@@ -38,6 +38,7 @@ internal class QaBookshelfRuntime(
             BookQaPilot.appendChapterPreview(applicationContext, woodlandCatalog)
         else woodlandCatalog
     }
+    val shelf by lazy { BookShelfPresentation(catalog, BookQaPilot.editorialBookIds) }
 
     companion object {
         fun installed(context: Context) = QaBookshelfRuntime(

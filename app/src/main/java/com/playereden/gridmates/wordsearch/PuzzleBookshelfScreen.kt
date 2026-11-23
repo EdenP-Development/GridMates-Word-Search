@@ -266,7 +266,8 @@ internal fun PuzzleBookDetailScreen(
     modifier: Modifier = Modifier,
     showPrototypeArt: Boolean = false,
     fieldNotesArt: Boolean = false,
-    startedPageIds: Set<String> = emptySet()
+    startedPageIds: Set<String> = emptySet(),
+    bookmarkedPageIds: Set<String> = emptySet()
 ) {
     val healthy = isBookStateReadable(catalog, progress)
     val book = catalog.book(bookId)
@@ -461,7 +462,8 @@ internal fun PuzzleBookDetailScreen(
                             Row(Modifier.fillMaxWidth(),
                                 verticalAlignment = Alignment.CenterVertically,
                                 horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                                if (showPrototypeArt && bookmark == page.id && !isComplete) {
+                                if (showPrototypeArt && !isComplete &&
+                                    (bookmark == page.id || page.id in bookmarkedPageIds)) {
                                     BookArt(book.theme, BookArtKind.BOOKMARK,
                                         Modifier.width(17.dp).height(48.dp)
                                             .testTag("book-bookmark-" + page.id), fieldNotes = fieldNotesArt)
