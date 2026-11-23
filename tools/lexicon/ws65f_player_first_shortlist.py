@@ -148,7 +148,7 @@ def review(root=ROOT):
         if not origin:
             raise ValueError(f"Sample uses word not in WS65-F shortlist {page}: {item['answer']}")
         grid, allowed = BOARD[item["board_tier"]]
-        if origin["provisional_reader_tier"] not in allowed or len(item["answer"]) > grid:
+        if origin["provisional_reader_tier"] not in allowed or len(item["answer"]) >= grid:
             raise ValueError(f"Sample exceeds proposed tier/length {page}: {item['answer']}")
         if item["answer"] == item["answer"][::-1]:
             raise ValueError(f"V5 palindrome review hold {page}: {item['answer']}")
