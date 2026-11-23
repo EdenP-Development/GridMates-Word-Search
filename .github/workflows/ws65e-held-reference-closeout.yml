@@ -1,0 +1,69 @@
+name: WS65-E Held-Word Reference Completion and Friendly Naming QA
+
+on:
+  workflow_dispatch:
+  pull_request:
+    paths:
+      - 'data/lexicon/intake/ws65e-*'
+      - 'tools/lexicon/ws65e_*'
+      - 'tools/lexicon/test_ws65e_*'
+      - 'docs/WS65E_*'
+      - '.github/workflows/ws65e-held-reference-closeout.yml'
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ws65e-held-reference-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  source-reference-only:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Verify canonical authoring editions and old recovered state
+        run: |
+          python3 tools/lexicon/audit_recovery.py
+          python3 tools/lexicon/validate.py --data-dir data/lexicon/authoring/en-v1
+          python3 tools/lexicon/validate.py --data-dir data/lexicon/authoring/fall-v1
+      - name: Run all vocabulary identity and source-reference tests
+        run: |
+          python3 -m unittest discover -s tools/lexicon -p 'test_ws63_quality_audit.py' -v
+          python3 -m unittest discover -s tools/lexicon -p 'test_ws64_woodland_review_queue.py' -v
+          python3 -m unittest discover -s tools/lexicon -p 'test_ws65_specialist_review_audit.py' -v
+          python3 -m unittest discover -s tools/lexicon -p 'test_ws65b_editorial_triage.py' -v
+          python3 -m unittest discover -s tools/lexicon -p 'test_ws65c_source_evidence.py' -v
+          python3 -m unittest discover -s tools/lexicon -p 'test_ws65d_second_pass.py' -v
+          python3 -m unittest discover -s tools/lexicon -p 'test_ws65e_held_reference_closeout.py' -v
+      - name: Generate exact unsigned worksheet and source manifest
+        run: |
+          python3 tools/lexicon/ws65e_held_reference_closeout.py --out-dir qa-ws65e-final-holds
+          python3 - <<'PY'
+          import json,csv
+          from pathlib import Path
+          d=Path('qa-ws65e-final-holds')
+          r=json.loads((d/'research-receipt.json').read_text())
+          with (d/'full-unsigned-candidate-ledger.csv').open(newline='') as f:
+              rows=list(csv.DictReader(f))
+          assert len(rows)==267
+          assert r['new_held_rows_with_source_context']==31
+          assert r['cumulative_research_references']==105
+          assert r['remaining_unreferenced_by_preflight_lane']=={'HOLD':0,'MOVE':0,'PROMISING':162}
+          assert r['new_owner_public_approvals']==0 and r['new_android_activated_words']==0
+          assert all(not x['qa_editor_decision'] and not x['owner_decision'] for x in rows)
+          print('WS65E_UNSIGNED_REFERENCE_OK: 31 new held reviews; 105 total referenced; 162 promising without word-specific review; no approvals')
+          PY
+          sha256sum qa-ws65e-final-holds/*.csv qa-ws65e-final-holds/research-receipt.json qa-ws65e-final-holds/README.md > qa-ws65e-final-holds/artifact-sha256.txt
+      - name: Archive editorial review evidence
+        if: ${{ always() }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: GridMates-WS65E-Unsigned-Research-Review
+          path: qa-ws65e-final-holds/
+          if-no-files-found: warn
+          retention-days: 30
