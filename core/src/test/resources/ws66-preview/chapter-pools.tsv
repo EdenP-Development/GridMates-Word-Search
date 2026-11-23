@@ -1,0 +1,113 @@
+chapter	subtopic	word_id	answer	display	tier	source
+Our Solar System	worlds	gm000190	EARTH	Earth	familiar	ws66a-fixture
+Our Solar System	worlds	gm000194	JUPITER	Jupiter	familiar	ws66a-fixture
+Our Solar System	worlds	gm000191	MARS	Mars	familiar	ws66a-fixture
+Our Solar System	worlds	gm000193	MERCURY	Mercury	familiar	ws66a-fixture
+Our Solar System	worlds	gm000197	NEPTUNE	Neptune	familiar	ws66a-fixture
+Our Solar System	worlds	gm000198	PLUTO	Pluto	familiar	ws66a-fixture
+Our Solar System	worlds	gm000195	SATURN	Saturn	familiar	ws66a-fixture
+Our Solar System	worlds	gm000196	URANUS	Uranus	familiar	ws66a-fixture
+Our Solar System	worlds	gm000192	VENUS	Venus	familiar	ws66a-fixture
+Our Solar System	worlds	gm000011	PLANET	Planet	familiar	en-v1
+Our Solar System	worlds	gm000189	MOON	Moon	familiar	en-v1
+Our Solar System	worlds	gm000188	SUN	Sun	familiar	en-v1
+Our Solar System	sky-events	gm000199	COMET	Comet	familiar	en-v1
+Our Solar System	sky-events	gm000200	METEOR	Meteor	familiar	en-v1
+Our Solar System	sky-events	gm000012	ASTEROID	Asteroid	familiar	en-v1
+Our Solar System	sky-events	gm000203	ECLIPSE	Eclipse	familiar	en-v1
+Our Solar System	sky-events	gm000156	SHADOW	Shadow	familiar	en-v1
+Our Solar System	sky-events	gm000219	DAYLIGHT	Daylight	familiar	en-v1
+Our Solar System	sky-events	gm000220	NIGHT	Night	familiar	en-v1
+Our Solar System	sky-events	gm000217	SUNRISE	Sunrise	familiar	en-v1
+Our Solar System	sky-events	gm000218	SUNSET	Sunset	familiar	en-v1
+Our Solar System	sky-events	gm000221	TIDE	Tide	familiar	en-v1
+Our Solar System	motion	gm000204	GRAVITY	Gravity	familiar	en-v1
+Our Solar System	motion	gm000202	ORBIT	Orbit	familiar	en-v1
+Our Solar System	motion	gm000222	ROTATION	Rotation	familiar	en-v1
+Our Solar System	motion	gm000223	AXIS	Axis	familiar	en-v1
+Our Solar System	motion	gm000216	SEASON	Season	familiar	en-v1
+Our Solar System	motion	gm000205	SOLAR	Solar	familiar	en-v1
+Our Solar System	motion	gm000206	LUNAR	Lunar	familiar	en-v1
+Our Solar System	surfaces	gm000201	CRATER	Crater	familiar	en-v1
+Our Solar System	surfaces	gm000210	ROCK	Rock	familiar	en-v1
+Our Solar System	surfaces	gm000209	ICE	Ice	familiar	en-v1
+Our Solar System	surfaces	gm000208	DUST	Dust	familiar	en-v1
+Our Solar System	surfaces	gm000211	ATMOSPHERE	Atmosphere	familiar	en-v1
+Our Solar System	surfaces	gm000212	SURFACE	Surface	familiar	en-v1
+Our Solar System	surfaces	gm000213	CORE	Core	familiar	en-v1
+Our Solar System	surfaces	gm000214	EQUATOR	Equator	familiar	en-v1
+Our Solar System	surfaces	gm000215	POLE	Pole	familiar	en-v1
+Our Solar System	surfaces	gm000207	RING	Ring	familiar	en-v1
+Our Solar System	observation	gm000020	TELESCOPE	Telescope	familiar	en-v1
+Our Solar System	observation	gm000017	SATELLITE	Satellite	familiar	en-v1
+Our Solar System	observation	gm000246	ROVER	Rover	familiar	en-v1
+Our Solar System	observation	gm000245	LANDER	Lander	familiar	en-v1
+Our Solar System	observation	gm000243	SPACECRAFT	Spacecraft	familiar	en-v1
+Our Solar System	observation	gm000154	SUNLIGHT	Sunlight	familiar	en-v1
+Our Solar System	observation	gm000226	MOONLIGHT	Moonlight	familiar	en-v1
+Our Solar System	observation	gm000224	STAR	Star	familiar	en-v1
+Quiet Clearings	wildflowers	gm000374	BLOOM	Bloom	familiar	ws66a-fixture
+Quiet Clearings	wildflowers	ws56q011	BLUEBELLS	Bluebells	familiar	ws66a-fixture
+Quiet Clearings	wildflowers	gm000372	CLOVER	Clover	familiar	ws66a-fixture
+Quiet Clearings	wildflowers	gm000345	DAISY	Daisy	familiar	ws66a-fixture
+Quiet Clearings	wildflowers	gm000375	PETAL	Petal	familiar	ws66a-fixture
+Quiet Clearings	wildflowers	gm000450	POLLEN	Pollen	familiar	ws66a-fixture
+Quiet Clearings	wildflowers	gm000371	BUTTERCUP	Buttercup	intermediate	ws66a-fixture
+Quiet Clearings	wildflowers	ws56q018	DANDELION	Dandelion	intermediate	ws66a-fixture
+Quiet Clearings	wildflowers	ws56q033	FIREWEED	Fireweed	intermediate	ws66a-fixture
+Quiet Clearings	wildflowers	gm000487	FOXGLOVE	Foxglove	intermediate	ws66a-fixture
+Quiet Clearings	wildflowers	gm000691	GOLDENROD	Goldenrod	intermediate	ws66a-fixture
+Quiet Clearings	wildflowers	ws56q019	HONEYSUCKLE	Honeysuckle	intermediate	ws66a-fixture
+Quiet Clearings	wildflowers	gm000357	PRIMROSE	Primrose	intermediate	ws66a-fixture
+Quiet Clearings	wildflowers	gm000350	VIOLET	Violet	intermediate	ws66a-fixture
+Quiet Clearings	wildflowers	gm000007	WILDFLOWER	Wildflower	familiar	en-v1
+Quiet Clearings	small-wildlife	gm000027	BUTTERFLY	Butterfly	familiar	ws66a-fixture
+Quiet Clearings	small-wildlife	ws56q021	FIREFLIES	Fireflies	intermediate	ws66a-fixture
+Quiet Clearings	small-wildlife	gm000002	RABBIT	Rabbit	familiar	en-v1
+Quiet Clearings	small-wildlife	gm000044	DEER	Deer	familiar	en-v1
+Quiet Clearings	small-wildlife	gm000064	FROG	Frog	familiar	en-v1
+Quiet Clearings	small-wildlife	gm000068	ROBIN	Robin	familiar	en-v1
+Quiet Clearings	small-wildlife	gm000076	WREN	Wren	familiar	en-v1
+Quiet Clearings	small-wildlife	gm000087	CHICKADEE	Chickadee	familiar	en-v1
+Quiet Clearings	small-wildlife	gm000732	MONARCH	Monarch	familiar	fall-v1
+Quiet Clearings	small-wildlife	gm000733	REDFOX	Red Fox	familiar	fall-v1
+Quiet Clearings	small-wildlife	gm000065	TOAD	Toad	familiar	en-v1
+Quiet Clearings	light-and-weather	ws56q012	DAPPLED	Dappled	familiar	ws66a-fixture
+Quiet Clearings	light-and-weather	gm000219	DAYLIGHT	Daylight	familiar	ws66a-fixture
+Quiet Clearings	light-and-weather	gm000695	MIST	Mist	familiar	ws66a-fixture
+Quiet Clearings	light-and-weather	ws56q015	RUSTLING	Rustling	familiar	ws66a-fixture
+Quiet Clearings	light-and-weather	ws56q010	SUNBEAM	Sunbeam	familiar	ws66a-fixture
+Quiet Clearings	light-and-weather	gm000467	SUNSHINE	Sunshine	familiar	ws66a-fixture
+Quiet Clearings	light-and-weather	ws56q016	WARMTH	Warmth	familiar	ws66a-fixture
+Quiet Clearings	light-and-weather	ws56q034	DEWDROPS	Dewdrops	intermediate	ws66a-fixture
+Quiet Clearings	light-and-weather	gm000694	FOG	Fog	familiar	fall-v1
+Quiet Clearings	light-and-weather	gm000157	DEW	Dew	familiar	en-v1
+Quiet Clearings	light-and-weather	gm000155	SHADE	Shade	familiar	en-v1
+Quiet Clearings	light-and-weather	gm000159	BREEZE	Breeze	familiar	en-v1
+Quiet Clearings	light-and-weather	gm000154	SUNLIGHT	Sunlight	familiar	en-v1
+Quiet Clearings	light-and-weather	gm000156	SHADOW	Shadow	familiar	en-v1
+Quiet Clearings	light-and-weather	gm000158	RAIN	Rain	familiar	en-v1
+Quiet Clearings	clearings-and-paths	gm000146	GLADE	Glade	familiar	en-v1
+Quiet Clearings	clearings-and-paths	gm000132	CLEARING	Clearing	familiar	en-v1
+Quiet Clearings	clearings-and-paths	gm000119	MEADOW	Meadow	familiar	en-v1
+Quiet Clearings	clearings-and-paths	gm000133	HOLLOW	Hollow	familiar	en-v1
+Quiet Clearings	clearings-and-paths	gm000131	GROVE	Grove	familiar	en-v1
+Quiet Clearings	clearings-and-paths	gm000134	THICKET	Thicket	familiar	en-v1
+Quiet Clearings	clearings-and-paths	gm000149	PATH	Path	familiar	en-v1
+Quiet Clearings	clearings-and-paths	gm000160	PEBBLE	Pebble	familiar	en-v1
+Quiet Clearings	clearings-and-paths	gm000123	BROOK	Brook	familiar	en-v1
+Quiet Clearings	leaves-and-understory	ws56q003	GRASS	Grass	familiar	ws66a-fixture
+Quiet Clearings	leaves-and-understory	ws56q017	GREENERY	Greenery	intermediate	ws66a-fixture
+Quiet Clearings	leaves-and-understory	gm000139	MOSS	Moss	familiar	en-v1
+Quiet Clearings	leaves-and-understory	gm000140	FERN	Fern	familiar	en-v1
+Quiet Clearings	leaves-and-understory	gm000141	LICHEN	Lichen	familiar	en-v1
+Quiet Clearings	leaves-and-understory	gm000005	MUSHROOM	Mushroom	familiar	en-v1
+Quiet Clearings	leaves-and-understory	gm000142	BRAMBLE	Bramble	familiar	en-v1
+Quiet Clearings	leaves-and-understory	gm000143	BLACKBERRY	Blackberry	familiar	en-v1
+Quiet Clearings	leaves-and-understory	gm000111	LEAF	Leaf	familiar	en-v1
+Quiet Clearings	leaves-and-understory	gm000094	WILLOW	Willow	familiar	en-v1
+Quiet Clearings	leaves-and-understory	gm000089	OAK	Oak	familiar	en-v1
+Quiet Clearings	leaves-and-understory	gm000113	TWIG	Twig	familiar	en-v1
+Quiet Clearings	leaves-and-understory	gm000112	ACORN	Acorn	familiar	en-v1
+Quiet Clearings	leaves-and-understory	gm000114	STUMP	Stump	familiar	en-v1
+Quiet Clearings	leaves-and-understory	gm000116	ROOT	Root	familiar	en-v1

@@ -1,0 +1,19 @@
+theme	chapter_number	chapter_title	primary_subtopic	allowed_subtopics
+WOODLAND	3	Along the Trail	trails	trails,habitats
+WOODLAND	4	Under the Canopy	trees	trees,birds,forest-animals
+WOODLAND	5	Birdsong	birds	birds
+WOODLAND	6	By the Stream	habitats	habitats,forest-animals
+WOODLAND	7	Quiet Clearings	habitats	habitats,trails
+WOODLAND	8	Forest Discoveries	forest-animals	forest-animals,trees,habitats
+SPACE	3	Night Sky	stars	stars,observatories
+SPACE	4	Our Solar System	solar-system	solar-system
+SPACE	5	Ready for Launch	spacecraft	spacecraft,exploration
+SPACE	6	Among the Stars	stars	stars,solar-system
+SPACE	7	Mission Control	spacecraft	spacecraft,exploration,observatories
+SPACE	8	Beyond the Horizon	exploration	exploration,stars,observatories
+GARDEN	3	First Shoots	growing	growing,plants
+GARDEN	4	Flower Borders	flowers	flowers
+GARDEN	5	Garden Visitors	pollinators	pollinators,flowers
+GARDEN	6	Tools and Trellises	tools	tools,growing
+GARDEN	7	Growing Season	growing	growing,plants,tools
+GARDEN	8	A Flourishing Garden	flowers	flowers,pollinators,plants,growing

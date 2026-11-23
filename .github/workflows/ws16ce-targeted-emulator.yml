@@ -1,0 +1,104 @@
+name: WS16CE v86 Actual Android Save and Large Text Emulator QA
+# Runs only when this workflow file is added/changed, or manually requested.
+# Deliberately separate from fast APK/artwork CI to conserve emulator minutes.
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - feature/ws14b-style-anchor-and-art-direction-2026-11-08
+    paths:
+      - '.github/workflows/ws16ce-targeted-emulator.yml'
+
+permissions:
+  contents: read
+  actions: read
+
+concurrency:
+  group: ws16ce-targeted-emulator-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  targeted-emulator:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+      - name: Download verified exact-source v86 signed app
+        uses: actions/download-artifact@v4
+        with:
+          name: GridMates-WordSearch-Android-QA
+          run-id: 43756581784
+          github-token: ${{ github.token }}
+          repository: PlayerEden/GridMates-Word-Search
+          path: qa-baseline
+      - name: Verify downloaded APK identity and signing input
+        run: |
+          echo 'f529d39b736aff210138117ecb259e0c6a095652c121bfa0515d7ef66089fa71  qa-baseline/app-debug.apk' | sha256sum --check
+          echo 'cbe50b2b4a34f3a8433e28ddc0efd5307a1adf9aa91e324ca757f40c6aec91ee  qa-signing/wordsearch-qa.p12' | sha256sum --check
+      - name: Checkout approved original Woodland portraits
+        uses: actions/checkout@v4
+        with:
+          repository: PlayerEden/SudokuTogether
+          ref: 975e31a1e8cbfebad1fbbc7602b3340c357da7ef
+          path: _approved_sudoku
+          persist-credentials: false
+      - name: Verify and import original Woodland artwork
+        run: python3 scripts/import_woodland_portraits.py --source _approved_sudoku
+      - name: Checkout five approved licensed font families
+        uses: actions/checkout@v4
+        with:
+          repository: google/fonts
+          ref: 24ddc1f324cac5d9f5aedca126d298f56e3f1640
+          path: _approved_fonts
+          persist-credentials: false
+          filter: blob:none
+          sparse-checkout: |
+            ofl/atkinsonhyperlegible
+            ofl/ibmplexmono
+            ofl/dmmono
+            ofl/patrickhand
+            ofl/literata
+      - name: Import hash-verified font files and install pinned debug art dependencies
+        run: |
+          python3 -m pip install --disable-pip-version-check --user fonttools==4.59.2 Pillow==12.3.0 CairoSVG==2.8.2
+          python3 scripts/import_font_library.py --source _approved_fonts
+      - uses: actions/setup-java@v5
+        with:
+          distribution: temurin
+          java-version: '17'
+      - name: Install upstream-SHA256-pinned Gradle 8.11.1
+        run: bash tools/ci/install_pinned_gradle.sh
+      - uses: gradle/actions/setup-gradle@v4
+      - name: Install Android SDK 35 platform and build tools
+        run: |
+          SDKMANAGER="$(command -v sdkmanager || find "$ANDROID_HOME/cmdline-tools" -type f -name sdkmanager -print -quit)"
+          test -n "$SDKMANAGER"
+          "$SDKMANAGER" "platforms;android-35" "build-tools;35.0.0"
+      - name: Build only Android instrumentation package from matching source
+        run: gradle --no-daemon :app:assembleDebugAndroidTest
+      - name: Enable KVM for actual API35 emulator
+        run: |
+          echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=static_node"' | sudo tee /etc/udev/rules.d/99-kvm4all.rules
+          sudo udevadm control --reload-rules
+          sudo udevadm trigger --name-match=kvm
+      - name: Run actual Nearby Wi-Fi restoration plus Solo, large-font and word-list tests
+        uses: reactivecircus/android-emulator-runner@v2
+        with:
+          api-level: 35
+          target: google_apis
+          arch: x86_64
+          profile: pixel_4
+          disable-animations: true
+          emulator-options: -no-window -gpu swiftshader_indirect -no-snapshot -noaudio -no-boot-anim
+          script: bash .github/scripts/ws16ce_targeted_emulator.sh
+      - name: Preserve actual instrumentation result text on failures
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: GridMates-WS16CE-v86-Emulator-Results
+          path: |
+            qa-report/
+            app/build/reports/androidTests/
+            app/build/outputs/androidTest-results/
+          retention-days: 14
+          if-no-files-found: ignore

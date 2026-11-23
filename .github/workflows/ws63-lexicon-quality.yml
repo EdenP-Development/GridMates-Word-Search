@@ -1,0 +1,63 @@
+name: WS63 Word Library Quality & Chapter Coverage QA
+
+on:
+  workflow_dispatch:
+  pull_request:
+    paths:
+      - 'tools/lexicon/ws63_quality_audit.py'
+      - 'tools/lexicon/test_ws63_quality_audit.py'
+      - 'data/lexicon/**'
+      - 'docs/WS63_*'
+      - '.github/workflows/ws63-lexicon-quality.yml'
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ws63-quality-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  read-only-vocabulary-audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Check unchanged historical and current catalog integrity
+        run: |
+          python3 tools/lexicon/audit_recovery.py
+          python3 tools/lexicon/validate.py --data-dir data/lexicon
+          python3 tools/lexicon/validate.py --data-dir data/lexicon/authoring/en-v1
+          python3 tools/lexicon/validate.py --data-dir data/lexicon/authoring/fall-v1
+      - name: Run WS63 deterministic identity, diversity and release-scope tests
+        run: python3 -m unittest discover -s tools/lexicon -p 'test_ws63_quality_audit.py' -v
+      - name: Generate read-only quality and chapter eligibility receipts
+        run: |
+          python3 tools/lexicon/ws63_quality_audit.py --out-dir qa-ws63-quality
+          test -s qa-ws63-quality/quality-baseline.json
+          test -s qa-ws63-quality/quality-baseline.md
+          python3 - <<'PY'
+          import json
+          from pathlib import Path
+          r=json.loads(Path('qa-ws63-quality/quality-baseline.json').read_text())
+          assert r['en_v1_qa_unique']==670, r
+          assert r['fall_v1_qa_unique']==150, r
+          assert r['fall_new_unique_over_en_v1']==117, r
+          assert r['authoring_edition_qa_unique_union']==787, r
+          assert len(r['proposed_chapters'])==18, r
+          assert r['status']=='INTERNAL_QA_DIAGNOSTIC_NOT_RELEASE_APPROVAL'
+          assert r['production_approved_new_words']==0
+          print('WS63 SOURCE_QA_OK: 670+117=787 distinct QA words; 18 chapter coverage diagnostics; 0 owner approvals')
+          PY
+          sha256sum qa-ws63-quality/quality-baseline.json qa-ws63-quality/quality-baseline.md             > qa-ws63-quality/artifact-sha256.txt
+      - name: Archive inspectable WS63 QA word-quality and chapter reports
+        if: ${{ always() }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: GridMates-WS63-Lexicon-Quality-Baseline
+          path: qa-ws63-quality/
+          if-no-files-found: warn
+          retention-days: 30

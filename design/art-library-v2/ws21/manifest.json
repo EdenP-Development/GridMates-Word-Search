@@ -1,0 +1,2708 @@
+{
+  "schema_version": 1,
+  "pack_id": "gm_ws21_covers_seasons_core_reserve",
+  "date": "2026-11-15",
+  "status": "candidate_not_shipped",
+  "description": "New seasonal reward art, adaptable themed book covers, theme medallions, and neutral functional GridMates Core UI template graphics",
+  "source_sheets": [
+    {
+      "path": "sources/ws21_illustrated_reward_seasonal_atlas_rgb.png",
+      "sha256": "a4d219803ce02db3e81716c960fad0d38b88803759f5542b6e00cd68d09eff0d",
+      "role": "illustration_atlas_rgb_cleanup_needed"
+    },
+    {
+      "path": "sources/ws21_reference_board_1.png",
+      "sha256": "22d4b646fa3378ec6731cbaec4679a854d7032c96abf00f8b3599c5e22d9e26b",
+      "role": "reference_only_baked_text_not_sprite"
+    },
+    {
+      "path": "sources/ws21_reference_board_2.png",
+      "sha256": "0c45a6ba89ff26d6fdc926e0365e78eb17479b89ce181a14446e7a9d59ca7cbd",
+      "role": "reference_only_baked_text_not_sprite"
+    }
+  ],
+  "sprites": [
+    {
+      "id": "gm_core_ws21_round_laurel_blank",
+      "scope": "core",
+      "family": "illustrated_rewards",
+      "path": "sprites/illustrated/gm_core_ws21_round_laurel_blank.png",
+      "width_px": 310,
+      "height_px": 338,
+      "sha256": "625eeb78a7a73fd91eafe6ff9df76b547744fd5cc425a191cc8204022528fa05",
+      "has_alpha": true,
+      "status": "candidate",
+      "source": "sources/ws21_illustrated_reward_seasonal_atlas_rgb.png",
+      "details": {
+        "grid_row": 0,
+        "grid_col": 0,
+        "source_box_xyxy": [
+          6,
+          0,
+          316,
+          338
+        ],
+        "edge_margin_pixels": {
+          "left": 18,
+          "right": 12,
+          "top": 12,
+          "bottom": 12
+        },
+        "cleanup": "neutral_checkerboard_color_key_v1"
+      }
+    },
+    {
+      "id": "gm_core_ws21_shield_laurel_blank",
+      "scope": "core",
+      "family": "illustrated_rewards",
+      "path": "sprites/illustrated/gm_core_ws21_shield_laurel_blank.png",
+      "width_px": 282,
+      "height_px": 336,
+      "sha256": "0fdffae44f0602d1fb77cb76b5c2be5ae64fd4ae7534954e69ad5d437aa486b6",
+      "has_alpha": true,
+      "status": "candidate",
+      "source": "sources/ws21_illustrated_reward_seasonal_atlas_rgb.png",
+      "details": {
+        "grid_row": 0,
+        "grid_col": 1,
+        "source_box_xyxy": [
+          334,
+          0,
+          616,
+          336
+        ],
+        "edge_margin_pixels": {
+          "left": 30,
+          "right": 29,
+          "top": 7,
+          "bottom": 14
+        },
+        "cleanup": "neutral_checkerboard_color_key_v1"
+      }
+    },
+    {
+      "id": "gm_core_ws21_parchment_ribbon_blank",
+      "scope": "core",
+      "family": "illustrated_rewards",
+      "path": "sprites/illustrated/gm_core_ws21_parchment_ribbon_blank.png",
+      "width_px": 317,
+      "height_px": 255,
+      "sha256": "7913afdbb3ad6e7e73ee0a9288b770faa238a74fa05021c667b6da55262a64e3",
+      "has_alpha": true,
+      "status": "candidate",
+      "source": "sources/ws21_illustrated_reward_seasonal_atlas_rgb.png",
+      "details": {
+        "grid_row": 0,
+        "grid_col": 2,
+        "source_box_xyxy": [
+          633,
+          41,
+          950,
+          296
+        ],
+        "edge_margin_pixels": {
+          "left": 4,
+          "right": 3,
+          "top": 53,
+          "bottom": 26
+        },
+        "cleanup": "neutral_checkerboard_color_key_v1"
+      }
+    },
+    {
+      "id": "gm_core_ws21_open_book_laurel_crest",
+      "scope": "core",
+      "family": "illustrated_rewards",
+      "path": "sprites/illustrated/gm_core_ws21_open_book_laurel_crest.png",
+      "width_px": 316,
+      "height_px": 295,
+      "sha256": "e6101abdcb0b45ec7c2a24c1ba7c8570f4aad0a83516e8b5e5f77236b0b7c555",
+      "has_alpha": true,
+      "status": "candidate",
+      "source": "sources/ws21_illustrated_reward_seasonal_atlas_rgb.png",
+      "details": {
+        "grid_row": 0,
+        "grid_col": 3,
+        "source_box_xyxy": [
+          950,
+          15,
+          1266,
+          310
+        ],
+        "edge_margin_pixels": {
+          "left": 7,
+          "right": 12,
+          "top": 27,
+          "bottom": 12
+        },
+        "cleanup": "neutral_checkerboard_color_key_v1"
+      }
+    },
+    {
+      "id": "gm_core_ws21_autumn_leaves_acorn",
+      "scope": "core",
+      "family": "illustrated_rewards",
+      "path": "sprites/illustrated/gm_core_ws21_autumn_leaves_acorn.png",
+      "width_px": 307,
+      "height_px": 270,
+      "sha256": "efd894babe0eb01809122b177da8ffc665f45c0e0c9d96e802d52eb0a06d3771",
+      "has_alpha": true,
+      "status": "candidate",
+      "source": "sources/ws21_illustrated_reward_seasonal_atlas_rgb.png",
+      "details": {
+        "grid_row": 1,
+        "grid_col": 0,
+        "source_box_xyxy": [
+          9,
+          333,
+          316,
+          603
+        ],
+        "edge_margin_pixels": {
+          "left": 21,
+          "right": 11,
+          "top": 35,
+          "bottom": 30
+        },
+        "cleanup": "neutral_checkerboard_color_key_v1"
+      }
+    },
+    {
+      "id": "gm_core_ws21_winter_snow_pine",
+      "scope": "core",
+      "family": "illustrated_rewards",
+      "path": "sprites/illustrated/gm_core_ws21_winter_snow_pine.png",
+      "width_px": 315,
+      "height_px": 269,
+      "sha256": "292899d4422db206eda8fc5561d8a913bcd8a819b4298cd9161fc45235a6a6e9",
+      "has_alpha": true,
+      "status": "candidate",
+      "source": "sources/ws21_illustrated_reward_seasonal_atlas_rgb.png",
+      "details": {
+        "grid_row": 1,
+        "grid_col": 1,
+        "source_box_xyxy": [
+          316,
+          337,
+          631,
+          606
+        ],
+        "edge_margin_pixels": {
+          "left": 12,
+          "right": 14,
+          "top": 39,
+          "bottom": 27
+        },
+        "cleanup": "neutral_checkerboard_color_key_v1"
+      }
+    },
+    {
+      "id": "gm_core_ws21_spring_blossoms",
+      "scope": "core",
+      "family": "illustrated_rewards",
+      "path": "sprites/illustrated/gm_core_ws21_spring_blossoms.png",
+      "width_px": 314,
+      "height_px": 261,
+      "sha256": "c9537f2e54103897fe837c0c64fa410ebd9c3c4e10b7a4f1fdff2293236d8d07",
+      "has_alpha": true,
+      "status": "candidate",
+      "source": "sources/ws21_illustrated_reward_seasonal_atlas_rgb.png",
+      "details": {
+        "grid_row": 1,
+        "grid_col": 2,
+        "source_box_xyxy": [
+          633,
+          338,
+          947,
+          599
+        ],
+        "edge_margin_pixels": {
+          "left": 6,
+          "right": 15,
+          "top": 40,
+          "bottom": 34
+        },
+        "cleanup": "neutral_checkerboard_color_key_v1"
+      }
+    },
+    {
+      "id": "gm_core_ws21_summer_sunflower_bee",
+      "scope": "core",
+      "family": "illustrated_rewards",
+      "path": "sprites/illustrated/gm_core_ws21_summer_sunflower_bee.png",
+      "width_px": 306,
+      "height_px": 287,
+      "sha256": "bc2f38d5bb17ffd74de7040f85581b873fa4db2245bc7b771daa376b6f48cc6e",
+      "has_alpha": true,
+      "status": "candidate",
+      "source": "sources/ws21_illustrated_reward_seasonal_atlas_rgb.png",
+      "details": {
+        "grid_row": 1,
+        "grid_col": 3,
+        "source_box_xyxy": [
+          950,
+          323,
+          1256,
+          610
+        ],
+        "edge_margin_pixels": {
+          "left": 2,
+          "right": 22,
+          "top": 25,
+          "bottom": 23
+        },
+        "cleanup": "neutral_checkerboard_color_key_v1"
+      }
+    },
+    {
+      "id": "gm_core_ws21_sealed_letter",
+      "scope": "core",
+      "family": "illustrated_rewards",
+      "path": "sprites/illustrated/gm_core_ws21_sealed_letter.png",
+      "width_px": 292,
+      "height_px": 233,
+      "sha256": "47a23cfe2f0133138af52c3d73293a2dc83568ca8f9662790dd64ae35e68026f",
+      "has_alpha": true,
+      "status": "candidate",
+      "source": "sources/ws21_illustrated_reward_seasonal_atlas_rgb.png",
+      "details": {
+        "grid_row": 2,
+        "grid_col": 0,
+        "source_box_xyxy": [
+          16,
+          654,
+          308,
+          887
+        ],
+        "edge_margin_pixels": {
+          "left": 28,
+          "right": 20,
+          "top": 45,
+          "bottom": 57
+        },
+        "cleanup": "neutral_checkerboard_color_key_v1"
+      }
+    },
+    {
+      "id": "gm_core_ws21_gold_trophy_cup",
+      "scope": "core",
+      "family": "illustrated_rewards",
+      "path": "sprites/illustrated/gm_core_ws21_gold_trophy_cup.png",
+      "width_px": 294,
+      "height_px": 280,
+      "sha256": "1c5621abc7ae0dd0b482654ab235ca2e8bc40d43316e0678c57741e1124cc4d1",
+      "has_alpha": true,
+      "status": "candidate",
+      "source": "sources/ws21_illustrated_reward_seasonal_atlas_rgb.png",
+      "details": {
+        "grid_row": 2,
+        "grid_col": 1,
+        "source_box_xyxy": [
+          328,
+          622,
+          622,
+          902
+        ],
+        "edge_margin_pixels": {
+          "left": 24,
+          "right": 23,
+          "top": 13,
+          "bottom": 42
+        },
+        "cleanup": "neutral_checkerboard_color_key_v1"
+      }
+    },
+    {
+      "id": "gm_core_ws21_gold_ornate_key",
+      "scope": "core",
+      "family": "illustrated_rewards",
+      "path": "sprites/illustrated/gm_core_ws21_gold_ornate_key.png",
+      "width_px": 297,
+      "height_px": 276,
+      "sha256": "644110c6e704173db116bbfac007e00eefb9f603f6427afbf710fa75480e81db",
+      "has_alpha": true,
+      "status": "candidate",
+      "source": "sources/ws21_illustrated_reward_seasonal_atlas_rgb.png",
+      "details": {
+        "grid_row": 2,
+        "grid_col": 2,
+        "source_box_xyxy": [
+          640,
+          623,
+          937,
+          899
+        ],
+        "edge_margin_pixels": {
+          "left": 19,
+          "right": 25,
+          "top": 14,
+          "bottom": 45
+        },
+        "cleanup": "neutral_checkerboard_color_key_v1"
+      }
+    },
+    {
+      "id": "gm_core_ws21_gift_box_green",
+      "scope": "core",
+      "family": "illustrated_rewards",
+      "path": "sprites/illustrated/gm_core_ws21_gift_box_green.png",
+      "width_px": 293,
+      "height_px": 278,
+      "sha256": "698a49aa559b81ccc3ced48f38574ef5fbe5633e8a9431c0c7a24fc52ef53353",
+      "has_alpha": true,
+      "status": "candidate",
+      "source": "sources/ws21_illustrated_reward_seasonal_atlas_rgb.png",
+      "details": {
+        "grid_row": 2,
+        "grid_col": 3,
+        "source_box_xyxy": [
+          959,
+          621,
+          1252,
+          899
+        ],
+        "edge_margin_pixels": {
+          "left": 21,
+          "right": 26,
+          "top": 4,
+          "bottom": 45
+        },
+        "cleanup": "neutral_checkerboard_color_key_v1"
+      }
+    },
+    {
+      "id": "gm_core_ws21_round_award_blank",
+      "scope": "core",
+      "family": "illustrated_rewards",
+      "path": "sprites/illustrated/gm_core_ws21_round_award_blank.png",
+      "width_px": 272,
+      "height_px": 320,
+      "sha256": "8e89ff4cb8aa36fd9e5288d92d137cc543c64baf40bcf513c562f5a58c80324d",
+      "has_alpha": true,
+      "status": "candidate",
+      "source": "sources/ws21_illustrated_reward_seasonal_atlas_rgb.png",
+      "details": {
+        "grid_row": 3,
+        "grid_col": 0,
+        "source_box_xyxy": [
+          25,
+          912,
+          297,
+          1232
+        ],
+        "edge_margin_pixels": {
+          "left": 37,
+          "right": 31,
+          "top": 20,
+          "bottom": 22
+        },
+        "cleanup": "neutral_checkerboard_color_key_v1"
+      }
+    },
+    {
+      "id": "gm_core_ws21_gold_star_wreath",
+      "scope": "core",
+      "family": "illustrated_rewards",
+      "path": "sprites/illustrated/gm_core_ws21_gold_star_wreath.png",
+      "width_px": 317,
+      "height_px": 287,
+      "sha256": "32e6a9cc8a66b28cf4be0c68fe1f6169ff8393db7500de62649365ff24d41531",
+      "has_alpha": true,
+      "status": "candidate",
+      "source": "sources/ws21_illustrated_reward_seasonal_atlas_rgb.png",
+      "details": {
+        "grid_row": 3,
+        "grid_col": 1,
+        "source_box_xyxy": [
+          316,
+          932,
+          633,
+          1219
+        ],
+        "edge_margin_pixels": {
+          "left": 7,
+          "right": 6,
+          "top": 9,
+          "bottom": 35
+        },
+        "cleanup": "neutral_checkerboard_color_key_v1"
+      }
+    },
+    {
+      "id": "gm_core_ws21_bookmark_blank_green",
+      "scope": "core",
+      "family": "illustrated_rewards",
+      "path": "sprites/illustrated/gm_core_ws21_bookmark_blank_green.png",
+      "width_px": 184,
+      "height_px": 314,
+      "sha256": "1c202457c65f9eb57480a34d7e469adee82e70b8c90dd4fef8b80551d28e81ad",
+      "has_alpha": true,
+      "status": "candidate",
+      "source": "sources/ws21_illustrated_reward_seasonal_atlas_rgb.png",
+      "details": {
+        "grid_row": 3,
+        "grid_col": 2,
+        "source_box_xyxy": [
+          697,
+          906,
+          881,
+          1220
+        ],
+        "edge_margin_pixels": {
+          "left": 76,
+          "right": 81,
+          "top": 14,
+          "bottom": 34
+        },
+        "cleanup": "neutral_checkerboard_color_key_v1"
+      }
+    },
+    {
+      "id": "gm_core_ws21_square_parchment_frame",
+      "scope": "core",
+      "family": "illustrated_rewards",
+      "path": "sprites/illustrated/gm_core_ws21_square_parchment_frame.png",
+      "width_px": 296,
+      "height_px": 276,
+      "sha256": "97866617606131b1f49da8b1825f39a77ca997a3698293c544bb4cf0fc816b1e",
+      "has_alpha": true,
+      "status": "candidate",
+      "source": "sources/ws21_illustrated_reward_seasonal_atlas_rgb.png",
+      "details": {
+        "grid_row": 3,
+        "grid_col": 3,
+        "source_box_xyxy": [
+          955,
+          932,
+          1251,
+          1208
+        ],
+        "edge_margin_pixels": {
+          "left": 17,
+          "right": 27,
+          "top": 3,
+          "bottom": 46
+        },
+        "cleanup": "neutral_checkerboard_color_key_v1"
+      }
+    },
+    {
+      "id": "gm_ws21_cover_woodland_standard",
+      "scope": "word_search",
+      "family": "book_covers",
+      "path": "sprites/covers/gm_ws21_cover_woodland_standard.png",
+      "width_px": 480,
+      "height_px": 660,
+      "sha256": "3888ddd99e2dff71d8624ce9b086a130c7978e80a25f70cad47e04a4150e0277",
+      "has_alpha": true,
+      "status": "candidate",
+      "source": "svg/covers/gm_ws21_cover_woodland_standard.svg",
+      "details": {        "theme": "woodland",
+        "variant": "standard",
+        "editable_svg_sha256": "d12cfa0fede117d8985a6ebd1c911921ac7db4a0be6c0e09e5b30756d838e6cc",
+        "label_zones": "blank native title/top and category/bottom",
+        "visual_only": true
+      }
+    },
+    {
+      "id": "gm_ws21_cover_woodland_collector",
+      "scope": "word_search",
+      "family": "book_covers",
+      "path": "sprites/covers/gm_ws21_cover_woodland_collector.png",
+      "width_px": 480,
+      "height_px": 662,
+      "sha256": "aa4b7ee98b08042dc402fc186a194a6ad970578a6bf4a613cb2362a7d489c36d",
+      "has_alpha": true,
+      "status": "candidate",
+      "source": "svg/covers/gm_ws21_cover_woodland_collector.svg",
+      "details": {
+        "theme": "woodland",
+        "variant": "collector",
+        "editable_svg_sha256": "0df0772791518a7344dd1bdeaa215ac81b87c10d46c882c5b7c2d0da2b454db0",
+        "label_zones": "blank native title/top and category/bottom",
+        "visual_only": true
+      }
+    },
+    {
+      "id": "gm_ws21_cover_woodland_pocket",
+      "scope": "word_search",
+      "family": "book_covers",
+      "path": "sprites/covers/gm_ws21_cover_woodland_pocket.png",
+      "width_px": 360,
+      "height_px": 594,
+      "sha256": "733b108afeee7d50c124ac112ba49f27c1cef6c4d8f64a92bd2e869203fe4824",
+      "has_alpha": true,
+      "status": "candidate",
+      "source": "svg/covers/gm_ws21_cover_woodland_pocket.svg",
+      "details": {
+        "theme": "woodland",
+        "variant": "pocket",
+        "editable_svg_sha256": "d1dfe7dfb85dc589fc9101367fa05a183f89b812c5e84565f9f0fa187d45b88c",
+        "label_zones": "blank native title/top and category/bottom",
+        "visual_only": true
+      }
+    },
+    {
+      "id": "gm_theme_woodland_emblem_round",
+      "scope": "theme",
+      "family": "medallions",
+      "path": "sprites/medallions/gm_theme_woodland_emblem_round.png",
+      "width_px": 280,
+      "height_px": 280,
+      "sha256": "75194457228adda2754ace71335ced3c8a7a6a2522e0590db63423cbdb212a9a",
+      "has_alpha": true,
+      "status": "candidate",
+      "source": "svg/medallions/gm_theme_woodland_emblem_round.svg",
+      "details": {
+        "theme": "woodland",
+        "editable_svg_sha256": "69e8cb91bec65f9d2e22af5db9bfd778ac00bb290df98ae618447cd8f5b3bfc6",
+        "visual_only": true
+      }
+    },
+    {
+      "id": "gm_ws21_cover_ocean_standard",
+      "scope": "word_search",
+      "family": "book_covers",
+      "path": "sprites/covers/gm_ws21_cover_ocean_standard.png",
+      "width_px": 480,
+      "height_px": 660,
+      "sha256": "9331d0b23ef99a9ee2c9a79ee547914fbee55c40cf52f9890666a65c30752905",
+      "has_alpha": true,
+      "status": "candidate",
+      "source": "svg/covers/gm_ws21_cover_ocean_standard.svg",
+      "details": {
+        "theme": "ocean",
+        "variant": "standard",
+        "editable_svg_sha256": "5b03ae876e262d48552fc472d1478e26bcbc200e1cd78c6beb48d615e35f31dd",
+        "label_zones": "blank native title/top and category/bottom",
+        "visual_only": true
+      }
+    },
+    {
+      "id": "gm_ws21_cover_ocean_collector",
+      "scope": "word_search",
+      "family": "book_covers",
+      "path": "sprites/covers/gm_ws21_cover_ocean_collector.png",
+      "width_px": 480,
+      "height_px": 662,
+      "sha256": "4252d65a6e02d416087a1b32f05abf72a5de7241cdf1fecb36223802ef749c67",
+      "has_alpha": true,
+      "status": "candidate",
+      "source": "svg/covers/gm_ws21_cover_ocean_collector.svg",
+      "details": {
+        "theme": "ocean",
+        "variant": "collector",
+        "editable_svg_sha256": "6ff43892e0f0eb42e9d1f6829ff310bf51b03aedca0ad2950228c6ddff8f0e2a",
+        "label_zones": "blank native title/top and category/bottom",
+        "visual_only": true
+      }
+    },
+    {
+      "id": "gm_ws21_cover_ocean_pocket",
+      "scope": "word_search",
+      "family": "book_covers",
+      "path": "sprites/covers/gm_ws21_cover_ocean_pocket.png",
+      "width_px": 360,
+      "height_px": 594,
+      "sha256": "80bb3a063e20e75bf36e6a4d617268c72f204d043cccd08991892c1da53b8d07",
+      "has_alpha": true,
+      "status": "candidate",
+      "source": "svg/covers/gm_ws21_cover_ocean_pocket.svg",
+      "details": {
+        "theme": "ocean",
+        "variant": "pocket",
+        "editable_svg_sha256": "1e429bb6a1406989695bc97c636b31ed8335975a3d63323feb10c63be4445724",
+        "label_zones": "blank native title/top and category/bottom",
+        "visual_only": true
+      }
+    },
+    {
+      "id": "gm_theme_ocean_emblem_round",
+      "scope": "theme",
+      "family": "medallions",
+      "path": "sprites/medallions/gm_theme_ocean_emblem_round.png",
+      "width_px": 280,
+      "height_px": 280,
+      "sha256": "6f1319b44abd0d8def8ab2fcb6ba220bb9204153a392dd91433864e525d1c8a3",
+      "has_alpha": true,
+      "status": "candidate",
+      "source": "svg/medallions/gm_theme_ocean_emblem_round.svg",
+      "details": {
+        "theme": "ocean",
+        "editable_svg_sha256": "e44aa5e04d9c13fcc65a0da860d95801e823411457d408aa9c70a0c0cf935a83",
+        "visual_only": true
+      }
+    },
+    {
+      "id": "gm_ws21_cover_bugs_standard",
+      "scope": "word_search",
+      "family": "book_covers",
+      "path": "sprites/covers/gm_ws21_cover_bugs_standard.png",
+      "width_px": 480,
+      "height_px": 660,
+      "sha256": "ba9b9a44aa1f12b2d9c02092f03d2be626d4b5739fb82b7107ebe8e6d321b5d8",
+      "has_alpha": true,
+      "status": "candidate",
+      "source": "svg/covers/gm_ws21_cover_bugs_standard.svg",
+      "details": {
+        "theme": "bugs",
+        "variant": "standard",
+        "editable_svg_sha256": "d9d8f71b41d9b940780e4e03e4522ec97bd5ecb64a389b74a0609815eca4b6d2",
+        "label_zones": "blank native title/top and category/bottom",
+        "visual_only": true
+      }
+    },
+    {
+      "id": "gm_ws21_cover_bugs_collector",
+      "scope": "word_search",
+      "family": "book_covers",
+      "path": "sprites/covers/gm_ws21_cover_bugs_collector.png",
+      "width_px": 480,
+      "height_px": 662,
+      "sha256": "959f2fdd257ab6f7e6d18bc3911e9e76e66d5f14e6a58e919c5d5c10f259e326",
+      "has_alpha": true,
+      "status": "candidate",
+      "source": "svg/covers/gm_ws21_cover_bugs_collector.svg",
+      "details": {
+        "theme": "bugs",
+        "variant": "collector",
+        "editable_svg_sha256": "52541da480886ec2cfc557deac881f1f3d622b3fa21d9562764d917a69b3dbe7",
+        "label_zones": "blank native title/top and category/bottom",
+        "visual_only": true
+      }
+    },
+    {
+      "id": "gm_ws21_cover_bugs_pocket",
+      "scope": "word_search",
+      "family": "book_covers",
+      "path": "sprites/covers/gm_ws21_cover_bugs_pocket.png",
+      "width_px": 360,
+      "height_px": 594,
+      "sha256": "1959f5bfb538dd6d32e95e53bdd690dbb85fdeef2c0847c13f91e40345400ff6",
+      "has_alpha": true,
+      "status": "candidate",
+      "source": "svg/covers/gm_ws21_cover_bugs_pocket.svg",
+      "details": {
+        "theme": "bugs",
+        "variant": "pocket",
+        "editable_svg_sha256": "0885a848e4ba99355bcf5eee01f7999c88700841459bf931aae07c7637a07588",
+        "label_zones": "blank native title/top and category/bottom",
+        "visual_only": true
+      }
+    },
+    {
+      "id": "gm_theme_bugs_emblem_round",
+      "scope": "theme",
+      "family": "medallions",
+      "path": "sprites/medallions/gm_theme_bugs_emblem_round.png",
+      "width_px": 280,
+      "height_px": 280,
+      "sha256": "c03207d45063a7ce5ee71a8d80e9d2f904b7098137c39ef5e26ec688f2f90ea9",
+      "has_alpha": true,
+      "status": "candidate",
+      "source": "svg/medallions/gm_theme_bugs_emblem_round.svg",
+      "details": {
+        "theme": "bugs",
+        "editable_svg_sha256": "0681cd8a51f980e6e7d37bb9bc136eddf02f993ebe6eb328a9cb38247284be7a",
+        "visual_only": true
+      }
+    },
+    {
+      "id": "gm_ws21_cover_garden_standard",
+      "scope": "word_search",
+      "family": "book_covers",
+      "path": "sprites/covers/gm_ws21_cover_garden_standard.png",
+      "width_px": 480,
+      "height_px": 660,
+      "sha256": "3dab76a178ca0c61462352b72a9cdb52a85fb9ab4a7d6651aaa9d3176272feee",
+      "has_alpha": true,
+      "status": "candidate",
+      "source": "svg/covers/gm_ws21_cover_garden_standard.svg",
+      "details": {
+        "theme": "garden",
+        "variant": "standard",
+        "editable_svg_sha256": "c4c6f1c7ff931499b79b0c859b8147f6f52fd425d9d7b75b3034336564f3968e",
+        "label_zones": "blank native title/top and category/bottom",
+        "visual_only": true
+      }
+    },
+    {
+      "id": "gm_ws21_cover_garden_collector",
+      "scope": "word_search",
+      "family": "book_covers",
+      "path": "sprites/covers/gm_ws21_cover_garden_collector.png",
+      "width_px": 480,
+      "height_px": 662,
+      "sha256": "ec3847b37077b1ac054bb8494118fc979de899b4e702471b84be93af0f14a710",
+      "has_alpha": true,
+      "status": "candidate",
+      "source": "svg/covers/gm_ws21_cover_garden_collector.svg",
+      "details": {
+        "theme": "garden",
+        "variant": "collector",
+        "editable_svg_sha256": "886b5c677e372b298439e3e0fbe0c58cb7a646a8db2557158a683bb3a01151fa",
+        "label_zones": "blank native title/top and category/bottom",
+        "visual_only": true
+      }
+    },
+    {
+      "id": "gm_ws21_cover_garden_pocket",
+      "scope": "word_search",
+      "family": "book_covers",
+      "path": "sprites/covers/gm_ws21_cover_garden_pocket.png",
+      "width_px": 360,
+      "height_px": 594,
+      "sha256": "da2c7565ed9c0ff4607b89ab006f3e9f74a43f0a936814de4e194cec070b851e",
+      "has_alpha": true,
+      "status": "candidate",
+      "source": "svg/covers/gm_ws21_cover_garden_pocket.svg",
+      "details": {
+        "theme": "garden",
+        "variant": "pocket",
+        "editable_svg_sha256": "ff6b7d66059d50af6be535655f05cbd20ff7e62f1b45fafa07a1c806ad14d22e",
+        "label_zones": "blank native title/top and category/bottom",
+        "visual_only": true
+      }
+    },
+    {
+      "id": "gm_theme_garden_emblem_round",
+      "scope": "theme",
+      "family": "medallions",
+      "path": "sprites/medallions/gm_theme_garden_emblem_round.png",
+      "width_px": 280,
+      "height_px": 280,
+      "sha256": "64d59be1f1b4dd1802883c368c943338a4263b2d63c96aef77dd5447c6ae431a",
+      "has_alpha": true,
+      "status": "candidate",
+      "source": "svg/medallions/gm_theme_garden_emblem_round.svg",
+      "details": {
+        "theme": "garden",
+        "editable_svg_sha256": "6485c50f270c25bc06a893e21370b5cb82d61fd1ef9b3f26f79d18e1102b5b4d",
+        "visual_only": true
+      }
+    },
+    {
+      "id": "gm_ws21_cover_space_standard",
+      "scope": "word_search",
+      "family": "book_covers",
+      "path": "sprites/covers/gm_ws21_cover_space_standard.png",
+      "width_px": 480,
+      "height_px": 660,
+      "sha256": "60605cccb3c7de169505a182de636baeda2a6f6b470db6c51b7f56145880a465",
+      "has_alpha": true,
+      "status": "candidate",
+      "source": "svg/covers/gm_ws21_cover_space_standard.svg",
+      "details": {
+        "theme": "space",
+        "variant": "standard",
+        "editable_svg_sha256": "7f667be09bd25ce3e1898410e9cef98985981b3b07c13685446e59a30e753cba",
+        "label_zones": "blank native title/top and category/bottom",
+        "visual_only": true
+      }
+    },
+    {
+      "id": "gm_ws21_cover_space_collector",
+      "scope": "word_search",
+      "family": "book_covers",
+      "path": "sprites/covers/gm_ws21_cover_space_collector.png",
+      "width_px": 480,
+      "height_px": 662,
+      "sha256": "4a2484001912de34517fb6059a54cbb27d5557fce5518d9b9582d995d2e86cdd",
+      "has_alpha": true,
+      "status": "candidate",
+      "source": "svg/covers/gm_ws21_cover_space_collector.svg",
+      "details": {
+        "theme": "space",
+        "variant": "collector",
+        "editable_svg_sha256": "807955f0165373a303fc0085153c705f43a8afdfac1d13768d5450ad387bdeb6",
+        "label_zones": "blank native title/top and category/bottom",
+        "visual_only": true
+      }
+    },
+    {
+      "id": "gm_ws21_cover_space_pocket",
+      "scope": "word_search",
+      "family": "book_covers",
+      "path": "sprites/covers/gm_ws21_cover_space_pocket.png",
+      "width_px": 360,
+      "height_px": 594,
+      "sha256": "f4a8a6f18f9424df9b0327cda2632bfc9a3e7e6141cea7519b823bdae1cbf463",
+      "has_alpha": true,
+      "status": "candidate",
+      "source": "svg/covers/gm_ws21_cover_space_pocket.svg",
+      "details": {
+        "theme": "space",
+        "variant": "pocket",
+        "editable_svg_sha256": "0359ef45d50bb5602e3fa1260fb5d5839c4298b4b298118ae5df536b0dbd10fe",
+        "label_zones": "blank native title/top and category/bottom",
+        "visual_only": true
+      }
+    },
+    {
+      "id": "gm_theme_space_emblem_round",
+      "scope": "theme",
+      "family": "medallions",
+      "path": "sprites/medallions/gm_theme_space_emblem_round.png",
+      "width_px": 280,
+      "height_px": 280,
+      "sha256": "4ff2cf64ad3e04cbf4a4b9b41a10f1ed5990a5110dd83a9958007924ae7a6a35",
+      "has_alpha": true,
+      "status": "candidate",
+      "source": "svg/medallions/gm_theme_space_emblem_round.svg",
+      "details": {
+        "theme": "space",
+        "editable_svg_sha256": "f32f33b70d77c5bc498cdfe2ecb84fe60975e7d18b44331123f856fca748baba",
+        "visual_only": true
+      }
+    },
+    {
+      "id": "gm_ws21_cover_winter_standard",
+      "scope": "word_search",
+      "family": "book_covers",
+      "path": "sprites/covers/gm_ws21_cover_winter_standard.png",
+      "width_px": 480,
+      "height_px": 660,
+      "sha256": "4e8da4a8342d0a16848eb193e16a79b453ba7e499edff26342bee18c896005b2",
+      "has_alpha": true,
+      "status": "candidate",
+      "source": "svg/covers/gm_ws21_cover_winter_standard.svg",
+      "details": {
+        "theme": "winter",
+        "variant": "standard",
+        "editable_svg_sha256": "e6e834c3f0f66349031e227a56e011868b33b7fb7a34a395555e7e93a6558ab5",
+        "label_zones": "blank native title/top and category/bottom",
+        "visual_only": true
+      }
+    },
+    {
+      "id": "gm_ws21_cover_winter_collector",
+      "scope": "word_search",
+      "family": "book_covers",
+      "path": "sprites/covers/gm_ws21_cover_winter_collector.png",
+      "width_px": 480,
+      "height_px": 662,
+      "sha256": "0e55831ced9a3980fde18d5dbda02785f99a9e098ce7efe3484d016fa3259344",
+      "has_alpha": true,
+      "status": "candidate",
+      "source": "svg/covers/gm_ws21_cover_winter_collector.svg",
+      "details": {
+        "theme": "winter",
+        "variant": "collector",
+        "editable_svg_sha256": "da64ba1841aaa97a60d39c6f2c5552d0c340352671ede4d1ccd66f114c593d42",
+        "label_zones": "blank native title/top and category/bottom",
+        "visual_only": true
+      }
+    },
+    {
+      "id": "gm_ws21_cover_winter_pocket",
+      "scope": "word_search",
+      "family": "book_covers",
+      "path": "sprites/covers/gm_ws21_cover_winter_pocket.png",
+      "width_px": 360,
+      "height_px": 594,
+      "sha256": "a1988b9557586a0813778193d74d9068a43a18d7f501c30a90368e80dbc0dfa6",
+      "has_alpha": true,
+      "status": "candidate",
+      "source": "svg/covers/gm_ws21_cover_winter_pocket.svg",
+      "details": {
+        "theme": "winter",
+        "variant": "pocket",
+        "editable_svg_sha256": "4cdabd217d042a6bc39c3461591b27eda48d559a9a1c987d0864c905dca2b2a9",
+        "label_zones": "blank native title/top and category/bottom",
+        "visual_only": true
+      }
+    },
+    {
+      "id": "gm_theme_winter_emblem_round",
+      "scope": "theme",
+      "family": "medallions",
+      "path": "sprites/medallions/gm_theme_winter_emblem_round.png",
+      "width_px": 280,
+      "height_px": 280,
+      "sha256": "8c5b816d6b0617defbe67b527c82792994145ced1b69d7accebd72931d1b43c6",
+      "has_alpha": true,
+      "status": "candidate",
+      "source": "svg/medallions/gm_theme_winter_emblem_round.svg",
+      "details": {
+        "theme": "winter",
+        "editable_svg_sha256": "505cb6d9997b0797da8c45a8ac2251f9f1dff8c8c6c2c258ee4b9cfc814211bb",
+        "visual_only": true
+      }
+    },
+    {
+      "id": "gm_ws21_cover_farm_standard",
+      "scope": "word_search",
+      "family": "book_covers",
+      "path": "sprites/covers/gm_ws21_cover_farm_standard.png",
+      "width_px": 480,
+      "height_px": 660,
+      "sha256": "cce4ffd89865bb097493a66d9556cca6f1c73336b403100fca73d552bf7a2fb0",
+      "has_alpha": true,
+      "status": "candidate",
+      "source": "svg/covers/gm_ws21_cover_farm_standard.svg",
+      "details": {
+        "theme": "farm",
+        "variant": "standard",
+        "editable_svg_sha256": "c057170e0034f8a0ae9862068b1bf4f6888ebf74b454885e3976cf53bfa63928",
+        "label_zones": "blank native title/top and category/bottom",
+        "visual_only": true
+      }
+    },
+    {
+      "id": "gm_ws21_cover_farm_collector",
+      "scope": "word_search",
+      "family": "book_covers",
+      "path": "sprites/covers/gm_ws21_cover_farm_collector.png",
+      "width_px": 480,
+      "height_px": 662,
+      "sha256": "7f642945b812c81107f6008d73e4cde1514a9cd0b943d4dbe013156c21395c1d",
+      "has_alpha": true,
+      "status": "candidate",
+      "source": "svg/covers/gm_ws21_cover_farm_collector.svg",
+      "details": {
+        "theme": "farm",
+        "variant": "collector",
+        "editable_svg_sha256": "64f06389d1af9062d1825b218353a339912f9c117799681e002f3d1a359c386c",
+        "label_zones": "blank native title/top and category/bottom",
+        "visual_only": true
+      }
+    },
+    {
+      "id": "gm_ws21_cover_farm_pocket",
+      "scope": "word_search",
+      "family": "book_covers",
+      "path": "sprites/covers/gm_ws21_cover_farm_pocket.png",
+      "width_px": 360,
+      "height_px": 594,
+      "sha256": "83f03968cc0271be4ca55fb7e9ed3d8d2a0a21e96021293f4ccbc5f0edb0c36f",
+      "has_alpha": true,
+      "status": "candidate",
+      "source": "svg/covers/gm_ws21_cover_farm_pocket.svg",
+      "details": {
+        "theme": "farm",
+        "variant": "pocket",
+        "editable_svg_sha256": "0d65d99cd42c021eed5686178142b1673e84bdc1da4456cbfab1d4ed21cab524",
+        "label_zones": "blank native title/top and category/bottom",
+        "visual_only": true
+      }
+    },
+    {
+      "id": "gm_theme_farm_emblem_round",
+      "scope": "theme",
+      "family": "medallions",
+      "path": "sprites/medallions/gm_theme_farm_emblem_round.png",
+      "width_px": 280,
+      "height_px": 280,
+      "sha256": "dfe520383ff5513dd717416cad727d5aec040bc73a89d149714109c86fd74d49",
+      "has_alpha": true,
+      "status": "candidate",
+      "source": "svg/medallions/gm_theme_farm_emblem_round.svg",      "details": {
+        "theme": "farm",
+        "editable_svg_sha256": "9302bf9693f9c769c16016609e7dcfbd4d6cc9e138186f428e5ec75cd24b4d91",
+        "visual_only": true
+      }
+    },
+    {
+      "id": "gm_ws21_cover_spooky_standard",
+      "scope": "word_search",
+      "family": "book_covers",
+      "path": "sprites/covers/gm_ws21_cover_spooky_standard.png",
+      "width_px": 480,
+      "height_px": 660,
+      "sha256": "fd9c7a1afdafe994a9b8ad2f3f322819faeeb5192b997844d01e8922ad8e0ccf",
+      "has_alpha": true,
+      "status": "candidate",
+      "source": "svg/covers/gm_ws21_cover_spooky_standard.svg",
+      "details": {
+        "theme": "spooky",
+        "variant": "standard",
+        "editable_svg_sha256": "733ff0f9419a11bb228f134e4c7259ece81fa59a1193306158971b2f5c89cc67",
+        "label_zones": "blank native title/top and category/bottom",
+        "visual_only": true
+      }
+    },
+    {
+      "id": "gm_ws21_cover_spooky_collector",
+      "scope": "word_search",
+      "family": "book_covers",
+      "path": "sprites/covers/gm_ws21_cover_spooky_collector.png",
+      "width_px": 480,
+      "height_px": 662,
+      "sha256": "cb2bfa64f97aa558c353df8c0d00605dec4a6d757d4d49f6ee884579e8fd9e2a",
+      "has_alpha": true,
+      "status": "candidate",
+      "source": "svg/covers/gm_ws21_cover_spooky_collector.svg",
+      "details": {
+        "theme": "spooky",
+        "variant": "collector",
+        "editable_svg_sha256": "7123c8a63884f02ac77b2bef42a82128a4c4b87dcd84255a4086cf388fa34be2",
+        "label_zones": "blank native title/top and category/bottom",
+        "visual_only": true
+      }
+    },
+    {
+      "id": "gm_ws21_cover_spooky_pocket",
+      "scope": "word_search",
+      "family": "book_covers",
+      "path": "sprites/covers/gm_ws21_cover_spooky_pocket.png",
+      "width_px": 360,
+      "height_px": 594,
+      "sha256": "1cf1b409a0de08ac42f70ad71528dd6896d029fa513a87117f57f15973e9ab4f",
+      "has_alpha": true,
+      "status": "candidate",
+      "source": "svg/covers/gm_ws21_cover_spooky_pocket.svg",
+      "details": {
+        "theme": "spooky",
+        "variant": "pocket",
+        "editable_svg_sha256": "52945e267a9cf52ec2d46161566cc3169b9f9cb1f142a71fef8604bde98981a8",
+        "label_zones": "blank native title/top and category/bottom",
+        "visual_only": true
+      }
+    },
+    {
+      "id": "gm_theme_spooky_emblem_round",
+      "scope": "theme",
+      "family": "medallions",
+      "path": "sprites/medallions/gm_theme_spooky_emblem_round.png",
+      "width_px": 280,
+      "height_px": 280,
+      "sha256": "4420b7df636dca19383f465fb729bdcd6aae817c961655b42b3bce87c059b124",
+      "has_alpha": true,
+      "status": "candidate",
+      "source": "svg/medallions/gm_theme_spooky_emblem_round.svg",
+      "details": {
+        "theme": "spooky",
+        "editable_svg_sha256": "13ff5bbeacbdf0f75940e9999fc85e3a209927c40f857a6ad6587973047ae73f",
+        "visual_only": true
+      }
+    },
+    {
+      "id": "gm_ws21_cover_desert_standard",
+      "scope": "word_search",
+      "family": "book_covers",
+      "path": "sprites/covers/gm_ws21_cover_desert_standard.png",
+      "width_px": 480,
+      "height_px": 660,
+      "sha256": "e7fa9d1012b36c62274f9a809a73de457a179f586a8893b92b14f1d41757e16c",
+      "has_alpha": true,
+      "status": "candidate",
+      "source": "svg/covers/gm_ws21_cover_desert_standard.svg",
+      "details": {
+        "theme": "desert",
+        "variant": "standard",
+        "editable_svg_sha256": "ce54c8e1113396810f04d4bad23471aef325d60e1f783a409498d506aa7a4802",
+        "label_zones": "blank native title/top and category/bottom",
+        "visual_only": true
+      }
+    },
+    {
+      "id": "gm_ws21_cover_desert_collector",
+      "scope": "word_search",
+      "family": "book_covers",
+      "path": "sprites/covers/gm_ws21_cover_desert_collector.png",
+      "width_px": 480,
+      "height_px": 662,
+      "sha256": "abda624aaef79cbdf2ecce6e30a563c1b6ffd49a90dfb7fb9ebd15d66ce8ab1e",
+      "has_alpha": true,
+      "status": "candidate",
+      "source": "svg/covers/gm_ws21_cover_desert_collector.svg",
+      "details": {
+        "theme": "desert",
+        "variant": "collector",
+        "editable_svg_sha256": "f4346db4dd11022862cf66670f7c004ea1727fd64353810a6511e623626b25cc",
+        "label_zones": "blank native title/top and category/bottom",
+        "visual_only": true
+      }
+    },
+    {
+      "id": "gm_ws21_cover_desert_pocket",
+      "scope": "word_search",
+      "family": "book_covers",
+      "path": "sprites/covers/gm_ws21_cover_desert_pocket.png",
+      "width_px": 360,
+      "height_px": 594,
+      "sha256": "77ed8839263bb7ceb402fe96d6858afa22cdf10aae91437a00c2d68ea1c8f34a",
+      "has_alpha": true,
+      "status": "candidate",
+      "source": "svg/covers/gm_ws21_cover_desert_pocket.svg",
+      "details": {
+        "theme": "desert",
+        "variant": "pocket",
+        "editable_svg_sha256": "e252b54bf6c95b527a88ae447ce0afbd3c27a0435d7f5e2017b69d590d9b0359",
+        "label_zones": "blank native title/top and category/bottom",
+        "visual_only": true
+      }
+    },
+    {
+      "id": "gm_theme_desert_emblem_round",
+      "scope": "theme",
+      "family": "medallions",
+      "path": "sprites/medallions/gm_theme_desert_emblem_round.png",
+      "width_px": 280,
+      "height_px": 280,
+      "sha256": "eecc892b1f403117fd8b72a46406949d533307af0dfa0e51b4176cccac36fb2a",
+      "has_alpha": true,
+      "status": "candidate",
+      "source": "svg/medallions/gm_theme_desert_emblem_round.svg",
+      "details": {
+        "theme": "desert",
+        "editable_svg_sha256": "8c371f12b544fc506c2ad60f90a1aa56868d5ffdac8adaa7872aa0554c1dcfa8",
+        "visual_only": true
+      }
+    },
+    {
+      "id": "gm_ws21_cover_night_sky_standard",
+      "scope": "word_search",
+      "family": "book_covers",
+      "path": "sprites/covers/gm_ws21_cover_night_sky_standard.png",
+      "width_px": 480,
+      "height_px": 660,
+      "sha256": "5fc39c69a9e8e85b067297ac33523f878a24ac2199ed7e6a70f2d6224d4b94a6",
+      "has_alpha": true,
+      "status": "candidate",
+      "source": "svg/covers/gm_ws21_cover_night_sky_standard.svg",
+      "details": {
+        "theme": "night_sky",
+        "variant": "standard",
+        "editable_svg_sha256": "c5c812d1c6a4c2e4a07c8eb000d31ed979e5ebc893017e57dddf50e223dfa2ca",
+        "label_zones": "blank native title/top and category/bottom",
+        "visual_only": true
+      }
+    },
+    {
+      "id": "gm_ws21_cover_night_sky_collector",
+      "scope": "word_search",
+      "family": "book_covers",
+      "path": "sprites/covers/gm_ws21_cover_night_sky_collector.png",
+      "width_px": 480,
+      "height_px": 662,
+      "sha256": "e2ba0ec9dc4ebd35f2b5f1731cd9a2c1bef9fd1a2cca9be75e0adfefbca387cf",
+      "has_alpha": true,
+      "status": "candidate",
+      "source": "svg/covers/gm_ws21_cover_night_sky_collector.svg",
+      "details": {
+        "theme": "night_sky",
+        "variant": "collector",
+        "editable_svg_sha256": "2e84f1e126e107ba6ad050d623b8d82bb40de4b92bab2cf254ec186e2b616044",
+        "label_zones": "blank native title/top and category/bottom",
+        "visual_only": true
+      }
+    },
+    {
+      "id": "gm_ws21_cover_night_sky_pocket",
+      "scope": "word_search",
+      "family": "book_covers",
+      "path": "sprites/covers/gm_ws21_cover_night_sky_pocket.png",
+      "width_px": 360,
+      "height_px": 594,
+      "sha256": "6acbbe120436f7a77a99cef6924a03f9ff05f29b484bd6885fbad511caa34e19",
+      "has_alpha": true,
+      "status": "candidate",
+      "source": "svg/covers/gm_ws21_cover_night_sky_pocket.svg",
+      "details": {
+        "theme": "night_sky",
+        "variant": "pocket",
+        "editable_svg_sha256": "9ce642f3067792f778a3a01e38cdbcbc61659f52f25db3b3865fb4231b61c21e",
+        "label_zones": "blank native title/top and category/bottom",
+        "visual_only": true
+      }
+    },
+    {
+      "id": "gm_theme_night_sky_emblem_round",
+      "scope": "theme",
+      "family": "medallions",
+      "path": "sprites/medallions/gm_theme_night_sky_emblem_round.png",
+      "width_px": 280,
+      "height_px": 280,
+      "sha256": "62319dd7e3793eae471a3a2bdc0780bcf0dcc3d375dd9b90831c242d6bdbdfed",
+      "has_alpha": true,
+      "status": "candidate",
+      "source": "svg/medallions/gm_theme_night_sky_emblem_round.svg",
+      "details": {
+        "theme": "night_sky",
+        "editable_svg_sha256": "25c56d9aa8bd836111b012d14c6aca24447d5e4310102d46ff56f25d36a31c59",
+        "visual_only": true
+      }
+    },
+    {
+      "id": "gm_ws21_cover_autumn_standard",
+      "scope": "word_search",
+      "family": "book_covers",
+      "path": "sprites/covers/gm_ws21_cover_autumn_standard.png",
+      "width_px": 480,
+      "height_px": 660,
+      "sha256": "46d37f058c29bd3e0536d3eb92411455cc2edd677be93bfcb5637048cba1eabc",
+      "has_alpha": true,
+      "status": "candidate",
+      "source": "svg/covers/gm_ws21_cover_autumn_standard.svg",
+      "details": {
+        "theme": "autumn",
+        "variant": "standard",
+        "editable_svg_sha256": "28051566ca56a235ae5a1284d61ba9d2e9e9ffbb1f509198c58d8d31369cfd64",
+        "label_zones": "blank native title/top and category/bottom",
+        "visual_only": true
+      }
+    },
+    {
+      "id": "gm_ws21_cover_autumn_collector",
+      "scope": "word_search",
+      "family": "book_covers",
+      "path": "sprites/covers/gm_ws21_cover_autumn_collector.png",
+      "width_px": 480,
+      "height_px": 662,
+      "sha256": "7de8b005e1ebafbb3e7675f79f379c0c377e0065cf763d356bff7d8f36eae5e1",
+      "has_alpha": true,
+      "status": "candidate",
+      "source": "svg/covers/gm_ws21_cover_autumn_collector.svg",
+      "details": {
+        "theme": "autumn",
+        "variant": "collector",
+        "editable_svg_sha256": "6831f5f8919fddba62ee531766815c376c7476d346a2343f75b4b99916a32a01",
+        "label_zones": "blank native title/top and category/bottom",
+        "visual_only": true
+      }
+    },
+    {
+      "id": "gm_ws21_cover_autumn_pocket",
+      "scope": "word_search",
+      "family": "book_covers",
+      "path": "sprites/covers/gm_ws21_cover_autumn_pocket.png",
+      "width_px": 360,
+      "height_px": 594,
+      "sha256": "2d248001364f7df577cc12a3f8b4eaf1c5ba629534ec56b77d1ae83c9978358d",
+      "has_alpha": true,
+      "status": "candidate",
+      "source": "svg/covers/gm_ws21_cover_autumn_pocket.svg",
+      "details": {
+        "theme": "autumn",
+        "variant": "pocket",
+        "editable_svg_sha256": "37d9151b0b34492e112de5abcdf4946573e6e55d417ac66e130bcab2d2ee8c8c",
+        "label_zones": "blank native title/top and category/bottom",
+        "visual_only": true
+      }
+    },
+    {
+      "id": "gm_theme_autumn_emblem_round",
+      "scope": "theme",
+      "family": "medallions",
+      "path": "sprites/medallions/gm_theme_autumn_emblem_round.png",
+      "width_px": 280,
+      "height_px": 280,
+      "sha256": "1c504af832b743428ceb58f5d4eb5a348dcd221b2276fe0797439e8a9d350dd0",
+      "has_alpha": true,
+      "status": "candidate",
+      "source": "svg/medallions/gm_theme_autumn_emblem_round.svg",
+      "details": {
+        "theme": "autumn",
+        "editable_svg_sha256": "30e7b12e8c55cf15f7baf2d8f9cc010ae2489697753585918332291eb6945316",
+        "visual_only": true
+      }
+    },
+    {
+      "id": "gm_ws21_cover_spring_standard",
+      "scope": "word_search",
+      "family": "book_covers",
+      "path": "sprites/covers/gm_ws21_cover_spring_standard.png",
+      "width_px": 480,
+      "height_px": 660,
+      "sha256": "5449bde9a750e8607c43b64dc6943faadf797ceb1018c58d31d6da0e52ae35f3",
+      "has_alpha": true,
+      "status": "candidate",
+      "source": "svg/covers/gm_ws21_cover_spring_standard.svg",
+      "details": {
+        "theme": "spring",
+        "variant": "standard",
+        "editable_svg_sha256": "a50123c7c0acf72d0823f008ae29efc83b38bacb390db934829100efd0598801",
+        "label_zones": "blank native title/top and category/bottom",
+        "visual_only": true
+      }
+    },
+    {
+      "id": "gm_ws21_cover_spring_collector",
+      "scope": "word_search",
+      "family": "book_covers",
+      "path": "sprites/covers/gm_ws21_cover_spring_collector.png",
+      "width_px": 480,
+      "height_px": 662,
+      "sha256": "c64ec4d593dae7ad8224a39292f7bb78e11b03f89c7bf31944f8a7159d3b8181",
+      "has_alpha": true,
+      "status": "candidate",
+      "source": "svg/covers/gm_ws21_cover_spring_collector.svg",
+      "details": {
+        "theme": "spring",
+        "variant": "collector",
+        "editable_svg_sha256": "c0d56175e54fc5c0a555dc6350118db22255db6b9aaab3840381991fbda6de06",
+        "label_zones": "blank native title/top and category/bottom",
+        "visual_only": true
+      }
+    },
+    {
+      "id": "gm_ws21_cover_spring_pocket",
+      "scope": "word_search",
+      "family": "book_covers",
+      "path": "sprites/covers/gm_ws21_cover_spring_pocket.png",
+      "width_px": 360,
+      "height_px": 594,
+      "sha256": "5f95c96498060487df37d1f96b32a552a4d5e53919463522837310ad079c5893",
+      "has_alpha": true,
+      "status": "candidate",
+      "source": "svg/covers/gm_ws21_cover_spring_pocket.svg",
+      "details": {
+        "theme": "spring",
+        "variant": "pocket",
+        "editable_svg_sha256": "8b73879b3b68963ecbd6a033c45d5fded56f61478152f2e50defe6f22ebc7ccd",
+        "label_zones": "blank native title/top and category/bottom",
+        "visual_only": true
+      }
+    },
+    {
+      "id": "gm_theme_spring_emblem_round",
+      "scope": "theme",
+      "family": "medallions",
+      "path": "sprites/medallions/gm_theme_spring_emblem_round.png",
+      "width_px": 280,
+      "height_px": 280,
+      "sha256": "8fd4f32296372b5b33db3edcfa46f7c936b3192ab2165d9d1f3a041200f05080",
+      "has_alpha": true,
+      "status": "candidate",
+      "source": "svg/medallions/gm_theme_spring_emblem_round.svg",
+      "details": {
+        "theme": "spring",
+        "editable_svg_sha256": "e7a9eece154242ec28853eb061da2db3faa458f5770edbb4c07133ecb80cca42",
+        "visual_only": true
+      }
+    },
+    {
+      "id": "gm_ws21_cover_summer_standard",
+      "scope": "word_search",
+      "family": "book_covers",
+      "path": "sprites/covers/gm_ws21_cover_summer_standard.png",
+      "width_px": 480,
+      "height_px": 660,
+      "sha256": "0ff64cb49bada9a3da4dd1c13a27201543ece2f121aefff993499d31ba48425a",
+      "has_alpha": true,
+      "status": "candidate",
+      "source": "svg/covers/gm_ws21_cover_summer_standard.svg",
+      "details": {
+        "theme": "summer",
+        "variant": "standard",
+        "editable_svg_sha256": "8952129eacaa0b8290c3d770d2cdbb5934f907c53b5451edcc3d71320ded6efd",
+        "label_zones": "blank native title/top and category/bottom",
+        "visual_only": true
+      }
+    },
+    {
+      "id": "gm_ws21_cover_summer_collector",
+      "scope": "word_search",
+      "family": "book_covers",
+      "path": "sprites/covers/gm_ws21_cover_summer_collector.png",
+      "width_px": 480,
+      "height_px": 662,
+      "sha256": "728f76db9c3b73b0a9346b42d18933ac66bc5d81b5221b90f7b72aab0baf1a91",
+      "has_alpha": true,
+      "status": "candidate",
+      "source": "svg/covers/gm_ws21_cover_summer_collector.svg",
+      "details": {
+        "theme": "summer",
+        "variant": "collector",
+        "editable_svg_sha256": "454c7c3de2d20b4fc0af1d1801ad0d01c86a0948ca9ebb22cc202a869445f0cb",
+        "label_zones": "blank native title/top and category/bottom",
+        "visual_only": true
+      }
+    },
+    {
+      "id": "gm_ws21_cover_summer_pocket",
+      "scope": "word_search",
+      "family": "book_covers",
+      "path": "sprites/covers/gm_ws21_cover_summer_pocket.png",
+      "width_px": 360,
+      "height_px": 594,
+      "sha256": "77c5775a349da502b1b9db64fecf8388d0c67ac69d25e914d08011dd6c09a08e",
+      "has_alpha": true,
+      "status": "candidate",
+      "source": "svg/covers/gm_ws21_cover_summer_pocket.svg",
+      "details": {
+        "theme": "summer",
+        "variant": "pocket",
+        "editable_svg_sha256": "a69eb4c31288eb83831712542d2345ec7058ecb9b3c9440ede013575f875e935",
+        "label_zones": "blank native title/top and category/bottom",
+        "visual_only": true
+      }
+    },
+    {
+      "id": "gm_theme_summer_emblem_round",
+      "scope": "theme",
+      "family": "medallions",
+      "path": "sprites/medallions/gm_theme_summer_emblem_round.png",
+      "width_px": 280,
+      "height_px": 280,
+      "sha256": "45e72306db91dd7e6fb997b92d2d659f6957b61f5fe58ee5c335c8229f117010",
+      "has_alpha": true,
+      "status": "candidate",
+      "source": "svg/medallions/gm_theme_summer_emblem_round.svg",
+      "details": {
+        "theme": "summer",
+        "editable_svg_sha256": "09c3b085470c9a1a34eb637786df155bf9d0c659beceaf769853cb95472dde7c",
+        "visual_only": true
+      }
+    },
+    {
+      "id": "gm_ws21_cover_mountains_standard",
+      "scope": "word_search",
+      "family": "book_covers",
+      "path": "sprites/covers/gm_ws21_cover_mountains_standard.png",
+      "width_px": 480,
+      "height_px": 660,
+      "sha256": "322c7b2ec98ae23ba53c96daef129eedb1494c96d66a1d49a22615509d0d6035",
+      "has_alpha": true,
+      "status": "candidate",
+      "source": "svg/covers/gm_ws21_cover_mountains_standard.svg",
+      "details": {
+        "theme": "mountains",
+        "variant": "standard",
+        "editable_svg_sha256": "7bbb3670b75b099bd00069993f6bbd0a2761fdd6f17ff5d0f00b1fb92df1cc89",
+        "label_zones": "blank native title/top and category/bottom",
+        "visual_only": true
+      }
+    },
+    {
+      "id": "gm_ws21_cover_mountains_collector",
+      "scope": "word_search",
+      "family": "book_covers",
+      "path": "sprites/covers/gm_ws21_cover_mountains_collector.png",
+      "width_px": 480,
+      "height_px": 662,
+      "sha256": "4c7533a002b97b61731e30cfa866acbdfcce2df53c55d812b70bef410c08fa18",
+      "has_alpha": true,
+      "status": "candidate",
+      "source": "svg/covers/gm_ws21_cover_mountains_collector.svg",
+      "details": {
+        "theme": "mountains",
+        "variant": "collector",
+        "editable_svg_sha256": "6160b08a979e91d64622651cdc744176bc4f07a0502c558bb08f3ec6cec6c381",
+        "label_zones": "blank native title/top and category/bottom",
+        "visual_only": true
+      }
+    },
+    {
+      "id": "gm_ws21_cover_mountains_pocket",
+      "scope": "word_search",
+      "family": "book_covers",
+      "path": "sprites/covers/gm_ws21_cover_mountains_pocket.png",
+      "width_px": 360,
+      "height_px": 594,
+      "sha256": "079841291f8669a65c9e29ed240b23fd58fb58976760708562879878ddaa01fd",
+      "has_alpha": true,
+      "status": "candidate",
+      "source": "svg/covers/gm_ws21_cover_mountains_pocket.svg",
+      "details": {        "theme": "mountains",
+        "variant": "pocket",
+        "editable_svg_sha256": "78326ede0b7ed1c8f77b3c90dbe745eecbfda789199f975aef314b0f2b5e0fd4",
+        "label_zones": "blank native title/top and category/bottom",
+        "visual_only": true
+      }
+    },
+    {
+      "id": "gm_theme_mountains_emblem_round",
+      "scope": "theme",
+      "family": "medallions",
+      "path": "sprites/medallions/gm_theme_mountains_emblem_round.png",
+      "width_px": 280,
+      "height_px": 280,
+      "sha256": "478a7a1f61444e40a16024a5d7bb1ea7babd50a7cb985543ee77f794352c80b6",
+      "has_alpha": true,
+      "status": "candidate",
+      "source": "svg/medallions/gm_theme_mountains_emblem_round.svg",
+      "details": {
+        "theme": "mountains",
+        "editable_svg_sha256": "a2abed55b9b6d4b2337819c4fda56dd717d6abe1b76ccd79218e8c1ecae6b403",
+        "visual_only": true
+      }
+    },
+    {
+      "id": "gm_ws21_cover_dinosaurs_standard",
+      "scope": "word_search",
+      "family": "book_covers",
+      "path": "sprites/covers/gm_ws21_cover_dinosaurs_standard.png",
+      "width_px": 480,
+      "height_px": 660,
+      "sha256": "a8d4774e209202080fe2c952be69779e28d8fdd018c62bd0c423713421847900",
+      "has_alpha": true,
+      "status": "candidate",
+      "source": "svg/covers/gm_ws21_cover_dinosaurs_standard.svg",
+      "details": {
+        "theme": "dinosaurs",
+        "variant": "standard",
+        "editable_svg_sha256": "ac83c5748f1b659618b1f704da74f839f7f8bd5e3a8919343e95a7f11ed4a765",
+        "label_zones": "blank native title/top and category/bottom",
+        "visual_only": true
+      }
+    },
+    {
+      "id": "gm_ws21_cover_dinosaurs_collector",
+      "scope": "word_search",
+      "family": "book_covers",
+      "path": "sprites/covers/gm_ws21_cover_dinosaurs_collector.png",
+      "width_px": 480,
+      "height_px": 662,
+      "sha256": "85d517693a18ace3681b178bf735fee4832a5aee255267d6dd8fd6112b4ebd32",
+      "has_alpha": true,
+      "status": "candidate",
+      "source": "svg/covers/gm_ws21_cover_dinosaurs_collector.svg",
+      "details": {
+        "theme": "dinosaurs",
+        "variant": "collector",
+        "editable_svg_sha256": "098ec062893e6ce8d08d0a2fcc41bd16606a21c5b304dbbb964bf380fb1b0ef9",
+        "label_zones": "blank native title/top and category/bottom",
+        "visual_only": true
+      }
+    },
+    {
+      "id": "gm_ws21_cover_dinosaurs_pocket",
+      "scope": "word_search",
+      "family": "book_covers",
+      "path": "sprites/covers/gm_ws21_cover_dinosaurs_pocket.png",
+      "width_px": 360,
+      "height_px": 594,
+      "sha256": "20b113c200245770897fba4e60ef1023ab7fff5a87e058dac1aeea7d1ff66fee",
+      "has_alpha": true,
+      "status": "candidate",
+      "source": "svg/covers/gm_ws21_cover_dinosaurs_pocket.svg",
+      "details": {
+        "theme": "dinosaurs",
+        "variant": "pocket",
+        "editable_svg_sha256": "a703c8eb8fcac480c6b2055e573d776f9e121a4767c421d37e24afc89eb6095c",
+        "label_zones": "blank native title/top and category/bottom",
+        "visual_only": true
+      }
+    },
+    {
+      "id": "gm_theme_dinosaurs_emblem_round",
+      "scope": "theme",
+      "family": "medallions",
+      "path": "sprites/medallions/gm_theme_dinosaurs_emblem_round.png",
+      "width_px": 280,
+      "height_px": 280,
+      "sha256": "4aa12eacc2a3ccc866fb441c67197d5183bcd2d0cb41127ef90a5474173c068c",
+      "has_alpha": true,
+      "status": "candidate",
+      "source": "svg/medallions/gm_theme_dinosaurs_emblem_round.svg",
+      "details": {
+        "theme": "dinosaurs",
+        "editable_svg_sha256": "074a69489576bf6f04c8ddfed776f753fdf026106123360dfb6cfda540f078f9",
+        "visual_only": true
+      }
+    },
+    {
+      "id": "gm_ws21_cover_food_standard",
+      "scope": "word_search",
+      "family": "book_covers",
+      "path": "sprites/covers/gm_ws21_cover_food_standard.png",
+      "width_px": 480,
+      "height_px": 660,
+      "sha256": "477827ca34b70a0d0e925a7cf1f1a3617b253a896b67d0bb0223b089682abe5c",
+      "has_alpha": true,
+      "status": "candidate",
+      "source": "svg/covers/gm_ws21_cover_food_standard.svg",
+      "details": {
+        "theme": "food",
+        "variant": "standard",
+        "editable_svg_sha256": "c9b4ba3bce84ea381614b7c14dd9ec0aa936c60c71d4f68e30f815797ade91a2",
+        "label_zones": "blank native title/top and category/bottom",
+        "visual_only": true
+      }
+    },
+    {
+      "id": "gm_ws21_cover_food_collector",
+      "scope": "word_search",
+      "family": "book_covers",
+      "path": "sprites/covers/gm_ws21_cover_food_collector.png",
+      "width_px": 480,
+      "height_px": 662,
+      "sha256": "22758d87041f9265be52739b93427ab2fdc0a10e739d2a0f12d98422fdc301b2",
+      "has_alpha": true,
+      "status": "candidate",
+      "source": "svg/covers/gm_ws21_cover_food_collector.svg",
+      "details": {
+        "theme": "food",
+        "variant": "collector",
+        "editable_svg_sha256": "7adaff794d134317af0e3b1d4453c8d2c3ed850a492d939d46913ae51a3e2fb7",
+        "label_zones": "blank native title/top and category/bottom",
+        "visual_only": true
+      }
+    },
+    {
+      "id": "gm_ws21_cover_food_pocket",
+      "scope": "word_search",
+      "family": "book_covers",
+      "path": "sprites/covers/gm_ws21_cover_food_pocket.png",
+      "width_px": 360,
+      "height_px": 594,
+      "sha256": "97e42ab13111428a8af0dcb40329f2dc6b5d84fd0aa2c97574e765531ac1d22d",
+      "has_alpha": true,
+      "status": "candidate",
+      "source": "svg/covers/gm_ws21_cover_food_pocket.svg",
+      "details": {
+        "theme": "food",
+        "variant": "pocket",
+        "editable_svg_sha256": "2ec1b07c3220dacf102309bbcd66eb5a9dec0cecf3ad0382eca047989884a39d",
+        "label_zones": "blank native title/top and category/bottom",
+        "visual_only": true
+      }
+    },
+    {
+      "id": "gm_theme_food_emblem_round",
+      "scope": "theme",
+      "family": "medallions",
+      "path": "sprites/medallions/gm_theme_food_emblem_round.png",
+      "width_px": 280,
+      "height_px": 280,
+      "sha256": "f588146ab7742d8faa50ff2d4048c322a125db00b87833cd6239385582d87260",
+      "has_alpha": true,
+      "status": "candidate",
+      "source": "svg/medallions/gm_theme_food_emblem_round.svg",
+      "details": {
+        "theme": "food",
+        "editable_svg_sha256": "c1b5d9a9c84a7f7892a5520e38a9a830d98892c0e0939aeed8708bb3f6f1de10",
+        "visual_only": true
+      }
+    },
+    {
+      "id": "gm_ws21_cover_weather_standard",
+      "scope": "word_search",
+      "family": "book_covers",
+      "path": "sprites/covers/gm_ws21_cover_weather_standard.png",
+      "width_px": 480,
+      "height_px": 660,
+      "sha256": "50441bf3c220ef625b6e957f9c268f21ddc1508140dabf449809aa0ed0ba99a4",
+      "has_alpha": true,
+      "status": "candidate",
+      "source": "svg/covers/gm_ws21_cover_weather_standard.svg",
+      "details": {
+        "theme": "weather",
+        "variant": "standard",
+        "editable_svg_sha256": "ecdddadf5c5083449ee369488f80d95988405146b237ca6358402ae7d7fc67f0",
+        "label_zones": "blank native title/top and category/bottom",
+        "visual_only": true
+      }
+    },
+    {
+      "id": "gm_ws21_cover_weather_collector",
+      "scope": "word_search",
+      "family": "book_covers",
+      "path": "sprites/covers/gm_ws21_cover_weather_collector.png",
+      "width_px": 480,
+      "height_px": 662,
+      "sha256": "ba99db099a9f4532b11267215e69cbf935b2335ea973b0489c3bb010f5ceaff7",
+      "has_alpha": true,
+      "status": "candidate",
+      "source": "svg/covers/gm_ws21_cover_weather_collector.svg",
+      "details": {
+        "theme": "weather",
+        "variant": "collector",
+        "editable_svg_sha256": "b5813f4cb9c77ca91c22f107407da5a62af491ad3e5fdc29d37002be2c4cedfd",
+        "label_zones": "blank native title/top and category/bottom",
+        "visual_only": true
+      }
+    },
+    {
+      "id": "gm_ws21_cover_weather_pocket",
+      "scope": "word_search",
+      "family": "book_covers",
+      "path": "sprites/covers/gm_ws21_cover_weather_pocket.png",
+      "width_px": 360,
+      "height_px": 594,
+      "sha256": "f394edcf97a52b1412c5cebaad52df0c34dac5ed67054af947fe42643b24ab94",
+      "has_alpha": true,
+      "status": "candidate",
+      "source": "svg/covers/gm_ws21_cover_weather_pocket.svg",
+      "details": {
+        "theme": "weather",
+        "variant": "pocket",
+        "editable_svg_sha256": "f894213bb6687977566264c6db20f11798e1cb2dd4c6660c930df072dcfc71ed",
+        "label_zones": "blank native title/top and category/bottom",
+        "visual_only": true
+      }
+    },
+    {
+      "id": "gm_theme_weather_emblem_round",
+      "scope": "theme",
+      "family": "medallions",
+      "path": "sprites/medallions/gm_theme_weather_emblem_round.png",
+      "width_px": 280,
+      "height_px": 280,
+      "sha256": "561b9208be98c13bd84797f29a1cfc4078ff57b06e54009361df3c73b918f75a",
+      "has_alpha": true,
+      "status": "candidate",
+      "source": "svg/medallions/gm_theme_weather_emblem_round.svg",
+      "details": {
+        "theme": "weather",
+        "editable_svg_sha256": "cf6417a23edf6438af2c6e855e8c31b973b25bf6f430a93b34903effc1823613",
+        "visual_only": true
+      }
+    },
+    {
+      "id": "gm_ws21_cover_travel_standard",
+      "scope": "word_search",
+      "family": "book_covers",
+      "path": "sprites/covers/gm_ws21_cover_travel_standard.png",
+      "width_px": 480,
+      "height_px": 660,
+      "sha256": "2fddd6ce0fe6489225731c4efda3cb0b3216eea8595bf0c00c012be71ce61519",
+      "has_alpha": true,
+      "status": "candidate",
+      "source": "svg/covers/gm_ws21_cover_travel_standard.svg",
+      "details": {
+        "theme": "travel",
+        "variant": "standard",
+        "editable_svg_sha256": "ea71588b6424912c01baaa4202bac831d55505e48b3fb072fa607089c20deee2",
+        "label_zones": "blank native title/top and category/bottom",
+        "visual_only": true
+      }
+    },
+    {
+      "id": "gm_ws21_cover_travel_collector",
+      "scope": "word_search",
+      "family": "book_covers",
+      "path": "sprites/covers/gm_ws21_cover_travel_collector.png",
+      "width_px": 480,
+      "height_px": 662,
+      "sha256": "46fe606198253d613ef4c6f8cdcd3e4d05e651c7a77084fa7859319a05186f96",
+      "has_alpha": true,
+      "status": "candidate",
+      "source": "svg/covers/gm_ws21_cover_travel_collector.svg",
+      "details": {
+        "theme": "travel",
+        "variant": "collector",
+        "editable_svg_sha256": "807389088e81efa40082a0aea8e330a6dd449017b7526d572676875dd0840a26",
+        "label_zones": "blank native title/top and category/bottom",
+        "visual_only": true
+      }
+    },
+    {
+      "id": "gm_ws21_cover_travel_pocket",
+      "scope": "word_search",
+      "family": "book_covers",
+      "path": "sprites/covers/gm_ws21_cover_travel_pocket.png",
+      "width_px": 360,
+      "height_px": 594,
+      "sha256": "f25e2ef4d1bdeec6b6ca0fd3dd43800e371ba1bbc90cb4d12a0479e564228f76",
+      "has_alpha": true,
+      "status": "candidate",
+      "source": "svg/covers/gm_ws21_cover_travel_pocket.svg",
+      "details": {
+        "theme": "travel",
+        "variant": "pocket",
+        "editable_svg_sha256": "be30ccb3bf204c7244f31e1529c477e92602e18bff6087badb5a3c756362cce4",
+        "label_zones": "blank native title/top and category/bottom",
+        "visual_only": true
+      }
+    },
+    {
+      "id": "gm_theme_travel_emblem_round",
+      "scope": "theme",
+      "family": "medallions",
+      "path": "sprites/medallions/gm_theme_travel_emblem_round.png",
+      "width_px": 280,
+      "height_px": 280,
+      "sha256": "8102831ec85a550fc9d3d29a1a3cf316996bb1dcc9441fab1019b2f1af24b750",
+      "has_alpha": true,
+      "status": "candidate",
+      "source": "svg/medallions/gm_theme_travel_emblem_round.svg",
+      "details": {
+        "theme": "travel",
+        "editable_svg_sha256": "cc94a8d7ec78cb353a557522a22b6924dfff998a76caa0d0f371cf7dde96ed60",
+        "visual_only": true
+      }
+    },
+    {
+      "id": "gm_ws21_cover_music_standard",
+      "scope": "word_search",
+      "family": "book_covers",
+      "path": "sprites/covers/gm_ws21_cover_music_standard.png",
+      "width_px": 480,
+      "height_px": 660,
+      "sha256": "bd16af1e051ec156a2b7fe119cba2f062787fd19d3a7cabd80d39a0a484ba364",
+      "has_alpha": true,
+      "status": "candidate",
+      "source": "svg/covers/gm_ws21_cover_music_standard.svg",
+      "details": {
+        "theme": "music",
+        "variant": "standard",
+        "editable_svg_sha256": "c72788c313a214ceebc2a58c3837f1b66890eb3bb23fcee0c733e861118ba9f1",
+        "label_zones": "blank native title/top and category/bottom",
+        "visual_only": true
+      }
+    },
+    {
+      "id": "gm_ws21_cover_music_collector",
+      "scope": "word_search",
+      "family": "book_covers",
+      "path": "sprites/covers/gm_ws21_cover_music_collector.png",
+      "width_px": 480,
+      "height_px": 662,
+      "sha256": "14e214c4ec6dec593e1a276f1263ebe68eb4f575c8cdcde7a7519f6421d86517",
+      "has_alpha": true,
+      "status": "candidate",
+      "source": "svg/covers/gm_ws21_cover_music_collector.svg",
+      "details": {
+        "theme": "music",
+        "variant": "collector",
+        "editable_svg_sha256": "ad340f738281f9808dca1d216f857ccc9c92c0887154ab929629c57ba0f688dc",
+        "label_zones": "blank native title/top and category/bottom",
+        "visual_only": true
+      }
+    },
+    {
+      "id": "gm_ws21_cover_music_pocket",
+      "scope": "word_search",
+      "family": "book_covers",
+      "path": "sprites/covers/gm_ws21_cover_music_pocket.png",
+      "width_px": 360,
+      "height_px": 594,
+      "sha256": "c9bd6e483fdeee4a1620391514706c788d477494afd760b31279100bce895d18",
+      "has_alpha": true,
+      "status": "candidate",
+      "source": "svg/covers/gm_ws21_cover_music_pocket.svg",
+      "details": {
+        "theme": "music",
+        "variant": "pocket",
+        "editable_svg_sha256": "300971adc87612bf0aa4b44283d4be52e9dd29879cc2d184cc6f9f7abbeddef2",
+        "label_zones": "blank native title/top and category/bottom",
+        "visual_only": true
+      }
+    },
+    {
+      "id": "gm_theme_music_emblem_round",
+      "scope": "theme",
+      "family": "medallions",
+      "path": "sprites/medallions/gm_theme_music_emblem_round.png",
+      "width_px": 280,
+      "height_px": 280,
+      "sha256": "5b66e08c239564d6a8837d6467ece81af12d17efe29c6e6bb037cb7d60dfc1d8",
+      "has_alpha": true,
+      "status": "candidate",
+      "source": "svg/medallions/gm_theme_music_emblem_round.svg",
+      "details": {
+        "theme": "music",
+        "editable_svg_sha256": "38aa858124c3bf01ea5e792b3224c510019f4e4802eb019d352cc08e7861ddd4",
+        "visual_only": true
+      }
+    },
+    {
+      "id": "gm_ws21_cover_fairy_tales_standard",
+      "scope": "word_search",
+      "family": "book_covers",
+      "path": "sprites/covers/gm_ws21_cover_fairy_tales_standard.png",
+      "width_px": 480,
+      "height_px": 660,
+      "sha256": "e65b6c86eed7f4181c02e95735bb7d40ac207004b2288b23cab92be2e7973cff",
+      "has_alpha": true,
+      "status": "candidate",
+      "source": "svg/covers/gm_ws21_cover_fairy_tales_standard.svg",
+      "details": {
+        "theme": "fairy_tales",
+        "variant": "standard",
+        "editable_svg_sha256": "994b25f1aa3ca8ab056bdfa4c4c4a2d79cb9b639f53ee17c7634332bb8fe2aba",
+        "label_zones": "blank native title/top and category/bottom",
+        "visual_only": true
+      }
+    },
+    {
+      "id": "gm_ws21_cover_fairy_tales_collector",
+      "scope": "word_search",
+      "family": "book_covers",
+      "path": "sprites/covers/gm_ws21_cover_fairy_tales_collector.png",
+      "width_px": 480,
+      "height_px": 662,
+      "sha256": "ce9f4e99f1fa7baa406411ff8e69775097437837d594d75c36b049493818455b",
+      "has_alpha": true,
+      "status": "candidate",
+      "source": "svg/covers/gm_ws21_cover_fairy_tales_collector.svg",
+      "details": {
+        "theme": "fairy_tales",
+        "variant": "collector",
+        "editable_svg_sha256": "3c530b0518284fd0b8fb7937d7438aae57f12c68e1d1aec422464687e40f6162",
+        "label_zones": "blank native title/top and category/bottom",
+        "visual_only": true
+      }
+    },
+    {
+      "id": "gm_ws21_cover_fairy_tales_pocket",
+      "scope": "word_search",
+      "family": "book_covers",
+      "path": "sprites/covers/gm_ws21_cover_fairy_tales_pocket.png",
+      "width_px": 360,
+      "height_px": 594,
+      "sha256": "bff043c4294dd906b1bd664068b794c4481fc0922580cb9b42a08cf9ab43f6f3",
+      "has_alpha": true,
+      "status": "candidate",
+      "source": "svg/covers/gm_ws21_cover_fairy_tales_pocket.svg",
+      "details": {
+        "theme": "fairy_tales",
+        "variant": "pocket",
+        "editable_svg_sha256": "33e5ae55f1faba2f1c710152de46fce9712a3bfa2cf4e8a96bccb1b20fc24864",
+        "label_zones": "blank native title/top and category/bottom",
+        "visual_only": true
+      }
+    },
+    {
+      "id": "gm_theme_fairy_tales_emblem_round",
+      "scope": "theme",
+      "family": "medallions",
+      "path": "sprites/medallions/gm_theme_fairy_tales_emblem_round.png",
+      "width_px": 280,
+      "height_px": 280,
+      "sha256": "76d0b7997be1f4ca32fe19365c2dd80a3abd945a47d51eb836c5912ec7ee1ea9",
+      "has_alpha": true,
+      "status": "candidate",
+      "source": "svg/medallions/gm_theme_fairy_tales_emblem_round.svg",
+      "details": {
+        "theme": "fairy_tales",
+        "editable_svg_sha256": "24c10e9e34a70b4347945df6096ce1a3e71d2f42541cadc162802b7378a4c8d2",
+        "visual_only": true
+      }
+    },
+    {
+      "id": "gm_ws21_cover_arctic_standard",
+      "scope": "word_search",
+      "family": "book_covers",
+      "path": "sprites/covers/gm_ws21_cover_arctic_standard.png",
+      "width_px": 480,
+      "height_px": 660,
+      "sha256": "cac21f6f6f279daac71f71d5fbefb7117e99bd28598a2bfe920866a5c49ae87a",
+      "has_alpha": true,
+      "status": "candidate",
+      "source": "svg/covers/gm_ws21_cover_arctic_standard.svg",
+      "details": {
+        "theme": "arctic",
+        "variant": "standard",
+        "editable_svg_sha256": "cb7897b563993302733380f28b9a9ae49710e50f300512a46859b3ed7c6762ec",
+        "label_zones": "blank native title/top and category/bottom",
+        "visual_only": true
+      }
+    },
+    {
+      "id": "gm_ws21_cover_arctic_collector",
+      "scope": "word_search",
+      "family": "book_covers",
+      "path": "sprites/covers/gm_ws21_cover_arctic_collector.png",
+      "width_px": 480,
+      "height_px": 662,
+      "sha256": "3c1c136b6bc8a32828be0fe11bdb8003b42e8e038c88859c97d6b12cd547f875",
+      "has_alpha": true,
+      "status": "candidate",
+      "source": "svg/covers/gm_ws21_cover_arctic_collector.svg",
+      "details": {
+        "theme": "arctic",        "variant": "collector",
+        "editable_svg_sha256": "4c31853c24133c59af78ba43b53d86b99ffcac11ac454f633db8a43475921b8b",
+        "label_zones": "blank native title/top and category/bottom",
+        "visual_only": true
+      }
+    },
+    {
+      "id": "gm_ws21_cover_arctic_pocket",
+      "scope": "word_search",
+      "family": "book_covers",
+      "path": "sprites/covers/gm_ws21_cover_arctic_pocket.png",
+      "width_px": 360,
+      "height_px": 594,
+      "sha256": "95612a76293df409b8003377cc6b4018d451ad773ce720f6d9dd280e154fd699",
+      "has_alpha": true,
+      "status": "candidate",
+      "source": "svg/covers/gm_ws21_cover_arctic_pocket.svg",
+      "details": {
+        "theme": "arctic",
+        "variant": "pocket",
+        "editable_svg_sha256": "1bba5d916ef4137fad3b3a8b721f25bf4aaf08af82680d024d47ee7626c39157",
+        "label_zones": "blank native title/top and category/bottom",
+        "visual_only": true
+      }
+    },
+    {
+      "id": "gm_theme_arctic_emblem_round",
+      "scope": "theme",
+      "family": "medallions",
+      "path": "sprites/medallions/gm_theme_arctic_emblem_round.png",
+      "width_px": 280,
+      "height_px": 280,
+      "sha256": "2fe0bf397a85edba4c9f81fde7ea29041d6c02f894b638addfc76e1f6cee69a6",
+      "has_alpha": true,
+      "status": "candidate",
+      "source": "svg/medallions/gm_theme_arctic_emblem_round.svg",
+      "details": {
+        "theme": "arctic",
+        "editable_svg_sha256": "e7dea3618e6cc3a68d7de8f52f71f666e2cfab024d2c10bdd23cbc814dbcd44f",
+        "visual_only": true
+      }
+    },
+    {
+      "id": "gm_ws21_cover_city_standard",
+      "scope": "word_search",
+      "family": "book_covers",
+      "path": "sprites/covers/gm_ws21_cover_city_standard.png",
+      "width_px": 480,
+      "height_px": 660,
+      "sha256": "909a88a1878ccc796a752855074bfaa0e7afff6d0889b8f5ec5be1123303237a",
+      "has_alpha": true,
+      "status": "candidate",
+      "source": "svg/covers/gm_ws21_cover_city_standard.svg",
+      "details": {
+        "theme": "city",
+        "variant": "standard",
+        "editable_svg_sha256": "631b64f997e30421e67d6e14dca239766c37b9d62cb687b920c837b1b7a6edc9",
+        "label_zones": "blank native title/top and category/bottom",
+        "visual_only": true
+      }
+    },
+    {
+      "id": "gm_ws21_cover_city_collector",
+      "scope": "word_search",
+      "family": "book_covers",
+      "path": "sprites/covers/gm_ws21_cover_city_collector.png",
+      "width_px": 480,
+      "height_px": 662,
+      "sha256": "6a58ef0076e62a618203a98d69b36d962af3673fb47d9ccab91661f5c7b63ff9",
+      "has_alpha": true,
+      "status": "candidate",
+      "source": "svg/covers/gm_ws21_cover_city_collector.svg",
+      "details": {
+        "theme": "city",
+        "variant": "collector",
+        "editable_svg_sha256": "669ae50612a5fbd7419ed3fbb1d6dc44fd2967752e6c35c516b4513dc03455b0",
+        "label_zones": "blank native title/top and category/bottom",
+        "visual_only": true
+      }
+    },
+    {
+      "id": "gm_ws21_cover_city_pocket",
+      "scope": "word_search",
+      "family": "book_covers",
+      "path": "sprites/covers/gm_ws21_cover_city_pocket.png",
+      "width_px": 360,
+      "height_px": 594,
+      "sha256": "76a440432c2bf10041267d4427fa18ebc5f0e50f8a7be0cb8f33027809e9f74b",
+      "has_alpha": true,
+      "status": "candidate",
+      "source": "svg/covers/gm_ws21_cover_city_pocket.svg",
+      "details": {
+        "theme": "city",
+        "variant": "pocket",
+        "editable_svg_sha256": "79874ba67cf8101dbd08415b833fd7b56ce7a691f1a066d1353debd05d2b7ba1",
+        "label_zones": "blank native title/top and category/bottom",
+        "visual_only": true
+      }
+    },
+    {
+      "id": "gm_theme_city_emblem_round",
+      "scope": "theme",
+      "family": "medallions",
+      "path": "sprites/medallions/gm_theme_city_emblem_round.png",
+      "width_px": 280,
+      "height_px": 280,
+      "sha256": "c0be0a80c8c5f80932579dd9cb4a8b046b30553956f28de6efe4cec25b78a2c0",
+      "has_alpha": true,
+      "status": "candidate",
+      "source": "svg/medallions/gm_theme_city_emblem_round.svg",
+      "details": {
+        "theme": "city",
+        "editable_svg_sha256": "a9ce7834d1ed9dd748cd303b52175d3b1ff57ca7ee614ec8d9aad42a356d2166",
+        "visual_only": true
+      }
+    },
+    {
+      "id": "gm_ws21_cover_underwater_standard",
+      "scope": "word_search",
+      "family": "book_covers",
+      "path": "sprites/covers/gm_ws21_cover_underwater_standard.png",
+      "width_px": 480,
+      "height_px": 660,
+      "sha256": "855dce728f73bebc799e638fafcbb177c7056aea3417ebeaf5e65c8f176f1e07",
+      "has_alpha": true,
+      "status": "candidate",
+      "source": "svg/covers/gm_ws21_cover_underwater_standard.svg",
+      "details": {
+        "theme": "underwater",
+        "variant": "standard",
+        "editable_svg_sha256": "3de23057d53c8f23b73c9d763b941f26d20ff23d38f3377b3dc1a78fd840fb49",
+        "label_zones": "blank native title/top and category/bottom",
+        "visual_only": true
+      }
+    },
+    {
+      "id": "gm_ws21_cover_underwater_collector",
+      "scope": "word_search",
+      "family": "book_covers",
+      "path": "sprites/covers/gm_ws21_cover_underwater_collector.png",
+      "width_px": 480,
+      "height_px": 662,
+      "sha256": "1b6a0626158de30e8d7c37bf26301f6f74d675ed65af8fde97c7eca8517f915f",
+      "has_alpha": true,
+      "status": "candidate",
+      "source": "svg/covers/gm_ws21_cover_underwater_collector.svg",
+      "details": {
+        "theme": "underwater",
+        "variant": "collector",
+        "editable_svg_sha256": "f28e8e5fb417760b6ae9052f71bfd465fe52f5876bf0c53ebb4223206f1896d6",
+        "label_zones": "blank native title/top and category/bottom",
+        "visual_only": true
+      }
+    },
+    {
+      "id": "gm_ws21_cover_underwater_pocket",
+      "scope": "word_search",
+      "family": "book_covers",
+      "path": "sprites/covers/gm_ws21_cover_underwater_pocket.png",
+      "width_px": 360,
+      "height_px": 594,
+      "sha256": "1a2d6300bad97ca4c9d75de70aaabbf0d16fe7a3885143ed2bff19b23e92c75f",
+      "has_alpha": true,
+      "status": "candidate",
+      "source": "svg/covers/gm_ws21_cover_underwater_pocket.svg",
+      "details": {
+        "theme": "underwater",
+        "variant": "pocket",
+        "editable_svg_sha256": "972e47e142532d481d03c28734bd911d8edaaf148c5211ce4d39e01c73fa7a93",
+        "label_zones": "blank native title/top and category/bottom",
+        "visual_only": true
+      }
+    },
+    {
+      "id": "gm_theme_underwater_emblem_round",
+      "scope": "theme",
+      "family": "medallions",
+      "path": "sprites/medallions/gm_theme_underwater_emblem_round.png",
+      "width_px": 280,
+      "height_px": 280,
+      "sha256": "63555b6b2e365290a75f50d37efc0795cfc474eda39651f394f31a54fdcbc823",
+      "has_alpha": true,
+      "status": "candidate",
+      "source": "svg/medallions/gm_theme_underwater_emblem_round.svg",
+      "details": {
+        "theme": "underwater",
+        "editable_svg_sha256": "d0aaf70781f49bb26ef9431d1220e18da929e476fe969bf1e51f4a38c1ff6753",
+        "visual_only": true
+      }
+    },
+    {
+      "id": "gm_ws21_cover_tropical_standard",
+      "scope": "word_search",
+      "family": "book_covers",
+      "path": "sprites/covers/gm_ws21_cover_tropical_standard.png",
+      "width_px": 480,
+      "height_px": 660,
+      "sha256": "2506e38575bd9fa84b1a67e81e0f39bb53cd2beea2ce76cd503023c3997021f0",
+      "has_alpha": true,
+      "status": "candidate",
+      "source": "svg/covers/gm_ws21_cover_tropical_standard.svg",
+      "details": {
+        "theme": "tropical",
+        "variant": "standard",
+        "editable_svg_sha256": "8b0c8633a7b1e01e6f44e664b77ef7230f7f330602427255575e9f41139bd4bd",
+        "label_zones": "blank native title/top and category/bottom",
+        "visual_only": true
+      }
+    },
+    {
+      "id": "gm_ws21_cover_tropical_collector",
+      "scope": "word_search",
+      "family": "book_covers",
+      "path": "sprites/covers/gm_ws21_cover_tropical_collector.png",
+      "width_px": 480,
+      "height_px": 662,
+      "sha256": "52114182bba1af1ea93a4878a8c268aa665b4c60aa18cd0b1a83f0534f9e7b6a",
+      "has_alpha": true,
+      "status": "candidate",
+      "source": "svg/covers/gm_ws21_cover_tropical_collector.svg",
+      "details": {
+        "theme": "tropical",
+        "variant": "collector",
+        "editable_svg_sha256": "e2dff8185b0db638f348ac7732c0df1e0c52ed04714a56fd48c5ce623032acdd",
+        "label_zones": "blank native title/top and category/bottom",
+        "visual_only": true
+      }
+    },
+    {
+      "id": "gm_ws21_cover_tropical_pocket",
+      "scope": "word_search",
+      "family": "book_covers",
+      "path": "sprites/covers/gm_ws21_cover_tropical_pocket.png",
+      "width_px": 360,
+      "height_px": 594,
+      "sha256": "b1da415b4a5fc2c0f522e91be1246fd79ae428234560703ab350bf5ad5c24e23",
+      "has_alpha": true,
+      "status": "candidate",
+      "source": "svg/covers/gm_ws21_cover_tropical_pocket.svg",
+      "details": {
+        "theme": "tropical",
+        "variant": "pocket",
+        "editable_svg_sha256": "05ccd3f984db44785c0662a862ba924944a4d7a6524afb79a70ddca001d6c754",
+        "label_zones": "blank native title/top and category/bottom",
+        "visual_only": true
+      }
+    },
+    {
+      "id": "gm_theme_tropical_emblem_round",
+      "scope": "theme",
+      "family": "medallions",
+      "path": "sprites/medallions/gm_theme_tropical_emblem_round.png",
+      "width_px": 280,
+      "height_px": 280,
+      "sha256": "17a95c194ff9c04f346bf4c5e016ca1e86e4a4e1c3cbcb75c6cc9d0fef30a09b",
+      "has_alpha": true,
+      "status": "candidate",
+      "source": "svg/medallions/gm_theme_tropical_emblem_round.svg",
+      "details": {
+        "theme": "tropical",
+        "editable_svg_sha256": "3648f73c22d4ab62027141c88608df2e09120274893f2c8dd053c0c3b6a3085a",
+        "visual_only": true
+      }
+    },
+    {
+      "id": "gm_core_ws21_header_plaque_forest",
+      "scope": "core",
+      "family": "ui_templates",
+      "path": "sprites/core_templates/gm_core_ws21_header_plaque_forest.png",
+      "width_px": 420,
+      "height_px": 116,
+      "sha256": "7c41cac43e817312c1c5b3c574e05e5965e3946da5d9acd89aaad914f05e65f9",
+      "has_alpha": true,
+      "status": "candidate",
+      "source": "svg/core_templates/gm_core_ws21_header_plaque_forest.svg",
+      "details": {
+        "template": "header_plaque",
+        "tone": "forest",
+        "editable_svg_sha256": "4cf6b1306fd68710c34c192626f079445869579aad4051e3a3599d81f5f8184a",
+        "blank_native_labels": true
+      }
+    },
+    {
+      "id": "gm_core_ws21_header_plaque_cream",
+      "scope": "core",
+      "family": "ui_templates",
+      "path": "sprites/core_templates/gm_core_ws21_header_plaque_cream.png",
+      "width_px": 420,
+      "height_px": 116,
+      "sha256": "3de1e174a0e8a7f18e0f411fd4ffa0c69466ad997ddd4a6364bec58f9fd6eae5",
+      "has_alpha": true,
+      "status": "candidate",
+      "source": "svg/core_templates/gm_core_ws21_header_plaque_cream.svg",
+      "details": {
+        "template": "header_plaque",
+        "tone": "cream",
+        "editable_svg_sha256": "8bd4a7150b1f5c8e104667353468522aa2261ff9941d5efafa03be2343718b19",
+        "blank_native_labels": true
+      }
+    },
+    {
+      "id": "gm_core_ws21_header_plaque_gold",
+      "scope": "core",
+      "family": "ui_templates",
+      "path": "sprites/core_templates/gm_core_ws21_header_plaque_gold.png",
+      "width_px": 420,
+      "height_px": 116,
+      "sha256": "8395e0f5798154840e25c62b5fc7e2868f6e98872081834771562aea12b2e763",
+      "has_alpha": true,
+      "status": "candidate",
+      "source": "svg/core_templates/gm_core_ws21_header_plaque_gold.svg",
+      "details": {
+        "template": "header_plaque",
+        "tone": "gold",
+        "editable_svg_sha256": "5c4ce291247eeb6ebbb7b305e8590bf7c7c10bb8813974e261fcd12f11a1af09",
+        "blank_native_labels": true
+      }
+    },
+    {
+      "id": "gm_core_ws21_menu_card_forest",
+      "scope": "core",
+      "family": "ui_templates",
+      "path": "sprites/core_templates/gm_core_ws21_menu_card_forest.png",
+      "width_px": 420,
+      "height_px": 116,
+      "sha256": "7c41cac43e817312c1c5b3c574e05e5965e3946da5d9acd89aaad914f05e65f9",
+      "has_alpha": true,
+      "status": "candidate",
+      "source": "svg/core_templates/gm_core_ws21_menu_card_forest.svg",
+      "details": {
+        "template": "menu_card",
+        "tone": "forest",
+        "editable_svg_sha256": "4cf6b1306fd68710c34c192626f079445869579aad4051e3a3599d81f5f8184a",
+        "blank_native_labels": true
+      }
+    },
+    {
+      "id": "gm_core_ws21_menu_card_cream",
+      "scope": "core",
+      "family": "ui_templates",
+      "path": "sprites/core_templates/gm_core_ws21_menu_card_cream.png",
+      "width_px": 420,
+      "height_px": 116,
+      "sha256": "3de1e174a0e8a7f18e0f411fd4ffa0c69466ad997ddd4a6364bec58f9fd6eae5",
+      "has_alpha": true,
+      "status": "candidate",
+      "source": "svg/core_templates/gm_core_ws21_menu_card_cream.svg",
+      "details": {
+        "template": "menu_card",
+        "tone": "cream",
+        "editable_svg_sha256": "8bd4a7150b1f5c8e104667353468522aa2261ff9941d5efafa03be2343718b19",
+        "blank_native_labels": true
+      }
+    },
+    {
+      "id": "gm_core_ws21_menu_card_gold",
+      "scope": "core",
+      "family": "ui_templates",
+      "path": "sprites/core_templates/gm_core_ws21_menu_card_gold.png",
+      "width_px": 420,
+      "height_px": 116,
+      "sha256": "8395e0f5798154840e25c62b5fc7e2868f6e98872081834771562aea12b2e763",
+      "has_alpha": true,
+      "status": "candidate",
+      "source": "svg/core_templates/gm_core_ws21_menu_card_gold.svg",
+      "details": {
+        "template": "menu_card",
+        "tone": "gold",
+        "editable_svg_sha256": "5c4ce291247eeb6ebbb7b305e8590bf7c7c10bb8813974e261fcd12f11a1af09",
+        "blank_native_labels": true
+      }
+    },
+    {
+      "id": "gm_core_ws21_tab_forest",
+      "scope": "core",
+      "family": "ui_templates",
+      "path": "sprites/core_templates/gm_core_ws21_tab_forest.png",
+      "width_px": 420,
+      "height_px": 113,
+      "sha256": "e46f563331a5b11e9c42197f87b86a844eb1461550eec96d872928129bad8847",
+      "has_alpha": true,
+      "status": "candidate",
+      "source": "svg/core_templates/gm_core_ws21_tab_forest.svg",
+      "details": {
+        "template": "tab",
+        "tone": "forest",
+        "editable_svg_sha256": "f2285fbaa1121f22dc424eb8f0f7b79c95e30e735d9f3f5a5665f7187090a2ae",
+        "blank_native_labels": true
+      }
+    },
+    {
+      "id": "gm_core_ws21_tab_cream",
+      "scope": "core",
+      "family": "ui_templates",
+      "path": "sprites/core_templates/gm_core_ws21_tab_cream.png",
+      "width_px": 420,
+      "height_px": 113,
+      "sha256": "5e939fb71d531762de5115fa8b42a7a4a01202493f3d085e29a9c66c9ec565f2",
+      "has_alpha": true,
+      "status": "candidate",
+      "source": "svg/core_templates/gm_core_ws21_tab_cream.svg",
+      "details": {
+        "template": "tab",
+        "tone": "cream",
+        "editable_svg_sha256": "489741df1b0974da1dd8d7939801793b9d0207f36b5c12d92b3c959425331c69",
+        "blank_native_labels": true
+      }
+    },
+    {
+      "id": "gm_core_ws21_tab_gold",
+      "scope": "core",
+      "family": "ui_templates",
+      "path": "sprites/core_templates/gm_core_ws21_tab_gold.png",
+      "width_px": 420,
+      "height_px": 113,
+      "sha256": "b50035a06a93832f287f2ddd8ed27f981b025d1821cc3bab0ae8f4977f050ef4",
+      "has_alpha": true,
+      "status": "candidate",
+      "source": "svg/core_templates/gm_core_ws21_tab_gold.svg",
+      "details": {
+        "template": "tab",
+        "tone": "gold",
+        "editable_svg_sha256": "2ac25308bb950bdae6f9031c9d9f89cff1c188846cbc6cad786328c2bde6cd5e",
+        "blank_native_labels": true
+      }
+    },
+    {
+      "id": "gm_core_ws21_button_forest",
+      "scope": "core",
+      "family": "ui_templates",
+      "path": "sprites/core_templates/gm_core_ws21_button_forest.png",
+      "width_px": 420,
+      "height_px": 113,
+      "sha256": "679186be00d94e1725d1ecc812c5bc90c84c5428fe0bc35b373d2692ced34f6e",
+      "has_alpha": true,
+      "status": "candidate",
+      "source": "svg/core_templates/gm_core_ws21_button_forest.svg",
+      "details": {
+        "template": "button",
+        "tone": "forest",
+        "editable_svg_sha256": "e737b548c17bb88164b1cf08fb329c2dd39f415033f070ee699a33ce2c6c91a7",
+        "blank_native_labels": true
+      }
+    },
+    {
+      "id": "gm_core_ws21_button_cream",
+      "scope": "core",
+      "family": "ui_templates",
+      "path": "sprites/core_templates/gm_core_ws21_button_cream.png",
+      "width_px": 420,
+      "height_px": 113,
+      "sha256": "a3d32fc578a8471907c1e83a686a3d0c6f688b2cf96c58bcfa25e65d119a652d",
+      "has_alpha": true,
+      "status": "candidate",
+      "source": "svg/core_templates/gm_core_ws21_button_cream.svg",
+      "details": {
+        "template": "button",
+        "tone": "cream",
+        "editable_svg_sha256": "895b0e994302615d25e4569303b821b1f55c1bf1b06de6b6518e4230569751cf",
+        "blank_native_labels": true
+      }
+    },
+    {
+      "id": "gm_core_ws21_button_gold",
+      "scope": "core",
+      "family": "ui_templates",
+      "path": "sprites/core_templates/gm_core_ws21_button_gold.png",
+      "width_px": 420,
+      "height_px": 113,
+      "sha256": "01eb5252470d86e08c3cf3d234d5cc218c2a84f92c8dde278bb7b428a0102892",
+      "has_alpha": true,
+      "status": "candidate",
+      "source": "svg/core_templates/gm_core_ws21_button_gold.svg",
+      "details": {
+        "template": "button",
+        "tone": "gold",
+        "editable_svg_sha256": "971cd2ebec0c7fa1ec8f06158c61e37c3ec5638c4a3a60e7bbfe49a445c98301",
+        "blank_native_labels": true
+      }
+    },
+    {
+      "id": "gm_core_ws21_portrait_frame_forest",
+      "scope": "core",
+      "family": "ui_templates",
+      "path": "sprites/core_templates/gm_core_ws21_portrait_frame_forest.png",
+      "width_px": 320,
+      "height_px": 320,
+      "sha256": "635543ae5ae76df3f30e6c8b85ef7fdd58d73be2118703f82d4fdc88f4e4d911",
+      "has_alpha": true,
+      "status": "candidate",
+      "source": "svg/core_templates/gm_core_ws21_portrait_frame_forest.svg",
+      "details": {
+        "template": "portrait_frame",
+        "tone": "forest",
+        "editable_svg_sha256": "b3f5d0c0db8dc66c92e2c133a038be08574cfd2c901f2c013172635a1f8752ff",
+        "blank_native_labels": true
+      }
+    },
+    {
+      "id": "gm_core_ws21_portrait_frame_cream",      "scope": "core",
+      "family": "ui_templates",
+      "path": "sprites/core_templates/gm_core_ws21_portrait_frame_cream.png",
+      "width_px": 320,
+      "height_px": 320,
+      "sha256": "3f235c65512c1b8bd9ea6fd0d66471eb85f1196ecdd3336544eb2d5712eb2940",
+      "has_alpha": true,
+      "status": "candidate",
+      "source": "svg/core_templates/gm_core_ws21_portrait_frame_cream.svg",
+      "details": {
+        "template": "portrait_frame",
+        "tone": "cream",
+        "editable_svg_sha256": "502a186a6fb39fd4e4c6f6f2bdb6d8ad8e9bfb50242b671e3c572910d477ca00",
+        "blank_native_labels": true
+      }
+    },
+    {
+      "id": "gm_core_ws21_portrait_frame_gold",
+      "scope": "core",
+      "family": "ui_templates",
+      "path": "sprites/core_templates/gm_core_ws21_portrait_frame_gold.png",
+      "width_px": 320,
+      "height_px": 320,
+      "sha256": "013bbc2297a1cb8d0448e73eea59269bac85d53603b32ba0f01b84de3e59fac2",
+      "has_alpha": true,
+      "status": "candidate",
+      "source": "svg/core_templates/gm_core_ws21_portrait_frame_gold.svg",
+      "details": {
+        "template": "portrait_frame",
+        "tone": "gold",
+        "editable_svg_sha256": "efcf4f0d8bfe19a31b9bb953e03c9740762bed986ad7433f8e271e577aed4efd",
+        "blank_native_labels": true
+      }
+    },
+    {
+      "id": "gm_core_ws21_progress_track_forest",
+      "scope": "core",
+      "family": "ui_templates",
+      "path": "sprites/core_templates/gm_core_ws21_progress_track_forest.png",
+      "width_px": 420,
+      "height_px": 113,
+      "sha256": "facc00d951d3fe1e312b2173b4bc094bea682c676adde7f2c6257756830da988",
+      "has_alpha": true,
+      "status": "candidate",
+      "source": "svg/core_templates/gm_core_ws21_progress_track_forest.svg",
+      "details": {
+        "template": "progress_track",
+        "tone": "forest",
+        "editable_svg_sha256": "1bfba833b696c1c151ba41c5eb0995578b0de596f71bcd5639f95ca5456ca9e3",
+        "blank_native_labels": true
+      }
+    },
+    {
+      "id": "gm_core_ws21_progress_track_cream",
+      "scope": "core",
+      "family": "ui_templates",
+      "path": "sprites/core_templates/gm_core_ws21_progress_track_cream.png",
+      "width_px": 420,
+      "height_px": 113,
+      "sha256": "6d39fdc4ed851ba232eb5aed4ccc5504dab8159958c0bf0a8bc0d01fb679ef52",
+      "has_alpha": true,
+      "status": "candidate",
+      "source": "svg/core_templates/gm_core_ws21_progress_track_cream.svg",
+      "details": {
+        "template": "progress_track",
+        "tone": "cream",
+        "editable_svg_sha256": "7c64d131ff97746574d4254d1f136dceeea15b8839412e13c83c2a1ef3e3c3b7",
+        "blank_native_labels": true
+      }
+    },
+    {
+      "id": "gm_core_ws21_progress_track_gold",
+      "scope": "core",
+      "family": "ui_templates",
+      "path": "sprites/core_templates/gm_core_ws21_progress_track_gold.png",
+      "width_px": 420,
+      "height_px": 113,
+      "sha256": "d2a17bf4f35bd6cd01c8a143990bad132c67c1a8a9034e42f7063b17a9f7aab9",
+      "has_alpha": true,
+      "status": "candidate",
+      "source": "svg/core_templates/gm_core_ws21_progress_track_gold.svg",
+      "details": {
+        "template": "progress_track",
+        "tone": "gold",
+        "editable_svg_sha256": "f7c32147fdbf705cd7cf49ecfc0702502ba8959b6cb344c53c5d39f239765292",
+        "blank_native_labels": true
+      }
+    },
+    {
+      "id": "gm_core_ws21_achievement_slot_forest",
+      "scope": "core",
+      "family": "ui_templates",
+      "path": "sprites/core_templates/gm_core_ws21_achievement_slot_forest.png",
+      "width_px": 320,
+      "height_px": 320,
+      "sha256": "58fa9148a873bd1655578a961a0bf56cd98133355f30378391d20272469d4878",
+      "has_alpha": true,
+      "status": "candidate",
+      "source": "svg/core_templates/gm_core_ws21_achievement_slot_forest.svg",
+      "details": {
+        "template": "achievement_slot",
+        "tone": "forest",
+        "editable_svg_sha256": "9c2629c9d192fc9bc9421fbb280abd9af630c44e99b56e6af1ce2273c0b02025",
+        "blank_native_labels": true
+      }
+    },
+    {
+      "id": "gm_core_ws21_achievement_slot_cream",
+      "scope": "core",
+      "family": "ui_templates",
+      "path": "sprites/core_templates/gm_core_ws21_achievement_slot_cream.png",
+      "width_px": 320,
+      "height_px": 320,
+      "sha256": "c2c3b472f3eb679611fe971809cba4d58592c0d3160aa2999c885b4831ddec73",
+      "has_alpha": true,
+      "status": "candidate",
+      "source": "svg/core_templates/gm_core_ws21_achievement_slot_cream.svg",
+      "details": {
+        "template": "achievement_slot",
+        "tone": "cream",
+        "editable_svg_sha256": "4f6440897b18b3a7a19b3d83f631aa2c4edca41802cb1d938c8ea3ebd2352c2b",
+        "blank_native_labels": true
+      }
+    },
+    {
+      "id": "gm_core_ws21_achievement_slot_gold",
+      "scope": "core",
+      "family": "ui_templates",
+      "path": "sprites/core_templates/gm_core_ws21_achievement_slot_gold.png",
+      "width_px": 320,
+      "height_px": 320,
+      "sha256": "62979c3af9f4af88aa514177ad2191af158fdccedca6a052093ccc8adbafd892",
+      "has_alpha": true,
+      "status": "candidate",
+      "source": "svg/core_templates/gm_core_ws21_achievement_slot_gold.svg",
+      "details": {
+        "template": "achievement_slot",
+        "tone": "gold",
+        "editable_svg_sha256": "99a3816b3243028d90c0be8e31c5059633c5e9d0eaaefb07399d27d147e1141c",
+        "blank_native_labels": true
+      }
+    },
+    {
+      "id": "gm_core_ws21_pagination_button_forest",
+      "scope": "core",
+      "family": "ui_templates",
+      "path": "sprites/core_templates/gm_core_ws21_pagination_button_forest.png",
+      "width_px": 420,
+      "height_px": 113,
+      "sha256": "784a9ed5cb4f89759f007c48312df661cfbc401d2a21a75728554df7ad4ae2fa",
+      "has_alpha": true,
+      "status": "candidate",
+      "source": "svg/core_templates/gm_core_ws21_pagination_button_forest.svg",
+      "details": {
+        "template": "pagination_button",
+        "tone": "forest",
+        "editable_svg_sha256": "a612840cd15e9e397146e7de410b941f9de34c6d0ad8fac3a6c06ea8b6554b54",
+        "blank_native_labels": true
+      }
+    },
+    {
+      "id": "gm_core_ws21_pagination_button_cream",
+      "scope": "core",
+      "family": "ui_templates",
+      "path": "sprites/core_templates/gm_core_ws21_pagination_button_cream.png",
+      "width_px": 420,
+      "height_px": 113,
+      "sha256": "69bc8511d037d33bd0bcea341c9e90b37e348acedf424369bbd85a88418ec860",
+      "has_alpha": true,
+      "status": "candidate",
+      "source": "svg/core_templates/gm_core_ws21_pagination_button_cream.svg",
+      "details": {
+        "template": "pagination_button",
+        "tone": "cream",
+        "editable_svg_sha256": "944d5ecd0bc2695b6f6927b9d702e5e6df8200bf2b5f7f233639c71046dea52c",
+        "blank_native_labels": true
+      }
+    },
+    {
+      "id": "gm_core_ws21_pagination_button_gold",
+      "scope": "core",
+      "family": "ui_templates",
+      "path": "sprites/core_templates/gm_core_ws21_pagination_button_gold.png",
+      "width_px": 420,
+      "height_px": 113,
+      "sha256": "bb6e3a0f07b4b5dd632eebddafc393a3eebecf1b20c6720d6e619b4aa5f0968d",
+      "has_alpha": true,
+      "status": "candidate",
+      "source": "svg/core_templates/gm_core_ws21_pagination_button_gold.svg",
+      "details": {
+        "template": "pagination_button",
+        "tone": "gold",
+        "editable_svg_sha256": "f8a123b20dfb425b1ad70386c059a47f48c181391ceda5e89014606ace13d8f7",
+        "blank_native_labels": true
+      }
+    }
+  ],
+  "notes": [
+    "16 illustrated sprites separated from an RGB atlas with baked near-white checkerboard background using color-aware alpha removal; review edge quality manually before production.",
+    "Two generated visual overview boards have baked text and are reference-only, not runtime sprites.",
+    "Book-cover SVGs and medallion/UI SVGs can regenerate PNG candidates; app labels, titles, buttons and status text stay native.",
+    "Do not ship all reserve PNGs by default, and do not change book IDs, profiles, progress or board gestures."
+  ],
+  "counts": {
+    "illustrated_rewards": 16,
+    "theme_book_covers": 72,
+    "theme_medallions": 24,
+    "core_ui_templates": 24,
+    "total": 136,
+    "editable_svgs": 120,
+    "reference_only_boards": 2
+  }
+}

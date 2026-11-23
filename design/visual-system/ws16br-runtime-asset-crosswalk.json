@@ -1,0 +1,421 @@
+{
+  "schema_version": 1,
+  "review_id": "WS16BR",
+  "review_date": "2026-11-14",
+  "purpose": "Existing-asset-to-runtime map, NOT an authorization to publish or an editable master registry",
+  "source_register": "design/visual-system/modular/ws16g-batch1-production-register.json",
+  "original_roles": 20,
+  "recorded_owner_approvals": 0,
+  "recorded_release_approvals": 0,
+  "shared_vs_game_specific": "GM_SHARED materials may later port deliberately to other GridMates games; Word Search books, walnut cabinet and themed motifs stay local.",
+  "entries": [
+    {
+      "id": "GM_BG_PARCHMENT_MAIN_V1",
+      "category": "Foundation",
+      "scope": "GM_SHARED",
+      "original_status": "PAINTERLY_MASTER_AND_EXPORT_PENDING",
+      "original_owner_art_approval": false,
+      "original_release_approval": false,
+      "source_candidates": [
+        "design/visual-system/modular/masters/shared/gm-parchment-tile-v1.svg",
+        "design/visual-system/modular/masters/shared/gm-parchment-edge-wash-v1.svg"
+      ],
+      "newer_source_candidate": null,
+      "runtime_code": [
+        "app/src/main/java/com/playereden/gridmates/wordsearch/GridMatesParchmentBackground.kt",
+        "app/src/main/java/com/playereden/gridmates/wordsearch/GridMatesShell.kt"
+      ],
+      "reconciliation": "EXISTING_NATIVE_EQUIVALENT__CHECK_FINISH_BEFORE_NEW_MASTER",
+      "this_audit_production_approval": false
+    },
+    {
+      "id": "GM_FRAME_PANEL_LIGHT_V1",
+      "category": "Foundation",
+      "scope": "GM_SHARED",
+      "original_status": "PAINTERLY_MASTER_AND_EXPORT_PENDING",
+      "original_owner_art_approval": false,
+      "original_release_approval": false,
+      "source_candidates": [
+        "design/visual-system/modular/masters/shared/gm-frame-panel-v1.svg"
+      ],
+      "newer_source_candidate": null,
+      "runtime_code": [
+        "app/src/main/java/com/playereden/gridmates/wordsearch/GridMatesIllustratedFrames.kt"
+      ],
+      "reconciliation": "EXISTING_NATIVE_EQUIVALENT__CHECK_FINISH_BEFORE_NEW_MASTER",
+      "this_audit_production_approval": false
+    },
+    {
+      "id": "GM_FRAME_PANEL_FEATURE_V1",
+      "category": "Foundation",
+      "scope": "GM_SHARED",
+      "original_status": "PAINTERLY_MASTER_AND_EXPORT_PENDING",
+      "original_owner_art_approval": false,
+      "original_release_approval": false,
+      "source_candidates": [
+        "design/visual-system/modular/masters/shared/gm-frame-feature-v1.svg"
+      ],
+      "newer_source_candidate": null,
+      "runtime_code": [
+        "app/src/main/java/com/playereden/gridmates/wordsearch/GridMatesIllustratedFrames.kt"
+      ],
+      "reconciliation": "EXISTING_NATIVE_EQUIVALENT__CHECK_FINISH_BEFORE_NEW_MASTER",
+      "this_audit_production_approval": false
+    },
+    {
+      "id": "GM_BTN_PRIMARY_V1",
+      "category": "Foundation",
+      "scope": "GM_SHARED",
+      "original_status": "PAINTERLY_MASTER_AND_EXPORT_PENDING",
+      "original_owner_art_approval": false,
+      "original_release_approval": false,
+      "source_candidates": [
+        "design/visual-system/modular/masters/shared/gm-pill-primary-v1.svg"
+      ],
+      "newer_source_candidate": null,
+      "runtime_code": [
+        "app/src/main/java/com/playereden/gridmates/wordsearch/GridMatesIllustratedFrames.kt"
+      ],
+      "reconciliation": "EXISTING_NATIVE_EQUIVALENT__CHECK_FINISH_BEFORE_NEW_MASTER",
+      "this_audit_production_approval": false
+    },
+    {
+      "id": "GM_DIVIDER_SHORT_V1",
+      "category": "Foundation",
+      "scope": "GM_SHARED",
+      "original_status": "PAINTERLY_MASTER_AND_EXPORT_PENDING",
+      "original_owner_art_approval": false,
+      "original_release_approval": false,
+      "source_candidates": [],
+      "newer_source_candidate": null,
+      "runtime_code": [
+        "app/src/main/java/com/playereden/gridmates/wordsearch/Ws16IHomeDecor.kt"
+      ],
+      "reconciliation": "EXISTING_NATIVE_EQUIVALENT__CHECK_FINISH_BEFORE_NEW_MASTER",
+      "this_audit_production_approval": false
+    },
+    {
+      "id": "WS_SHELF_TOP_V1",
+      "category": "Shelf",
+      "scope": "WS_THEME",
+      "original_status": "EIGHT_SVG_QA_RENDERED_AND_APK_VERIFIED__OWNER_ART_REVIEW_PENDING",
+      "original_owner_art_approval": false,
+      "original_release_approval": false,
+      "source_candidates": [
+        "design/visual-system/modular/masters/wordsearch/ws16e-shelf-top-v1.svg"
+      ],
+      "newer_source_candidate": "design/visual-system/masters/ws16g-batch1/ws16g-shelf-top-v1.svg",
+      "runtime_code": [
+        "app/src/main/java/com/playereden/gridmates/wordsearch/Ws16EStorybookShelf.kt",
+        "app/src/main/java/com/playereden/gridmates/wordsearch/Ws16BIMountedCabinetShelf.kt"
+      ],
+      "reconciliation": "OLDER_ART_STUDY__LATER_CABINET_OR_SHELF_EXISTS",
+      "this_audit_production_approval": false
+    },
+    {
+      "id": "WS_SHELF_FRONT_V1",
+      "category": "Shelf",
+      "scope": "WS_THEME",
+      "original_status": "EIGHT_SVG_QA_RENDERED_AND_APK_VERIFIED__OWNER_ART_REVIEW_PENDING",
+      "original_owner_art_approval": false,
+      "original_release_approval": false,
+      "source_candidates": [
+        "design/visual-system/modular/masters/wordsearch/ws16e-shelf-front-center-v1.svg"
+      ],
+      "newer_source_candidate": "design/visual-system/masters/ws16g-batch1/ws16g-shelf-front-v1.svg",
+      "runtime_code": [
+        "app/src/main/java/com/playereden/gridmates/wordsearch/Ws16EStorybookShelf.kt",
+        "app/src/main/java/com/playereden/gridmates/wordsearch/Ws16BIMountedCabinetShelf.kt"
+      ],
+      "reconciliation": "OLDER_ART_STUDY__LATER_CABINET_OR_SHELF_EXISTS",
+      "this_audit_production_approval": false
+    },
+    {
+      "id": "WS_SHELF_APRON_CARVED_V1",
+      "category": "Shelf",
+      "scope": "WS_THEME",
+      "original_status": "EIGHT_SVG_QA_RENDERED_AND_APK_VERIFIED__OWNER_ART_REVIEW_PENDING",
+      "original_owner_art_approval": false,
+      "original_release_approval": false,
+      "source_candidates": [
+        "design/visual-system/modular/masters/wordsearch/ws16f-carved-shelf-apron-v2.svg"
+      ],
+      "newer_source_candidate": "design/visual-system/masters/ws16g-batch1/ws16g-shelf-apron-v1.svg",
+      "runtime_code": [
+        "app/src/main/java/com/playereden/gridmates/wordsearch/Ws16EStorybookShelf.kt",
+        "app/src/main/java/com/playereden/gridmates/wordsearch/Ws16BIMountedCabinetShelf.kt"
+      ],
+      "reconciliation": "OLDER_ART_STUDY__LATER_CABINET_OR_SHELF_EXISTS",
+      "this_audit_production_approval": false
+    },
+    {
+      "id": "WS_SHELF_BRACKET_LEFT_V1",
+      "category": "Shelf",
+      "scope": "WS_THEME",
+      "original_status": "EIGHT_SVG_QA_RENDERED_AND_APK_VERIFIED__OWNER_ART_REVIEW_PENDING",
+      "original_owner_art_approval": false,
+      "original_release_approval": false,
+      "source_candidates": [
+        "design/visual-system/modular/masters/wordsearch/ws16e-shelf-end-left-v1.svg"
+      ],
+      "newer_source_candidate": "design/visual-system/masters/ws16g-batch1/ws16g-shelf-bracket-left-v1.svg",
+      "runtime_code": [
+        "app/src/main/java/com/playereden/gridmates/wordsearch/Ws16EStorybookShelf.kt",
+        "app/src/main/java/com/playereden/gridmates/wordsearch/Ws16BIMountedCabinetShelf.kt"
+      ],
+      "reconciliation": "OLDER_ART_STUDY__LATER_CABINET_OR_SHELF_EXISTS",
+      "this_audit_production_approval": false
+    },
+    {
+      "id": "WS_SHELF_BRACKET_RIGHT_V1",
+      "category": "Shelf",
+      "scope": "WS_THEME",
+      "original_status": "EIGHT_SVG_QA_RENDERED_AND_APK_VERIFIED__OWNER_ART_REVIEW_PENDING",
+      "original_owner_art_approval": false,
+      "original_release_approval": false,
+      "source_candidates": [
+        "design/visual-system/modular/masters/wordsearch/ws16e-shelf-end-right-v1.svg"
+      ],
+      "newer_source_candidate": "design/visual-system/masters/ws16g-batch1/ws16g-shelf-bracket-right-v1.svg",
+      "runtime_code": [
+        "app/src/main/java/com/playereden/gridmates/wordsearch/Ws16EStorybookShelf.kt",
+        "app/src/main/java/com/playereden/gridmates/wordsearch/Ws16BIMountedCabinetShelf.kt"
+      ],
+      "reconciliation": "OLDER_ART_STUDY__LATER_CABINET_OR_SHELF_EXISTS",
+      "this_audit_production_approval": false
+    },
+    {
+      "id": "WS_SHELF_CENTER_ORNAMENT_V1",
+      "category": "Shelf",
+      "scope": "WS_THEME",
+      "original_status": "EIGHT_SVG_QA_RENDERED_AND_APK_VERIFIED__OWNER_ART_REVIEW_PENDING",
+      "original_owner_art_approval": false,
+      "original_release_approval": false,
+      "source_candidates": [
+        "design/visual-system/modular/masters/wordsearch/ws16e-shelf-leaf-medallion-v1.svg"
+      ],
+      "newer_source_candidate": "design/visual-system/masters/ws16g-batch1/ws16g-shelf-medallion-v1.svg",
+      "runtime_code": [
+        "app/src/main/java/com/playereden/gridmates/wordsearch/Ws16EStorybookShelf.kt",
+        "app/src/main/java/com/playereden/gridmates/wordsearch/Ws16BIMountedCabinetShelf.kt"
+      ],
+      "reconciliation": "OLDER_ART_STUDY__LATER_CABINET_OR_SHELF_EXISTS",
+      "this_audit_production_approval": false
+    },
+    {
+      "id": "WS_SHELF_CONTACT_SHADOW_V1",
+      "category": "Shelf",
+      "scope": "WS_THEME",
+      "original_status": "EIGHT_SVG_QA_RENDERED_AND_APK_VERIFIED__OWNER_ART_REVIEW_PENDING",
+      "original_owner_art_approval": false,
+      "original_release_approval": false,
+      "source_candidates": [
+        "design/visual-system/modular/masters/wordsearch/ws16e-shelf-contact-shadow-v1.svg"
+      ],
+      "newer_source_candidate": "design/visual-system/masters/ws16g-batch1/ws16g-shelf-contact-shadow-v1.svg",
+      "runtime_code": [
+        "app/src/main/java/com/playereden/gridmates/wordsearch/Ws16EStorybookShelf.kt",
+        "app/src/main/java/com/playereden/gridmates/wordsearch/Ws16BIMountedCabinetShelf.kt"
+      ],
+      "reconciliation": "OLDER_ART_STUDY__LATER_CABINET_OR_SHELF_EXISTS",
+      "this_audit_production_approval": false
+    },
+    {
+      "id": "WS_BOOKCASE_BACKBOARD_V1",
+      "category": "Library",
+      "scope": "WS_THEME",
+      "original_status": "EIGHT_SVG_QA_RENDERED_AND_APK_VERIFIED__OWNER_ART_REVIEW_PENDING",
+      "original_owner_art_approval": false,
+      "original_release_approval": false,
+      "source_candidates": [
+        "design/visual-system/modular/masters/wordsearch/ws16f-bookcase-backboard-v1.svg"
+      ],
+      "newer_source_candidate": "design/visual-system/masters/ws16g-batch1/ws16g-bookcase-backboard-v1.svg",
+      "runtime_code": [
+        "app/src/main/java/com/playereden/gridmates/wordsearch/WS16ATModularLibraryScene.kt"
+      ],
+      "reconciliation": "OLDER_ART_STUDY__LATER_CABINET_OR_SHELF_EXISTS",
+      "this_audit_production_approval": false
+    },
+    {
+      "id": "WS_BOOKCASE_ROW_SHELF_V1",
+      "category": "Library",
+      "scope": "WS_THEME",
+      "original_status": "COMPOSITE_RECIPE_PENDING_INTEGRATION",
+      "original_owner_art_approval": false,
+      "original_release_approval": false,
+      "source_candidates": [],
+      "newer_source_candidate": null,
+      "runtime_code": [
+        "app/src/main/java/com/playereden/gridmates/wordsearch/Ws16BIMountedCabinetShelf.kt"
+      ],
+      "reconciliation": "LATER_LIVE_SHELF_EXISTS_AS_COMPOSITE",
+      "this_audit_production_approval": false
+    },
+    {
+      "id": "WS_ACTION_CONTINUE_V1",
+      "category": "Actions",
+      "scope": "WS_THEME",
+      "original_status": "QA_INTEGRATED_SVG_RENDERED_256RGBA__OWNER_PHONE_REVIEW_PENDING",
+      "original_owner_art_approval": false,
+      "original_release_approval": false,
+      "source_candidates": [
+        "design/visual-system/masters/ws16b-continue-action.svg"
+      ],
+      "newer_source_candidate": "design/visual-system/masters/ws16h-home/continue.svg",
+      "runtime_code": [
+        "app/src/main/java/com/playereden/gridmates/wordsearch/Ws16BActionArt.kt",
+        "app/src/main/java/com/playereden/gridmates/wordsearch/Ws16BHomeActions.kt"
+      ],
+      "reconciliation": "QA_ACTION_ICON_RENDERED__REUSE",
+      "this_audit_production_approval": false
+    },
+    {
+      "id": "WS_ACTION_DAILY_V1",
+      "category": "Actions",
+      "scope": "WS_THEME",
+      "original_status": "QA_INTEGRATED_SVG_RENDERED_256RGBA__OWNER_PHONE_REVIEW_PENDING",
+      "original_owner_art_approval": false,
+      "original_release_approval": false,
+      "source_candidates": [
+        "design/visual-system/masters/ws16b-daily-action.svg"
+      ],
+      "newer_source_candidate": "design/visual-system/masters/ws16h-home/daily.svg",
+      "runtime_code": [
+        "app/src/main/java/com/playereden/gridmates/wordsearch/Ws16BActionArt.kt",
+        "app/src/main/java/com/playereden/gridmates/wordsearch/Ws16BHomeActions.kt"
+      ],
+      "reconciliation": "QA_ACTION_ICON_RENDERED__REUSE",
+      "this_audit_production_approval": false
+    },
+    {
+      "id": "WS_ACTION_TOGETHER_V1",
+      "category": "Actions",
+      "scope": "WS_THEME",
+      "original_status": "QA_INTEGRATED_SVG_RENDERED_256RGBA__OWNER_PHONE_REVIEW_PENDING",
+      "original_owner_art_approval": false,
+      "original_release_approval": false,
+      "source_candidates": [
+        "design/visual-system/masters/ws16b-together-action.svg"
+      ],
+      "newer_source_candidate": "design/visual-system/masters/ws16h-home/together.svg",
+      "runtime_code": [
+        "app/src/main/java/com/playereden/gridmates/wordsearch/Ws16BActionArt.kt",
+        "app/src/main/java/com/playereden/gridmates/wordsearch/Ws16BHomeActions.kt"
+      ],
+      "reconciliation": "QA_ACTION_ICON_RENDERED__REUSE",
+      "this_audit_production_approval": false
+    },
+    {
+      "id": "WS_ACTION_QUICKPLAY_V1",
+      "category": "Actions",
+      "scope": "WS_THEME",
+      "original_status": "QA_INTEGRATED_SVG_RENDERED_256RGBA__OWNER_PHONE_REVIEW_PENDING",
+      "original_owner_art_approval": false,
+      "original_release_approval": false,
+      "source_candidates": [
+        "design/visual-system/masters/ws16b-quick-action.svg"
+      ],
+      "newer_source_candidate": "design/visual-system/masters/ws16h-home/quick.svg",
+      "runtime_code": [
+        "app/src/main/java/com/playereden/gridmates/wordsearch/Ws16BActionArt.kt",
+        "app/src/main/java/com/playereden/gridmates/wordsearch/Ws16BHomeActions.kt"
+      ],
+      "reconciliation": "QA_ACTION_ICON_RENDERED__REUSE",
+      "this_audit_production_approval": false
+    },
+    {
+      "id": "WS_ACTION_FULL_LIBRARY_V1",
+      "category": "Actions",
+      "scope": "WS_THEME",
+      "original_status": "QA_INTEGRATED_SVG_RENDERED_256RGBA__OWNER_PHONE_REVIEW_PENDING",
+      "original_owner_art_approval": false,
+      "original_release_approval": false,
+      "source_candidates": [],
+      "newer_source_candidate": "design/visual-system/masters/ws16h-home/full-library.svg",
+      "runtime_code": [
+        "app/src/main/java/com/playereden/gridmates/wordsearch/Ws16BActionArt.kt",
+        "app/src/main/java/com/playereden/gridmates/wordsearch/Ws16BHomeActions.kt"
+      ],
+      "reconciliation": "QA_ACTION_ICON_RENDERED__REUSE",
+      "this_audit_production_approval": false
+    },
+    {
+      "id": "WS_ACTION_COLLECTION_V1",
+      "category": "Actions",
+      "scope": "WS_THEME",
+      "original_status": "QA_INTEGRATED_SVG_RENDERED_256RGBA__OWNER_PHONE_REVIEW_PENDING",
+      "original_owner_art_approval": false,
+      "original_release_approval": false,
+      "source_candidates": [
+        "design/visual-system/masters/ws16d-collection-gallery-shortcut.svg"
+      ],
+      "newer_source_candidate": "design/visual-system/masters/ws16h-home/collection.svg",
+      "runtime_code": [
+        "app/src/main/java/com/playereden/gridmates/wordsearch/Ws16BActionArt.kt",
+        "app/src/main/java/com/playereden/gridmates/wordsearch/Ws16BHomeActions.kt"
+      ],
+      "reconciliation": "QA_ACTION_ICON_RENDERED__REUSE",
+      "this_audit_production_approval": false
+    }
+  ],
+  "extra_families": [
+    {
+      "id": "WS16I_HOME_DECOR_FIVE",
+      "scope": "WS_THEME",
+      "source_dir": "design/visual-system/masters/ws16i-home-decor/",
+      "runtime_code": [
+        "app/src/main/java/com/playereden/gridmates/wordsearch/Ws16IHomeDecor.kt"
+      ],
+      "status": "VERSIONED_QA_ART_REUSE"
+    },
+    {
+      "id": "WS16AA_PARCHMENT_TOOTH",
+      "scope": "GM_SHARED",
+      "source_file": "design/visual-system/masters/ws16aa/paper-tooth.svg",
+      "runtime_code": [
+        "app/src/main/java/com/playereden/gridmates/wordsearch/GridMatesParchmentBackground.kt"
+      ],
+      "status": "EXISTING_QA_TILE_WITH_NATIVE_FALLBACK"
+    },
+    {
+      "id": "THREE_OWNED_BOOK_COVERS_SPINES",
+      "scope": "WS_THEME",
+      "source_file": "design/visual-system/masters/ws14-generated-asset-sheet-original.png",
+      "runtime_code": [
+        "app/src/main/java/com/playereden/gridmates/wordsearch/BookArt.kt"
+      ],
+      "status": "MULTI_VERSION_IMPORTS__DEBUG_ONLY__RELEASE_RIGHTS_NOT_CLEARED"
+    },
+    {
+      "id": "WS16BA_CABINET",
+      "scope": "WS_THEME",
+      "source_file": "design/visual-system/masters/ws16ba/cabinet_tall_master_q90.jpg",
+      "runtime_code": [
+        "app/src/main/java/com/playereden/gridmates/wordsearch/WS16ATModularLibraryScene.kt"
+      ],
+      "status": "LATEST_LIBRARY_VISUAL_DIRECTION__DO_NOT_CHANGE_LAYOUT"
+    }
+  ],
+  "issues_to_reconcile": [
+    "Older WS14 art register has an empty assets list; do not treat it as the canonical list of existing artwork.",
+    "Issue #108 references an approved-assets.json file absent from the active source head; inspect its history/other branch before publishing.",
+    "WS16AB optimized painted shelf is present but its full resolution generated original is separately stored, not included in this GitHub master tree.",
+    "Current v75 Library screenshots establish direction acceptance, not rights clearance or production release.",
+    "Actual word/puzzle completion and relaunch save behavior require device acceptance; CI source compilation is insufficient."
+  ],
+  "recommended_followups": [
+    {
+      "priority": "P1",
+      "action": "Compare HOME_STORYBOOK finish versus quiet baseline on real phone; generate standalone seamless painterly tile only if visibly needed."
+    },
+    {
+      "priority": "P1",
+      "action": "Validate compact book preview: 320dp, fontScale 2, Back, View pages, screen reader."
+    },
+    {
+      "priority": "P2",
+      "action": "Apply the already implemented shared frames to other screen-specific cards/records/profile before any new artwork."
+    }
+  ]
+}

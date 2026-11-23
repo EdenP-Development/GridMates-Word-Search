@@ -1,0 +1,73 @@
+name: WS65-G All Player-Context Notes and Repeat-Risk QA
+
+on:
+  workflow_dispatch:
+  pull_request:
+    paths:
+      - 'data/lexicon/intake/ws65g-*'
+      - 'tools/lexicon/ws65g_*'
+      - 'tools/lexicon/test_ws65g_*'
+      - 'docs/WS65G_*'
+      - '.github/workflows/ws65g-complete-context.yml'
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ws65g-complete-context-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  strict-unsigned-editorial-coverage:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Verify immutable catalogs and recovered lexicon
+        run: |
+          python3 tools/lexicon/audit_recovery.py
+          python3 tools/lexicon/validate.py --data-dir data/lexicon/authoring/en-v1
+          python3 tools/lexicon/validate.py --data-dir data/lexicon/authoring/fall-v1
+      - name: Execute all WS63–WS65-G vocabulary integrity regression tests
+        run: |
+          python3 -m unittest discover -s tools/lexicon -p 'test_ws63_quality_audit.py' -v
+          python3 -m unittest discover -s tools/lexicon -p 'test_ws64_woodland_review_queue.py' -v
+          python3 -m unittest discover -s tools/lexicon -p 'test_ws65_specialist_review_audit.py' -v
+          python3 -m unittest discover -s tools/lexicon -p 'test_ws65b_editorial_triage.py' -v
+          python3 -m unittest discover -s tools/lexicon -p 'test_ws65c_source_evidence.py' -v
+          python3 -m unittest discover -s tools/lexicon -p 'test_ws65d_second_pass.py' -v
+          python3 -m unittest discover -s tools/lexicon -p 'test_ws65e_held_reference_closeout.py' -v
+          python3 -m unittest discover -s tools/lexicon -p 'test_ws65f_player_first_shortlist.py' -v
+          python3 -m unittest discover -s tools/lexicon -p 'test_ws65g_editorial_coverage.py' -v
+      - name: Export deterministic editorial coverage and page-risk report
+        run: |
+          python3 tools/lexicon/ws65g_editorial_coverage.py --out-dir qa-ws65g-editorial-coverage
+          python3 - <<'PY'
+          import csv,json
+          from pathlib import Path
+          d=Path('qa-ws65g-editorial-coverage')
+          r=json.loads((d/'editorial-coverage-and-page-risk.json').read_text())
+          with (d/'unsigned-remaining-82.csv').open(newline='') as f:
+              rows=list(csv.DictReader(f))
+          assert len(rows)==82
+          assert r['ws65cde_word_specific_source_notes']==105
+          assert r['ws65f_topic_linked_player_glosses']==80
+          assert r['ws65g_new_topic_linked_player_glosses']==82
+          assert r['promising_without_player_context_after_ws65g']==0
+          assert r['new_human_editor_approvals']==0 and r['new_owner_public_approvals']==0
+          assert r['new_android_playable_answers']==0
+          assert all(not x['candidate_human_decision'] and not x['owner_public_approval'] for x in rows)
+          print('WS65G_UNSIGNED_COVERAGE_OK: 105 source notes + 162 original topic glosses = 267 candidate occurrences; 0 release approvals')
+          PY
+          sha256sum qa-ws65g-editorial-coverage/unsigned-remaining-82.csv qa-ws65g-editorial-coverage/editorial-coverage-and-page-risk.json qa-ws65g-editorial-coverage/README.md > qa-ws65g-editorial-coverage/artifact-sha256.txt
+      - name: Archive private editorial QA artifact (never publish word pack)
+        if: ${{ always() }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: GridMates-WS65G-Unsigned-Editorial-Workbooks
+          path: qa-ws65g-editorial-coverage/
+          if-no-files-found: warn
+          retention-days: 30

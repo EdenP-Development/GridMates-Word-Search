@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256">
+<defs><radialGradient id="paper"><stop stop-color="#fff3df"/><stop offset=".75" stop-color="#f3dfbb"/><stop offset="1" stop-color="#e1c79f"/></radialGradient><linearGradient id="gold" x2=".3" y2="1"><stop stop-color="#fff1a4"/><stop offset=".53" stop-color="#d1a64c"/><stop offset="1" stop-color="#98672b"/></linearGradient></defs>
+<circle cx="128" cy="130" r="122" fill="#80602f" opacity=".15"/><circle cx="128" cy="125" r="118" fill="url(#gold)" stroke="#77501f" stroke-width="5"/>
+<circle cx="128" cy="125" r="105" fill="url(#paper)" stroke="#fff1b9" stroke-width="6"/><circle cx="128" cy="125" r="97" fill="none" stroke="#b08438" stroke-width="2"/>
+<g fill="none" stroke="#647344" stroke-width="6" stroke-linecap="round"><path d="M91 207Q60 174 49 140M165 207Q196 174 207 140"/></g>
+<g fill="#738454"><ellipse cx="71" cy="169" rx="10" ry="17" transform="rotate(-48 71 169)"/><ellipse cx="59" cy="144" rx="10" ry="17" transform="rotate(-26 59 144)"/><ellipse cx="87" cy="193" rx="10" ry="16" transform="rotate(-65 87 193)"/><ellipse cx="185" cy="169" rx="10" ry="17" transform="rotate(48 185 169)"/><ellipse cx="197" cy="144" rx="10" ry="17" transform="rotate(26 197 144)"/><ellipse cx="169" cy="193" rx="10" ry="16" transform="rotate(65 169 193)"/></g>
+<path d="M128 217l8 9-8 9-8-9z" fill="#b88938"/>
+</svg>

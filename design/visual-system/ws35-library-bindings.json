@@ -1,0 +1,110 @@
+{
+  "master": {
+    "format": "PNG RGBA",
+    "generator": "ImageGen",
+    "review_status": "QA candidate",
+    "dimensions": [
+      2172,
+      724
+    ],
+    "sha256": "590ebe39770ce2a58b9202f7712a549484ff8a0d906c0b985d436f2be222ee06",
+    "parts": [
+      "bindings-atlas-00.part",
+      "bindings-atlas-01.part",
+      "bindings-atlas-02.part",
+      "bindings-atlas-03.part",
+      "bindings-atlas-04.part",
+      "bindings-atlas-05.part",
+      "bindings-atlas-06.part",
+      "bindings-atlas-07.part"
+    ]
+  },
+  "android_source_set": "debug",
+  "release_approved": false,
+  "bindings": [
+    {
+      "id": "GM_WS_LIBRARY_BINDING_WOODLAND_V1",
+      "name": "woodland",
+      "role": "playable",
+      "columns": [
+        0,
+        376
+      ],
+      "dimensions": [
+        179,
+        703
+      ],
+      "rgba_sha256": "dba9b3541d5da9d284650ec29ae55d909ae0eb231071397ef6ecfb20846523d7"
+    },
+    {
+      "id": "GM_WS_LIBRARY_BINDING_SPACE_V1",
+      "name": "space",
+      "role": "playable",
+      "columns": [
+        376,
+        727
+      ],
+      "dimensions": [
+        179,
+        704
+      ],
+      "rgba_sha256": "94ab95c8148f5e19cb1d564bde2375556c52bedf1b1a7bb9335585a24725f611"
+    },
+    {
+      "id": "GM_WS_LIBRARY_BINDING_GARDEN_V1",
+      "name": "garden",
+      "role": "playable",
+      "columns": [
+        727,
+        1078
+      ],
+      "dimensions": [
+        181,
+        700
+      ],
+      "rgba_sha256": "192188abc9d846af139c01cbee40a57b9c4f98ca6f9cd3c7aeb852c006cd699e"
+    },
+    {
+      "id": "GM_WS_LIBRARY_BINDING_TOBACCO_V1",
+      "name": "tobacco",
+      "role": "decoration",
+      "columns": [
+        1078,
+        1430
+      ],
+      "dimensions": [
+        176,
+        704
+      ],
+      "rgba_sha256": "31b8cdff61cff4803aad06426c5fd3f732f716441a817a6dafa179273c9519e8"
+    },
+    {
+      "id": "GM_WS_LIBRARY_BINDING_AUBURN_V1",
+      "name": "auburn",
+      "role": "decoration",
+      "columns": [
+        1430,
+        1781
+      ],
+      "dimensions": [
+        176,
+        703
+      ],
+      "rgba_sha256": "7787d96b45ebc92b81acdd5b36e153195d4d69787577a1fba059ed89993f8124"
+    },
+    {
+      "id": "GM_WS_LIBRARY_BINDING_SLATE_V1",
+      "name": "slate",
+      "role": "decoration",
+      "columns": [
+        1781,
+        2172
+      ],
+      "dimensions": [
+        182,
+        704
+      ],
+      "rgba_sha256": "40bbd6dbae7bdd40ca490aac02bdfb03550918e9ca4e3e176bf12ee7efb96aa8"
+    }
+  ]
+}

@@ -1,0 +1,24 @@
+name: WS22 Source PNG and Prestige Frame Integrity
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - feature/ws14b-style-anchor-and-art-direction-2026-11-08
+    paths:
+      - 'design/art-library-v2/ws22/**'
+      - '.github/workflows/ws22-actual-binary-art-qa.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  verify-complete-art-source:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+      - name: Reconstruct losslessly sharded original source PNG
+        run: python3 design/art-library-v2/ws22/restore_atlas.py
+      - name: Verify 16 actual PNG sprites, 24 vector masters and SHA256 provenance
+        run: python3 design/art-library-v2/ws22/validate_ws22.py

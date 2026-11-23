@@ -1,0 +1,90 @@
+chapter	theme	topic	subtopic	word_id	answer	display	tier	source_pool	review_stage
+Flower Borders	GARDEN	garden	flowers	ws65c082	ALYSSUM	Alyssum	familiar	WS65	WS65G
+Flower Borders	GARDEN	garden	flowers	ws65c119	ASTER	Aster	familiar	WS65	WS65G
+Flower Borders	GARDEN	garden	flowers	gm000490	BEGONIA	Begonia	familiar	WS65	WS65F
+Flower Borders	GARDEN	garden	flowers	ws65c107	BLEEDINGHEART	Bleeding Heart	intermediate	WS65	WS65G
+Flower Borders	GARDEN	garden	flowers	gm000373	BLOSSOM	Blossom	familiar	WS65	WS65G
+Flower Borders	GARDEN	garden	flowers	gm000376	BUD	Bud	familiar	WS65	WS65G
+Flower Borders	GARDEN	garden	flowers	gm000488	CALENDULA	Calendula	familiar	WS65	WS65F
+Flower Borders	GARDEN	garden	flowers	ws65c104	CONEFLOWER	Coneflower	familiar	WS65	WS65F
+Flower Borders	GARDEN	garden	flowers	ws65c102	DAYLILY	Daylily	familiar	WS65	WS65F
+Flower Borders	GARDEN	garden	flowers	gm000477	FLOWERBED	Flower Bed	familiar	WS65	WS65G
+Flower Borders	GARDEN	garden	flowers	ws65c141	FLOWERBORDER	Flower Border	familiar	WS65	WS65G
+Flower Borders	GARDEN	garden	flowers	gm000487	FOXGLOVE	Foxglove	familiar	WS65	WS65G
+Flower Borders	GARDEN	garden	flowers	gm000368	HOLLYHOCK	Hollyhock	familiar	WS65	WS65F
+Flower Borders	GARDEN	garden	flowers	ws65c078	IMPATIENS	Impatiens	familiar	WS65	WS65F
+Flower Borders	GARDEN	garden	flowers	gm000359	IRIS	Iris	familiar	WS65	WS65F
+Flower Borders	GARDEN	garden	flowers	ws65c089	LANTANA	Lantana	familiar	WS65	WS65G
+Flower Borders	GARDEN	garden	flowers	gm000030	MARIGOLD	Marigold	familiar	WS65	WS65F
+Flower Borders	GARDEN	garden	flowers	gm000486	NASTURTIUM	Nasturtium	familiar	WS65	WS65F
+Flower Borders	GARDEN	garden	flowers	gm000451	NECTAR	Nectar	familiar	WS65	WS65G
+Flower Borders	GARDEN	garden	flowers	gm000358	PANSY	Pansy	familiar	WS65	WS65F
+Flower Borders	GARDEN	garden	flowers	gm000348	PEONY	Peony	familiar	WS65	WS65F
+Flower Borders	GARDEN	garden	flowers	gm000375	PETAL	Petal	familiar	WS65	WS65G
+Flower Borders	GARDEN	garden	flowers	gm000354	PETUNIA	Petunia	familiar	WS65	WS65F
+Flower Borders	GARDEN	garden	flowers	ws65c103	PHLOX	Phlox	familiar	WS65	WS65F
+Flower Borders	GARDEN	garden	flowers	gm000450	POLLEN	Pollen	familiar	WS65	WS65G
+Flower Borders	GARDEN	garden	flowers	gm000357	PRIMROSE	Primrose	familiar	WS65	WS65F
+Flower Borders	GARDEN	garden	flowers	ws65c088	SALVIA	Salvia	familiar	WS65	WS65G
+Flower Borders	GARDEN	garden	flowers	gm000369	SNAPDRAGON	Snapdragon	familiar	WS65	WS65F
+Flower Borders	GARDEN	garden	flowers	gm000489	VERBENA	Verbena	familiar	WS65	WS65G
+Flower Borders	GARDEN	garden	flowers	gm000353	ZINNIA	Zinnia	familiar	WS65	WS65F
+Our Solar System	SPACE	space	solar-system	gm000012	ASTEROID	Asteroid	intermediate	WS65	WS65F
+Our Solar System	SPACE	space	solar-system	ws65c040	ASTEROIDBELT	Asteroid Belt	intermediate	WS65	WS65G
+Our Solar System	SPACE	space	solar-system	gm000211	ATMOSPHERE	Atmosphere	intermediate	WS65	WS65F
+Our Solar System	SPACE	space	solar-system	ws65c020	CALLISTO	Callisto	intermediate	WS65	WS65G
+Our Solar System	SPACE	space	solar-system	gm000199	COMET	Comet	intermediate	WS65	WS65F
+Our Solar System	SPACE	space	solar-system	gm000201	CRATER	Crater	intermediate	WS65	WS65F
+Our Solar System	SPACE	space	solar-system	ws65c025	DEIMOS	Deimos	intermediate	WS65	WS65G
+Our Solar System	SPACE	space	solar-system	ws65c017	DWARFPLANET	Dwarf Planet	intermediate	WS65	WS65G
+Our Solar System	SPACE	space	solar-system	gm000190	EARTH	Earth	familiar	WS65	WS65F
+Our Solar System	SPACE	space	solar-system	ws65c022	ENCELADUS	Enceladus	intermediate	WS65	WS65G
+Our Solar System	SPACE	space	solar-system	ws65c018	EUROPA	Europa	intermediate	WS65	WS65G
+Our Solar System	SPACE	space	solar-system	ws65c019	GANYMEDE	Ganymede	intermediate	WS65	WS65G
+Our Solar System	SPACE	space	solar-system	ws65c015	GASGIANT	Gas Giant	intermediate	WS65	WS65F
+Our Solar System	SPACE	space	solar-system	ws65c064	GREATREDSPOT	Great Red Spot	advanced	WS65	WS65G
+Our Solar System	SPACE	space	solar-system	ws65c016	ICEGIANT	Ice Giant	intermediate	WS65	WS65G
+Our Solar System	SPACE	space	solar-system	gm000194	JUPITER	Jupiter	familiar	WS65	WS65F
+Our Solar System	SPACE	space	solar-system	ws65c038	KUIPERBELT	Kuiper Belt	intermediate	WS65	WS65G
+Our Solar System	SPACE	space	solar-system	gm000191	MARS	Mars	familiar	WS65	WS65F
+Our Solar System	SPACE	space	solar-system	gm000193	MERCURY	Mercury	familiar	WS65	WS65F
+Our Solar System	SPACE	space	solar-system	gm000336	METEORITE	Meteorite	intermediate	WS65	WS65F
+Our Solar System	SPACE	space	solar-system	ws65c045	METEOROID	Meteoroid	intermediate	WS65	WS65F
+Our Solar System	SPACE	space	solar-system	gm000197	NEPTUNE	Neptune	familiar	WS65	WS65F
+Our Solar System	SPACE	space	solar-system	ws65c065	OLYMPUSMONS	Olympus Mons	advanced	WS65	WS65G
+Our Solar System	SPACE	space	solar-system	ws65c039	OORTCLOUD	Oort Cloud	intermediate	WS65	WS65G
+Our Solar System	SPACE	space	solar-system	ws65c024	PHOBOS	Phobos	intermediate	WS65	WS65G
+Our Solar System	SPACE	space	solar-system	gm000198	PLUTO	Pluto	familiar	WS65	WS65F
+Our Solar System	SPACE	space	solar-system	ws65c063	RINGSYSTEM	Ring System	intermediate	WS65	WS65G
+Our Solar System	SPACE	space	solar-system	gm000195	SATURN	Saturn	familiar	WS65	WS65F
+Our Solar System	SPACE	space	solar-system	ws65c021	TITAN	Titan	intermediate	WS65	WS65G
+Our Solar System	SPACE	space	solar-system	ws65c023	TRITON	Triton	intermediate	WS65	WS65G
+Our Solar System	SPACE	space	solar-system	gm000196	URANUS	Uranus	familiar	WS65	WS65F
+Our Solar System	SPACE	space	solar-system	ws65c066	VALLESMARINERIS	Valles Marineris	advanced	WS65	WS65G
+Our Solar System	SPACE	space	solar-system	gm000192	VENUS	Venus	familiar	WS65	WS65F
+Quiet Clearings	WOODLAND	woodland	habitats	gm000374	BLOOM	Bloom	familiar	WS64	WS65F
+Quiet Clearings	WOODLAND	woodland	habitats	ws56q011	BLUEBELLS	Bluebells	familiar	WS64	WS65F
+Quiet Clearings	WOODLAND	woodland	habitats	gm000371	BUTTERCUP	Buttercup	intermediate	WS64	WS65G
+Quiet Clearings	WOODLAND	woodland	habitats	gm000027	BUTTERFLY	Butterfly	familiar	WS64	WS65F
+Quiet Clearings	WOODLAND	woodland	habitats	gm000372	CLOVER	Clover	familiar	WS64	WS65F
+Quiet Clearings	WOODLAND	woodland	habitats	gm000345	DAISY	Daisy	familiar	WS64	WS65F
+Quiet Clearings	WOODLAND	woodland	habitats	ws56q018	DANDELION	Dandelion	intermediate	WS64	WS65G
+Quiet Clearings	WOODLAND	woodland	habitats	ws56q012	DAPPLED	Dappled	familiar	WS64	WS65F
+Quiet Clearings	WOODLAND	woodland	habitats	gm000219	DAYLIGHT	Daylight	familiar	WS64	WS65F
+Quiet Clearings	WOODLAND	woodland	habitats	ws56q034	DEWDROPS	Dewdrops	intermediate	WS64	WS65G
+Quiet Clearings	WOODLAND	woodland	habitats	ws56q021	FIREFLIES	Fireflies	intermediate	WS64	WS65G
+Quiet Clearings	WOODLAND	woodland	habitats	ws56q033	FIREWEED	Fireweed	intermediate	WS64	WS65G
+Quiet Clearings	WOODLAND	woodland	habitats	gm000487	FOXGLOVE	Foxglove	intermediate	WS64	WS65G
+Quiet Clearings	WOODLAND	woodland	habitats	gm000691	GOLDENROD	Goldenrod	intermediate	WS64	WS65G
+Quiet Clearings	WOODLAND	woodland	habitats	ws56q003	GRASS	Grass	familiar	WS64	WS65F
+Quiet Clearings	WOODLAND	woodland	habitats	ws56q017	GREENERY	Greenery	intermediate	WS64	WS65G
+Quiet Clearings	WOODLAND	woodland	habitats	ws56q019	HONEYSUCKLE	Honeysuckle	intermediate	WS64	WS65G
+Quiet Clearings	WOODLAND	woodland	habitats	gm000695	MIST	Mist	familiar	WS64	WS65F
+Quiet Clearings	WOODLAND	woodland	habitats	gm000375	PETAL	Petal	familiar	WS64	WS65F
+Quiet Clearings	WOODLAND	woodland	habitats	gm000450	POLLEN	Pollen	familiar	WS64	WS65G
+Quiet Clearings	WOODLAND	woodland	habitats	gm000357	PRIMROSE	Primrose	intermediate	WS64	WS65G
+Quiet Clearings	WOODLAND	woodland	habitats	ws56q015	RUSTLING	Rustling	familiar	WS64	WS65G
+Quiet Clearings	WOODLAND	woodland	habitats	ws56q010	SUNBEAM	Sunbeam	familiar	WS64	WS65F
+Quiet Clearings	WOODLAND	woodland	habitats	gm000467	SUNSHINE	Sunshine	familiar	WS64	WS65F
+Quiet Clearings	WOODLAND	woodland	habitats	gm000350	VIOLET	Violet	intermediate	WS64	WS65G
+Quiet Clearings	WOODLAND	woodland	habitats	ws56q016	WARMTH	Warmth	familiar	WS64	WS65G

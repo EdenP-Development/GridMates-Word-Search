@@ -1,0 +1,261 @@
+chapter	chapter_title	primary_subtopic	allowed_subtopics	page	page_title	answer	word_id	display	tier	word_subtopic	provenance
+3	Along the Trail	trails	trails,habitats	1	First Steps	TRAIL	gm000148	Trail	familiar	trails	existing_woodland_QA_not_release
+3	Along the Trail	trails	trails,habitats	1	First Steps	PATH	gm000149	Path	familiar	trails	existing_woodland_QA_not_release
+3	Along the Trail	trails	trails,habitats	1	First Steps	HILL	gm000129	Hill	familiar	habitats	existing_woodland_QA_not_release
+3	Along the Trail	trails	trails,habitats	1	First Steps	RAIN	gm000158	Rain	familiar	trails	existing_woodland_QA_not_release
+3	Along the Trail	trails	trails,habitats	1	First Steps	SHADE	gm000155	Shade	familiar	trails	existing_woodland_QA_not_release
+3	Along the Trail	trails	trails,habitats	1	First Steps	STONE	gm000161	Stone	familiar	trails	existing_woodland_QA_not_release
+3	Along the Trail	trails	trails,habitats	1	First Steps	BROOK	gm000123	Brook	familiar	habitats	existing_woodland_QA_not_release
+3	Along the Trail	trails	trails,habitats	1	First Steps	RIDGE	gm000130	Ridge	familiar	habitats	existing_woodland_QA_not_release
+3	Along the Trail	trails	trails,habitats	1	First Steps	MARSH	gm000126	Marsh	familiar	habitats	existing_woodland_QA_not_release
+3	Along the Trail	trails	trails,habitats	1	First Steps	SWAMP	gm000127	Swamp	familiar	habitats	existing_woodland_QA_not_release
+3	Along the Trail	trails	trails,habitats	1	First Steps	GLADE	gm000146	Glade	familiar	habitats	existing_woodland_QA_not_release
+3	Along the Trail	trails	trails,habitats	1	First Steps	GROVE	gm000131	Grove	familiar	habitats	existing_woodland_QA_not_release
+3	Along the Trail	trails	trails,habitats	2	Following the Path	COMPASS	gm000037	Compass	familiar	trails	existing_woodland_QA_not_release
+3	Along the Trail	trails	trails,habitats	2	Following the Path	TRACKS	gm000152	Tracks	familiar	trails	existing_woodland_QA_not_release
+3	Along the Trail	trails	trails,habitats	2	Following the Path	HIKING	gm000163	Hiking	familiar	trails	existing_woodland_QA_not_release
+3	Along the Trail	trails	trails,habitats	2	Following the Path	WALKING	gm000168	Walking	familiar	trails	existing_woodland_QA_not_release
+3	Along the Trail	trails	trails,habitats	2	Following the Path	BREEZE	gm000159	Breeze	familiar	trails	existing_woodland_QA_not_release
+3	Along the Trail	trails	trails,habitats	2	Following the Path	SHADOW	gm000156	Shadow	familiar	trails	existing_woodland_QA_not_release
+3	Along the Trail	trails	trails,habitats	2	Following the Path	STREAM	gm000121	Stream	familiar	habitats	existing_woodland_QA_not_release
+3	Along the Trail	trails	trails,habitats	2	Following the Path	BURROW	gm000137	Burrow	familiar	habitats	existing_woodland_QA_not_release
+3	Along the Trail	trails	trails,habitats	2	Following the Path	VALLEY	gm000128	Valley	familiar	habitats	existing_woodland_QA_not_release
+3	Along the Trail	trails	trails,habitats	2	Following the Path	LICHEN	gm000141	Lichen	familiar	habitats	existing_woodland_QA_not_release
+3	Along the Trail	trails	trails,habitats	2	Following the Path	PEBBLE	gm000160	Pebble	familiar	trails	existing_woodland_QA_not_release
+3	Along the Trail	trails	trails,habitats	2	Following the Path	FOREST	gm000001	Forest	familiar	habitats	existing_woodland_QA_not_release
+3	Along the Trail	trails	trails,habitats	2	Following the Path	NATURE	gm000170	Nature	familiar	trails	existing_woodland_QA_not_release
+3	Along the Trail	trails	trails,habitats	2	Following the Path	RIVER	gm000120	River	familiar	habitats	existing_woodland_QA_not_release
+3	Along the Trail	trails	trails,habitats	2	Following the Path	CREEK	gm000124	Creek	familiar	habitats	existing_woodland_QA_not_release
+3	Along the Trail	trails	trails,habitats	2	Following the Path	MOSS	gm000139	Moss	familiar	habitats	existing_woodland_QA_not_release
+3	Along the Trail	trails	trails,habitats	3	Into the Wilderness	FOOTPRINT	gm000151	Footprint	familiar	trails	existing_woodland_QA_not_release
+3	Along the Trail	trails	trails,habitats	3	Into the Wilderness	BINOCULARS	gm000167	Binoculars	familiar	trails	existing_woodland_QA_not_release
+3	Along the Trail	trails	trails,habitats	3	Into the Wilderness	BACKPACK	gm000164	Backpack	familiar	trails	existing_woodland_QA_not_release
+3	Along the Trail	trails	trails,habitats	3	Into the Wilderness	CAMPFIRE	gm000165	Campfire	familiar	trails	existing_woodland_QA_not_release
+3	Along the Trail	trails	trails,habitats	3	Into the Wilderness	WILDLIFE	gm000169	Wildlife	familiar	trails	existing_woodland_QA_not_release
+3	Along the Trail	trails	trails,habitats	3	Into the Wilderness	OUTDOORS	gm000171	Outdoors	familiar	trails	existing_woodland_QA_not_release
+3	Along the Trail	trails	trails,habitats	3	Into the Wilderness	SUNLIGHT	gm000154	Sunlight	familiar	trails	existing_woodland_QA_not_release
+3	Along the Trail	trails	trails,habitats	3	Into the Wilderness	FEATHER	gm000153	Feather	familiar	trails	existing_woodland_QA_not_release
+3	Along the Trail	trails	trails,habitats	3	Into the Wilderness	LANTERN	gm000166	Lantern	familiar	trails	existing_woodland_QA_not_release
+3	Along the Trail	trails	trails,habitats	3	Into the Wilderness	MUSHROOM	gm000005	Mushroom	familiar	habitats	existing_woodland_QA_not_release
+3	Along the Trail	trails	trails,habitats	3	Into the Wilderness	WOODLAND	gm000118	Woodland	familiar	habitats	existing_woodland_QA_not_release
+3	Along the Trail	trails	trails,habitats	3	Into the Wilderness	CLEARING	gm000132	Clearing	familiar	habitats	existing_woodland_QA_not_release
+3	Along the Trail	trails	trails,habitats	3	Into the Wilderness	WATERFALL	gm000039	Waterfall	familiar	habitats	existing_woodland_QA_not_release
+3	Along the Trail	trails	trails,habitats	3	Into the Wilderness	BLUEBERRY	gm000144	Blueberry	familiar	habitats	existing_woodland_QA_not_release
+3	Along the Trail	trails	trails,habitats	3	Into the Wilderness	RIVERBANK	gm000006	Riverbank	familiar	habitats	existing_woodland_QA_not_release
+3	Along the Trail	trails	trails,habitats	3	Into the Wilderness	WETLAND	gm000147	Wetland	familiar	habitats	existing_woodland_QA_not_release
+3	Along the Trail	trails	trails,habitats	3	Into the Wilderness	BRAMBLE	gm000142	Bramble	familiar	habitats	existing_woodland_QA_not_release
+3	Along the Trail	trails	trails,habitats	3	Into the Wilderness	THICKET	gm000134	Thicket	familiar	habitats	existing_woodland_QA_not_release
+3	Along the Trail	trails	trails,habitats	3	Into the Wilderness	WILDFLOWER	gm000007	Wildflower	familiar	habitats	existing_woodland_QA_not_release
+3	Along the Trail	trails	trails,habitats	3	Into the Wilderness	BLACKBERRY	gm000143	Blackberry	familiar	habitats	existing_woodland_QA_not_release
+3	Along the Trail	trails	trails,habitats	3	Into the Wilderness	HOLLOW	gm000133	Hollow	familiar	habitats	existing_woodland_QA_not_release
+3	Along the Trail	trails	trails,habitats	3	Into the Wilderness	MEADOW	gm000119	Meadow	familiar	habitats	existing_woodland_QA_not_release
+3	Along the Trail	trails	trails,habitats	3	Into the Wilderness	BRIDGE	gm000150	Bridge	familiar	trails	existing_woodland_QA_not_release
+3	Along the Trail	trails	trails,habitats	3	Into the Wilderness	CANOPY	gm000135	Canopy	familiar	habitats	existing_woodland_QA_not_release
+4	Under the Canopy	trees	trees,birds,forest-animals	1	Trees Around Us	TREE	gm000107	Tree	familiar	trees	existing_woodland_QA_not_release
+4	Under the Canopy	trees	trees,birds,forest-animals	1	Trees Around Us	LEAF	gm000111	Leaf	familiar	trees	existing_woodland_QA_not_release
+4	Under the Canopy	trees	trees,birds,forest-animals	1	Trees Around Us	BARK	gm000110	Bark	familiar	trees	existing_woodland_QA_not_release
+4	Under the Canopy	trees	trees,birds,forest-animals	1	Trees Around Us	ROOT	gm000116	Root	familiar	trees	existing_woodland_QA_not_release
+4	Under the Canopy	trees	trees,birds,forest-animals	1	Trees Around Us	MAPLE	gm000092	Maple	familiar	trees	existing_woodland_QA_not_release
+4	Under the Canopy	trees	trees,birds,forest-animals	1	Trees Around Us	ALDER	gm000104	Alder	familiar	trees	existing_woodland_QA_not_release
+4	Under the Canopy	trees	trees,birds,forest-animals	1	Trees Around Us	BIRCH	gm000091	Birch	familiar	trees	existing_woodland_QA_not_release
+4	Under the Canopy	trees	trees,birds,forest-animals	1	Trees Around Us	CEDAR	gm000093	Cedar	familiar	trees	existing_woodland_QA_not_release
+4	Under the Canopy	trees	trees,birds,forest-animals	1	Trees Around Us	ASPEN	gm000095	Aspen	familiar	trees	existing_woodland_QA_not_release
+4	Under the Canopy	trees	trees,birds,forest-animals	1	Trees Around Us	BEECH	gm000096	Beech	familiar	trees	existing_woodland_QA_not_release
+4	Under the Canopy	trees	trees,birds,forest-animals	1	Trees Around Us	SKUNK	gm000061	Skunk	familiar	forest-animals	existing_woodland_QA_not_release
+4	Under the Canopy	trees	trees,birds,forest-animals	1	Trees Around Us	RAVEN	gm000074	Raven	familiar	birds	existing_woodland_QA_not_release
+4	Under the Canopy	trees	trees,birds,forest-animals	2	Branches and Neighbors	BRANCH	gm000109	Branch	familiar	trees	existing_woodland_QA_not_release
+4	Under the Canopy	trees	trees,birds,forest-animals	2	Branches and Neighbors	TRUNK	gm000108	Trunk	familiar	trees	existing_woodland_QA_not_release
+4	Under the Canopy	trees	trees,birds,forest-animals	2	Branches and Neighbors	ACORN	gm000112	Acorn	familiar	trees	existing_woodland_QA_not_release
+4	Under the Canopy	trees	trees,birds,forest-animals	2	Branches and Neighbors	STUMP	gm000114	Stump	familiar	trees	existing_woodland_QA_not_release
+4	Under the Canopy	trees	trees,birds,forest-animals	2	Branches and Neighbors	SAPLING	gm000115	Sapling	familiar	trees	existing_woodland_QA_not_release
+4	Under the Canopy	trees	trees,birds,forest-animals	2	Branches and Neighbors	WILLOW	gm000094	Willow	familiar	trees	existing_woodland_QA_not_release
+4	Under the Canopy	trees	trees,birds,forest-animals	2	Branches and Neighbors	POPLAR	gm000103	Poplar	familiar	trees	existing_woodland_QA_not_release
+4	Under the Canopy	trees	trees,birds,forest-animals	2	Branches and Neighbors	SPRUCE	gm000098	Spruce	familiar	trees	existing_woodland_QA_not_release
+4	Under the Canopy	trees	trees,birds,forest-animals	2	Branches and Neighbors	TIMBER	gm000117	Timber	familiar	trees	existing_woodland_QA_not_release
+4	Under the Canopy	trees	trees,birds,forest-animals	2	Branches and Neighbors	GROUSE	gm000086	Grouse	familiar	birds	existing_woodland_QA_not_release
+4	Under the Canopy	trees	trees,birds,forest-animals	2	Branches and Neighbors	BADGER	gm000048	Badger	familiar	forest-animals	existing_woodland_QA_not_release
+4	Under the Canopy	trees	trees,birds,forest-animals	2	Branches and Neighbors	WEASEL	gm000057	Weasel	familiar	forest-animals	existing_woodland_QA_not_release
+4	Under the Canopy	trees	trees,birds,forest-animals	2	Branches and Neighbors	TURTLE	gm000066	Turtle	familiar	forest-animals	existing_woodland_QA_not_release
+4	Under the Canopy	trees	trees,birds,forest-animals	2	Branches and Neighbors	ORIOLE	gm000079	Oriole	familiar	birds	existing_woodland_QA_not_release
+4	Under the Canopy	trees	trees,birds,forest-animals	2	Branches and Neighbors	BOBCAT	gm000054	Bobcat	familiar	forest-animals	existing_woodland_QA_not_release
+4	Under the Canopy	trees	trees,birds,forest-animals	2	Branches and Neighbors	FALCON	gm000073	Falcon	familiar	birds	existing_woodland_QA_not_release
+4	Under the Canopy	trees	trees,birds,forest-animals	3	Canopy Secrets	EVERGREEN	gm000172	Evergreen	intermediate	trees	existing_woodland_QA_not_release
+4	Under the Canopy	trees	trees,birds,forest-animals	3	Canopy Secrets	DECIDUOUS	gm000174	Deciduous	intermediate	trees	existing_woodland_QA_not_release
+4	Under the Canopy	trees	trees,birds,forest-animals	3	Canopy Secrets	COTTONWOOD	gm000180	Cottonwood	intermediate	trees	existing_woodland_QA_not_release
+4	Under the Canopy	trees	trees,birds,forest-animals	3	Canopy Secrets	SYCAMORE	gm000106	Sycamore	familiar	trees	existing_woodland_QA_not_release
+4	Under the Canopy	trees	trees,birds,forest-animals	3	Canopy Secrets	BLACKTHORN	gm000179	Blackthorn	intermediate	trees	existing_woodland_QA_not_release
+4	Under the Canopy	trees	trees,birds,forest-animals	3	Canopy Secrets	PINECONE	gm000004	Pinecone	familiar	trees	existing_woodland_QA_not_release
+4	Under the Canopy	trees	trees,birds,forest-animals	3	Canopy Secrets	CHESTNUT	gm000101	Chestnut	familiar	trees	existing_woodland_QA_not_release
+4	Under the Canopy	trees	trees,birds,forest-animals	3	Canopy Secrets	HAWTHORN	gm000178	Hawthorn	intermediate	trees	existing_woodland_QA_not_release
+4	Under the Canopy	trees	trees,birds,forest-animals	3	Canopy Secrets	BUTTERNUT	gm000181	Butternut	intermediate	trees	existing_woodland_QA_not_release
+4	Under the Canopy	trees	trees,birds,forest-animals	3	Canopy Secrets	CHIPMUNK	gm000052	Chipmunk	familiar	forest-animals	existing_woodland_QA_not_release
+4	Under the Canopy	trees	trees,birds,forest-animals	3	Canopy Secrets	CARDINAL	gm000078	Cardinal	familiar	birds	existing_woodland_QA_not_release
+4	Under the Canopy	trees	trees,birds,forest-animals	3	Canopy Secrets	NUTHATCH	gm000088	Nuthatch	familiar	birds	existing_woodland_QA_not_release
+4	Under the Canopy	trees	trees,birds,forest-animals	3	Canopy Secrets	HEDGEHOG	gm000051	Hedgehog	familiar	forest-animals	existing_woodland_QA_not_release
+4	Under the Canopy	trees	trees,birds,forest-animals	3	Canopy Secrets	SQUIRREL	gm000009	Squirrel	familiar	forest-animals	existing_woodland_QA_not_release
+4	Under the Canopy	trees	trees,birds,forest-animals	3	Canopy Secrets	PHEASANT	gm000084	Pheasant	familiar	birds	existing_woodland_QA_not_release
+4	Under the Canopy	trees	trees,birds,forest-animals	3	Canopy Secrets	BLUEBIRD	gm000003	Bluebird	familiar	birds	existing_woodland_QA_not_release
+4	Under the Canopy	trees	trees,birds,forest-animals	3	Canopy Secrets	PORCUPINE	gm000053	Porcupine	familiar	forest-animals	existing_woodland_QA_not_release
+4	Under the Canopy	trees	trees,birds,forest-animals	3	Canopy Secrets	BLACKBIRD	gm000070	Blackbird	familiar	birds	existing_woodland_QA_not_release
+4	Under the Canopy	trees	trees,birds,forest-animals	3	Canopy Secrets	JUNIPER	gm000105	Juniper	familiar	trees	existing_woodland_QA_not_release
+4	Under the Canopy	trees	trees,birds,forest-animals	3	Canopy Secrets	CHICKADEE	gm000087	Chickadee	familiar	birds	existing_woodland_QA_not_release
+4	Under the Canopy	trees	trees,birds,forest-animals	3	Canopy Secrets	HICKORY	gm000100	Hickory	familiar	trees	existing_woodland_QA_not_release
+4	Under the Canopy	trees	trees,birds,forest-animals	3	Canopy Secrets	REDWOOD	gm000102	Redwood	familiar	trees	existing_woodland_QA_not_release
+4	Under the Canopy	trees	trees,birds,forest-animals	3	Canopy Secrets	SAPSUCKER	gm000185	Sapsucker	intermediate	birds	existing_woodland_QA_not_release
+4	Under the Canopy	trees	trees,birds,forest-animals	3	Canopy Secrets	CONIFER	gm000173	Conifer	intermediate	trees	existing_woodland_QA_not_release
+6	By the Stream	habitats	habitats,forest-animals	1	Water's Edge	RIVER	gm000120	River	familiar	habitats	existing_woodland_QA_not_release
+6	By the Stream	habitats	habitats,forest-animals	1	Water's Edge	POND	gm000122	Pond	familiar	habitats	existing_woodland_QA_not_release
+6	By the Stream	habitats	habitats,forest-animals	1	Water's Edge	BROOK	gm000123	Brook	familiar	habitats	existing_woodland_QA_not_release
+6	By the Stream	habitats	habitats,forest-animals	1	Water's Edge	CREEK	gm000124	Creek	familiar	habitats	existing_woodland_QA_not_release
+6	By the Stream	habitats	habitats,forest-animals	1	Water's Edge	LAKE	gm000125	Lake	familiar	habitats	existing_woodland_QA_not_release
+6	By the Stream	habitats	habitats,forest-animals	1	Water's Edge	SWAMP	gm000127	Swamp	familiar	habitats	existing_woodland_QA_not_release
+6	By the Stream	habitats	habitats,forest-animals	1	Water's Edge	GLADE	gm000146	Glade	familiar	habitats	existing_woodland_QA_not_release
+6	By the Stream	habitats	habitats,forest-animals	1	Water's Edge	GROVE	gm000131	Grove	familiar	habitats	existing_woodland_QA_not_release
+6	By the Stream	habitats	habitats,forest-animals	1	Water's Edge	RIDGE	gm000130	Ridge	familiar	habitats	existing_woodland_QA_not_release
+6	By the Stream	habitats	habitats,forest-animals	1	Water's Edge	MOUSE	gm000047	Mouse	familiar	forest-animals	existing_woodland_QA_not_release
+6	By the Stream	habitats	habitats,forest-animals	1	Water's Edge	OTTER	gm000049	Otter	familiar	forest-animals	existing_woodland_QA_not_release
+6	By the Stream	habitats	habitats,forest-animals	1	Water's Edge	MOOSE	gm000055	Moose	familiar	forest-animals	existing_woodland_QA_not_release
+6	By the Stream	habitats	habitats,forest-animals	2	Creekside Wildlife	STREAM	gm000121	Stream	familiar	habitats	existing_woodland_QA_not_release
+6	By the Stream	habitats	habitats,forest-animals	2	Creekside Wildlife	RIVERBANK	gm000006	Riverbank	familiar	habitats	existing_woodland_QA_not_release
+6	By the Stream	habitats	habitats,forest-animals	2	Creekside Wildlife	BEAVER	gm000008	Beaver	familiar	forest-animals	existing_woodland_QA_not_release
+6	By the Stream	habitats	habitats,forest-animals	2	Creekside Wildlife	TURTLE	gm000066	Turtle	familiar	forest-animals	existing_woodland_QA_not_release
+6	By the Stream	habitats	habitats,forest-animals	2	Creekside Wildlife	MARSH	gm000126	Marsh	familiar	habitats	existing_woodland_QA_not_release
+6	By the Stream	habitats	habitats,forest-animals	2	Creekside Wildlife	NEST	gm000136	Nest	familiar	habitats	existing_woodland_QA_not_release
+6	By the Stream	habitats	habitats,forest-animals	2	Creekside Wildlife	MOSS	gm000139	Moss	familiar	habitats	existing_woodland_QA_not_release
+6	By the Stream	habitats	habitats,forest-animals	2	Creekside Wildlife	FERN	gm000140	Fern	familiar	habitats	existing_woodland_QA_not_release
+6	By the Stream	habitats	habitats,forest-animals	2	Creekside Wildlife	BADGER	gm000048	Badger	familiar	forest-animals	existing_woodland_QA_not_release
+6	By the Stream	habitats	habitats,forest-animals	2	Creekside Wildlife	WEASEL	gm000057	Weasel	familiar	forest-animals	existing_woodland_QA_not_release
+6	By the Stream	habitats	habitats,forest-animals	2	Creekside Wildlife	BOBCAT	gm000054	Bobcat	familiar	forest-animals	existing_woodland_QA_not_release
+6	By the Stream	habitats	habitats,forest-animals	2	Creekside Wildlife	LIZARD	gm000063	Lizard	familiar	forest-animals	existing_woodland_QA_not_release
+6	By the Stream	habitats	habitats,forest-animals	2	Creekside Wildlife	RABBIT	gm000002	Rabbit	familiar	forest-animals	existing_woodland_QA_not_release
+6	By the Stream	habitats	habitats,forest-animals	2	Creekside Wildlife	SHREW	gm000060	Shrew	familiar	forest-animals	existing_woodland_QA_not_release
+6	By the Stream	habitats	habitats,forest-animals	2	Creekside Wildlife	SKUNK	gm000061	Skunk	familiar	forest-animals	existing_woodland_QA_not_release
+6	By the Stream	habitats	habitats,forest-animals	2	Creekside Wildlife	HILL	gm000129	Hill	familiar	habitats	existing_woodland_QA_not_release
+6	By the Stream	habitats	habitats,forest-animals	3	River Wilderness	WATERFALL	gm000039	Waterfall	familiar	habitats	existing_woodland_QA_not_release
+6	By the Stream	habitats	habitats,forest-animals	3	River Wilderness	WETLAND	gm000147	Wetland	familiar	habitats	existing_woodland_QA_not_release
+6	By the Stream	habitats	habitats,forest-animals	3	River Wilderness	SALAMANDER	gm000067	Salamander	familiar	forest-animals	existing_woodland_QA_not_release
+6	By the Stream	habitats	habitats,forest-animals	3	River Wilderness	UNDERGROWTH	gm000145	Undergrowth	familiar	habitats	existing_woodland_QA_not_release
+6	By the Stream	habitats	habitats,forest-animals	3	River Wilderness	PORCUPINE	gm000053	Porcupine	familiar	forest-animals	existing_woodland_QA_not_release
+6	By the Stream	habitats	habitats,forest-animals	3	River Wilderness	CLEARING	gm000132	Clearing	familiar	habitats	existing_woodland_QA_not_release
+6	By the Stream	habitats	habitats,forest-animals	3	River Wilderness	MUSHROOM	gm000005	Mushroom	familiar	habitats	existing_woodland_QA_not_release
+6	By the Stream	habitats	habitats,forest-animals	3	River Wilderness	WOODLAND	gm000118	Woodland	familiar	habitats	existing_woodland_QA_not_release
+6	By the Stream	habitats	habitats,forest-animals	3	River Wilderness	BLUEBERRY	gm000144	Blueberry	familiar	habitats	existing_woodland_QA_not_release
+6	By the Stream	habitats	habitats,forest-animals	3	River Wilderness	BRAMBLE	gm000142	Bramble	familiar	habitats	existing_woodland_QA_not_release
+6	By the Stream	habitats	habitats,forest-animals	3	River Wilderness	THICKET	gm000134	Thicket	familiar	habitats	existing_woodland_QA_not_release
+6	By the Stream	habitats	habitats,forest-animals	3	River Wilderness	CHIPMUNK	gm000052	Chipmunk	familiar	forest-animals	existing_woodland_QA_not_release
+6	By the Stream	habitats	habitats,forest-animals	3	River Wilderness	HEDGEHOG	gm000051	Hedgehog	familiar	forest-animals	existing_woodland_QA_not_release
+6	By the Stream	habitats	habitats,forest-animals	3	River Wilderness	SQUIRREL	gm000009	Squirrel	familiar	forest-animals	existing_woodland_QA_not_release
+6	By the Stream	habitats	habitats,forest-animals	3	River Wilderness	RACCOON	gm000050	Raccoon	familiar	forest-animals	existing_woodland_QA_not_release
+6	By the Stream	habitats	habitats,forest-animals	3	River Wilderness	WILDFLOWER	gm000007	Wildflower	familiar	habitats	existing_woodland_QA_not_release
+6	By the Stream	habitats	habitats,forest-animals	3	River Wilderness	BLACKBERRY	gm000143	Blackberry	familiar	habitats	existing_woodland_QA_not_release
+6	By the Stream	habitats	habitats,forest-animals	3	River Wilderness	CANOPY	gm000135	Canopy	familiar	habitats	existing_woodland_QA_not_release
+6	By the Stream	habitats	habitats,forest-animals	3	River Wilderness	BURROW	gm000137	Burrow	familiar	habitats	existing_woodland_QA_not_release
+6	By the Stream	habitats	habitats,forest-animals	3	River Wilderness	VALLEY	gm000128	Valley	familiar	habitats	existing_woodland_QA_not_release
+6	By the Stream	habitats	habitats,forest-animals	3	River Wilderness	LICHEN	gm000141	Lichen	familiar	habitats	existing_woodland_QA_not_release
+6	By the Stream	habitats	habitats,forest-animals	3	River Wilderness	FOREST	gm000001	Forest	familiar	habitats	existing_woodland_QA_not_release
+6	By the Stream	habitats	habitats,forest-animals	3	River Wilderness	HOLLOW	gm000133	Hollow	familiar	habitats	existing_woodland_QA_not_release
+6	By the Stream	habitats	habitats,forest-animals	3	River Wilderness	MEADOW	gm000119	Meadow	familiar	habitats	existing_woodland_QA_not_release
+7	Quiet Clearings	habitats	habitats,trails	1	Little Clearing	MOSS	gm000139	Moss	familiar	habitats	existing_woodland_QA_not_release
+7	Quiet Clearings	habitats	habitats,trails	1	Little Clearing	FERN	gm000140	Fern	familiar	habitats	existing_woodland_QA_not_release
+7	Quiet Clearings	habitats	habitats,trails	1	Little Clearing	HILL	gm000129	Hill	familiar	habitats	existing_woodland_QA_not_release
+7	Quiet Clearings	habitats	habitats,trails	1	Little Clearing	NEST	gm000136	Nest	familiar	habitats	existing_woodland_QA_not_release
+7	Quiet Clearings	habitats	habitats,trails	1	Little Clearing	SHADE	gm000155	Shade	familiar	trails	existing_woodland_QA_not_release
+7	Quiet Clearings	habitats	habitats,trails	1	Little Clearing	MARSH	gm000126	Marsh	familiar	habitats	existing_woodland_QA_not_release
+7	Quiet Clearings	habitats	habitats,trails	1	Little Clearing	SWAMP	gm000127	Swamp	familiar	habitats	existing_woodland_QA_not_release
+7	Quiet Clearings	habitats	habitats,trails	1	Little Clearing	RIVER	gm000120	River	familiar	habitats	existing_woodland_QA_not_release
+7	Quiet Clearings	habitats	habitats,trails	1	Little Clearing	CREEK	gm000124	Creek	familiar	habitats	existing_woodland_QA_not_release
+7	Quiet Clearings	habitats	habitats,trails	1	Little Clearing	BROOK	gm000123	Brook	familiar	habitats	existing_woodland_QA_not_release
+7	Quiet Clearings	habitats	habitats,trails	1	Little Clearing	RIDGE	gm000130	Ridge	familiar	habitats	existing_woodland_QA_not_release
+7	Quiet Clearings	habitats	habitats,trails	1	Little Clearing	LAKE	gm000125	Lake	familiar	habitats	existing_woodland_QA_not_release
+7	Quiet Clearings	habitats	habitats,trails	2	Woodland Calm	GROVE	gm000131	Grove	familiar	habitats	existing_woodland_QA_not_release
+7	Quiet Clearings	habitats	habitats,trails	2	Woodland Calm	GLADE	gm000146	Glade	familiar	habitats	existing_woodland_QA_not_release
+7	Quiet Clearings	habitats	habitats,trails	2	Woodland Calm	MEADOW	gm000119	Meadow	familiar	habitats	existing_woodland_QA_not_release
+7	Quiet Clearings	habitats	habitats,trails	2	Woodland Calm	PEBBLE	gm000160	Pebble	familiar	trails	existing_woodland_QA_not_release
+7	Quiet Clearings	habitats	habitats,trails	2	Woodland Calm	BREEZE	gm000159	Breeze	familiar	trails	existing_woodland_QA_not_release
+7	Quiet Clearings	habitats	habitats,trails	2	Woodland Calm	VALLEY	gm000128	Valley	familiar	habitats	existing_woodland_QA_not_release
+7	Quiet Clearings	habitats	habitats,trails	2	Woodland Calm	LICHEN	gm000141	Lichen	familiar	habitats	existing_woodland_QA_not_release
+7	Quiet Clearings	habitats	habitats,trails	2	Woodland Calm	FOREST	gm000001	Forest	familiar	habitats	existing_woodland_QA_not_release
+7	Quiet Clearings	habitats	habitats,trails	2	Woodland Calm	HOLLOW	gm000133	Hollow	familiar	habitats	existing_woodland_QA_not_release
+7	Quiet Clearings	habitats	habitats,trails	2	Woodland Calm	CANOPY	gm000135	Canopy	familiar	habitats	existing_woodland_QA_not_release
+7	Quiet Clearings	habitats	habitats,trails	2	Woodland Calm	HIKING	gm000163	Hiking	familiar	trails	existing_woodland_QA_not_release
+7	Quiet Clearings	habitats	habitats,trails	2	Woodland Calm	TRACKS	gm000152	Tracks	familiar	trails	existing_woodland_QA_not_release
+7	Quiet Clearings	habitats	habitats,trails	2	Woodland Calm	NATURE	gm000170	Nature	familiar	trails	existing_woodland_QA_not_release
+7	Quiet Clearings	habitats	habitats,trails	2	Woodland Calm	BRIDGE	gm000150	Bridge	familiar	trails	existing_woodland_QA_not_release
+7	Quiet Clearings	habitats	habitats,trails	2	Woodland Calm	SHADOW	gm000156	Shadow	familiar	trails	existing_woodland_QA_not_release
+7	Quiet Clearings	habitats	habitats,trails	2	Woodland Calm	STONE	gm000161	Stone	familiar	trails	existing_woodland_QA_not_release
+7	Quiet Clearings	habitats	habitats,trails	3	Hidden Glades	CLEARING	gm000132	Clearing	familiar	habitats	existing_woodland_QA_not_release
+7	Quiet Clearings	habitats	habitats,trails	3	Hidden Glades	UNDERGROWTH	gm000145	Undergrowth	familiar	habitats	existing_woodland_QA_not_release
+7	Quiet Clearings	habitats	habitats,trails	3	Hidden Glades	WOODLAND	gm000118	Woodland	familiar	habitats	existing_woodland_QA_not_release
+7	Quiet Clearings	habitats	habitats,trails	3	Hidden Glades	BLACKBERRY	gm000143	Blackberry	familiar	habitats	existing_woodland_QA_not_release
+7	Quiet Clearings	habitats	habitats,trails	3	Hidden Glades	BLUEBERRY	gm000144	Blueberry	familiar	habitats	existing_woodland_QA_not_release
+7	Quiet Clearings	habitats	habitats,trails	3	Hidden Glades	MUSHROOM	gm000005	Mushroom	familiar	habitats	existing_woodland_QA_not_release
+7	Quiet Clearings	habitats	habitats,trails	3	Hidden Glades	RIVERBANK	gm000006	Riverbank	familiar	habitats	existing_woodland_QA_not_release
+7	Quiet Clearings	habitats	habitats,trails	3	Hidden Glades	WATERFALL	gm000039	Waterfall	familiar	habitats	existing_woodland_QA_not_release
+7	Quiet Clearings	habitats	habitats,trails	3	Hidden Glades	THICKET	gm000134	Thicket	familiar	habitats	existing_woodland_QA_not_release
+7	Quiet Clearings	habitats	habitats,trails	3	Hidden Glades	CAMPFIRE	gm000165	Campfire	familiar	trails	existing_woodland_QA_not_release
+7	Quiet Clearings	habitats	habitats,trails	3	Hidden Glades	OUTDOORS	gm000171	Outdoors	familiar	trails	existing_woodland_QA_not_release
+7	Quiet Clearings	habitats	habitats,trails	3	Hidden Glades	BACKPACK	gm000164	Backpack	familiar	trails	existing_woodland_QA_not_release
+7	Quiet Clearings	habitats	habitats,trails	3	Hidden Glades	SUNLIGHT	gm000154	Sunlight	familiar	trails	existing_woodland_QA_not_release
+7	Quiet Clearings	habitats	habitats,trails	3	Hidden Glades	WILDLIFE	gm000169	Wildlife	familiar	trails	existing_woodland_QA_not_release
+7	Quiet Clearings	habitats	habitats,trails	3	Hidden Glades	FOOTPRINT	gm000151	Footprint	familiar	trails	existing_woodland_QA_not_release
+7	Quiet Clearings	habitats	habitats,trails	3	Hidden Glades	WETLAND	gm000147	Wetland	familiar	habitats	existing_woodland_QA_not_release
+7	Quiet Clearings	habitats	habitats,trails	3	Hidden Glades	BRAMBLE	gm000142	Bramble	familiar	habitats	existing_woodland_QA_not_release
+7	Quiet Clearings	habitats	habitats,trails	3	Hidden Glades	COMPASS	gm000037	Compass	familiar	trails	existing_woodland_QA_not_release
+7	Quiet Clearings	habitats	habitats,trails	3	Hidden Glades	FEATHER	gm000153	Feather	familiar	trails	existing_woodland_QA_not_release
+7	Quiet Clearings	habitats	habitats,trails	3	Hidden Glades	WALKING	gm000168	Walking	familiar	trails	existing_woodland_QA_not_release
+7	Quiet Clearings	habitats	habitats,trails	3	Hidden Glades	LANTERN	gm000166	Lantern	familiar	trails	existing_woodland_QA_not_release
+7	Quiet Clearings	habitats	habitats,trails	3	Hidden Glades	WILDFLOWER	gm000007	Wildflower	familiar	habitats	existing_woodland_QA_not_release
+7	Quiet Clearings	habitats	habitats,trails	3	Hidden Glades	STREAM	gm000121	Stream	familiar	habitats	existing_woodland_QA_not_release
+7	Quiet Clearings	habitats	habitats,trails	3	Hidden Glades	BURROW	gm000137	Burrow	familiar	habitats	existing_woodland_QA_not_release
+8	Forest Discoveries	forest-animals	forest-animals,trees,habitats	1	Animal Clues	BEAR	gm000043	Bear	familiar	forest-animals	existing_woodland_QA_not_release
+8	Forest Discoveries	forest-animals	forest-animals,trees,habitats	1	Animal Clues	DEER	gm000044	Deer	familiar	forest-animals	existing_woodland_QA_not_release
+8	Forest Discoveries	forest-animals	forest-animals,trees,habitats	1	Animal Clues	WOLF	gm000046	Wolf	familiar	forest-animals	existing_woodland_QA_not_release
+8	Forest Discoveries	forest-animals	forest-animals,trees,habitats	1	Animal Clues	FROG	gm000064	Frog	familiar	forest-animals	existing_woodland_QA_not_release
+8	Forest Discoveries	forest-animals	forest-animals,trees,habitats	1	Animal Clues	MOUSE	gm000047	Mouse	familiar	forest-animals	existing_woodland_QA_not_release
+8	Forest Discoveries	forest-animals	forest-animals,trees,habitats	1	Animal Clues	MOOSE	gm000055	Moose	familiar	forest-animals	existing_woodland_QA_not_release
+8	Forest Discoveries	forest-animals	forest-animals,trees,habitats	1	Animal Clues	SHREW	gm000060	Shrew	familiar	forest-animals	existing_woodland_QA_not_release
+8	Forest Discoveries	forest-animals	forest-animals,trees,habitats	1	Animal Clues	SKUNK	gm000061	Skunk	familiar	forest-animals	existing_woodland_QA_not_release
+8	Forest Discoveries	forest-animals	forest-animals,trees,habitats	1	Animal Clues	STUMP	gm000114	Stump	familiar	trees	existing_woodland_QA_not_release
+8	Forest Discoveries	forest-animals	forest-animals,trees,habitats	1	Animal Clues	VOLE	gm000059	Vole	familiar	forest-animals	existing_woodland_QA_not_release
+8	Forest Discoveries	forest-animals	forest-animals,trees,habitats	1	Animal Clues	MARSH	gm000126	Marsh	familiar	habitats	existing_woodland_QA_not_release
+8	Forest Discoveries	forest-animals	forest-animals,trees,habitats	1	Animal Clues	MAPLE	gm000092	Maple	familiar	trees	existing_woodland_QA_not_release
+8	Forest Discoveries	forest-animals	forest-animals,trees,habitats	2	Forest Life	RABBIT	gm000002	Rabbit	familiar	forest-animals	existing_woodland_QA_not_release
+8	Forest Discoveries	forest-animals	forest-animals,trees,habitats	2	Forest Life	BADGER	gm000048	Badger	familiar	forest-animals	existing_woodland_QA_not_release
+8	Forest Discoveries	forest-animals	forest-animals,trees,habitats	2	Forest Life	OTTER	gm000049	Otter	familiar	forest-animals	existing_woodland_QA_not_release
+8	Forest Discoveries	forest-animals	forest-animals,trees,habitats	2	Forest Life	RACCOON	gm000050	Raccoon	familiar	forest-animals	existing_woodland_QA_not_release
+8	Forest Discoveries	forest-animals	forest-animals,trees,habitats	2	Forest Life	BEAVER	gm000008	Beaver	familiar	forest-animals	existing_woodland_QA_not_release
+8	Forest Discoveries	forest-animals	forest-animals,trees,habitats	2	Forest Life	HARE	gm000045	Hare	familiar	forest-animals	existing_woodland_QA_not_release
+8	Forest Discoveries	forest-animals	forest-animals,trees,habitats	2	Forest Life	MEADOW	gm000119	Meadow	familiar	habitats	existing_woodland_QA_not_release
+8	Forest Discoveries	forest-animals	forest-animals,trees,habitats	2	Forest Life	CANOPY	gm000135	Canopy	familiar	habitats	existing_woodland_QA_not_release
+8	Forest Discoveries	forest-animals	forest-animals,trees,habitats	2	Forest Life	POPLAR	gm000103	Poplar	familiar	trees	existing_woodland_QA_not_release
+8	Forest Discoveries	forest-animals	forest-animals,trees,habitats	2	Forest Life	SPRUCE	gm000098	Spruce	familiar	trees	existing_woodland_QA_not_release
+8	Forest Discoveries	forest-animals	forest-animals,trees,habitats	2	Forest Life	TIMBER	gm000117	Timber	familiar	trees	existing_woodland_QA_not_release
+8	Forest Discoveries	forest-animals	forest-animals,trees,habitats	2	Forest Life	BRANCH	gm000109	Branch	familiar	trees	existing_woodland_QA_not_release
+8	Forest Discoveries	forest-animals	forest-animals,trees,habitats	2	Forest Life	STREAM	gm000121	Stream	familiar	habitats	existing_woodland_QA_not_release
+8	Forest Discoveries	forest-animals	forest-animals,trees,habitats	2	Forest Life	BURROW	gm000137	Burrow	familiar	habitats	existing_woodland_QA_not_release
+8	Forest Discoveries	forest-animals	forest-animals,trees,habitats	2	Forest Life	WILLOW	gm000094	Willow	familiar	trees	existing_woodland_QA_not_release
+8	Forest Discoveries	forest-animals	forest-animals,trees,habitats	2	Forest Life	VALLEY	gm000128	Valley	familiar	habitats	existing_woodland_QA_not_release
+8	Forest Discoveries	forest-animals	forest-animals,trees,habitats	3	Deep Woods Discoveries	PORCUPINE	gm000053	Porcupine	familiar	forest-animals	existing_woodland_QA_not_release
+8	Forest Discoveries	forest-animals	forest-animals,trees,habitats	3	Deep Woods Discoveries	SALAMANDER	gm000067	Salamander	familiar	forest-animals	existing_woodland_QA_not_release
+8	Forest Discoveries	forest-animals	forest-animals,trees,habitats	3	Deep Woods Discoveries	HEDGEHOG	gm000051	Hedgehog	familiar	forest-animals	existing_woodland_QA_not_release
+8	Forest Discoveries	forest-animals	forest-animals,trees,habitats	3	Deep Woods Discoveries	CHIPMUNK	gm000052	Chipmunk	familiar	forest-animals	existing_woodland_QA_not_release
+8	Forest Discoveries	forest-animals	forest-animals,trees,habitats	3	Deep Woods Discoveries	SQUIRREL	gm000009	Squirrel	familiar	forest-animals	existing_woodland_QA_not_release
+8	Forest Discoveries	forest-animals	forest-animals,trees,habitats	3	Deep Woods Discoveries	LIZARD	gm000063	Lizard	familiar	forest-animals	existing_woodland_QA_not_release
+8	Forest Discoveries	forest-animals	forest-animals,trees,habitats	3	Deep Woods Discoveries	WEASEL	gm000057	Weasel	familiar	forest-animals	existing_woodland_QA_not_release
+8	Forest Discoveries	forest-animals	forest-animals,trees,habitats	3	Deep Woods Discoveries	TURTLE	gm000066	Turtle	familiar	forest-animals	existing_woodland_QA_not_release
+8	Forest Discoveries	forest-animals	forest-animals,trees,habitats	3	Deep Woods Discoveries	BOBCAT	gm000054	Bobcat	familiar	forest-animals	existing_woodland_QA_not_release
+8	Forest Discoveries	forest-animals	forest-animals,trees,habitats	3	Deep Woods Discoveries	CLEARING	gm000132	Clearing	familiar	habitats	existing_woodland_QA_not_release
+8	Forest Discoveries	forest-animals	forest-animals,trees,habitats	3	Deep Woods Discoveries	MUSHROOM	gm000005	Mushroom	familiar	habitats	existing_woodland_QA_not_release
+8	Forest Discoveries	forest-animals	forest-animals,trees,habitats	3	Deep Woods Discoveries	PINECONE	gm000004	Pinecone	familiar	trees	existing_woodland_QA_not_release
+8	Forest Discoveries	forest-animals	forest-animals,trees,habitats	3	Deep Woods Discoveries	WOODLAND	gm000118	Woodland	familiar	habitats	existing_woodland_QA_not_release
+8	Forest Discoveries	forest-animals	forest-animals,trees,habitats	3	Deep Woods Discoveries	CHESTNUT	gm000101	Chestnut	familiar	trees	existing_woodland_QA_not_release
+8	Forest Discoveries	forest-animals	forest-animals,trees,habitats	3	Deep Woods Discoveries	SYCAMORE	gm000106	Sycamore	familiar	trees	existing_woodland_QA_not_release
+8	Forest Discoveries	forest-animals	forest-animals,trees,habitats	3	Deep Woods Discoveries	HAWTHORN	gm000178	Hawthorn	intermediate	trees	existing_woodland_QA_not_release
+8	Forest Discoveries	forest-animals	forest-animals,trees,habitats	3	Deep Woods Discoveries	RIVERBANK	gm000006	Riverbank	familiar	habitats	existing_woodland_QA_not_release
+8	Forest Discoveries	forest-animals	forest-animals,trees,habitats	3	Deep Woods Discoveries	WATERFALL	gm000039	Waterfall	familiar	habitats	existing_woodland_QA_not_release
+8	Forest Discoveries	forest-animals	forest-animals,trees,habitats	3	Deep Woods Discoveries	BLUEBERRY	gm000144	Blueberry	familiar	habitats	existing_woodland_QA_not_release
+8	Forest Discoveries	forest-animals	forest-animals,trees,habitats	3	Deep Woods Discoveries	DECIDUOUS	gm000174	Deciduous	intermediate	trees	existing_woodland_QA_not_release
+8	Forest Discoveries	forest-animals	forest-animals,trees,habitats	3	Deep Woods Discoveries	EVERGREEN	gm000172	Evergreen	intermediate	trees	existing_woodland_QA_not_release
+8	Forest Discoveries	forest-animals	forest-animals,trees,habitats	3	Deep Woods Discoveries	BUTTERNUT	gm000181	Butternut	intermediate	trees	existing_woodland_QA_not_release
+8	Forest Discoveries	forest-animals	forest-animals,trees,habitats	3	Deep Woods Discoveries	HICKORY	gm000100	Hickory	familiar	trees	existing_woodland_QA_not_release
+8	Forest Discoveries	forest-animals	forest-animals,trees,habitats	3	Deep Woods Discoveries	SAPLING	gm000115	Sapling	familiar	trees	existing_woodland_QA_not_release

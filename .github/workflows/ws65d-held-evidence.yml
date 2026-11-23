@@ -1,0 +1,68 @@
+name: WS65-D Held Vocabulary and Chapter-Move Source QA
+
+on:
+  workflow_dispatch:
+  pull_request:
+    paths:
+      - 'data/lexicon/intake/ws65d-*'
+      - 'tools/lexicon/ws65d_*'
+      - 'tools/lexicon/test_ws65d_*'
+      - 'docs/WS65D_*'
+      - '.github/workflows/ws65d-held-evidence.yml'
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ws65d-held-evidence-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  reproducible-evidence-only:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Preserve recovered data and canonical English/Fall packs
+        run: |
+          python3 tools/lexicon/audit_recovery.py
+          python3 tools/lexicon/validate.py --data-dir data/lexicon/authoring/en-v1
+          python3 tools/lexicon/validate.py --data-dir data/lexicon/authoring/fall-v1
+      - name: Verify identity and human-signature boundaries WS63–65D
+        run: |
+          python3 -m unittest discover -s tools/lexicon -p 'test_ws63_quality_audit.py' -v
+          python3 -m unittest discover -s tools/lexicon -p 'test_ws64_woodland_review_queue.py' -v
+          python3 -m unittest discover -s tools/lexicon -p 'test_ws65_specialist_review_audit.py' -v
+          python3 -m unittest discover -s tools/lexicon -p 'test_ws65b_editorial_triage.py' -v
+          python3 -m unittest discover -s tools/lexicon -p 'test_ws65c_source_evidence.py' -v
+          python3 -m unittest discover -s tools/lexicon -p 'test_ws65d_second_pass.py' -v
+      - name: Build unsigned source-linked second-pass evidence receipt
+        run: |
+          python3 tools/lexicon/ws65d_second_pass.py --out-dir qa-ws65d-evidence
+          python3 - <<'PY'
+          from pathlib import Path
+          import csv,json
+          d=Path('qa-ws65d-evidence')
+          r=json.loads((d/'second-pass-evidence-receipt.json').read_text())
+          with (d/'unsigned-second-pass-review.csv').open(newline='') as f:
+              rows=list(csv.DictReader(f))
+          assert len(rows)==267
+          assert r['new_ws65d_source_referenced_rows']==36
+          assert r['combined_evidence_rows']==74
+          assert r['remaining_unchecked_by_preflight_lane']=={'HOLD':31,'MOVE':0,'PROMISING':162}
+          assert r['new_owner_public_approvals']==0 and r['new_playable_android_words']==0
+          assert all(not x['owner_decision'] and not x['qa_editor_decision'] for x in rows)
+          print('WS65D_UNSIGNED_LEDGER_OK: 36 new evidence records, 74 total, 193 unchecked')
+          PY
+          sha256sum qa-ws65d-evidence/unsigned-second-pass-review.csv qa-ws65d-evidence/second-pass-evidence-receipt.json qa-ws65d-evidence/README.md > qa-ws65d-evidence/artifact-sha256.txt
+      - name: Save inspectable editorial worksheet and checksums
+        if: ${{ always() }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: GridMates-WS65D-Unsigned-Second-Pass-Evidence
+          path: qa-ws65d-evidence/
+          if-no-files-found: warn
+          retention-days: 30

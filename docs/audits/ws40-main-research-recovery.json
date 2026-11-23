@@ -1,0 +1,48 @@
+{
+  "schema_version": 1,
+  "source_commit": "9043cf4c942da598b5841cc39c361c99abd9ef26",
+  "restored_on": "2026-11-17",
+  "scope": "Historical research references; their old current-status, prices, policy and APK claims are not reverified or promoted",
+  "files": [
+    {
+      "path": "docs/CI_ACTIONS_ARTIFACT_RETENTION.md",
+      "git_blob_sha1": "ed220091709a405f4ee371aae16eaa0e04ed0570",
+      "size_bytes": 1002
+    },
+    {
+      "path": "docs/COMPETITOR_WORD_SEARCH_UX_RESEARCH_2026-11-06.md",
+      "git_blob_sha1": "32555d67b8170dad0fa11c4b8f6d6fa50dfdfc5f",
+      "size_bytes": 15250
+    },
+    {
+      "path": "docs/FONT_LIBRARY_LICENSE_RESEARCH_2026-11-06.md",
+      "git_blob_sha1": "c8b18cba296af6058f06b7d30e41f859674eb0c6",
+      "size_bytes": 14225
+    },
+    {
+      "path": "docs/MULTILINGUAL_SPANISH_RESEARCH_AND_DEV_PLAN.md",
+      "git_blob_sha1": "4a7e720549e0a6009c873b1dad7d1dcc535233e5",
+      "size_bytes": 28049
+    },
+    {
+      "path": "docs/PARITY_FIRST_QUALITY_PLAN.md",
+      "git_blob_sha1": "79a88616511fd4670ba4d97fca4219c50e4e3005",
+      "size_bytes": 9737
+    },
+    {
+      "path": "docs/WORD_LIBRARY_STATUS_2026-11-08.md",
+      "git_blob_sha1": "633c420d3cb6cdb44be1f28f7998425b4350a96e",
+      "size_bytes": 15204
+    },
+    {
+      "path": "docs/WORD_SEARCH_GENRE_MASTER_RESEARCH_2026-11-08.md",
+      "git_blob_sha1": "5807a1b94b192f26b4ba053b56552920a3a51235",
+      "size_bytes": 30300
+    }
+  ],
+  "not_enabled": [
+    "main artifact-cleanup workflow",
+    "unreviewed font candidates",
+    "obsolete asset schema and early UI plans"
+  ]
+}

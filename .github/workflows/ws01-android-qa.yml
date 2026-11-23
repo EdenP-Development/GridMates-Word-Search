@@ -1,4 +1,4 @@
-name: WS-01 Android QA
+name: GridMates Word Search Android QA
 
 on:
   workflow_dispatch:
@@ -9,24 +9,245 @@ on:
       - 'build.gradle.kts'
       - 'settings.gradle.kts'
       - 'gradle.properties'
+      - 'scripts/**'
+      - 'design/woodland/**'
+      - 'design/visual-system/masters/ws16as/**'
+      - 'design/visual-system/masters/ws16ba/**'
+      - 'design/visual-system/masters/ws16bb/**'
+      - 'tools/ci/**'
+      - 'tools/asset_pipeline/**'
       - '.github/workflows/ws01-android-qa.yml'
+      - 'design/font-library-approved-b5.json'
 
 permissions:
   contents: read
+  actions: read
+
+# Avoid burning GitHub Actions minutes building superseded PR commits.
+# Separate pull requests retain independent workflows, and manual
+# workflow_dispatch runs use their own ref-specific group.
+concurrency:
+  group: wordsearch-standard-android-qa-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
 
 jobs:
   android-qa:
     runs-on: ubuntu-latest
-    timeout-minutes: 25
+    timeout-minutes: 40
+    env:
+      WS68_INTEGRATION: ${{ (github.head_ref || github.ref_name) == 'integration/ws68-v111-beta-2026-11-23' }}
     steps:
       - uses: actions/checkout@v4
+      # Byte-for-byte reuse of the 12 already-approved Sudoku portraits.
+      # Pinned source commit prevents an upstream branch edit changing QA art.
+      - name: Checkout approved Sudoku Woodland art (pinned)
+        uses: actions/checkout@v4
+        with:
+          repository: PlayerEden/SudokuTogether
+          ref: 975e31a1e8cbfebad1fbbc7602b3340c357da7ef
+          path: _approved_sudoku
+          persist-credentials: false
+      - name: Verify and import the 12 approved Woodland portraits
+        run: |
+          python3 scripts/import_woodland_portraits.py --source _approved_sudoku
+      - name: Checkout reviewed OFL fonts (pinned, sparse)
+        uses: actions/checkout@v4
+        with:
+          repository: google/fonts
+          ref: 24ddc1f324cac5d9f5aedca126d298f56e3f1640
+          path: _approved_fonts
+          persist-credentials: false
+          filter: blob:none
+          sparse-checkout: |
+            ofl/atkinsonhyperlegible
+            ofl/ibmplexmono
+            ofl/dmmono
+            ofl/patrickhand
+            ofl/literata
+      - name: Verify and bundle font binaries and license notices
+        run: |
+          python3 -m pip install --disable-pip-version-check --user fonttools==4.59.2
+          python3 scripts/import_font_library.py --source _approved_fonts
+      - name: Import hash-pinned WS-14 cover and spine PNGs for this QA APK
+        if: ${{ hashFiles('design/visual-system/masters/ws14-generated-asset-sheet-original.png') != '' }}
+        run: |
+          python3 -m pip install --disable-pip-version-check --user Pillow==12.3.0
+          python3 tools/asset_pipeline/import_ws14_candidate_sheet.py
+          python3 tools/asset_pipeline/validate_ws14_assets.py
+      - name: Verify original WS-14J Woodland artwork and debug source copy
+        run: python3 -m unittest discover -s tools/asset_pipeline -p 'test_ws14j_page_accent.py' -v
+      - name: Install pinned build-only SVG renderer (no Android runtime dependency)
+        run: python3 -m pip install --disable-pip-version-check --user CairoSVG==2.8.2
+      - name: Render three original WS-14K2 theme motifs into debug-only Android assets
+        run: |
+          python3 tools/asset_pipeline/render_ws14k2_gameplay_motifs.py
+          python3 -m unittest discover -s tools/asset_pipeline -p 'test_ws14k2_gameplay_motifs.py' -v
+      - name: Render 8 SHA-pinned WS16G shelf pieces into debug-only PNG assets
+        run: |
+          python3 tools/asset_pipeline/render_ws16g_shelf.py
+          python3 -m unittest discover -s tools/asset_pipeline -p 'test_ws16g_shelf_art.py' -v
+      - name: Render WS16H illustrated Home icons to debug-only sprites
+        run: |
+          python3 tools/asset_pipeline/render_ws16h_home.py
+          python3 -m unittest discover -s tools/asset_pipeline -p 'test_ws16h_home.py' -v
+      - name: Render five WS16I storybook botanical Home overlays
+        run: |
+          python3 tools/asset_pipeline/render_ws16i_home_decor.py
+          python3 -m unittest discover -s tools/asset_pipeline -p 'test_ws16i_home_decor.py' -v
+      - name: Render two distinct WS16M header emblems into QA assets
+        run: |
+          python3 tools/asset_pipeline/render_ws16m_brand.py
+          python3 -m unittest discover -s tools/asset_pipeline -p 'test_ws16m_brand.py' -v
+      - name: Render six source-pinned WS16AA painted shelf and paper assets
+        run: |
+          python3 tools/asset_pipeline/render_ws16aa.py
+          python3 -m unittest discover -s tools/asset_pipeline -p 'test_ws16aa_art.py' -v
+      - name: Render hash-pinned WS16BS Home paper material (QA only)
+        run: |
+          python3 tools/asset_pipeline/render_ws16bs_home_paper.py
+          python3 -m unittest discover -s tools/asset_pipeline -p 'test_ws16bs_home_art.py' -v
+      - name: Verify actual WS16AB shelf asset, original-file provenance and native integration
+        run: |
+          python3 tools/asset_pipeline/verify_ws16ab_apk.py
+          python3 -m unittest discover -s tools/asset_pipeline -p 'test_ws16ab_shelf.py' -v
+      - name: Build source-pinned WS16AD geometry proofs and 3 blank book pairs
+        run: |
+          python3 tools/asset_pipeline/build_ws16ad_book_factory.py
+          python3 -m unittest discover -s tools/asset_pipeline -p 'test_ws16ad_book_factory.py' -v
+          python3 -m unittest discover -s tools/asset_pipeline -p 'test_ws16ad_spine_policy.py' -v
+      - name: Rebuild all three WS16AE V2 painted books and spines
+        run: |
+          python3 tools/asset_pipeline/build_ws16ae_books_v2.py
+          python3 -m unittest discover -s tools/asset_pipeline -p 'test_ws16ae_books_v2.py' -v
+      - name: Verify WS16BH densely packed scalable real spines
+        run: python3 -m unittest discover -s tools/asset_pipeline -p 'test_ws16bh_dense_library.py' -v
+      - name: Validate WS16BG real front covers and portrait bookcase paging
+        run: python3 -m unittest discover -s tools/asset_pipeline -p 'test_ws16bg_face_out_library.py' -v
+      - name: Repair all three source-pinned WS16AF spine lettering masters
+        run: |
+          python3 tools/asset_pipeline/build_ws16af_spines_clean.py
+          python3 -m unittest discover -s tools/asset_pipeline -p 'test_ws16af_spines_clean.py' -v
+      - name: Render WS16AI approved-walnut modular cabinet and tight book spines
+        run: |
+          python3 tools/asset_pipeline/build_ws16ai_bookcase.py
+          python3 -m unittest discover -s tools/asset_pipeline -p 'test_ws16ai_bookcase.py' -v
+      - name: Rebuild 12 textured WS16AO tall and standard physical book spines
+        run: |
+          python3 tools/asset_pipeline/build_ws16ao_spine_family.py
+          python3 -m unittest discover -s tools/asset_pipeline -p 'test_ws16ao_spine_family.py' -v
+      - name: Render WS16BF three clean curved bindings from source-pinned WS16AI
+        run: |
+          python3 tools/asset_pipeline/build_ws16bf_curved_spines.py
+          python3 -m unittest discover -s tools/asset_pipeline -p 'test_ws16bf_curved_spines.py' -v
+      - name: Reproduce WS16AK illustrated empty cabinet from pinned 1024px master
+        run: |
+          python3 tools/asset_pipeline/build_ws16ak_ci.py
+          python3 -m unittest discover -s tools/asset_pipeline -p 'test_ws16ak_ci.py' -v
+          python3 -m unittest discover -s tools/asset_pipeline -p 'test_ws16al_immersive_shell.py' -v
+          python3 -m unittest discover -s tools/asset_pipeline -p 'test_ws16am_immersive_bookcase.py' -v
+          python3 -m unittest discover -s tools/asset_pipeline -p 'test_ws16at_modular_library.py' -v
+      - name: Reassemble original WS16AS art kit from hash-pinned source parts
+        if: ${{ hashFiles('design/visual-system/masters/ws16as/manifest.json') != '' }}
+        run: python3 tools/asset_pipeline/assemble_ws16as_github_kit.py
+      - name: Extract original WS16AS five-part painted shell from hash-pinned ZIP
+        if: ${{ hashFiles('design/visual-system/masters/ws16as/WS16AS_Modular_Library_Art_Kit.zip') != '' }}
+        run: python3 tools/asset_pipeline/import_ws16as_modular_library.py --kit design/visual-system/masters/ws16as/WS16AS_Modular_Library_Art_Kit.zip
+      - name: Generate 5 source-aligned WS16BA high-resolution portrait cabinet PNGs
+        run: |
+          python3 tools/asset_pipeline/build_ws16ba_hi_res.py
+          python3 -m unittest discover -s tools/asset_pipeline -p 'test_ws16ba_hi_res.py' -v
+      - name: Import hash-pinned independent WS16BB cabinet-matched shelf
+        run: |
+          python3 tools/asset_pipeline/import_ws16bb_matched_shelf.py
+          python3 -m unittest discover -s tools/asset_pipeline -p 'test_ws16bb_shelf.py' -v
+      - name: Validate WS16BJ slim carved title and book clearance
+        run: python3 -m unittest discover -s tools/asset_pipeline -p 'test_ws16bj_carved_title.py' -v
+      - name: Verify WS16BN actual Play-green buttons and lowered bookcase layout
+        run: python3 -m unittest discover -s tools/asset_pipeline -p 'test_ws16bn_green_layout.py' -v
+      - name: WS16BR shared asset crosswalk and Home/preview source QA
+        run: python3 -m unittest discover -s tools/asset_pipeline -p 'test_ws16br_asset_cohesion.py' -v
+      - name: WS16BT Collection, Profile and Records cohesion safeguards
+        run: python3 -m unittest discover -s tools/asset_pipeline -p 'test_ws16bt_secondary_cohesion.py' -v
+      - name: WS25 Home and Collection source-pinned debug artwork and UI guards
+        run: |
+          python3 tools/asset_pipeline/import_ws25_collection_accent.py
+          python3 -m unittest discover -s tools/asset_pipeline -p 'test_ws25_home_collection.py' -v
+      - name: WS26 responsive collectible gallery and profile dossier source QA
+        run: python3 -m unittest discover -s tools/asset_pipeline -p 'test_ws26_gallery_profile.py' -v
+      - name: WS27 phone collection density and large text safety QA
+        run: python3 -m unittest discover -s tools/asset_pipeline -p 'test_ws27_collection_density.py' -v
+      - name: WS28 Profile vertical-stack overlap regression guard
+        run: python3 -m unittest discover -s tools/asset_pipeline -p 'test_ws28_profile_overlap.py' -v
+      - name: WS29 Render original SHA-verified WS21 collectible shields (debug only)
+        run: |
+          python3 tools/asset_pipeline/render_ws29_achievement_medals.py
+          python3 -m unittest discover -s tools/asset_pipeline -p 'test_ws29_achievement_medals.py' -v
+      - name: WS30 Native non-emoji reward symbols and progress preservation
+        run: python3 -m unittest discover -s tools/asset_pipeline -p 'test_ws30_medal_symbols.py' -v
+      - name: WS31 Advanced milestone engravings and achievement integrity
+        run: python3 -m unittest discover -s tools/asset_pipeline -p 'test_ws31_milestone_engraving.py' -v
+      - name: WS44 Verified side-word scoring and local save contract
+        run: python3 -m unittest discover -s tools/asset_pipeline -p 'test_ws44_side_word_scoring.py' -v
+      - name: WS45 Bonus journal and native Android scoring execution contract
+        run: python3 -m unittest discover -s tools/asset_pipeline -p 'test_ws45_bonus_journal.py' -v
+      - name: WS46 Reproducible bonus-word opportunity audit and artifact guard
+        run: python3 -m unittest discover -s tools/asset_pipeline -p 'test_ws46_bonus_opportunity_audit.py' -v
+      - name: WS47 Bonus fragment geometry and measured-origin artifact guards
+        run: python3 -m unittest discover -s tools/asset_pipeline -p 'test_ws47_bonus_origin.py' -v
+      - name: WS49 Fall QA-only naturally recognized bonus coverage guard
+        run: python3 -m unittest discover -s tools/asset_pipeline -p 'test_ws49_fall_natural_coverage.py' -v
+      - name: WS50 Verify thematic chapter map and QA-only manuscript boundaries
+        run: python3 -m unittest discover -s tools/asset_pipeline -p 'test_ws50_chapter_map.py' -v
+      - name: WS51 Guard exact Birdsong word sources, page sets and versioned QA isolation
+        run: python3 -m unittest discover -s tools/asset_pipeline -p 'test_ws51_birdsong_manuscript.py' -v
+      - name: WS52 Validate five Woodland chapter manuscripts and existing QA source words
+        run: python3 -m unittest discover -s tools/asset_pipeline -p 'test_ws52_woodland_manuscript.py' -v
+      - name: WS53 Verify revised Quiet Clearings recipe and honest chapter overlap gains
+        run: python3 -m unittest discover -s tools/asset_pipeline -p 'test_ws53_quiet_clearings.py' -v
+      - name: WS54 Validate stream chapter source and six-chapter bookwide variety
+        run: python3 -m unittest discover -s tools/asset_pipeline -p 'test_ws54_stream_bookwide_quality.py' -v
+      - name: WS55 Audit Forest Discoveries vocabulary and six-chapter identity
+        run: python3 -m unittest discover -s tools/asset_pipeline -p 'test_ws55_forest_discoveries.py' -v
+      - name: WS56 Verify distinct quiet clearings words and untouched original Library
+        run: python3 -m unittest discover -s tools/asset_pipeline -p 'test_ws56_quiet_clearings.py' -v
+      - name: WS16BU compact gallery/pager and profile readability guards
+        run: python3 -m unittest discover -s tools/asset_pipeline -p 'test_ws16bu_compact_gallery.py' -v
+      - name: WS16BV compact bundled Fonts and license access guards
+        run: python3 -m unittest discover -s tools/asset_pipeline -p 'test_ws16bv_compact_fonts.py' -v
+      - name: WS16BW Records layout, results and journal paging guards
+        run: python3 -m unittest discover -s tools/asset_pipeline -p 'test_ws16bw_records_journal.py' -v
+      - name: WS16BX phone metric density and fallback guards
+        run: python3 -m unittest discover -s tools/asset_pipeline -p 'test_ws16bx_metric_density.py' -v
+      - name: WS16BZ continuous Solo word index and short Daily preservation
+        run: python3 -m unittest discover -s tools/asset_pipeline -p 'test_ws16bz_solo_words.py' -v
+      - name: WS16CA Nearby prerequisite and Daily shared frame source checks
+        run: python3 -m unittest discover -s tools/asset_pipeline -p 'test_ws16ca_nearby_daily.py' -v
+      - name: Verify WS16BM shared GridMates paper controls and palette
+        run: python3 -m unittest discover -s tools/asset_pipeline -p 'test_ws16bm_shared_controls.py' -v
+      - name: Verify WS16BL cabinet press depth, pager dots and accessibility
+        run: python3 -m unittest discover -s tools/asset_pipeline -p 'test_ws16bl_motion_depth.py' -v
+      - name: Generate WS16BI mounted walnut shelf and wordless future bindings
+        run: |
+          python3 tools/asset_pipeline/build_ws16bi_library_art.py
+          python3 -m unittest discover -s tools/asset_pipeline -p 'test_ws16bi_library_cohesion.py' -v
+      - name: Generate WS16BK future bookcases and walnut pager assets
+        run: |
+          python3 tools/asset_pipeline/build_ws16bk_future_bookcase_assets.py
+          python3 -m unittest discover -s tools/asset_pipeline -p 'test_ws16bk_future_bookcases.py' -v
+      - name: Import the Library bindings and matching cover artwork
+        run: |
+          python3 tools/asset_pipeline/ws35_library_bindings.py
+          python3 tools/asset_pipeline/ws36_matched_book_covers.py
       - uses: actions/setup-java@v5
         with:
           distribution: temurin
           java-version: '17'
+      - name: Install SHA-256 pinned Gradle 8.11.1 from official distribution
+        run: bash tools/ci/install_pinned_gradle.sh
+      # Cache/validate Gradle without re-provisioning an HTTP-504-prone distribution.
       - uses: gradle/actions/setup-gradle@v4
-        with:
-          gradle-version: '8.11.1'
+      - name: Verify active Gradle is pinned
+        run: gradle --version | grep -F 'Gradle 8.11.1'
       - name: Install pinned Android platform and build tools
         run: |
           echo "ANDROID_HOME=$ANDROID_HOME"
@@ -38,15 +259,762 @@ jobs:
           "$SDKMANAGER" "platforms;android-35" "build-tools;35.0.0"
       - name: Core + app unit tests, lint and QA APK
         run: gradle --no-daemon :core:test :app:testDebugUnitTest :app:lintDebug :app:compileDebugAndroidTestKotlin :app:assembleDebug
+      - name: Verify stable QA signing certificate for install-over updates
+        run: |
+          APK=app/build/outputs/apk/debug/app-debug.apk
+          test -f "$APK"
+          "$ANDROID_HOME/build-tools/35.0.0/apksigner" verify --print-certs "$APK" | tee /tmp/ws-signature.txt
+          grep -iF '75cc3c896247d71fbd51f7a3ed41f90c8218a8a5a70df8c0f6b494b5cc23d419' /tmp/ws-signature.txt || {
+            echo "::error::Wrong QA signing identity; reject update APK."; exit 1;
+          }
       - name: Verify QA package identity and checksum
         run: |
           APK=app/build/outputs/apk/debug/app-debug.apk
           test -f "$APK"
           "$ANDROID_HOME/build-tools/35.0.0/aapt" dump badging "$APK" | grep '^package:'
           "$ANDROID_HOME/build-tools/35.0.0/aapt" dump badging "$APK" | grep -F "name='com.playereden.gridmates.wordsearch.qa'"
+          echo "Checking five bundled OFL fonts and licenses..."
+          for id in atkinson plex_mono dm_mono patrick_hand literata; do
+            unzip -Z1 "$APK" | grep -F "gm_${id}" >/dev/null || {
+              echo "::error::Missing packaged font gm_$id"; exit 1;
+            }
+          done
+          for id in atkinson plex dmmono patrick literata; do
+            unzip -Z1 "$APK" | grep -F "font_licenses/${id}_ofl.txt" >/dev/null || {
+              echo "::error::Missing bundled font license $id"; exit 1;
+            }
+          done
+          echo "Checking all original Woodland portraits are present in APK..."
+          unzip -Z1 "$APK" > /tmp/ws04c-apk-entries.txt
+          for name in owl fox rabbit bear badger hedgehog robin deer squirrel otter tortoise cat; do
+            grep -F "woodland_${name}" /tmp/ws04c-apk-entries.txt > /dev/null || {
+              echo "::error::Missing original Woodland portrait $name in APK"; exit 1;
+            }
+          done
           sha256sum "$APK"
+      - name: Verify illustrated QA APK contains all six source-matched sprites
+        if: ${{ hashFiles('design/visual-system/masters/ws14-generated-asset-sheet-original.png') != '' }}
+        run: |
+          python3 - <<'PY'
+          import hashlib, json, zipfile
+          from pathlib import Path
+          manifest = json.loads(Path('design/visual-system/ws14-art-register.json').read_text())
+          expected = {}
+          for asset in manifest['assets']:
+              for export in asset['exports']:
+                  if export['android_source_set'] != 'debug':
+                      continue
+                  source = Path(export['path'])
+                  assert source.is_file(), source
+                  entry = 'assets/' + str(source).removeprefix('app/src/debug/assets/')
+                  expected[entry] = export['sha256']
+          assert len(expected) == 6, ('Not all six book sprites registered', expected)
+          with zipfile.ZipFile('app/build/outputs/apk/debug/app-debug.apk') as z:
+              actual = {name for name in z.namelist() if name.startswith('assets/ws14/')}
+              assert actual == set(expected), ('Unexpected/missing QA sprites', actual, expected)
+              for name, digest in expected.items():
+                  assert hashlib.sha256(z.read(name)).hexdigest() == digest, name
+          print('WS-14D standard QA APK: six original-image-derived sprites packaged with exact hashes')
+          PY
+      - name: Verify WS-14J QA accent bytes in debug APK
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          import json, hashlib, zipfile
+          item=json.loads(Path('design/visual-system/ws14j-page-accent-candidates.json').read_text())['assets'][0]
+          name='assets/ws14j/page-accents/woodland.png'
+          assert item['state'] == 'GENERATED_UNREVIEWED' and not item['release_approved']
+          with zipfile.ZipFile('app/build/outputs/apk/debug/app-debug.apk') as apk:
+              matching=[p for p in apk.namelist() if p.startswith('assets/ws14j/')]
+              assert matching == [name], matching
+              assert hashlib.sha256(apk.read(name)).hexdigest() == item['export_sha256']
+          print('QA-only Woodland page accent packed with source-matched hash')
+          PY
+      - name: Verify all three WS-14K2 visual motifs in exact Android QA APK
+        run: python3 tools/asset_pipeline/verify_ws14k2_apk.py app/build/outputs/apk/debug/app-debug.apk
+      - name: Verify WS16AK six painted bands in exact Android QA APK
+        run: python3 tools/asset_pipeline/verify_ws16ak_apk.py app/build/outputs/apk/debug/app-debug.apk
+      - name: Verify exact original WS16AS artwork (optional) in debug APK
+        run: python3 tools/asset_pipeline/verify_ws16as_apk.py app/build/outputs/apk/debug/app-debug.apk
+      - name: Verify WS16BK bookcase blank-gallery and pager source images
+        run: python3 tools/asset_pipeline/verify_ws16bk_apk.py app/build/outputs/apk/debug/app-debug.apk
+      - name: Verify the exact WS35 bindings in the signed debug APK
+        run: python3 tools/asset_pipeline/ws35_library_bindings.py --debug-apk app/build/outputs/apk/debug/app-debug.apk
+      - name: Verify the matching cover and spine pairs in the signed debug APK
+        run: python3 tools/asset_pipeline/ws36_matched_book_covers.py --debug-apk app/build/outputs/apk/debug/app-debug.apk
+      - name: Verify WS16BI mounted shelf and 3 unlettered blanks are packaged
+        run: python3 tools/asset_pipeline/verify_ws16bi_apk.py app/build/outputs/apk/debug/app-debug.apk
+      - name: Verify independent WS16BB matched shelf in QA APK
+        run: python3 tools/asset_pipeline/verify_ws16bb_apk.py app/build/outputs/apk/debug/app-debug.apk
+      - name: Verify five high-res cabinet pieces in QA APK
+        run: python3 tools/asset_pipeline/verify_ws16ba_apk.py app/build/outputs/apk/debug/app-debug.apk
+      - name: Verify WS16AI full-screen modular bookcase in Android QA APK
+        run: python3 tools/asset_pipeline/verify_ws16ai_apk.py app/build/outputs/apk/debug/app-debug.apk
+      - name: Verify 12 WS16AO source-pinned physical spines packaged in debug
+        run: python3 tools/asset_pipeline/verify_ws16ao_apk.py app/build/outputs/apk/debug/app-debug.apk
+      - name: Verify WS16BF exact anti-speckle binding bytes in Android QA
+        run: python3 tools/asset_pipeline/verify_ws16bf_apk.py app/build/outputs/apk/debug/app-debug.apk
+      - name: Verify WS16AF corrected lettering for all three physical spines
+        run: python3 tools/asset_pipeline/verify_ws16af_apk.py app/build/outputs/apk/debug/app-debug.apk
+      - name: Verify all three WS16AE V2 covers and spines in QA APK
+        run: python3 tools/asset_pipeline/verify_ws16ae_apk.py app/build/outputs/apk/debug/app-debug.apk
+      - name: Verify WS16AD packaged QA book factory assets
+        run: python3 tools/asset_pipeline/verify_ws16ad_apk.py app/build/outputs/apk/debug/app-debug.apk
+      - name: Verify WS16AB generated-painted shelf is SHA matched in Android QA APK
+        run: python3 tools/asset_pipeline/verify_ws16ab_apk.py app/build/outputs/apk/debug/app-debug.apk
+      - name: Verify WS16AA painted assets in actual Android debug APK
+        run: python3 tools/asset_pipeline/verify_ws16aa_apk.py app/build/outputs/apk/debug/app-debug.apk
+      - name: Verify WS16BS painted Home art and source-hash receipt in APK
+        run: python3 tools/asset_pipeline/verify_ws16bs_apk.py app/build/outputs/apk/debug/app-debug.apk
+      - name: Verify WS16G shelf art is source-matched in the QA APK
+        run: python3 tools/asset_pipeline/verify_ws16g_shelf_apks.py app/build/outputs/apk/debug/app-debug.apk
+      - name: Verify six source-hashed WS16H action sprites in QA APK
+        run: python3 tools/asset_pipeline/verify_ws16h_home_apk.py app/build/outputs/apk/debug/app-debug.apk
+      - name: Verify five source-hashed WS16I Home assets in QA APK
+        run: python3 tools/asset_pipeline/verify_ws16i_home_decor_apk.py app/build/outputs/apk/debug/app-debug.apk
+      - name: Verify two WS16M branding PNGs in source-matched QA APK
+        run: python3 tools/asset_pipeline/verify_ws16m_brand_apk.py app/build/outputs/apk/debug/app-debug.apk
       - uses: actions/upload-artifact@v4
         with:
-          name: GridMates-WordSearch-WS01-QA
+          name: GridMates-WordSearch-Android-QA
           path: app/build/outputs/apk/debug/*.apk
+          retention-days: ${{ (github.base_ref == 'main' || github.ref_name == 'main' || github.head_ref == 'feature/ws33-packed-library-2026-11-16') && 3 || 30 }}
+      - name: Verify frozen QA word packs and authoring provenance
+        run: |
+          python3 tools/lexicon/audit_recovery.py
+          python3 tools/lexicon/build_qa_curation.py
+          python3 tools/lexicon/render_qa_runtime.py
+          git diff --exit-code -- app/src/debug/java/com/playereden/gridmates/wordsearch/QuickPlayContent.kt core/src/test/resources/reviewed-packs data/lexicon
+      - name: Prepare WS42 device tests and v103 baseline
+        id: ws42-prep
+        if: ${{ (github.head_ref || github.ref_name) == 'feature/ws42-handset-polish-2026-11-17' }}
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gradle --no-daemon :app:assembleDebugAndroidTest
+          mkdir -p qa-baseline
+          curl -fLsS -H "Authorization: Bearer $GH_TOKEN" -H "Accept: application/vnd.github+json" https://api.github.com/repos/PlayerEden/GridMates-Word-Search/actions/artifacts/14397980688/zip -o qa-baseline.zip
+          python3 -c "import zipfile; zipfile.ZipFile('qa-baseline.zip').extractall('qa-baseline')"
+          echo '19949e41b1ed9165781c7a39b89857c9996bd5e27cfe25227dc5afabcfe25359  qa-baseline/app-debug.apk' | sha256sum --check
+          echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=static_node"' | sudo tee /etc/udev/rules.d/99-kvm4all.rules
+          sudo udevadm control --reload-rules
+          sudo udevadm trigger --name-match=kvm
+      - name: Check the phone layout and v103 saved board on Android
+        if: ${{ (github.head_ref || github.ref_name) == 'feature/ws42-handset-polish-2026-11-17' }}
+        uses: reactivecircus/android-emulator-runner@v2
+        env:
+          WS42_SOURCE: ${{ github.event.pull_request.head.sha || github.sha }}
+        with:
+          api-level: 35
+          target: google_apis
+          arch: x86_64
+          profile: pixel_4
+          avd-name: ws42-upgrade
+          ram-size: 3072M
+          disable-animations: true
+          emulator-options: -no-window -gpu swiftshader -no-snapshot -noaudio -no-boot-anim
+          script: bash scripts/ws42_handset_emulator.sh upgrade
+      - name: Open the Library and play a later Garden chapter on Android
+        if: ${{ !cancelled() && steps.ws42-prep.outcome == 'success' }}
+        uses: reactivecircus/android-emulator-runner@v2
+        env:
+          WS42_SOURCE: ${{ github.event.pull_request.head.sha || github.sha }}
+        with:
+          api-level: 35
+          target: google_apis
+          arch: x86_64
+          profile: pixel_4
+          avd-name: ws42-book
+          ram-size: 3072M
+          disable-animations: true
+          emulator-options: -no-window -gpu swangle -no-snapshot -noaudio -no-boot-anim
+          script: bash scripts/ws42_handset_emulator.sh book
+      - name: Execute the WS42 Android regression suite
+        if: ${{ !cancelled() && steps.ws42-prep.outcome == 'success' }}
+        uses: reactivecircus/android-emulator-runner@v2
+        with:
+          api-level: 35
+          target: google_apis
+          arch: x86_64
+          profile: pixel_4
+          avd-name: ws42-regression
+          ram-size: 3072M
+          disable-animations: true
+          emulator-options: -no-window -gpu swiftshader -no-snapshot -noaudio -no-boot-anim
+          script: bash scripts/ws42_handset_emulator.sh regression
+      - name: Upload WS42 native and device evidence
+        if: ${{ always() && (github.head_ref || github.ref_name) == 'feature/ws42-handset-polish-2026-11-17' }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: GridMates-WS42-Actual-Android
+          path: |
+            qa-ws42-native/
+            qa-ws42-report/
+          if-no-files-found: warn
+          retention-days: 30
+      - name: Prepare WS41 Android tests and v102 install-over baseline
+        if: ${{ (github.head_ref || github.ref_name) == 'feature/ws41-mixed-quick-play-2026-11-17' }}
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gradle --no-daemon :app:assembleDebugAndroidTest
+          mkdir -p qa-baseline
+          curl -fLsS -H "Authorization: Bearer $GH_TOKEN" -H "Accept: application/vnd.github+json" https://api.github.com/repos/PlayerEden/GridMates-Word-Search/actions/artifacts/14377072810/zip -o qa-baseline.zip
+          python3 -c "import zipfile; zipfile.ZipFile('qa-baseline.zip').extractall('qa-baseline')"
+          echo '3468befffa01b5e6b1f098389d775519274d95557ce00eac9d8b8514e9335d37  qa-baseline/app-debug.apk' | sha256sum --check
+          echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=static_node"' | sudo tee /etc/udev/rules.d/99-kvm4all.rules
+          sudo udevadm control --reload-rules
+          sudo udevadm trigger --name-match=kvm
+      - name: Play mixed puzzles and verify portable saves on actual Android
+        if: ${{ (github.head_ref || github.ref_name) == 'feature/ws41-mixed-quick-play-2026-11-17' }}
+        uses: reactivecircus/android-emulator-runner@v2
+        env:
+          WS41_SOURCE: ${{ github.event.pull_request.head.sha || github.sha }}
+        with:
+          api-level: 35
+          target: google_apis
+          arch: x86_64
+          profile: pixel_4
+          ram-size: 1536M
+          disable-animations: true
+          emulator-options: -no-window -gpu swiftshader_indirect -no-snapshot -noaudio -no-boot-anim
+          script: bash scripts/ws41_mixed_play_emulator.sh
+      - name: Upload WS41 native play and persistence evidence
+        if: ${{ always() && (github.head_ref || github.ref_name) == 'feature/ws41-mixed-quick-play-2026-11-17' }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: GridMates-WS41-Actual-Android-Play
+          path: |
+            qa-phone-report/
+            qa-ws41-report/
+          if-no-files-found: ignore
+          retention-days: 30
+      - name: Prepare WS39 replay and backup Android tests
+        if: ${{ (github.head_ref || github.ref_name) == 'feature/ws39-replay-and-book-backups-2026-11-17' }}
+        run: |
+          gradle --no-daemon :app:assembleDebugAndroidTest
+          echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=static_node"' | sudo tee /etc/udev/rules.d/99-kvm4all.rules
+          sudo udevadm control --reload-rules
+          sudo udevadm trigger --name-match=kvm
+      - name: Verify Quick Play and recoverable book backups on Android
+        if: ${{ (github.head_ref || github.ref_name) == 'feature/ws39-replay-and-book-backups-2026-11-17' }}
+        uses: reactivecircus/android-emulator-runner@v2
+        with:
+          api-level: 35
+          target: google_apis
+          arch: x86_64
+          profile: pixel_4
+          ram-size: 1536M
+          disable-animations: true
+          emulator-options: -no-window -gpu swiftshader_indirect -no-snapshot -noaudio -no-boot-anim
+          script: bash scripts/ws39_replay_backup_emulator.sh
+      - name: Upload WS39 Android test evidence
+        if: ${{ always() && (github.head_ref || github.ref_name) == 'feature/ws39-replay-and-book-backups-2026-11-17' }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: GridMates-WS39-Replay-Backup-Android
+          path: qa-ws39-report/
+          if-no-files-found: ignore
+          retention-days: 30
+      - name: Prepare the targeted Library test APK and emulator
+        if: ${{ (github.head_ref || github.ref_name) == 'feature/ws33-packed-library-2026-11-16' }}
+        run: |
+          gradle --no-daemon :app:assembleDebugAndroidTest
+          echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=static_node"' | sudo tee /etc/udev/rules.d/99-kvm4all.rules
+          sudo udevadm control --reload-rules
+          sudo udevadm trigger --name-match=kvm
+      - name: Play Woodland through two app restarts
+        if: ${{ (github.head_ref || github.ref_name) == 'feature/ws33-packed-library-2026-11-16' }}
+        uses: reactivecircus/android-emulator-runner@v2
+        with:
+          api-level: 35
+          target: google_apis
+          arch: x86_64
+          profile: pixel_4
+          disable-animations: true
+          emulator-options: -no-window -gpu swiftshader_indirect -no-snapshot -noaudio -no-boot-anim
+          script: bash scripts/ws33_library_emulator.sh
+      - name: Upload Library run evidence
+        if: ${{ always() && (github.head_ref || github.ref_name) == 'feature/ws33-packed-library-2026-11-16' }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: GridMates-WS33-Library-Emulator
+          path: qa-library-report/
+          if-no-files-found: ignore
           retention-days: 3
+
+      - name: WS57 Validate frozen page assets, source and previous 63-page safeguards
+        run: python3 -m unittest discover -s tools/asset_pipeline -p 'test_ws57_playable_woodland_preview.py' -v
+
+      - name: WS57 Prepare dedicated playable-preview emulator QA
+        if: ${{ (github.head_ref || github.ref_name) == 'feature/ws57-woodland-playable-preview-2026-11-21' }}
+        run: |
+          gradle --no-daemon :app:assembleDebugAndroidTest
+          echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=static_node"' | sudo tee /etc/udev/rules.d/99-kvm4all.rules
+          sudo udevadm control --reload-rules
+          sudo udevadm trigger --name-match=kvm
+
+      - name: WS57 Execute all 18 real frozen QA pages and saved-upgrade tests on Android
+        if: ${{ (github.head_ref || github.ref_name) == 'feature/ws57-woodland-playable-preview-2026-11-21' }}
+        uses: reactivecircus/android-emulator-runner@v2
+        with:
+          api-level: 35
+          target: google_apis
+          arch: x86_64
+          profile: pixel_4
+          avd-name: ws57-woodland-preview
+          ram-size: 3072M
+          disable-animations: true
+          emulator-options: -no-window -gpu swiftshader -no-snapshot -noaudio -no-boot-anim
+          script: bash scripts/ws57_woodland_preview_emulator.sh
+
+      - name: WS57 Upload device-executed QA preview regression
+        if: ${{ always() && (github.head_ref || github.ref_name) == 'feature/ws57-woodland-playable-preview-2026-11-21' }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: GridMates-WS57-Playable-Woodland-Emulator
+          path: qa-ws57-woodland-preview/
+          if-no-files-found: warn
+          retention-days: 30
+
+      - name: WS58 Prepare dedicated Woodland UI interaction tests
+        if: ${{ (github.head_ref || github.ref_name) == 'feature/ws58-woodland-real-ui-qa-2026-11-22' }}
+        run: |
+          gradle --no-daemon :app:assembleDebugAndroidTest
+          echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=static_node"' | sudo tee /etc/udev/rules.d/99-kvm4all.rules
+          sudo udevadm control --reload-rules
+          sudo udevadm trigger --name-match=kvm
+
+      - name: WS58 Run six-chapter navigation and true finger traces on Android
+        if: ${{ (github.head_ref || github.ref_name) == 'feature/ws58-woodland-real-ui-qa-2026-11-22' }}
+        uses: reactivecircus/android-emulator-runner@v2
+        with:
+          api-level: 35
+          target: google_apis
+          arch: x86_64
+          profile: pixel_4
+          avd-name: ws58-woodland-ui
+          ram-size: 3072M
+          disable-animations: true
+          emulator-options: -no-window -gpu swiftshader -no-snapshot -noaudio -no-boot-anim
+          script: bash scripts/ws58_woodland_player_emulator.sh
+
+      - name: WS58 Upload real Compose interaction report
+        if: ${{ always() && (github.head_ref || github.ref_name) == 'feature/ws58-woodland-real-ui-qa-2026-11-22' }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: GridMates-WS58-Woodland-Player-Emulator
+          path: qa-ws58-woodland-player/
+          if-no-files-found: warn
+          retention-days: 30
+
+      - name: WS59 Prepare large-type and landscape Android UI regression
+        if: ${{ (github.head_ref || github.ref_name) == 'feature/ws59-woodland-large-text-landscape-qa-2026-11-22' }}
+        run: |
+          gradle --no-daemon :app:assembleDebugAndroidTest
+          echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=static_node"' | sudo tee /etc/udev/rules.d/99-kvm4all.rules
+          sudo udevadm control --reload-rules
+          sudo udevadm trigger --name-match=kvm
+
+      - name: WS59 Execute 200% portrait and 150% landscape Woodland V5 UI tests
+        if: ${{ (github.head_ref || github.ref_name) == 'feature/ws59-woodland-large-text-landscape-qa-2026-11-22' }}
+        uses: reactivecircus/android-emulator-runner@v2
+        with:
+          api-level: 35
+          target: google_apis
+          arch: x86_64
+          profile: pixel_4
+          avd-name: ws59-woodland-layout
+          ram-size: 3072M
+          disable-animations: true
+          emulator-options: -no-window -gpu swiftshader -no-snapshot -noaudio -no-boot-anim
+          script: bash scripts/ws59_woodland_accessibility_emulator.sh
+
+      - name: WS59 Publish actual Android UI and screenshot evidence
+        if: ${{ always() && (github.head_ref || github.ref_name) == 'feature/ws59-woodland-large-text-landscape-qa-2026-11-22' }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: GridMates-WS59-Woodland-Accessibility-Emulator
+          path: qa-ws59-woodland-accessibility/
+          if-no-files-found: warn
+          retention-days: 30
+
+      - name: WS60 Prepare large-text book readability Android regressions
+        if: ${{ (github.head_ref || github.ref_name) == 'feature/ws60-book-page-compact-readability-2026-11-22' }}
+        run: |
+          gradle --no-daemon :app:assembleDebugAndroidTest
+          echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=static_node"' | sudo tee /etc/udev/rules.d/99-kvm4all.rules
+          sudo udevadm control --reload-rules
+          sudo udevadm trigger --name-match=kvm
+
+      - name: WS60 Execute 200% portrait and 150% real landscape book UI
+        if: ${{ (github.head_ref || github.ref_name) == 'feature/ws60-book-page-compact-readability-2026-11-22' }}
+        uses: reactivecircus/android-emulator-runner@v2
+        with:
+          api-level: 35
+          target: google_apis
+          arch: x86_64
+          profile: pixel_4
+          avd-name: ws60-book-page
+          ram-size: 3072M
+          disable-animations: true
+          emulator-options: -no-window -gpu swiftshader -no-snapshot -noaudio -no-boot-anim
+          script: bash scripts/ws59_woodland_accessibility_emulator.sh
+
+      - name: WS60 Upload native readability screenshots and test logs
+        if: ${{ always() && (github.head_ref || github.ref_name) == 'feature/ws60-book-page-compact-readability-2026-11-22' }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: GridMates-WS60-Book-Page-Readability-Emulator
+          path: qa-ws59-woodland-accessibility/
+          if-no-files-found: warn
+          retention-days: 30
+
+      - name: WS61 Fetch exact signed WS57 v107 QA APK and pin its SHA-256
+        if: ${{ (github.head_ref || github.ref_name) == 'feature/ws61-real-signed-v107-to-v108-upgrade-2026-11-22' }}
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          mkdir -p qa-baseline
+          gh run download 44971601632 --repo "$GITHUB_REPOSITORY" --name GridMates-WordSearch-Android-QA --dir qa-baseline
+          echo '304b389d53935ceb8a8857666caf00fbc15e3c51a440ab3cced07f1f684e82f9  qa-baseline/app-debug.apk' | sha256sum -c
+          test -s qa-baseline/app-debug.apk
+
+      - name: WS66 Build upgrade tests and verify QA and release packages
+        if: ${{ (github.head_ref || github.ref_name) == 'feature/ws66-chapter-preview-v110-2026-11-23' }}
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh run download 45065450259 --repo "$GITHUB_REPOSITORY" --name GridMates-WordSearch-Android-QA --dir qa-ws66-baseline
+          echo '6a7d59e6fed8bd2524abd216027b3caf7445aa8afa79c7fa8f2f3600b65a3b3b  qa-ws66-baseline/app-debug.apk' | sha256sum -c
+          gradle --no-daemon :app:assembleDebugAndroidTest :app:assembleRelease
+          mkdir -p qa-ws66-preview
+          DEBUG=app/build/outputs/apk/debug/app-debug.apk
+          RELEASE=app/build/outputs/apk/release/app-release-unsigned.apk
+          "$ANDROID_HOME/build-tools/35.0.0/aapt" dump badging "$DEBUG" > qa-ws66-preview/debug-badging.txt
+          "$ANDROID_HOME/build-tools/35.0.0/aapt" dump badging "$RELEASE" > qa-ws66-preview/release-badging.txt
+          grep -F "name='com.playereden.gridmates.wordsearch.qa' versionCode='110'" qa-ws66-preview/debug-badging.txt
+          grep -F "name='com.playereden.gridmates.wordsearch' versionCode='108'" qa-ws66-preview/release-badging.txt
+          "$ANDROID_HOME/build-tools/35.0.0/apksigner" verify --print-certs "$DEBUG" > qa-ws66-preview/signer.txt
+          grep -F '75cc3c896247d71fbd51f7a3ed41f90c8218a8a5a70df8c0f6b494b5cc23d419' qa-ws66-preview/signer.txt
+          sha256sum "$DEBUG" > qa-ws66-preview/apk-sha256.txt
+          python3 - "$DEBUG" "$RELEASE" <<'PY'
+          import sys
+          from pathlib import Path
+          from zipfile import ZipFile
+          prefix = 'assets/ws66-v110/'
+          directory = Path('core/build/generated/ws66-preview/assets/ws66-v110')
+          with ZipFile(sys.argv[1]) as debug, ZipFile(sys.argv[2]) as release:
+              expected = {prefix + p.name: p.read_bytes() for p in directory.iterdir()}
+              assert len(expected) == 7
+              assert {name for name in debug.namelist() if name.startswith(prefix)} == set(expected)
+              assert all(debug.read(name) == data for name, data in expected.items())
+              assert all(not name.startswith(prefix) for name in release.namelist())
+              assert all(b'Ws66ChapterPreview' not in release.read(name)
+                         for name in release.namelist() if name.endswith('.dex'))
+          print('WS66 preview snapshots match the debug asset source and are absent from release.')
+          PY
+          echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=static_node"' | sudo tee /etc/udev/rules.d/99-kvm4all.rules
+          sudo udevadm control --reload-rules
+          sudo udevadm trigger --name-match=kvm
+
+      - name: WS66 Real signed v108 to v110 upgrade and chapter play
+        if: ${{ (github.head_ref || github.ref_name) == 'feature/ws66-chapter-preview-v110-2026-11-23' }}
+        uses: reactivecircus/android-emulator-runner@v2
+        with:
+          api-level: 35
+          target: google_apis
+          arch: x86_64
+          profile: pixel_4
+          avd-name: ws66-chapter-preview
+          ram-size: 3072M
+          disable-animations: true
+          emulator-options: -no-window -gpu swiftshader -no-snapshot -noaudio -no-boot-anim
+          script: bash scripts/ws66_preview_emulator.sh
+
+      - name: WS66 Archive board snapshots and device evidence
+        if: ${{ always() && (github.head_ref || github.ref_name) == 'feature/ws66-chapter-preview-v110-2026-11-23' }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: GridMates-WS66-v110-Chapter-Preview-Evidence
+          path: |
+            qa-ws66-preview/
+            core/build/generated/ws66-preview/
+          retention-days: 30
+          if-no-files-found: warn
+
+      - name: WS61 Compile upgrade instrumentation and configure emulator
+        if: ${{ (github.head_ref || github.ref_name) == 'feature/ws61-real-signed-v107-to-v108-upgrade-2026-11-22' }}
+        run: |
+          gradle --no-daemon :app:assembleDebugAndroidTest
+          echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=static_node"' | sudo tee /etc/udev/rules.d/99-kvm4all.rules
+          sudo udevadm control --reload-rules
+          sudo udevadm trigger --name-match=kvm
+
+      - name: WS67 Verify v111 package and fetch the signed v110 baseline
+        if: ${{ env.WS68_INTEGRATION == 'true' || (github.head_ref || github.ref_name) == 'feature/ws67-home-library-v111-2026-11-23' }}
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh run download 45257536508 --repo "$GITHUB_REPOSITORY" --name GridMates-WordSearch-Android-QA --dir qa-ws67-baseline
+          echo 'e595acafdeb6b8e48661e09cb3fb3fa89f3205810b8b1c3df166e5b427a98f80  qa-ws67-baseline/app-debug.apk' | sha256sum -c
+          gradle --no-daemon :app:assembleDebugAndroidTest
+          mkdir -p qa-ws67-home-library
+          APK=app/build/outputs/apk/debug/app-debug.apk
+          "$ANDROID_HOME/build-tools/35.0.0/aapt" dump badging "$APK" > qa-ws67-home-library/badging.txt
+          grep -F "name='com.playereden.gridmates.wordsearch.qa' versionCode='111'" qa-ws67-home-library/badging.txt
+          "$ANDROID_HOME/build-tools/35.0.0/apksigner" verify --print-certs "$APK" > qa-ws67-home-library/signer.txt
+          grep -F '75cc3c896247d71fbd51f7a3ed41f90c8218a8a5a70df8c0f6b494b5cc23d419' qa-ws67-home-library/signer.txt
+          sha256sum "$APK" > qa-ws67-home-library/apk-sha256.txt
+          if [ "$WS68_INTEGRATION" = true ]; then
+            gh run download 45065450259 --repo "$GITHUB_REPOSITORY" --name GridMates-WordSearch-Android-QA --dir qa-ws66-baseline
+            echo '6a7d59e6fed8bd2524abd216027b3caf7445aa8afa79c7fa8f2f3600b65a3b3b  qa-ws66-baseline/app-debug.apk' | sha256sum -c
+            python3 - "$APK" > qa-ws67-home-library/frozen-boards.txt <<'PY'
+          from hashlib import sha256
+          import sys
+          from zipfile import ZipFile
+
+          prefix = 'assets/ws66-v110/'
+          with ZipFile('qa-ws67-baseline/app-debug.apk') as baseline, ZipFile(sys.argv[1]) as candidate:
+              snapshots = {name for name in baseline.namelist() if name.startswith(prefix)}
+              assert len(snapshots) == 7, sorted(snapshots)
+              assert {name for name in candidate.namelist() if name.startswith(prefix)} == snapshots
+              for name in sorted(snapshots):
+                  data = baseline.read(name)
+                  assert candidate.read(name) == data, name
+                  print(sha256(data).hexdigest(), name)
+          PY
+          fi
+          echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=static_node"' | sudo tee /etc/udev/rules.d/99-kvm4all.rules
+          sudo udevadm control --reload-rules
+          sudo udevadm trigger --name-match=kvm
+
+      - name: Test signed upgrade, native Home and library, and beta integration
+        if: ${{ env.WS68_INTEGRATION == 'true' || (github.head_ref || github.ref_name) == 'feature/ws67-home-library-v111-2026-11-23' }}
+        uses: reactivecircus/android-emulator-runner@v2
+        with:
+          api-level: 35
+          target: google_apis
+          arch: x86_64
+          profile: pixel_4
+          avd-name: ws67-home-library
+          ram-size: 3072M
+          disable-animations: true
+          emulator-options: -no-window -gpu swiftshader -no-snapshot -noaudio -no-boot-anim
+          script: bash ${{ env.WS68_INTEGRATION == 'true' && 'scripts/ws68_beta_emulator.sh' || 'scripts/ws67_home_library_emulator.sh' }}
+
+      - name: WS67 Archive UI screenshots, signer and upgrade evidence
+        if: ${{ always() && (env.WS68_INTEGRATION == 'true' || (github.head_ref || github.ref_name) == 'feature/ws67-home-library-v111-2026-11-23') }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: GridMates-WS67-v111-Home-Library-Evidence
+          path: qa-ws67-home-library/
+          if-no-files-found: warn
+          retention-days: 30
+
+      - name: WS68 Archive legacy restore and all three Nearby game modes
+        if: ${{ always() && env.WS68_INTEGRATION == 'true' }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: GridMates-WS68-Beta-Integration-Evidence
+          path: |
+            qa-ws68-integration/
+            qa-ws62-nearby-tcp/
+          if-no-files-found: warn
+          retention-days: 30
+
+      - name: WS61 Real v107 to v108 APK install-over preserving 6 private files
+        if: ${{ (github.head_ref || github.ref_name) == 'feature/ws61-real-signed-v107-to-v108-upgrade-2026-11-22' }}
+        uses: reactivecircus/android-emulator-runner@v2
+        with:
+          api-level: 35
+          target: google_apis
+          arch: x86_64
+          profile: pixel_4
+          avd-name: ws61-signed-upgrade
+          ram-size: 3072M
+          disable-animations: true
+          emulator-options: -no-window -gpu swiftshader -no-snapshot -noaudio -no-boot-anim
+          script: bash scripts/ws61_signed_v107_v108_upgrade_emulator.sh
+
+      - name: WS61 Archive install logs, private save hashes and decode receipts
+        if: ${{ always() && (github.head_ref || github.ref_name) == 'feature/ws61-real-signed-v107-to-v108-upgrade-2026-11-22' }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: GridMates-WS61-Signed-v107-to-v108-Upgrade-Evidence
+          path: qa-ws61-signed-upgrade/
+          if-no-files-found: warn
+          retention-days: 30
+
+      - name: WS62 Compile live Nearby TCP Android instrumentation
+        if: ${{ (github.head_ref || github.ref_name) == 'feature/ws62-live-tcp-nearby-modes-qa-2026-11-22' }}
+        run: |
+          gradle --no-daemon :app:assembleDebugAndroidTest
+          echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=static_node"' | sudo tee /etc/udev/rules.d/99-kvm4all.rules
+          sudo udevadm control --reload-rules
+          sudo udevadm trigger --name-match=kvm
+
+      - name: WS62 Exercise real host and guest TCP in Co-op Race Duel
+        if: ${{ (github.head_ref || github.ref_name) == 'feature/ws62-live-tcp-nearby-modes-qa-2026-11-22' }}
+        uses: reactivecircus/android-emulator-runner@v2
+        with:
+          api-level: 35
+          target: google_apis
+          arch: x86_64
+          profile: pixel_4
+          avd-name: ws62-nearby-live-tcp
+          ram-size: 3072M
+          disable-animations: true
+          emulator-options: -no-window -gpu swiftshader -no-snapshot -noaudio -no-boot-anim
+          script: bash scripts/ws62_nearby_live_tcp_emulator.sh
+
+      - name: WS62 Upload TCP handshake, claim and emulator interface reports
+        if: ${{ always() && (github.head_ref || github.ref_name) == 'feature/ws62-live-tcp-nearby-modes-qa-2026-11-22' }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: GridMates-WS62-Nearby-Live-TCP-Emulator
+          path: qa-ws62-nearby-tcp/
+          if-no-files-found: warn
+          retention-days: 30
+
+      - name: WS45 Prepare focused score and save instrumentation
+        if: ${{ (github.head_ref || github.ref_name) == 'feature/ws45-bonus-android-reliability-2026-11-19' }}
+        run: |
+          gradle --no-daemon :app:assembleDebugAndroidTest
+          echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=static_node"' | sudo tee /etc/udev/rules.d/99-kvm4all.rules
+          sudo udevadm control --reload-rules
+          sudo udevadm trigger --name-match=kvm
+
+      - name: WS45 Run side-word, Solo, Daily and backup regression on Android
+        if: ${{ (github.head_ref || github.ref_name) == 'feature/ws45-bonus-android-reliability-2026-11-19' }}
+        uses: reactivecircus/android-emulator-runner@v2
+        with:
+          api-level: 35
+          target: google_apis
+          arch: x86_64
+          profile: pixel_4
+          avd-name: ws45-bonus-regression
+          ram-size: 3072M
+          disable-animations: true
+          emulator-options: -no-window -gpu swiftshader -no-snapshot -noaudio -no-boot-anim
+          script: bash scripts/ws45_bonus_emulator.sh
+
+      - name: WS45 Upload actual Android scoring and persistence evidence
+        if: ${{ always() && (github.head_ref || github.ref_name) == 'feature/ws45-bonus-android-reliability-2026-11-19' }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: GridMates-WS45-Score-Android-Execution
+          path: qa-ws45-bonus/
+          if-no-files-found: warn
+          retention-days: 30
+
+      - name: WS46 Publish actual V1/V2/V3/V5 side-word opportunity distribution
+        if: ${{ always() && (github.head_ref || github.ref_name) == 'feature/ws46-bonus-opportunity-audit-2026-11-19' }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: GridMates-WS46-Bonus-Opportunity-Audit
+          path: core/build/ws46-bonus-opportunities.tsv
+          if-no-files-found: warn
+          retention-days: 30
+
+      - name: WS47 Upload real-board fragment crossing and free-word origins
+        if: ${{ always() && (github.head_ref || github.ref_name) == 'feature/ws47-bonus-origin-and-fragment-audit-2026-11-19' }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: GridMates-WS47-Bonus-Origin-Audit
+          path: |
+            core/build/ws46-bonus-opportunities.tsv
+            core/build/ws47-bonus-origin.tsv
+          if-no-files-found: error
+          retention-days: 30
+
+      - name: WS49 Upload Fall incremental natural bonus-word measurements
+        if: ${{ always() && (github.head_ref || github.ref_name) == 'feature/ws49-fall-natural-bonus-coverage-2026-11-19' }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: GridMates-WS49-Natural-Fall-Coverage
+          path: |
+            core/build/ws46-bonus-opportunities.tsv
+            core/build/ws47-bonus-origin.tsv
+            core/build/ws49-fall-natural-increment.tsv
+            core/build/ws49-fall-candidate-frequencies.tsv
+          if-no-files-found: error
+          retention-days: 30
+
+      - name: WS50 Upload chapter-map and Birdsong three-page manuscript reports
+        if: ${{ always() && (github.head_ref || github.ref_name) == 'feature/ws50-chapter-recipe-and-birdsong-lab-2026-11-19' }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: GridMates-WS50-Chapter-Recipe-QA
+          path: |
+            core/build/ws50-chapter-pool-coverage.tsv
+            core/build/ws50-birdsong-qa-preview.tsv
+          if-no-files-found: error
+          retention-days: 30
+
+      - name: WS51 Upload 3-page unique Birdsong candidate boards
+        if: ${{ always() && (github.head_ref || github.ref_name) == 'feature/ws51-birdsong-diverse-page-manuscript-2026-11-20' }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: GridMates-WS51-Birdsong-Manuscript
+          path: core/build/ws51-birdsong-diverse-frozen-pages.tsv
+          if-no-files-found: error
+          retention-days: 30
+
+      - name: WS52 Upload five Woodland chapter candidate puzzle manuscripts
+        if: ${{ always() && (github.head_ref || github.ref_name) == 'feature/ws52-woodland-five-chapter-manuscripts-2026-11-20' }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: GridMates-WS52-Woodland-Chapter-QA
+          path: |
+            core/build/ws52-woodland-five-chapter-frozen-boards.tsv
+            core/build/ws52-woodland-chapter-quality.tsv
+          if-no-files-found: error
+          retention-days: 30
+
+      - name: WS53 Upload revised Quiet Clearings frozen boards and chapter-overlap deltas
+        if: ${{ always() && (github.head_ref || github.ref_name) == 'feature/ws53-quiet-clearings-distinct-editorial-2026-11-20' }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: GridMates-WS53-Quiet-Clearings-QA
+          path: |
+            core/build/ws53-quiet-clearings-frozen-boards.tsv
+            core/build/ws53-woodland-overlap-delta.tsv
+          if-no-files-found: error
+          retention-days: 30
+
+      - name: WS54 Upload stream frozen boards and complete Woodland bookwide repetition study
+        if: ${{ always() && (github.head_ref || github.ref_name) == 'feature/ws54-stream-chapter-bookwide-quality-2026-11-20' }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: GridMates-WS54-Stream-Bookwide-QA
+          path: |
+            core/build/ws54-stream-frozen-pages.tsv
+            core/build/ws54-bookwide-overlap-delta.tsv
+            core/build/ws54-bookwide-word-frequency.tsv
+          if-no-files-found: error
+          retention-days: 30
+
+      - name: WS55 Upload wildlife boards and Woodland chapter identity reports
+        if: ${{ always() && (github.head_ref || github.ref_name) == 'feature/ws55-forest-discoveries-editorial-2026-11-21' }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: GridMates-WS55-Forest-Bookwide-QA
+          path: |
+            core/build/ws55-forest-frozen-pages.tsv
+            core/build/ws55-bookwide-overlap-delta.tsv
+            core/build/ws55-bookwide-word-frequency.tsv
+          if-no-files-found: error
+          retention-days: 30
+
+      - name: WS56 Upload frozen clearings pages and six-chapter vocabulary frequency
+        if: ${{ always() && (github.head_ref || github.ref_name) == 'feature/ws56-quiet-clearings-groundcover-editorial-2026-11-21' }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: GridMates-WS56-Quiet-Clearings-QA
+          path: |
+            core/build/ws56-clearings-frozen-pages.tsv
+            core/build/ws56-bookwide-overlap-delta.tsv
+            core/build/ws56-bookwide-word-frequency.tsv
+          if-no-files-found: error
+          retention-days: 30

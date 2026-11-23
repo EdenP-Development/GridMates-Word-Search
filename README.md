@@ -1,52 +1,73 @@
-**WS-10 vocabulary direction:** Target **10,000+ unique human-approved words across 30+ themes**. See [WS-10 issue #87](https://github.com/PlayerEden/GridMates-Word-Search/issues/87) and [draft lexicon foundation PR #86](https://github.com/PlayerEden/GridMates-Word-Search/pull/86). The new pipeline currently has 40 *sample candidates*, zero approved; this is not a bulk import or APK release.
+# GridMates: Word Search
 
-**Genre research reference (Nov 8, 2026):** [Word Search — History, Audience, Rules, Stats & Design](./docs/WORD_SEARCH_GENRE_MASTER_RESEARCH_2026-11-08.md) · [Word Library Inventory and Editorial Audit](./docs/WORD_LIBRARY_STATUS_2026-11-08.md). These are living **research/reference documents**, not new Android build or release claims.
+An offline-first Android puzzle game with illustrated puzzle books, Solo/Custom,
+Daily, nearby Co-op, Shared Board Race and Speed Duel.
 
-**Book-sized Solo puzzle update (WS-04D-B1):** new puzzle presets start at **12×12** Short (12 words), with **15×15** Standard (16, new default), and **20×20** Extended (24). Relaxed/Classic/Expert challenge stays independent from board size. The first zoomable board offers Move/Find panning and adjustable 100–250% zoom; old v1/v2 seeded Solo and dated Daily puzzles remain supported. [Draft PR #22](https://github.com/PlayerEden/GridMates-Word-Search/pull/22), [green Android CI #42174823751](https://github.com/PlayerEden/GridMates-Word-Search/actions/runs/42174823751), [APK artifact](https://github.com/PlayerEden/GridMates-Word-Search/actions/runs/42174823751/artifacts/13482927260), [QA receipt](https://github.com/PlayerEden/GridMates-Word-Search/blob/feature/ws04d-book-size-presets-zoom-2026-11-06/docs/WS04D_BOOK_SIZES_BUILD_QA_2026-11-06.md), [exact-source checkpoint](https://github.com/PlayerEden/GridMates-Word-Search/tree/checkpoint/ws04d-book-board-presets-v044-ci-green-2026-11-06). **20×20 real-phone pan/touch/accessibility testing and stable QA signing still open**; do not call this a production-ready experience. Follow [issue #23](https://github.com/PlayerEden/GridMates-Word-Search/issues/23).\n\n**Latest WS-04D-A Gameplay V2:** Theme, **Board Size (8×8 / 10×10 / 12×12)** and **Challenge (Relaxed / Classic / Expert)** can now be selected independently for new English Solo puzzles. The old English v1 puzzle engine, existing Solo records and offline Daily seeds remain unchanged; save schema 4 reads older schema 1–3 data. Home is streamlined around playable Solo and Daily. [Draft PR #20](https://github.com/PlayerEden/GridMates-Word-Search/pull/20) · [CI-green run #42173169314](https://github.com/PlayerEden/GridMates-Word-Search/actions/runs/42173169314) · [v0.4.3 QA artifact](https://github.com/PlayerEden/GridMates-Word-Search/actions/runs/42173169314/artifacts/13481938907) · [source/QA receipt](https://github.com/PlayerEden/GridMates-Word-Search/blob/feature/ws04d-v2-puzzle-setup-2026-11-06/docs/WS04D_A_BUILD_QA_2026-11-06). **Actual Android test execution, signed in-place updates, touch/visual owner acceptance and deeper UX work are still pending**; follow [WS-04D-B issue #21](https://github.com/PlayerEden/GridMates-Word-Search/issues/21). Keep all PRs draft, preserve saved data and original Woodland art.\n\n# GridMates: Word Search
+**Current playable QA is v111.** The three illustrated books contain 87 frozen pages, with grouped chapters and saved progress. The signed install-over passed Android emulator QA. Handset, two-phone Nearby, and editorial release review remain open. [Signed APK ZIP](https://github.com/PlayerEden/GridMates-Word-Search/actions/runs/45273861695/artifacts/14866208722) · [v111 draft and test results](https://github.com/PlayerEden/GridMates-Word-Search/pull/188)
 
-*A word-search puzzle is more fun with good company.*
+The [beta integration checkpoint](docs/devlog/2026-11-23_WS68_BETA_INTEGRATION.md) brings the cumulative game forward against `main` and verifies the upgrade chain and Nearby on the same source.
 
-**GridMates: Word Search** is a planned standalone native Android game in the **GridMates** puzzle family, featuring classic offline Solo and Daily puzzles, same-Wi-Fi two-phone Co-op, and two Versus modes: **Shared Board Race** and **Speed Duel**.
+- [Current product roadmap](docs/CURRENT_PRODUCT_ROADMAP.md)
+- [Start here for development](docs/START_HERE.md)
+- [Active handoff](docs/WS14_ACTIVE_HANDOFF_2026-11-09.md)
+- [Development journal](docs/DEVELOPMENT_JOURNAL.md)
+- [Recovered GitHub plans and source crosswalk](docs/audits/2026-11-17_WS40_GITHUB_PLAN_RECOVERY.md)
+- [Current QA vocabulary authoring](data/lexicon/authoring/en-v1/README.md)
+- [Master game design](docs/MASTER_GAME_DESIGN.md)
+- [Word Search genre and audience research](docs/WORD_SEARCH_GENRE_MASTER_RESEARCH_2026-11-08.md)
+- [Artifact retention and maintenance](docs/CI_ACTIONS_ARTIFACT_RETENTION.md)
 
-**Status:** **WS-03 Solo Beta is CI-built and ready for physical QA; first playable Solo word-search prototype was CI-built** in [stacked draft PR #4](https://github.com/PlayerEden/GridMates-Word-Search/pull/4), with a [verified QA APK from run #42138730965](https://github.com/PlayerEden/GridMates-Word-Search/actions/runs/42138730965/artifacts/13467085867). The generator and native letter grid are implemented for testing, but physical input testing, saved progress, Daily, profiles and multiplayer are not complete. This is not a Google Play release.
+Continue reviewed vocabulary batches toward 10k/ 30-plus topics and future book
+families. Keep stable saves/signing and the shared warm-paper/green/gold identity.
+GridMates: Sudoku is a separate project.
 
-**Latest Daily Alpha:** [WS-04A draft PR #9](https://github.com/PlayerEden/GridMates-Word-Search/pull/9) has CI-verified offline Daily puzzles, dated completion history and migration-friendly Solo + Daily backups. [Android QA APK](https://github.com/PlayerEden/GridMates-Word-Search/actions/runs/42152990119/artifacts/13473941256) · [QA report and phone checklist](https://github.com/PlayerEden/GridMates-Word-Search/blob/feature/ws04a-offline-daily-2026-11-05/docs/WS04A_BUILD_QA_2026-11-05.md). **The build is not yet phone-tested or publicly released; export local progress before any QA uninstall.**
+<details>
+<summary>Historical checkpoints before WS40 — reference only</summary>
 
-**Latest WS-04B Collections Alpha:** Offline profile name, a 12-entry Woodland catalogue, completion-based portrait unlocks and eight achievements now build cleanly on [draft PR #12](https://github.com/PlayerEden/GridMates-Word-Search/pull/12) in [CI #42159209553](https://github.com/PlayerEden/GridMates-Word-Search/actions/runs/42159209553). This test APK uses temporary monogram previews; **the approved Woodland PNG art has not yet been imported**. See [QA and checksum receipt](https://github.com/PlayerEden/GridMates-Word-Search/blob/feature/ws04b-profile-woodland-achievements-2026-11-05/docs/WS04B_BUILD_QA_2026-11-05.md). Physical phone testing is still outstanding; protect saved data before QA reinstalls.
+# GridMates: Word Search
 
-**Final WS-04B source verification:** the save-export safeguard [passed CI #42159885088](https://github.com/PlayerEden/GridMates-Word-Search/actions/runs/42159885088) at SHA `fe448b6584326a1e3b241792584a3689d4de194c`. [Final rollback checkpoint](https://github.com/PlayerEden/GridMates-Word-Search/tree/checkpoint/ws04b-collections-safeguarded-ci-green-2026-11-05), [QA details and checksum](https://github.com/PlayerEden/GridMates-Word-Search/blob/feature/ws04b-profile-woodland-achievements-2026-11-05/docs/WS04B_BUILD_QA_2026-11-05.md). **Next:** original Woodland PNG import [issue #14](https://github.com/PlayerEden/GridMates-Word-Search/issues/14), then owner phone QA. Avoid unintended uninstall of QA apps with local progress; export first.
+> **CURRENT DEVELOPMENT / DESIGN AUDIT (Nov 14, 2026):** [Whole-repo asset and visual-cohesion findings](docs/audits/2026-11-14_WHOLE_REPO_ASSET_AND_VISUAL_COHESION_AUDIT.md) and [v75 functional/phone QA](docs/devlog/2026-11-14_WS16BP_LIBRARY_FUNCTIONAL_NAVIGATION_QA.md). Active code is on [draft PR #131](https://github.com/PlayerEden/GridMates-Word-Search/pull/131), **not `main`**. Latest dual-green Android/art QA build is [v75](https://github.com/PlayerEden/GridMates-Word-Search/actions/runs/43635464423/artifacts/14129808202); release art approval, full phone QA and app integration remain open. Read older statuses below as historical.
 
-**Latest WS-04C original-art checkpoint:** The **actual approved twelve Woodland PNGs** are now packaged in the QA Android build via a pinned, checksum-verified checkout of the Sudoku source (not AI replacements). [Draft PR #15](https://github.com/PlayerEden/GridMates-Word-Search/pull/15), [green CI #42162387676](https://github.com/PlayerEden/GridMates-Word-Search/actions/runs/42162387676), [final APK artifact](https://github.com/PlayerEden/GridMates-Word-Search/actions/runs/42162387676/artifacts/13477367662), [source and APK QA receipt](https://github.com/PlayerEden/GridMates-Word-Search/blob/feature/ws04c-verified-woodland-assets-2026-11-05/docs/WS04C_BUILD_QA_2026-11-05.md), [exact green source checkpoint](https://github.com/PlayerEden/GridMates-Word-Search/tree/checkpoint/ws04c-woodland-originals-v042-ci-green-2026-11-05). **Actual device rendering, backup migration, and stable QA signing remain open.** Next generated art work is a reviewed Ocean/Bugs proof batch [issue #16](https://github.com/PlayerEden/GridMates-Word-Search/issues/16), not a shipped collection.
+> **New-chat continuity:** [Development Journal — chronological who/what/why/build records](docs/DEVELOPMENT_JOURNAL.md) · [Latest WS-14C handoff](docs/WS14_ACTIVE_HANDOFF_2026-11-09.md). A dated entry is required for **each development pass and build**. The illustrated APK is available through the [GitHub Actions artwork artifact](https://github.com/PlayerEden/GridMates-Word-Search/actions/runs/42576785170/artifacts/13656070327); download its ZIP and extract `app-debug.apk` when an in-chat file link fails. Physical-device QA remains open.
 
-## Current playable checkpoint
+> **WS-14 artwork pipeline and current new-chat handoff (Nov 9, 2026):** [Reproducible PNG creation → GitHub binary upload → Android import/playtest guide](docs/ASSET_CREATION_GITHUB_INTEGRATION_PLAYBOOK.md) · [Active WS-14 new-chat checkpoint](docs/WS14_ACTIVE_HANDOFF_2026-11-09.md). Six real book covers/spines were imported into the debug APK and verified absent from release on [art-workflow run #42576785170](https://github.com/PlayerEden/GridMates-Word-Search/actions/runs/42576785170); [Android QA #42576785096](https://github.com/PlayerEden/GridMates-Word-Search/actions/runs/42576785096) also passed. **Owner physical-device art review and release rights are still pending.** Older milestones below are historical, not the current WS-14 handoff.
 
-**WS-03 Solo Beta** is CI-green on [draft PR #7](https://github.com/PlayerEden/GridMates-Word-Search/pull/7), stacked on the independent native foundation and the WS-02B touch-feel work. Its verified Android QA APK has offline Solo save/resume, a three-step hint ladder, a Records journal, progress backup/restore and smoother marker-style gameplay. **Physical on-phone acceptance is still open; this is not a production Google Play release.**
+*Good puzzles. Good company.*
 
-- [Get the latest Solo Beta QA APK from GitHub](https://github.com/PlayerEden/GridMates-Word-Search/actions/runs/42149214204/artifacts/13471921695)
-- [Build evidence and SHA-256](https://github.com/PlayerEden/GridMates-Word-Search/blob/feature/ws03-solo-save-results-2026-11-05/docs/WS03_BUILD_QA_2026-11-05.md)
-- [Phone test playbook](https://github.com/PlayerEden/GridMates-Word-Search/blob/feature/ws03-solo-save-results-2026-11-05/docs/WS03_SOLO_BETA_PLAYTEST.md)
+GridMates: Word Search is a standalone, offline-first native Android word-search game in the GridMates puzzle family. It emphasizes comfortable, paperback-inspired puzzles and easy nearby play with someone on the same Wi-Fi.
 
-**Caution:** QA APK signing can differ between GitHub runs. Before uninstalling any build that contains saved progress, use **Settings → Export** to preserve your local Word Search JSON backup, then use **Settings → Import** after reinstalling.
+## Current development status — November 7, 2026
 
-## Start here
+**Latest: WS-07F Records UI v0.8.2/code36, automated 92/92 API35 Android tests PASS** and signed v0.8.1→v0.8.2 saved-progress upgrade PASS. [Exact source, checksum, APK ZIP and rollback](docs/WS07F_RECORDS_BUILD_QA_2026-11-07.md). [Draft PR #60](https://github.com/PlayerEden/GridMates-Word-Search/pull/60) moves Solo/Race/Duel controls near the top and pages all histories without hiding old records. [Separate Collection pagination draft PR #61](https://github.com/PlayerEden/GridMates-Word-Search/pull/61) is awaiting full QA. **Real two-phone word marking still OPEN at owner's request; no `main` merge or production release.**
+- [Latest cumulative draft PR #48 — Shared Co-op Board Looks](https://github.com/PlayerEden/GridMates-Word-Search/pull/48) builds on Postcards [#47](https://github.com/PlayerEden/GridMates-Word-Search/pull/47), Nearby Presence [#46](https://github.com/PlayerEden/GridMates-Word-Search/pull/46), Speed Duel journal [#45](https://github.com/PlayerEden/GridMates-Word-Search/pull/45), Speed Duel [#44](https://github.com/PlayerEden/GridMates-Word-Search/pull/44), Versus Journal [#43](https://github.com/PlayerEden/GridMates-Word-Search/pull/43), Shared Board Race [#42](https://github.com/PlayerEden/GridMates-Word-Search/pull/42), stable QA updates [#41](https://github.com/PlayerEden/GridMates-Word-Search/pull/41), screenshot/UI polish [#40](https://github.com/PlayerEden/GridMates-Word-Search/pull/40), then #39 and older drafts.
+- [Exact WS-06G Android QA receipt](docs/WS06G_BUILD_QA_2026-11-07.md): real API35 emulator **71 tests passed**, signed v0.7.3→v0.7.4 install-over preserving Solo/Daily/profile, Race and Duel journals; host-authoritative Co-op style protocol v7 tests, checksum and rollback checkpoint.
+- [Cumulative v0.7.4 QA APK ZIP](https://github.com/PlayerEden/GridMates-Word-Search/actions/runs/42360155148/artifacts/13569895376) (GitHub Actions artifact expires November 14, 2026).
+- **Do not mark physical two-phone LAN or real handset update QA passed yet.** All PRs remain draft/unmerged until owner testing.
 
-- **[Master Game Design](docs/MASTER_GAME_DESIGN.md)** — full vision, mode rules, gameplay, art and UX, reusable Sudoku systems, data safety, monetization boundaries and open design questions.
-- **[Development Roadmap](docs/DEVELOPMENT_ROADMAP.md)** — staged execution plan and verification gates.
-- **[START HERE — Development handoff](docs/START_HERE.md)** — current stage and safe next action for a new coding session.
+## Playable in the cumulative QA app
 
-## GridMates principles
+- Offline Solo and Daily word searches with different themes, book-size grids, challenges, assisted hints and local results.
+- Profiles, achievements, free achievement-earned Woodland portraits and collectible board fonts. No cosmetic purchases or ad-to-unlock requirements.
+- Manual backup/restore of local Solo/Daily/profile and separate Race/Duel history, with protective validation; separate QA application ID and pinned public **test-only** signer. Future Play signing will be private and different.
+- Nearby Co-op on the same Wi-Fi: open rooms or optional codes, discovery/manual join, shared found words, partner presence, chat, reconnect and **temporary shared room board looks** (free Classic Paper / Linen Sketch / Blueprint Study previews, round-frozen, with a Classic-on-my-phone readability override). Neither player's permanent font or collection changes.
+- **Shared Board Race:** one shared board, first valid claim scores each word, real-time points, and winner/tie. Completed results persist in separate Versus stats with Played/Wins/Losses/Ties and word-by-word post-match comparison; no duplicate awards on reconnect. Co-op stays noncompetitive.
+- **Speed Duel:** independent, identical private boards on two phones; both tap Ready before GO. Only per-seat counts are public, while each phone sees its own discovered words. The host resolves the first accepted complete board; reconnection recovers a living host's state. Completed Duel results now have a **separate saved journal**, local wins/losses and a final-screen save confirmation.
+- Friend-presence panel showing true local Wi-Fi connection and contributions, with counts-only opponent progress in Speed Duel. Completed Solo/Daily/Nearby puzzles can optionally preview an **offline 4:5 PNG result postcard** or share the existing privacy-safe text through Android Sharesheet; no remote names, chat, hidden solutions or room details are shared.
+- Readable paper/ink UI, compact navigation, larger text and landscape support. Emulator checks complement, not replace, real physical touch/accessibility review.
 
-- Simple for first-time and older players; polished enough to feel like a complete modern game.
-- Offline-first, optional deliberate nearby play. No mandatory online account.
-- Reuse the original GridMates: Sudoku animal portraits and proven UX patterns, while giving Word Search its own engine, app identity, saves, tests and releases.
-- Respectful help, long-term progress, optional cosmetic rewards, and no ads interrupting puzzles.
-- The design remains iterative: proposals should change when real phone playtests show a better answer.
+**Coming next:** [WS-07A–G quality milestones](docs/DEVELOPMENT_ROADMAP.md#live-development-priority--ws-07-refinement-arc-november-7-2026): fix touch coordinate mapping/direction locking, no-scroll adaptive gameplay, accessible 20×20 precision, physical two-phone Co-op/Race/Duel, hint/menus/content, save/performance regression and beta gate. Do not represent preview looks as rare/earned cosmetics. Both phones must use LAN protocol **v7 compatible** builds; v0.7.7 is an emulator-verified QA candidate requiring real-phone acceptance.
 
-**Next:** The [WS-02B feel-polish build](https://github.com/PlayerEden/GridMates-Word-Search/pull/6) has passed Android CI but needs hands-on review: smoother word dragging, new marker highlights, compact word-list layout and haptic feedback. [Download QA build from GitHub](https://github.com/PlayerEden/GridMates-Word-Search/actions/runs/42146261876/artifacts/13469863578). Then address remaining phone feedback and begin WS-03 durable Solo saves/update-signing. The underlying WS-01 foundation is [draft PR #3](https://github.com/PlayerEden/GridMates-Word-Search/pull/3).
+## Source of truth
 
-**Sister project:** [GridMates: Sudoku](https://github.com/PlayerEden/SudokuTogether) — do not treat its default main as the latest Android gameplay source; see the handoff for current references.
+- [START HERE — current coding handoff](docs/START_HERE.md)
+- [Development Roadmap — active WS-07A–G](docs/DEVELOPMENT_ROADMAP.md)
+- [WS-07: Playtest evidence, input and accessibility research, UX specification](docs/WS07_PLAYTEST_RESEARCH_AND_UX_SPEC_2026-11-07.md)
+- [Master Game Design](docs/MASTER_GAME_DESIGN.md)
+- [WS-06G shared Co-op look rules and QA plan](docs/WS06G_SHARED_COOP_BOARD_LOOKS_QA_PLAN_2026-11-07.md)
 
-## First development tickets
+**Installing safely:** Stable-signed WS-05J v0.5.9 from PR #41 and later builds (including WS-06D v0.7.1) can normally update over the top to v0.7.4. The **actual v0.7.3→v0.7.4 path passed Android emulator QA**. Old ephemeral-signed v0.5.8 and the separate PR #40 screenshot v0.5.9 APK may require **Export backup → verify JSON → uninstall Word Search QA only → install v0.7.4 → Restore backup**. Never uninstall or clear app storage without verifying a backup. Read the [full QA receipt](docs/WS06G_BUILD_QA_2026-11-07.md).
 
-- [WS-01 — Native Android foundation and safe Sudoku reuse](https://github.com/PlayerEden/GridMates-Word-Search/issues/1)
-- [WS-02 — Deterministic word-search engine and touch prototype](https://github.com/PlayerEden/GridMates-Word-Search/issues/2)
+**Sister project:** [GridMates: Sudoku](https://github.com/PlayerEden/SudokuTogether). Word Search has its own package, saves, engine, LAN mode namespace, signing and repository.
+
+
+</details>
