@@ -1,0 +1,134 @@
+source_pool	answer	preflight_lane	preflight_reason	suggested_tier	suggested_chapter	context_reference
+WS65	CERES	HOLD	Valid dwarf-planet context needs source-level name and familiarity check; do not default to Relaxed.	intermediate		https://science.nasa.gov/solar-system/solar-system-facts/
+WS65	ERIS	HOLD	Valid dwarf-planet context needs source-level name and familiarity check; do not default to Relaxed.	intermediate		https://science.nasa.gov/solar-system/solar-system-facts/
+WS65	HAUMEA	HOLD	Valid dwarf-planet context needs source-level name and familiarity check; do not default to Relaxed.	intermediate		https://science.nasa.gov/solar-system/solar-system-facts/
+WS65	MAKEMAKE	HOLD	Valid dwarf-planet context needs source-level name and familiarity check; do not default to Relaxed.	intermediate		https://science.nasa.gov/solar-system/solar-system-facts/
+WS65	TERRESTRIAL	MOVE	Generic adjective without 'planet' does not promise a specific solar-system object; consider a distinct science vocabulary chapter.	intermediate	Planetary Science	https://science.nasa.gov/solar-system/solar-system-facts/
+WS65	GASGIANT	PROMISING	Recognizable Solar-System class if displayed as the two-word term and tested for clarity; discuss Relaxed familiarity.	intermediate		https://science.nasa.gov/solar-system/solar-system-facts/
+WS65	ICEGIANT	PROMISING	Recognizable Solar-System class if displayed as the two-word term and tested for clarity; discuss Relaxed familiarity.	intermediate		https://science.nasa.gov/solar-system/solar-system-facts/
+WS65	DWARFPLANET	PROMISING	Recognizable Solar-System class if displayed as the two-word term and tested for clarity; discuss Relaxed familiarity.	intermediate		https://science.nasa.gov/solar-system/solar-system-facts/
+WS65	EUROPA	PROMISING	Named Solar-System moon; suitable specialist term, but reader familiarity and source evidence must be individually checked.	intermediate		https://science.nasa.gov/solar-system/moons/facts/
+WS65	GANYMEDE	PROMISING	Named Solar-System moon; suitable specialist term, but reader familiarity and source evidence must be individually checked.	intermediate		https://science.nasa.gov/solar-system/moons/facts/
+WS65	CALLISTO	PROMISING	Named Solar-System moon; suitable specialist term, but reader familiarity and source evidence must be individually checked.	intermediate		https://science.nasa.gov/solar-system/moons/facts/
+WS65	TITAN	PROMISING	Named Solar-System moon; suitable specialist term, but reader familiarity and source evidence must be individually checked.	intermediate		https://science.nasa.gov/solar-system/moons/facts/
+WS65	ENCELADUS	PROMISING	Named Solar-System moon; suitable specialist term, but reader familiarity and source evidence must be individually checked.	intermediate		https://science.nasa.gov/solar-system/moons/facts/
+WS65	TRITON	PROMISING	Named Solar-System moon; suitable specialist term, but reader familiarity and source evidence must be individually checked.	intermediate		https://science.nasa.gov/solar-system/moons/facts/
+WS65	PHOBOS	PROMISING	Named Solar-System moon; suitable specialist term, but reader familiarity and source evidence must be individually checked.	intermediate		https://science.nasa.gov/solar-system/moons/facts/
+WS65	DEIMOS	PROMISING	Named Solar-System moon; suitable specialist term, but reader familiarity and source evidence must be individually checked.	intermediate		https://science.nasa.gov/solar-system/moons/facts/
+WS65	ARIEL	HOLD	NASA lists this as a Uranian moon; multiple literary/name meanings and lower casual familiarity require clear chapter context.	advanced		https://science.nasa.gov/uranus/moons/facts/
+WS65	MIRANDA	HOLD	NASA lists this as a Uranian moon; multiple literary/name meanings and lower casual familiarity require clear chapter context.	advanced		https://science.nasa.gov/uranus/moons/facts/
+WS65	TITANIA	HOLD	NASA lists this as a Uranian moon; multiple literary/name meanings and lower casual familiarity require clear chapter context.	advanced		https://science.nasa.gov/uranus/moons/facts/
+WS65	OBERON	HOLD	NASA lists this as a Uranian moon; multiple literary/name meanings and lower casual familiarity require clear chapter context.	advanced		https://science.nasa.gov/uranus/moons/facts/
+WS65	UMBRIEL	HOLD	NASA lists this as a Uranian moon; multiple literary/name meanings and lower casual familiarity require clear chapter context.	advanced		https://science.nasa.gov/uranus/moons/facts/
+WS65	KUIPERBELT	PROMISING	Distinct Solar-System region; expert or intermediate tier and long-answer fit need independent checking.	intermediate		https://science.nasa.gov/solar-system/solar-system-facts/
+WS65	OORTCLOUD	PROMISING	Distinct Solar-System region; expert or intermediate tier and long-answer fit need independent checking.	intermediate		https://science.nasa.gov/solar-system/solar-system-facts/
+WS65	ASTEROIDBELT	PROMISING	Distinct Solar-System region; expert or intermediate tier and long-answer fit need independent checking.	intermediate		https://science.nasa.gov/solar-system/solar-system-facts/
+WS65	COMET	PROMISING	Recognizable Solar-System small-body class; keep differentiating similarly spelled terms during page review.	intermediate		https://science.nasa.gov/solar-system/solar-system-facts/
+WS65	ASTEROID	PROMISING	Recognizable Solar-System small-body class; keep differentiating similarly spelled terms during page review.	intermediate		https://science.nasa.gov/solar-system/solar-system-facts/
+WS65	METEORITE	PROMISING	Recognizable Solar-System small-body class; keep differentiating similarly spelled terms during page review.	intermediate		https://science.nasa.gov/solar-system/solar-system-facts/
+WS65	METEOROID	PROMISING	Recognizable Solar-System small-body class; keep differentiating similarly spelled terms during page review.	intermediate		https://science.nasa.gov/solar-system/solar-system-facts/
+WS65	COMA	HOLD	The unqualified word has a common unrelated meaning; explicitly teach comet coma or Trojan asteroid if retained.	advanced		https://science.nasa.gov/solar-system/solar-system-facts/
+WS65	TROJAN	HOLD	The unqualified word has a common unrelated meaning; explicitly teach comet coma or Trojan asteroid if retained.	advanced		https://science.nasa.gov/solar-system/solar-system-facts/
+WS65	BENNU	HOLD	Specialist object/surface term; verify exact sense and demand before including in a general family-friendly Solar-System page.	advanced		https://science.nasa.gov/solar-system/solar-system-facts/
+WS65	VESTA	HOLD	Specialist object/surface term; verify exact sense and demand before including in a general family-friendly Solar-System page.	advanced		https://science.nasa.gov/solar-system/solar-system-facts/
+WS65	REGOLITH	HOLD	Specialist object/surface term; verify exact sense and demand before including in a general family-friendly Solar-System page.	advanced		https://science.nasa.gov/solar-system/solar-system-facts/
+WS65	IONTAIL	HOLD	Specific comet component needs context; standalone label is easy to misread outside a specialist chapter.	advanced		https://science.nasa.gov/solar-system/solar-system-facts/
+WS65	DUSTTAIL	HOLD	Specific comet component needs context; standalone label is easy to misread outside a specialist chapter.	advanced		https://science.nasa.gov/solar-system/solar-system-facts/
+WS65	NUCLEUS	HOLD	Specific comet component needs context; standalone label is easy to misread outside a specialist chapter.	advanced		https://science.nasa.gov/solar-system/solar-system-facts/
+WS65	GREATREDSPOT	PROMISING	Named Solar-System landmark; use only on size-eligible advanced pages with verified spelling and display.	advanced		https://science.nasa.gov/jupiter/jupiter-facts/
+WS65	OLYMPUSMONS	PROMISING	Named Solar-System landmark; use only on size-eligible advanced pages with verified spelling and display.	advanced		https://science.nasa.gov/jupiter/jupiter-facts/
+WS65	VALLESMARINERIS	PROMISING	Named Solar-System landmark; use only on size-eligible advanced pages with verified spelling and display.	advanced		https://science.nasa.gov/jupiter/jupiter-facts/
+WS65	CRATER	PROMISING	Recognizable Solar-System feature; can be reused across pages but not counted as a new canonical word when existing.	intermediate		https://science.nasa.gov/solar-system/solar-system-facts/
+WS65	ATMOSPHERE	PROMISING	Recognizable Solar-System feature; can be reused across pages but not counted as a new canonical word when existing.	intermediate		https://science.nasa.gov/solar-system/solar-system-facts/
+WS65	RINGSYSTEM	PROMISING	Recognizable Solar-System feature; can be reused across pages but not counted as a new canonical word when existing.	intermediate		https://science.nasa.gov/solar-system/solar-system-facts/
+WS65	PERIHELION	HOLD	Real planetary-science concept but too technical/ambiguous for a simple chapter without verified sense and advanced-tier selection.	advanced	Planetary Science	https://science.nasa.gov/solar-system/solar-system-facts/
+WS65	APHELION	HOLD	Real planetary-science concept but too technical/ambiguous for a simple chapter without verified sense and advanced-tier selection.	advanced	Planetary Science	https://science.nasa.gov/solar-system/solar-system-facts/
+WS65	ECCENTRICITY	HOLD	Real planetary-science concept but too technical/ambiguous for a simple chapter without verified sense and advanced-tier selection.	advanced	Planetary Science	https://science.nasa.gov/solar-system/solar-system-facts/
+WS65	INCLINATION	HOLD	Real planetary-science concept but too technical/ambiguous for a simple chapter without verified sense and advanced-tier selection.	advanced	Planetary Science	https://science.nasa.gov/solar-system/solar-system-facts/
+WS65	RETROGRADE	HOLD	Real planetary-science concept but too technical/ambiguous for a simple chapter without verified sense and advanced-tier selection.	advanced	Planetary Science	https://science.nasa.gov/solar-system/solar-system-facts/
+WS65	PROGRADE	HOLD	Real planetary-science concept but too technical/ambiguous for a simple chapter without verified sense and advanced-tier selection.	advanced	Planetary Science	https://science.nasa.gov/solar-system/solar-system-facts/
+WS65	MAGNETOSPHERE	HOLD	Real planetary-science concept but too technical/ambiguous for a simple chapter without verified sense and advanced-tier selection.	advanced	Planetary Science	https://science.nasa.gov/solar-system/solar-system-facts/
+WS65	ALBEDO	HOLD	Real planetary-science concept but too technical/ambiguous for a simple chapter without verified sense and advanced-tier selection.	advanced	Planetary Science	https://science.nasa.gov/solar-system/solar-system-facts/
+WS65	REVOLUTION	HOLD	Real planetary-science concept but too technical/ambiguous for a simple chapter without verified sense and advanced-tier selection.	advanced	Planetary Science	https://science.nasa.gov/solar-system/solar-system-facts/
+WS65	NICOTIANA	HOLD	Ornamental flowering tobacco genus; check family-facing display, plant naming and age-appropriate context before inclusion.	intermediate		https://plants.ces.ncsu.edu/
+WS65	COSMOS	HOLD	Existing canonical word also denotes the universe; flower sense must be explicitly approved for this new garden topic association.	familiar		https://plants.ces.ncsu.edu/
+WS65	AGERATUM	HOLD	Valid-looking ornamental name is not automatically familiar; verify the plant, common display and beginner suitability.	intermediate		https://content.ces.ncsu.edu/extension-gardener-handbook/10-herbaceous-ornamentals
+WS65	CELOSIA	HOLD	Valid-looking ornamental name is not automatically familiar; verify the plant, common display and beginner suitability.	intermediate		https://content.ces.ncsu.edu/extension-gardener-handbook/10-herbaceous-ornamentals
+WS65	CLEOME	HOLD	Valid-looking ornamental name is not automatically familiar; verify the plant, common display and beginner suitability.	intermediate		https://content.ces.ncsu.edu/extension-gardener-handbook/10-herbaceous-ornamentals
+WS65	GOMPHRENA	HOLD	Valid-looking ornamental name is not automatically familiar; verify the plant, common display and beginner suitability.	intermediate		https://content.ces.ncsu.edu/extension-gardener-handbook/10-herbaceous-ornamentals
+WS65	PORTULACA	HOLD	Valid-looking ornamental name is not automatically familiar; verify the plant, common display and beginner suitability.	intermediate		https://content.ces.ncsu.edu/extension-gardener-handbook/10-herbaceous-ornamentals
+WS65	TORENIA	HOLD	Valid-looking ornamental name is not automatically familiar; verify the plant, common display and beginner suitability.	intermediate		https://content.ces.ncsu.edu/extension-gardener-handbook/10-herbaceous-ornamentals
+WS65	SCAEVOLA	HOLD	Valid-looking ornamental name is not automatically familiar; verify the plant, common display and beginner suitability.	intermediate		https://content.ces.ncsu.edu/extension-gardener-handbook/10-herbaceous-ornamentals
+WS65	GAZANIA	HOLD	Valid-looking ornamental name is not automatically familiar; verify the plant, common display and beginner suitability.	intermediate		https://content.ces.ncsu.edu/extension-gardener-handbook/10-herbaceous-ornamentals
+WS65	NEMESIA	HOLD	Valid-looking ornamental name is not automatically familiar; verify the plant, common display and beginner suitability.	intermediate		https://content.ces.ncsu.edu/extension-gardener-handbook/10-herbaceous-ornamentals
+WS65	ANGELONIA	HOLD	Valid-looking ornamental name is not automatically familiar; verify the plant, common display and beginner suitability.	intermediate		https://content.ces.ncsu.edu/extension-gardener-handbook/10-herbaceous-ornamentals
+WS65	HELIOTROPE	HOLD	Valid-looking ornamental name is not automatically familiar; verify the plant, common display and beginner suitability.	intermediate		https://content.ces.ncsu.edu/extension-gardener-handbook/10-herbaceous-ornamentals
+WS65	GAILLARDIA	HOLD	Valid-looking ornamental name is not automatically familiar; verify the plant, common display and beginner suitability.	intermediate		https://content.ces.ncsu.edu/extension-gardener-handbook/10-herbaceous-ornamentals
+WS65	PEONY	PROMISING	Strong flower-border concept; verify common-name context and consider more welcoming reader tier than the initial blanket intermediate.	familiar		https://content.ces.ncsu.edu/extension-gardener-handbook/10-herbaceous-ornamentals
+WS65	IRIS	PROMISING	Strong flower-border concept; verify common-name context and consider more welcoming reader tier than the initial blanket intermediate.	familiar		https://content.ces.ncsu.edu/extension-gardener-handbook/10-herbaceous-ornamentals
+WS65	DAYLILY	PROMISING	Strong flower-border concept; verify common-name context and consider more welcoming reader tier than the initial blanket intermediate.	familiar		https://content.ces.ncsu.edu/extension-gardener-handbook/10-herbaceous-ornamentals
+WS65	PHLOX	PROMISING	Strong flower-border concept; verify common-name context and consider more welcoming reader tier than the initial blanket intermediate.	familiar		https://content.ces.ncsu.edu/extension-gardener-handbook/10-herbaceous-ornamentals
+WS65	CONEFLOWER	PROMISING	Strong flower-border concept; verify common-name context and consider more welcoming reader tier than the initial blanket intermediate.	familiar		https://content.ces.ncsu.edu/extension-gardener-handbook/10-herbaceous-ornamentals
+WS65	HOLLYHOCK	PROMISING	Strong flower-border concept; verify common-name context and consider more welcoming reader tier than the initial blanket intermediate.	familiar		https://content.ces.ncsu.edu/extension-gardener-handbook/10-herbaceous-ornamentals
+WS65	FOXGLOVE	PROMISING	Strong flower-border concept; verify common-name context and consider more welcoming reader tier than the initial blanket intermediate.	familiar		https://content.ces.ncsu.edu/extension-gardener-handbook/10-herbaceous-ornamentals
+WS65	PRIMROSE	PROMISING	Strong flower-border concept; verify common-name context and consider more welcoming reader tier than the initial blanket intermediate.	familiar		https://content.ces.ncsu.edu/extension-gardener-handbook/10-herbaceous-ornamentals
+WS65	ASTER	PROMISING	Strong flower-border concept; verify common-name context and consider more welcoming reader tier than the initial blanket intermediate.	familiar		https://content.ces.ncsu.edu/extension-gardener-handbook/10-herbaceous-ornamentals
+WS65	BLACKEYEDSUSAN	HOLD	Common name and genus can represent overlapping flowering-plant concepts; review duplication and prefer familiar display on early pages.	intermediate		https://plants.ces.ncsu.edu/plants/rudbeckia/
+WS65	RUDBECKIA	HOLD	Common name and genus can represent overlapping flowering-plant concepts; review duplication and prefer familiar display on early pages.	intermediate		https://plants.ces.ncsu.edu/plants/rudbeckia/
+WS65	GAURA	HOLD	Botanical naming and other ordinary-name uses need a clear flower sense and reader familiarity check.	advanced		https://content.ces.ncsu.edu/extension-gardener-handbook/10-herbaceous-ornamentals
+WS65	VERONICA	HOLD	Botanical naming and other ordinary-name uses need a clear flower sense and reader familiarity check.	advanced		https://content.ces.ncsu.edu/extension-gardener-handbook/10-herbaceous-ornamentals
+WS65	BLEEDINGHEART	PROMISING	Recognizable flower-border plant but grid-normalized answer exceeds 11 letters, so not eligible for 12x12.	intermediate		https://content.ces.ncsu.edu/extension-gardener-handbook/10-herbaceous-ornamentals
+WS65	PETAL	PROMISING	Directly evocative of a flowering bed; keep for focused chapter review and correct page-size selection.	familiar		https://content.ces.ncsu.edu/extension-gardener-handbook/10-herbaceous-ornamentals
+WS65	BLOSSOM	PROMISING	Directly evocative of a flowering bed; keep for focused chapter review and correct page-size selection.	familiar		https://content.ces.ncsu.edu/extension-gardener-handbook/10-herbaceous-ornamentals
+WS65	BUD	PROMISING	Directly evocative of a flowering bed; keep for focused chapter review and correct page-size selection.	familiar		https://content.ces.ncsu.edu/extension-gardener-handbook/10-herbaceous-ornamentals
+WS65	FLOWERBED	PROMISING	Directly evocative of a flowering bed; keep for focused chapter review and correct page-size selection.	familiar		https://content.ces.ncsu.edu/extension-gardener-handbook/10-herbaceous-ornamentals
+WS65	FLOWERBORDER	PROMISING	Directly evocative of a flowering bed; keep for focused chapter review and correct page-size selection.	familiar		https://content.ces.ncsu.edu/extension-gardener-handbook/10-herbaceous-ornamentals
+WS65	POLLEN	PROMISING	Flower-and-pollination terms can help vary borders; cross-chapter reuse is fine, verify meaning in context.	familiar		https://content.ces.ncsu.edu/extension-gardener-handbook/10-herbaceous-ornamentals
+WS65	NECTAR	PROMISING	Flower-and-pollination terms can help vary borders; cross-chapter reuse is fine, verify meaning in context.	familiar		https://content.ces.ncsu.edu/extension-gardener-handbook/10-herbaceous-ornamentals
+WS65	STAMEN	MOVE	Flower anatomy is accurate educational vocabulary but distracts from a chapter about ornamental borders.	intermediate	Flower Anatomy / Botany	https://content.ces.ncsu.edu/extension-gardener-handbook
+WS65	PISTIL	MOVE	Flower anatomy is accurate educational vocabulary but distracts from a chapter about ornamental borders.	intermediate	Flower Anatomy / Botany	https://content.ces.ncsu.edu/extension-gardener-handbook
+WS65	ANTHER	MOVE	Flower anatomy is accurate educational vocabulary but distracts from a chapter about ornamental borders.	intermediate	Flower Anatomy / Botany	https://content.ces.ncsu.edu/extension-gardener-handbook
+WS65	SEPAL	MOVE	Flower anatomy is accurate educational vocabulary but distracts from a chapter about ornamental borders.	intermediate	Flower Anatomy / Botany	https://content.ces.ncsu.edu/extension-gardener-handbook
+WS65	FILAMENT	MOVE	Flower anatomy is accurate educational vocabulary but distracts from a chapter about ornamental borders.	intermediate	Flower Anatomy / Botany	https://content.ces.ncsu.edu/extension-gardener-handbook
+WS65	STIGMA	MOVE	Flower anatomy is accurate educational vocabulary but distracts from a chapter about ornamental borders.	intermediate	Flower Anatomy / Botany	https://content.ces.ncsu.edu/extension-gardener-handbook
+WS65	STYLE	MOVE	Flower anatomy is accurate educational vocabulary but distracts from a chapter about ornamental borders.	intermediate	Flower Anatomy / Botany	https://content.ces.ncsu.edu/extension-gardener-handbook
+WS65	OVARY	MOVE	Flower anatomy is accurate educational vocabulary but distracts from a chapter about ornamental borders.	intermediate	Flower Anatomy / Botany	https://content.ces.ncsu.edu/extension-gardener-handbook
+WS65	BOUQUET	MOVE	Cut-flower arrangement, not a plant growing in a garden border.	familiar	Flower Arranging / Crafts	
+WS65	DEADHEAD	MOVE	Garden maintenance and plant-life-cycle vocabulary better fits Growing Season / How Gardens Grow.	intermediate	Growing Season	
+WS65	ANNUAL	MOVE	Garden maintenance and plant-life-cycle vocabulary better fits Growing Season / How Gardens Grow.	intermediate	Growing Season	
+WS65	PERENNIAL	MOVE	Garden maintenance and plant-life-cycle vocabulary better fits Growing Season / How Gardens Grow.	intermediate	Growing Season	
+WS65	BIENNIAL	MOVE	Garden maintenance and plant-life-cycle vocabulary better fits Growing Season / How Gardens Grow.	intermediate	Growing Season	
+WS64	BIRDHOUSE	MOVE	Human-provided backyard bird equipment suits Birdwatching or Garden Visitors more naturally than woodland birdsong.	intermediate	Birdwatching / Garden Visitors	
+WS64	BIRDBATH	MOVE	Human-provided backyard bird equipment suits Birdwatching or Garden Visitors more naturally than woodland birdsong.	intermediate	Birdwatching / Garden Visitors	
+WS64	FEEDER	MOVE	Human-provided backyard bird equipment suits Birdwatching or Garden Visitors more naturally than woodland birdsong.	intermediate	Birdwatching / Garden Visitors	
+WS64	SONG	PROMISING	Broad ordinary word; keep only if bird-specific meaning and the source page theme are apparent.	familiar	Birdsong	
+WS64	FLIGHT	PROMISING	Broad ordinary word; keep only if bird-specific meaning and the source page theme are apparent.	familiar	Birdsong	
+WS64	HATCH	PROMISING	Broad ordinary word; keep only if bird-specific meaning and the source page theme are apparent.	familiar	Birdsong	
+WS64	TALON	PROMISING	Bird anatomy/life-stage term: context-specific and good for varied intermediate pages.	intermediate	Birdsong	
+WS64	PLUMAGE	PROMISING	Bird anatomy/life-stage term: context-specific and good for varied intermediate pages.	intermediate	Birdsong	
+WS64	FLEDGLING	PROMISING	Bird anatomy/life-stage term: context-specific and good for varied intermediate pages.	intermediate	Birdsong	
+WS64	NESTLING	PROMISING	Bird anatomy/life-stage term: context-specific and good for varied intermediate pages.	intermediate	Birdsong	
+WS64	SPRING	HOLD	Ambiguous between a freshwater source and a season; verify the proposed stream sense and page clues.	familiar	By the Stream	
+WS64	WATERLILY	MOVE	Usually associated with slow or still water; stronger in a pond/wetland chapter than a flowing stream.	intermediate	Ponds & Wetlands	
+WS64	SHORELINE	MOVE	More evocative of coast/lake shore than a woodland streambank.	intermediate	Lakes & Shores	
+WS64	RIVERSTONE	HOLD	Compound may be understandable but needs validation as natural en-US wording and chapter context.	intermediate	By the Stream	
+WS64	MAYFLY	PROMISING	Aquatic-life terms fit a woodland stream; verify page sense and age-appropriate familiarity.	intermediate	By the Stream	
+WS64	MINNOW	PROMISING	Aquatic-life terms fit a woodland stream; verify page sense and age-appropriate familiarity.	intermediate	By the Stream	
+WS64	CRAYFISH	PROMISING	Aquatic-life terms fit a woodland stream; verify page sense and age-appropriate familiarity.	intermediate	By the Stream	
+WS64	TADPOLE	PROMISING	Aquatic-life terms fit a woodland stream; verify page sense and age-appropriate familiarity.	intermediate	By the Stream	
+WS64	CAMERATRAP	MOVE	A wildlife-monitoring device, better suited to tracking/research than discovering forest animals themselves.	intermediate	Wildlife Research	
+WS64	DROPPINGS	HOLD	Animal-tracking term is valid but may feel unpleasant in a relaxed family puzzle; owner needs tone decision.	intermediate	Forest Discoveries	
+WS64	NESTBUILDING	MOVE	More bird behavior than generalized forest mammal/signs vocabulary.	intermediate	Birdsong	
+WS64	WILDLIFESIGNS	HOLD	Valid-looking descriptive or technical concept, but long/specialist form and player clarity need human verification.	advanced	Forest Discoveries	
+WS64	ANIMALTRACKS	HOLD	Valid-looking descriptive or technical concept, but long/specialist form and player clarity need human verification.	advanced	Forest Discoveries	
+WS64	ECHOLOCATION	HOLD	Valid-looking descriptive or technical concept, but long/specialist form and player clarity need human verification.	advanced	Forest Discoveries	
+WS64	PICNIC	MOVE	Human recreation activity rather than natural woodland-clearing atmosphere.	familiar	Outdoor Activities	
+WS64	BLOODROOT	MOVE	Shade/woodland-floor plants are more consistent with Under the Canopy than an open sunny clearing.	intermediate	Under the Canopy	
+WS64	TRILLIUM	MOVE	Shade/woodland-floor plants are more consistent with Under the Canopy than an open sunny clearing.	intermediate	Under the Canopy	
+WS64	WOODANEMONE	MOVE	Shade/woodland-floor plants are more consistent with Under the Canopy than an open sunny clearing.	intermediate	Under the Canopy	
+WS64	WILDGINGER	MOVE	Shade/woodland-floor plants are more consistent with Under the Canopy than an open sunny clearing.	intermediate	Under the Canopy	
+WS64	CHAMOMILE	HOLD	Flower can belong in garden/herb planting; verify whether a woodland clearing setting is accurate.	intermediate	Flower Borders	
+WS64	THISTLEDOWN	HOLD	Botanical term may be a good clearing addition but reader familiarity and ecological chapter fit need checking.	intermediate	Quiet Clearings	
+WS64	SWEETGRASS	HOLD	Botanical term may be a good clearing addition but reader familiarity and ecological chapter fit need checking.	intermediate	Quiet Clearings	
+WS64	WOODSORREL	HOLD	Botanical term may be a good clearing addition but reader familiarity and ecological chapter fit need checking.	intermediate	Quiet Clearings	
+WS64	MEADOWSWEET	HOLD	Botanical term may be a good clearing addition but reader familiarity and ecological chapter fit need checking.	intermediate	Quiet Clearings	
