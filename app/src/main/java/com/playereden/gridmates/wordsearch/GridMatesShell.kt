@@ -110,11 +110,13 @@ internal fun GridMatesShell(
     }
     val page = Page.entries.firstOrNull { it.name == pageName } ?: Page.PLAY
     val activityAlbumAvailable = remember { QuickPlayContent.mixed != null }
-    val bookAlbum = if (qa.enabled && (page == Page.BOOKS_QA || page == Page.COLLECTION)) {
-        remember(qa, soloStore.profile.bookAwards) {
-            BookQaPilot.bookAlbum(qa.catalog, soloStore.profile.bookAwards)
+    val bookAlbums = if (qa.enabled && (page == Page.BOOKS_QA || page == Page.COLLECTION)) {
+        val bookJournal = qa.progressStore?.progress
+        val awards = soloStore.profile.bookAwards
+        remember(qa, bookJournal, awards) {
+            BookQaPilot.bookAlbums(qa.catalog, qa.shelf, bookJournal, awards)
         }
-    } else null
+    } else emptyMap()
     LaunchedEffect(page) {
         if (page in setOf(Page.PLAY, Page.PROFILE, Page.COLLECTION, Page.RECORDS))
             qa.syncBookRewards(soloStore)
@@ -192,7 +194,7 @@ internal fun GridMatesShell(
                         safeContentPadding = contentPadding,
                         initialBookId = homeBookIntent,
                         presentation = qa.shelf,
-                        bookAlbum = bookAlbum,
+                        bookAlbums = bookAlbums,
                         onBookProgressSaved = { qa.syncBookRewards(soloStore) }
                     )
                 }
@@ -249,7 +251,7 @@ internal fun GridMatesShell(
                 },
                 modifier = Modifier.padding(contentPadding)
                     .padding(horizontal = 18.dp, vertical = 12.dp),
-                bookAlbum = bookAlbum,
+                bookAlbums = bookAlbums,
                 activityAlbumAvailable = activityAlbumAvailable,
                 fromActivityResult = sectionReturnPageName == Page.PUZZLE.name ||
                     sectionReturnPageName == Page.DAILY_PUZZLE.name

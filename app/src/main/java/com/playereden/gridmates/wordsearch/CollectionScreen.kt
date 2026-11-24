@@ -69,7 +69,7 @@ import com.playereden.gridmates.wordsearch.core.PortraitProgress
 import com.playereden.gridmates.wordsearch.core.WoodlandCollection
 import com.playereden.gridmates.wordsearch.core.WordSearchAchievements
 
-private enum class CollectionAlbum { BOOK, ACTIVITY }
+private const val activityAlbumId = "@activity"
 
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
@@ -78,7 +78,7 @@ internal fun CollectionScreen(
     onBack: () -> Unit,
     backLabel: String,
     modifier: Modifier = Modifier,
-    bookAlbum: BookAlbumProgress? = null,
+    bookAlbums: Map<String, BookAlbumProgress> = emptyMap(),
     activityAlbumAvailable: Boolean = false,
     fromActivityResult: Boolean = false
 ) {
@@ -105,17 +105,15 @@ internal fun CollectionScreen(
     } else null
     val directAlbum = fromActivityResult && activityAlbum != null
     val tabs = listOfNotNull("Portraits", "Fonts", "Achievements",
-        "Albums".takeIf { bookAlbum != null || activityAlbum != null })
+        "Albums".takeIf { bookAlbums.isNotEmpty() || activityAlbum != null })
     var selectedTab by rememberSaveable { mutableStateOf(if (directAlbum) "Albums" else "Portraits") }
     var selectedAlbum by rememberSaveable {
-        mutableStateOf(if (directAlbum) CollectionAlbum.ACTIVITY else null)
+        mutableStateOf(if (directAlbum) activityAlbumId else null)
     }
     val collectionTab = selectedTab.takeIf { it in tabs } ?: "Portraits"
     val shownAlbum = selectedAlbum?.takeIf {
-        collectionTab == "Albums" && when (it) {
-            CollectionAlbum.BOOK -> bookAlbum != null
-            CollectionAlbum.ACTIVITY -> activityAlbum != null
-        }
+        collectionTab == "Albums" &&
+            (it in bookAlbums || (it == activityAlbumId && activityAlbum != null))
     }
     val navigateBack: () -> Unit = {
         if (shownAlbum != null && !directAlbum) selectedAlbum = null else onBack()
@@ -230,16 +228,16 @@ internal fun CollectionScreen(
         ) collectionContent@{
             if (collectionTab == "Albums") {
                 when (shownAlbum) {
-                    CollectionAlbum.BOOK -> BookAlbumContent(requireNotNull(bookAlbum))
-                    CollectionAlbum.ACTIVITY -> ActivityAlbumContent(requireNotNull(activityAlbum))
+                    activityAlbumId -> ActivityAlbumContent(requireNotNull(activityAlbum))
                     null -> {
-                        bookAlbum?.let {
-                            BookAlbumLink(it, onClick = { selectedAlbum = CollectionAlbum.BOOK })
+                        for (album in bookAlbums.values) {
+                            BookAlbumLink(album, onClick = { selectedAlbum = album.bookId })
                         }
                         activityAlbum?.let {
-                            ActivityAlbumLink(it, onClick = { selectedAlbum = CollectionAlbum.ACTIVITY })
+                            ActivityAlbumLink(it, onClick = { selectedAlbum = activityAlbumId })
                         }
                     }
+                    else -> BookAlbumContent(bookAlbums.getValue(shownAlbum))
                 }
                 return@collectionContent
             }
@@ -517,7 +515,7 @@ private fun BoardFontCard(
 
 /** Source-pinned WS22 motif: debug art is optional; release has a native fallback. */
 @Composable
-private fun WoodlandCollectionAccent() {
+internal fun WoodlandCollectionAccent(modifier: Modifier = Modifier.size(58.dp)): Boolean {
     val context = LocalContext.current
     val resource = remember(context) {
         context.resources.getIdentifier(
@@ -528,9 +526,10 @@ private fun WoodlandCollectionAccent() {
             painter = painterResource(resource),
             contentDescription = null,
             contentScale = ContentScale.Fit,
-            modifier = Modifier.size(58.dp).testTag("ws25-collection-robin")
+            modifier = modifier.testTag("ws25-collection-robin")
         )
     }
+    return resource != 0
 }
 
 @Composable

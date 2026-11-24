@@ -59,4 +59,30 @@ class BookAlbumRulesTest {
         assertNull(progress.next)
         assertNull(BookAlbumRules.progress(catalog(listOf(first)), gardenId, goals, completed))
     }
+
+    @Test fun groupedBooksCreditVerifiedPagesFromEachOwnerOnce() {
+        val appendixId = "woodland-test-appendix"
+        val appendixPage = page("woodland-test-appendix-page", WordTheme.WOODLAND, 5L)
+        val source = BookCatalog(catalog(listOf(first, second)).books + PuzzleBook(
+            appendixId, "Woodland appendix", 2, WordTheme.WOODLAND,
+            listOf(BookChapter("woodland-test-appendix-chapter", "Birdsong", listOf(appendixPage)))
+        ))
+        val pages = setOf(woodland.id, appendixPage.id)
+        val chapter = listOf(BookAlbumGoal("birdsong", "Birdsong", "Finish both pages", pages))
+        val awards = listOf(award(woodlandId, woodland), award(gardenId, first))
+        val editions = setOf(woodlandId, appendixId)
+        val wrongOwner = BookLibraryProgress(mapOf(woodlandId to BookVolumeProgress(
+            woodlandId, setOf(woodland.id, appendixPage.id))))
+        val partial = requireNotNull(BookAlbumRules.progress(
+            source, woodlandId, chapter, awards, wrongOwner, editions))
+        assertEquals(1, partial.next?.completed)
+
+        val puzzle = BookPageSessionRules.puzzle(source, appendixId, appendixPage.id)
+        val journal = BookProgressRules.recordVerifiedCompletion(source, BookLibraryProgress(),
+            appendixId, appendixPage.id, puzzle, puzzle.targets.mapTo(mutableSetOf()) { it.id })
+        val complete = requireNotNull(BookAlbumRules.progress(
+            source, woodlandId, chapter, awards, journal, editions))
+        assertEquals(1, complete.earnedCount)
+        assertNull(complete.next)
+    }
 }

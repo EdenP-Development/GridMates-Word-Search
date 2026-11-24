@@ -77,7 +77,7 @@ class Ws76ActivityAlbumAndroidTest {
 
     @Test fun earnedStampsCarryForwardAndFollowRealDailyAndQuickPlaySolves() {
         openAlbums()
-        compose.onNodeWithTag("book-album-link").assertIsDisplayed().performClick()
+        compose.onNodeWithTag("book-album-link-$gardenBookId").assertIsDisplayed().performClick()
         compose.onNodeWithText("Garden album").assertIsDisplayed()
         compose.onNodeWithText("1 of 4 stamps earned").assertIsDisplayed()
         pressBack()
@@ -170,7 +170,7 @@ class Ws76ActivityAlbumAndroidTest {
         assertEquals(320, configuration.screenWidthDp)
         assertEquals(1.5f, configuration.fontScale, .01f)
         openAlbums()
-        compose.onNodeWithTag("book-album-link").assertIsDisplayed()
+        compose.onNodeWithTag("book-album-link-$gardenBookId").assertIsDisplayed()
         compose.onNodeWithTag("activity-album-link").assertIsDisplayed()
         capture("large-text-album-index")
         compose.onNodeWithTag("activity-album-link").performClick()
