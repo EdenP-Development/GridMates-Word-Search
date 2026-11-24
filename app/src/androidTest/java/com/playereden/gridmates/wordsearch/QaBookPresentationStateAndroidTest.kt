@@ -120,7 +120,7 @@ class QaBookPresentationStateAndroidTest {
         compose.onNodeWithTag("book-detail-list")
             .performScrollToNode(hasText("Page 3 · Completed"))
         compose.onNodeWithText("Page 3 · Completed").assertExists()
-        compose.onNodeWithText("Replay page 3").assertExists()
+        compose.onNodeWithText("Review page 3").assertExists()
         compose.onNodeWithText("Bookmark page 3").assertDoesNotExist()
         compose.onNodeWithTag("book-page-complete-" + third.id).assertExists()
     }

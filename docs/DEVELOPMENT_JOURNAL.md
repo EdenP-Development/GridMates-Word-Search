@@ -1,3 +1,5 @@
+**WS71 Book play polish (November 23).** The v114 candidate adds a book completion screen, consistent Play and Resume buttons, and cleaner chapter navigation. Android QA is pending. [Pass record](devlog/2026-11-23_WS71_BOOK_PLAY_POLISH.md)
+
 **WS70 Home scrolling and shelf order (November 23).** Signed v113 passed Android gestures at 320dp and 393dp, top-shelf order, placeholder replacement, and the v112 install-over. Handset review is open. [Draft #191](https://github.com/PlayerEden/GridMates-Word-Search/pull/191) · [Pass receipt](devlog/2026-11-23_WS70_HOME_SCROLL_SHELF_ORDER.md) · [Signed v113](https://github.com/PlayerEden/GridMates-Word-Search/actions/runs/45317919000/artifacts/14886522521)
 
 **WS69 Library and Home polish (November 23).** Signed v112 passed Android and release checks at `fb7ffaabc6f085524dbd08e477ec2a88accc55b3`. The full title, both shelf brackets, Home cover contact, and the saved puzzle were verified at 320dp and 393dp. The signed v111 remains the fallback. [Draft #190](https://github.com/PlayerEden/GridMates-Word-Search/pull/190) · [Pass record](devlog/2026-11-23_WS69_LIBRARY_POLISH.md)

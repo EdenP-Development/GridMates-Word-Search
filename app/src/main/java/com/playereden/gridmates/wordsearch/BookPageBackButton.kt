@@ -11,9 +11,13 @@ import androidx.compose.ui.unit.dp
 
 /** Compact native back arrow with a full 48dp touch target and clear TalkBack name. */
 @Composable
-internal fun BookPageBackButton(onBack: () -> Unit, modifier: Modifier = Modifier) {
+internal fun BookPageBackButton(
+    onBack: () -> Unit,
+    modifier: Modifier = Modifier,
+    label: String = "Back to book"
+) {
     PuzzleIconAction(
-        label = "Back to book", onClick = onBack,
+        label = label, onClick = onBack,
         modifier = modifier.testTag("ws14k-back-to-book")
     ) {
         Canvas(Modifier.size(24.dp)) {

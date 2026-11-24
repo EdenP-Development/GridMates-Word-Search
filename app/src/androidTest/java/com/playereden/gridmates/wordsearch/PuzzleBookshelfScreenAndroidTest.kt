@@ -125,7 +125,7 @@ class PuzzleBookshelfScreenAndroidTest {
         compose.onNodeWithText("Book complete · You can revisit any page.").assertExists()
         compose.onNodeWithText("Start solving").assertDoesNotExist()
         compose.onNodeWithText("Bookmark page 1").assertDoesNotExist()
-        compose.onNodeWithText("Replay page 1").assertExists().performClick()
+        compose.onNodeWithText("Review page 1").assertExists().performClick()
         compose.runOnIdle { assertEquals(first.id, selected) }
     }
 

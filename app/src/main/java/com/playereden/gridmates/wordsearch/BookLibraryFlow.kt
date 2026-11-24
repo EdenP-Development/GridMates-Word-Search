@@ -116,6 +116,7 @@ internal fun BookLibraryFlow(
                 fieldNotesArt = fieldNotesArt,
                 onBookProgressSaved = onBookProgressSaved,
                 presentation = shelf,
+                backLabel = if (directFromHome) "Back to Home" else "Back to book",
                 onBack = {
                     if (directFromHome) onExit()
                     else {

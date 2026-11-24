@@ -53,7 +53,7 @@ class Ws16CarouselHomeAndroidTest {
         compose.onNodeWithContentDescription("Play Woodland", substring = true)
             .performClick()
         compose.waitForIdle()
-        compose.onNodeWithContentDescription("Back to book").performClick()
+        compose.onNodeWithContentDescription("Back to Home").performClick()
         compose.waitForIdle()
         compose.onNodeWithTag("ws16-home-header").assertExists()
     }

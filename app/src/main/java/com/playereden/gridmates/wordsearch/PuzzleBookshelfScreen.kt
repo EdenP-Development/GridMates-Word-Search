@@ -393,17 +393,15 @@ internal fun PuzzleBookDetailScreen(
                             Text("Book complete · You can revisit any page.",
                                 color = Forest, style = MaterialTheme.typography.titleMedium)
                         } else if (onPlayPage != null) {
-                            Button(
-                                onClick = { onPlayPage(bookId, next.id) },
-                                modifier = Modifier.fillMaxWidth().heightIn(min = 48.dp)
-                                        .testTag("book-continue")
-                            ) {
-                                Text(when {
+                            GridMatesIllustratedPill(
+                                label = when {
                                     next.id in startedPageIds -> "Resume page " + (pages.indexOf(next) + 1)
                                     completed.isEmpty() -> "Start solving"
                                     else -> "Continue solving"
-                                })
-                            }
+                                },
+                                onClick = { onPlayPage(bookId, next.id) },
+                                modifier = Modifier.fillMaxWidth().testTag("book-continue")
+                            )
                         } else {
                             Text("Book pages will be playable after content approval.",
                                 color = Muted, style = MaterialTheme.typography.bodyMedium)
@@ -499,11 +497,12 @@ internal fun PuzzleBookDetailScreen(
                                     if (compactRow) {
                                         Row(Modifier.fillMaxWidth(),
                                             horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                                            Button(
+                                            GridMatesIllustratedPill(
+                                                label = action,
                                                 onClick = { onPlayPage(bookId, page.id) },
                                                 modifier = Modifier.weight(0.44f).heightIn(min = 48.dp)
                                                     .semantics { contentDescription = "$action page $ordinal" }
-                                            ) { Text(action, maxLines = 1) }
+                                            )
                                             OutlinedButton(
                                                 onClick = { onBookmarkPage(bookId, page.id) },
                                                 enabled = bookmark != page.id,
@@ -520,11 +519,12 @@ internal fun PuzzleBookDetailScreen(
                                         }
                                     } else {
                                         Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
-                                            Button(
+                                            GridMatesIllustratedPill(
+                                                label = action,
                                                 onClick = { onPlayPage(bookId, page.id) },
                                                 modifier = Modifier.fillMaxWidth().heightIn(min = 48.dp)
                                                     .semantics { contentDescription = "$action page $ordinal" }
-                                            ) { Text(action, maxLines = 1) }
+                                            )
                                             OutlinedButton(
                                                 onClick = { onBookmarkPage(bookId, page.id) },
                                                 enabled = bookmark != page.id,
@@ -543,10 +543,17 @@ internal fun PuzzleBookDetailScreen(
                                 }
                             } else {
                                 if (onPlayPage != null) {
-                                    Button(onClick = { onPlayPage(bookId, page.id) },
-                                        modifier = Modifier.fillMaxWidth().heightIn(min = 48.dp)) {
-                                        Text(if (isComplete) "Replay page $ordinal"
-                                            else "$action page $ordinal")
+                                    if (isComplete) {
+                                        OutlinedButton(
+                                            onClick = { onPlayPage(bookId, page.id) },
+                                            modifier = Modifier.fillMaxWidth().heightIn(min = 48.dp)
+                                        ) { Text("Review page $ordinal") }
+                                    } else {
+                                        GridMatesIllustratedPill(
+                                            label = "$action page $ordinal",
+                                            onClick = { onPlayPage(bookId, page.id) },
+                                            modifier = Modifier.fillMaxWidth()
+                                        )
                                     }
                                 }
                                 if (!isComplete && onBookmarkPage != null) {
