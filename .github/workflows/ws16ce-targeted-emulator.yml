@@ -29,7 +29,7 @@ jobs:
           name: GridMates-WordSearch-Android-QA
           run-id: 43756581784
           github-token: ${{ github.token }}
-          repository: PlayerEden/GridMates-Word-Search
+          repository: EdenP-Development/GridMates-Word-Search
           path: qa-baseline
       - name: Verify downloaded APK identity and signing input
         run: |
@@ -38,7 +38,7 @@ jobs:
       - name: Checkout approved original Woodland portraits
         uses: actions/checkout@v4
         with:
-          repository: PlayerEden/SudokuTogether
+          repository: EdenP-Development/SudokuTogether
           ref: 975e31a1e8cbfebad1fbbc7602b3340c357da7ef
           path: _approved_sudoku
           persist-credentials: false

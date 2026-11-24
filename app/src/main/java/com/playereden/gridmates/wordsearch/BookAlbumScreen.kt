@@ -66,15 +66,22 @@ internal fun BookAlbumContent(album: BookAlbumProgress) {
                 modifier = Modifier.testTag("book-album-next"))
         }
 
-        val artwork = listOf(BookArtKind.EMBLEM, BookArtKind.CHAPTER,
-            BookArtKind.BOOKMARK, BookArtKind.COMPLETION)
         album.stamps.forEachIndexed { index, stamp ->
             GridMatesInfoPanel(Modifier.fillMaxWidth().testTag("book-stamp-${stamp.goal.id}")) {
                 Row(Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically,
                     horizontalArrangement = Arrangement.spacedBy(12.dp)) {
-                    BookArt(album.theme, artwork.getOrElse(index) { BookArtKind.COMPLETION },
-                        Modifier.size(46.dp).alpha(if (stamp.earned) 1f else .28f),
-                        fieldNotes = true)
+                    val art = Modifier.size(46.dp).alpha(if (stamp.earned) 1f else .28f)
+                    val usesRobin = stamp.goal.id == "woodland-dawn-chorus" &&
+                        WoodlandCollectionAccent(art)
+                    if (!usesRobin) {
+                        val kind = when (index) {
+                            0 -> BookArtKind.EMBLEM
+                            1 -> BookArtKind.CHAPTER
+                            album.stamps.lastIndex -> BookArtKind.COMPLETION
+                            else -> BookArtKind.BOOKMARK
+                        }
+                        BookArt(album.theme, kind, art, fieldNotes = true)
+                    }
                     Column(Modifier.weight(1f), verticalArrangement = Arrangement.spacedBy(3.dp)) {
                         Text(stamp.goal.title, color = Forest,
                             style = MaterialTheme.typography.titleMedium)
@@ -97,7 +104,7 @@ internal fun BookAlbumLink(
     newlyEarned: String? = null
 ) {
     AlbumLink("${album.title} album", album.earnedCount, album.stamps.size, onClick,
-        Modifier.testTag("book-album-link"), newlyEarned) {
+        Modifier.testTag("book-album-link-${album.bookId}"), newlyEarned) {
         BookArt(album.theme, BookArtKind.EMBLEM, Modifier.size(32.dp), fieldNotes = true,
             pageAccentCandidate = true)
     }

@@ -30,11 +30,11 @@ class CollectionDensityTests(unittest.TestCase):
         src=(APP/"CollectionScreen.kt").read_text()
         for marker in (
             'listOfNotNull("Portraits", "Fonts", "Achievements",',
-            '"Albums".takeIf { bookAlbum != null || activityAlbum != null }',
+            '"Albums".takeIf { bookAlbums.isNotEmpty() || activityAlbum != null }',
             'FlowRow(Modifier.fillMaxWidth(),',
             'for (label in tabs)',
             'if (collectionTab == "Albums")',
-            "BookAlbumContent(requireNotNull(bookAlbum))",
+            "BookAlbumContent(bookAlbums.getValue(shownAlbum))",
             "ActivityAlbumContent(requireNotNull(activityAlbum))",
             "maxWidth < 320.dp || fontScale >= 1.3f",
             "if (columns == 2)",

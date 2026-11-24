@@ -54,7 +54,7 @@ class Ws75GardenAlbumAndroidTest {
         compose.onNodeWithTag("ws16-full-shelf").performScrollTo().performClick()
         compose.onNodeWithTag("ws16bh-spine-$garden").assertIsDisplayed().performClick()
         compose.onNodeWithTag("library-view-pages").assertIsDisplayed().performClick()
-        val albumLink = hasTestTag("book-album-link")
+        val albumLink = hasTestTag("book-album-link-$garden")
         val details = compose.onNodeWithTag("book-detail-list")
         details.performScrollToNode(albumLink)
         compose.onNode(albumLink).assertIsDisplayed().performClick()
@@ -103,7 +103,7 @@ class Ws75GardenAlbumAndroidTest {
     private fun openCollectionAlbum() {
         compose.onNodeWithTag("ws16d-home-collection").performScrollTo().performClick()
         compose.onNodeWithTag("ws25-collection-tab-albums").assertIsDisplayed().performClick()
-        compose.onNodeWithTag("book-album-link").assertIsDisplayed().performClick()
+        compose.onNodeWithTag("book-album-link-$garden").assertIsDisplayed().performClick()
     }
 
     private fun assertAlbum(earned: Int, next: String) {

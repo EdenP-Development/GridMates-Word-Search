@@ -1,0 +1,9 @@
+# Continue GridMates: Word Search
+
+**Latest verified APK is signed QA v119.** Its Android run passed the v118 install-over and kept the Solo and book journals intact. Garden and Activity albums work, including the live Daily and Quick Play rewards. [APK ZIP](https://github.com/EdenP-Development/GridMates-Word-Search/actions/runs/45446328318/artifacts/14946605616) · [Build receipt](docs/devlog/2026-11-24_WS76_ACTIVITY_ALBUM_AND_GARDEN_PACING.md)
+
+**Current work** is Woodland's book album. [Draft #197](https://github.com/EdenP-Development/GridMates-Word-Search/pull/197) is its stacked development base. [WS77 checkpoint](https://github.com/EdenP-Development/GridMates-Word-Search/commit/59030b660f47fd3abc6fba548206065764c9b327) has the five goals and the existing-journal progress model started. Resume by finishing Collection and book navigation, then test the signed upgrade with completed pages from the original and appended Woodland chapters.
+
+**EdenP Development** maintains the shared [standards](https://github.com/EdenP-Development/Eden-Development-Standards) and [app registry](https://github.com/EdenP-Development/Eden-Development-Standards/blob/main/APP_REGISTRY.json). Follow the [integration receipt](docs/devlog/2026-11-24_EDENP_WORD_SEARCH_TRANSFER.md) for the transfer, known signing identities and fresh Android checks. itch.io is the planned public beta channel. Signed v119 is a persistent QA build.
+
+For the working tree, read the [active handoff](docs/WS14_ACTIVE_HANDOFF_2026-11-09.md) and [development journal](docs/DEVELOPMENT_JOURNAL.md). The [product roadmap](docs/CURRENT_PRODUCT_ROADMAP.md), [master game design](docs/MASTER_GAME_DESIGN.md), and [visual identity](docs/WS14_FULL_APP_VISUAL_IDENTITY_AND_UI_PRODUCTION_ROADMAP_2026-11-08.md) contain the current content and design decisions. Check the live branch and CI before building.
