@@ -18,16 +18,18 @@ After reviewing the actual WS-16C Home and Profile screenshots, the owner identi
 - CollectionScreen: Portraits, Fonts, Achievements and local player customization already work; not yet a per-book thematic gallery.
 - BookCatalog and BookProgress: unique stable book/chapter/page IDs and completed-page records are separate from Solo/Daily. Production BookCatalog is currently empty. Woodland, Space and Garden illustrated QA books are test books, not an approved source of production rewards.
 
-## Future gallery design — direction to review, not yet locked
-The Collection should feel like a delightful art gallery, not just a list of achievements. Suggested categories: All, General, Woodland, Space, Garden, and future published books. Each book gets an illustrated album card matching its cover art; entering it reveals themed portraits, frames, paper/board looks, decorative trail styles, stamps or other intentional art collectibles. Present larger artwork, accurate unlocked/total counts, meaningful locked-item silhouettes with a clear earning explanation, and item preview/equip when relevant.
+## Book albums and activity collections
 
-Two complementary reward lanes:
-- **General rewards:** existing portraits and fonts, achievements, basic cosmetics and rewards from general activity (Custom, Daily and future Quick Play).
-- **Book rewards:** new items earned from actual verified published book-page, chapter and volume milestones. Example: completing a chapter unlocks a signature stamp; completing a volume unlocks a premium themed frame or portrait. A book can be replayed, but repeating the same milestone must not grant duplicate progress.
+The owner confirmed this direction on November 24. Each playable book gets a matching collection album. Its items are earned by completing milestones within that book. The Library's book details can show album progress and open the same album available in Collection.
 
-**Preserve previous unlocks.** Do not secretly convert already-earned general Woodland animal portraits to book-only locks. Their current IDs, thresholds, ownership, equipped status and backups must remain valid. They may be displayed in a Woodland gallery with a General source label, with entirely new IDs assigned to any book-specific items.
+| Collection | How players earn its items | Examples |
+| --- | --- | --- |
+| Book album | Complete distinct pages, chapters and the required pages of the linked book | Garden rewards earned by solving Garden pages and chapters. Woodland and Space get their own albums as they are built out. |
+| Activity collection | Complete a specific challenge anywhere it applies, using Word Search's own game records | Finish a set of Daily puzzles, solve Quick Play at several board sizes, or complete selected puzzles without hints. |
 
-Use stable, versioned collectible IDs and a definition catalog with source General or Book(bookId). Derive book awards from verified published progress, never QA-only prototype pages; an idempotent grant/migration scheme should backfill legitimate older rewards and not delete earned ones. Asset manifests, hash/approval gates and accessibility labels remain mandatory. No internet or account required.
+Show what each item requires and give players a clear next goal. The Garden pilot can demonstrate early, chapter and book-completion rewards. Its portrait shortlist is subject to the latest Sudoku art review and a visual comparison at Word Search's avatar and card sizes. Choose the final reward milestones and portrait assignments during the pilot.
+
+Bind the album to a stable book ID and each collectible to a stable item ID. Use existing verified book progress and the qualifying pages defined by the book's edition. Count and grant a milestone once and credit earlier eligible completions when loading saves. Use the original IDs and earning rules for the existing general Woodland portraits and board fonts. Prototype with QA book data and use approved book progress for production rewards. Use native labels for the requirements, progress and equip controls.
 
 ## Phasing
 1. WS-16D: Collection Home access and responsive art, tested on Android.
