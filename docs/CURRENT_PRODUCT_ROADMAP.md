@@ -1,5 +1,7 @@
 # Current product roadmap
 
+**WS75 Garden album and progression.** The signed v118 QA preview adds four stamps for Garden pages and chapters, a visible next goal, and a route from Collection and the book itself. Android verified existing Garden progress earns the first stamp and completing the next page earns New Shoots. Phone playtesting will check the jump to 20×20 on page 3. The next Collection pass can use existing Daily and Quick Play records for activity milestones. [Draft #196](https://github.com/PlayerEden/GridMates-Word-Search/pull/196) · [Pass record](devlog/2026-11-24_WS75_GARDEN_ALBUM_AND_PUZZLE_PROGRESS.md)
+
 **WS69 Library and Home polish.** Signed v112 passed the Android emulator upgrade and checked both 320dp and 393dp widths. The cabinet shading is continuous, the lower brackets clear the base, the full title fits, and covers rest on the Home shelf. The next content pass deepens Quiet Clearings Expert and Our Solar System Familiar. [Draft #190](https://github.com/PlayerEden/GridMates-Word-Search/pull/190) · [Pass record](devlog/2026-11-23_WS69_LIBRARY_POLISH.md)
 
 **WS68 beta integration.** Validate the cumulative v111 source against `main`, including the signed v108 → v110 → v111 path, frozen pages, all three Nearby modes in the emulator, and release isolation. The next player-facing pass starts with the bookcase edge and clipped brackets, followed by handset playthroughs and vocabulary work on the shallowest chapter pools. [Integration and acceptance record](devlog/2026-11-23_WS68_BETA_INTEGRATION.md)
@@ -66,7 +68,7 @@ source crosswalk and the [development journal](DEVELOPMENT_JOURNAL.md) for recei
 | Ocean/Bugs portraits | Coordinated art ideas still make sense, but the parity-first plan deferred them behind core content and multiplayer acceptance. Keep the original twelve Woodland portraits. |
 | More board fonts | Keep the current bundled, achievement-earned fonts. The recovered font research is a future intake shortlist, not approval to import or sell those fonts. Paid board-font unlocks are not the current design. |
 | Co-op split word lists | Future optional mode after ordinary Co-op is accepted. Needs hidden-list and hint/accessibility privacy rules. |
-| Stamps, weekly/daily gifts, rotating store, shared wallet | Open design choices, not a committed economy. Existing fixed achievements/fonts remain the useful baseline. No grind or attendance requirement is implied. |
+| Weekly/daily gifts, rotating store, shared wallet | Open design choices for later review. Existing fixed achievements and fonts provide the baseline for activity rewards. |
 | Ads / one-time Remove Ads | Later launch/business work after a clean beta. No implementation or store-policy readiness is implied by current QA. |
 | Online accounts, internet multiplayer, persistent friends, cross-game inventory | Outside the current offline/LAN baseline. Do not accidentally expand scope from older speculative notes. |
 | Full painted GridMates/Word Search wordmarks | The old WS16AE brief requested complete title artwork. Current code uses illustrated emblems plus accessible native lettering. Treat full wordmarks as an optional branding decision, not as already delivered by the emblems. |
