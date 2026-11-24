@@ -20,7 +20,6 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.graphics.ColorMatrix
@@ -29,11 +28,14 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.layout.onSizeChanged
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
+import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.rememberTextMeasurer
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
@@ -139,7 +141,8 @@ private fun WS16ATCabinetLayers(
                     contentScale = ContentScale.FillBounds,
                     colorFilter = woodFilter,
                     modifier = Modifier.align(Alignment.BottomCenter)
-                        .fillMaxWidth().height(baseHeight))
+                        .fillMaxWidth().height(baseHeight)
+                        .testTag("ws16at-cabinet-base"))
             }
         }
     }
@@ -224,7 +227,18 @@ internal fun WS16ATModularLibraryScene(
             22.dp.coerceAtMost((bottom - 32.dp).coerceAtLeast(0.dp))
             else 0.dp
         val titleTop = (top - 88.dp).coerceAtLeast(12.dp)
-        val wideTitle = packedCatalog && density.fontScale >= 1.65f
+        val libraryTitle = "Your Library"
+        val titleSideInset = 66.dp
+        val direction = LocalLayoutDirection.current
+        val titleLane = maxWidth - safeContentPadding.calculateLeftPadding(direction) -
+            safeContentPadding.calculateRightPadding(direction) - titleSideInset * 2
+        val titleTextWidth = rememberTextMeasurer().measure(
+            text = AnnotatedString(libraryTitle),
+            style = MaterialTheme.typography.titleLarge.copy(fontWeight = FontWeight.Bold),
+            maxLines = 1, softWrap = false
+        ).size.width
+        val titleWidth = with(density) { titleTextWidth.toDp() } + CarvedTitleSidePadding * 2
+        val wideTitle = packedCatalog && (density.fontScale >= 1.65f || titleWidth > titleLane)
         val plaqueTop = if (wideTitle) 70.dp else titleTop
         var titleHeightPx by remember { mutableIntStateOf(0) }
         val headerBottom = safeContentPadding.calculateTopPadding() + plaqueTop +
@@ -244,9 +258,10 @@ internal fun WS16ATModularLibraryScene(
         val pagerGap = if (density.fontScale >= 1.65f) 8.dp else 12.dp
         val pagerRailBudget = 62.dp
         val showPager = pages > 1
-        val pagerBayHeight = shelfOverhang +
-            if (showPager || !packedCatalog) pagerGap + pagerRailBudget else 0.dp
-        // Reserve carved shelf overhang and pager rail clearance first.
+        val pagerControlsHeight = if (showPager || !packedCatalog) pagerGap + pagerRailBudget else 0.dp
+        // The pager extends behind the base artwork, but the entire painted
+        // shelf and its brackets need to end above that join.
+        val pagerBayHeight = shelfOverhang + maxOf(pagerControlsHeight, pagerDrop + 6.dp)
         val shelfTierSpace = (available - pagerBayHeight).coerceAtLeast(1.dp)
         val tierHeights = if (usePackedRows) {
             // Preserve the pager bay with three live shelves too; a raw
@@ -258,24 +273,9 @@ internal fun WS16ATModularLibraryScene(
             shelfTierSpace * 0.54f, shelfTierSpace * 0.46f
         ) else List(tierCount) { available / tierCount }
 
-        // Backdrop and real shelves/books are independent; hide nothing in a bitmap.
+        // Preserve the lighting shared by the backboard, crown, and base.
         WS16ATCabinetLayers(foreground = false, modifier = Modifier.fillMaxSize(),
             woodFilter = woodFilter)
-        if (bindingArt != null) {
-            Canvas(Modifier.fillMaxSize().padding(
-                start = leftWidth, end = rightWidth, top = top, bottom = bottom
-            )) {
-                val recess = Color(0xFF201209)
-                drawRect(Brush.horizontalGradient(
-                    0f to recess.copy(alpha = .58f), .24f to Color.Transparent,
-                    .69f to Color.Transparent, 1f to recess.copy(alpha = .46f)
-                ))
-                drawRect(Brush.verticalGradient(
-                    0f to recess.copy(alpha = .12f), .44f to recess.copy(alpha = .22f),
-                    1f to recess.copy(alpha = .47f)
-                ))
-            }
-        }
         HorizontalPager(
             state = pager,
             modifier = Modifier.fillMaxSize()
@@ -384,15 +384,15 @@ internal fun WS16ATModularLibraryScene(
         Box(Modifier.fillMaxSize().padding(safeContentPadding)
             .testTag("ws16aw-safe-overlays")) {
         WS16BIAdaptivePlaque(
-            label = "Your Library", title = true, styled = cabinetPortrait || wideTitle,
+            label = libraryTitle, title = true, styled = cabinetPortrait || wideTitle,
             modifier = Modifier.align(Alignment.TopCenter)
                 .then(
                     if (wideTitle) {
-                        // Keep the enlarged title below the 54dp Back and menu buttons.
+                        // Allow the full title below the Back and menu buttons.
                         Modifier.padding(start = 16.dp, top = plaqueTop, end = 16.dp)
                             .fillMaxWidth()
                     } else {
-                        Modifier.padding(start = 66.dp, end = 66.dp, top = plaqueTop)
+                        Modifier.padding(start = titleSideInset, end = titleSideInset, top = plaqueTop)
                     }
                 )
                 .onSizeChanged { titleHeightPx = it.height }

@@ -26,9 +26,11 @@ class CarvedTitleTests(unittest.TestCase):
 
     def test_title_moves_up_without_repositioning_book_pagers(self):
         scene = (APP / "WS16ATModularLibraryScene.kt").read_text()
-        self.assertIn('label = "Your Library", title = true, styled = cabinetPortrait', scene)
+        self.assertIn('val libraryTitle = "Your Library"', scene)
+        self.assertIn('label = libraryTitle, title = true, styled = cabinetPortrait', scene)
         self.assertIn('val titleTop = (top - 88.dp).coerceAtLeast(12.dp)', scene)
-        self.assertIn('.padding(start = 66.dp, end = 66.dp,', scene)
+        self.assertIn('val titleSideInset = 66.dp', scene)
+        self.assertIn('.padding(start = titleSideInset, end = titleSideInset,', scene)
         self.assertIn('testTag("ws16at-library-title")', scene)
         self.assertNotIn('top = (top - 58.dp).coerceAtLeast(38.dp)', scene)
         # No regression to spine-first, count or pagination behavior.

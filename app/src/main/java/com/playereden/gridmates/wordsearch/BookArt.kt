@@ -6,10 +6,13 @@ import android.graphics.BitmapFactory
 import androidx.compose.foundation.Image
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.graphics.asImageBitmap
+import androidx.compose.ui.graphics.painter.BitmapPainter
+import androidx.compose.ui.unit.IntSize
 import com.playereden.gridmates.wordsearch.core.WordTheme
 
 /**
@@ -172,13 +175,25 @@ private fun decodeBookArt(context: Context, path: String): Bitmap? {
     return context.assets.open(path).use { BitmapFactory.decodeStream(it, null, options) }
 }
 
+/** Trim clear rows below the cover while preserving the bundled bitmap. */
+private fun coverHeightAboveShelf(bitmap: Bitmap): Int {
+    if (!bitmap.hasAlpha()) return bitmap.height
+    val pixels = IntArray(bitmap.width)
+    for (y in bitmap.height - 1 downTo 0) {
+        bitmap.getPixels(pixels, 0, bitmap.width, 0, y, bitmap.width, 1)
+        if (pixels.any { it ushr 24 != 0 }) return y + 1
+    }
+    return bitmap.height
+}
+
 @Composable
 internal fun BookArt(
     theme: WordTheme,
     kind: BookArtKind,
     modifier: Modifier = Modifier,
     fieldNotes: Boolean = false,
-    pageAccentCandidate: Boolean = false
+    pageAccentCandidate: Boolean = false,
+    restingOnShelf: Boolean = false
 ) {
     val context = LocalContext.current
     val existingStudyPath = bookArtPath(theme, kind, fieldNotes) ?: return
@@ -202,9 +217,14 @@ internal fun BookArt(
             }
     } ?: return
 
+    val painter = remember(bitmap, restingOnShelf) {
+        val height = if (restingOnShelf) coverHeightAboveShelf(bitmap) else bitmap.height
+        BitmapPainter(bitmap.asImageBitmap(), srcSize = IntSize(bitmap.width, height))
+    }
     Image(
-        bitmap = bitmap.asImageBitmap(),
+        painter = painter,
         contentDescription = null, // decorative; accessible status is native text
+        alignment = if (restingOnShelf) Alignment.BottomCenter else Alignment.Center,
         contentScale = ContentScale.Fit,
         modifier = modifier
     )

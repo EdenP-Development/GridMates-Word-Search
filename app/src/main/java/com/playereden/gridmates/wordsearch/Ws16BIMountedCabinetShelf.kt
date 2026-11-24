@@ -49,6 +49,7 @@ internal fun Ws16BIMountedCabinetShelf(
             colorFilter = colorFilter,
             modifier = Modifier.fillMaxWidth().height(paintedHeight)
                 .offset(y = paintedHeight - 42.dp)
+                .testTag("ws16bi-shelf-raster")
         )
     }
 }

@@ -62,10 +62,13 @@ internal fun Ws16BookCoverPager(
         val coverWidth = (contentWidth * .59f).coerceIn(136.dp, 186.dp)
             .coerceAtMost((contentWidth - 80.dp).coerceAtLeast(120.dp))
         val sidePadding = ((viewportWidth - coverWidth) / 2).coerceAtLeast(0.dp)
+        val carouselHeight = 252.dp
+        val shelfRise = 6.dp
+        val shelfTop = carouselHeight - 42.dp - shelfRise
 
-        Box(Modifier.fillMaxWidth().height(252.dp)) {
+        Box(Modifier.fillMaxWidth().height(carouselHeight)) {
             Ws16EStorybookShelf(
-                Modifier.align(Alignment.BottomCenter).offset(y = (-6).dp)
+                Modifier.align(Alignment.BottomCenter).offset(y = -shelfRise)
             )
 
             // One real Pager draws the center AND the adjacent pages and moves
@@ -80,7 +83,7 @@ internal fun Ws16BookCoverPager(
                 key = { page -> books[page].id },
                 modifier = Modifier.align(Alignment.TopCenter)
                     .requiredWidth(viewportWidth)
-                    .height(226.dp)
+                    .height(shelfTop)
                     .testTag("ws14d-cover-pager")
             ) { page ->
                 val book = books[page]
@@ -88,7 +91,7 @@ internal fun Ws16BookCoverPager(
                 val interactionSource = remember(book.id) { MutableInteractionSource() }
                 val pressed by interactionSource.collectIsPressedAsState()
                 Box(
-                    modifier = Modifier.fillMaxWidth().height(226.dp)
+                    modifier = Modifier.fillMaxWidth().height(shelfTop)
                         .graphicsLayer {
                             // As one book moves toward the edge, it subtly
                             // recedes; the incoming book grows as it centers.
@@ -123,8 +126,9 @@ internal fun Ws16BookCoverPager(
                     BookArt(
                         theme = book.theme,
                         kind = BookArtKind.COVER,
-                        modifier = Modifier.width(coverWidth - 8.dp).height(218.dp),
-                        fieldNotes = fieldNotesArt
+                        modifier = Modifier.width(coverWidth - 8.dp).height(shelfTop),
+                        fieldNotes = fieldNotesArt,
+                        restingOnShelf = true
                     )
                 }
             }
