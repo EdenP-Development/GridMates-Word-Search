@@ -29,7 +29,7 @@ import java.io.File
 class HandsetPolishAndroidTest {
     @get:Rule val compose = createComposeRule()
 
-    @Test fun homeKeepsTitleAndActionsInPlaceWhenModesScroll() {
+    @Test fun homeScrollsTitleWhileKeepingProfileAndMenuInReach() {
         val context = InstrumentationRegistry.getInstrumentation().targetContext
         val file = "ws42-home-${System.nanoTime()}.json"
         val store = SoloStore(context, file)
@@ -44,12 +44,14 @@ class HandsetPolishAndroidTest {
             }
             val menu = compose.onNodeWithContentDescription("Open menu")
             val initial = menu.getUnclippedBoundsInRoot()
+            val title = compose.onNodeWithTag("ws41-home-title").assertIsDisplayed()
+            val initialTitleTop = title.getUnclippedBoundsInRoot().top
             compose.onNodeWithText("My Puzzles").performScrollTo().assertIsDisplayed()
             val range = compose.onNodeWithTag("home-mode-scroll").fetchSemanticsNode()
                 .config[SemanticsProperties.VerticalScrollAxisRange]
             assertTrue("Expected the Home modes to scroll", range.value() > 0f)
             assertEquals(initial, menu.getUnclippedBoundsInRoot())
-            compose.onNodeWithText("Word Search").assertIsDisplayed()
+            assertTrue(title.getUnclippedBoundsInRoot().top < initialTitleTop)
             compose.onNodeWithContentDescription("Open player profile").assertIsDisplayed()
             menu.performClick()
             compose.onNodeWithText("Settings & backup").assertIsDisplayed()

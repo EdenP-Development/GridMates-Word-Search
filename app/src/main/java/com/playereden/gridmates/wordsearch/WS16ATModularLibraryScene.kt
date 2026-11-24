@@ -192,6 +192,8 @@ internal fun WS16ATModularLibraryScene(
             maxHeight < 480.dp -> 1
             // WS16BI: third tier ONLY when each book remains tall enough.
             // At ordinary phone heights use two real shelves and pagination.
+            // In the playable cabinet, adding a book fills a slot without moving shelves.
+            packedCatalog && maxHeight >= (if (densePortrait) 960.dp else 830.dp) -> 3
             densePortrait && maxHeight >= 960.dp && books.size > slots -> 3
             !densePortrait && maxHeight >= 830.dp && books.size > 2 * slots -> 3
             else -> 2
@@ -286,20 +288,12 @@ internal fun WS16ATModularLibraryScene(
             val isFutureBookcase = densePortrait && page >= realPageCount
             val pageBooks = if (isFutureBookcase) emptyList() else
                 books.drop(page * capacity).take(capacity)
-            // A small catalog gives both shelves a real book to open.
-            val spreadCatalog = bindingArt != null && tierCount == 2 &&
-                realPageCount == 1 && pageBooks.size in 2..slots
             Column(Modifier.fillMaxSize()
                 .testTag(if (isFutureBookcase) "ws16bk-future-bookcase-$page"
                          else "ws16at-page-$page")) {
                 repeat(tierCount) { tier ->
                     val shelfIndex = page * tierCount + tier
-                    val shelfBooks = if (spreadCatalog) {
-                        val topBooks = (pageBooks.size + 1) / 2
-                        if (tier == 0) pageBooks.take(topBooks) else pageBooks.drop(topBooks)
-                    } else if (usePackedRows) {
-                        pageBooks.drop(tier * slots).take(slots)
-                    } else if (balancedSparseLayout) {
+                    val shelfBooks = if (balancedSparseLayout) {
                         val topBooks = (pageBooks.size + 1) / 2
                         if (tier == 0) pageBooks.take(topBooks) else pageBooks.drop(topBooks)
                     } else pageBooks.drop(tier * slots).take(slots)
@@ -312,6 +306,7 @@ internal fun WS16ATModularLibraryScene(
                                 art = bindingArt,
                                 shelfIndex = shelfIndex,
                                 bookSlot = catalogSlot,
+                                slotCount = slots,
                                 height = (tierHeight - shelfContactDepth).coerceAtLeast(54.dp),
                                 onBookSelected = onBookSelected
                             )

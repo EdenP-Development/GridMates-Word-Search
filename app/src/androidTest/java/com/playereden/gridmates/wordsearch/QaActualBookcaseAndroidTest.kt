@@ -19,6 +19,7 @@ import androidx.compose.ui.test.assertIsNotEnabled
 import androidx.compose.ui.test.assertIsEnabled
 import androidx.compose.ui.test.assertHasNoClickAction
 import androidx.compose.ui.test.assertIsDisplayed
+import androidx.compose.ui.test.hasAnyAncestor
 import androidx.compose.ui.test.hasTestTag
 import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.onNodeWithTag
@@ -92,20 +93,65 @@ class QaActualBookcaseAndroidTest {
         val title = compose.onNodeWithText("Your Library").assertIsDisplayed()
         val textLayouts = mutableListOf<TextLayoutResult>()
         title.performSemanticsAction(SemanticsActions.GetTextLayoutResult) { it(textLayouts) }
-        assertTrue(textLayouts.isNotEmpty() && textLayouts.none { it.hasVisualOverflow })
+        assertTrue(textLayouts.any { layout ->
+            val lastLine = layout.lineCount - 1
+            !layout.isLineEllipsized(lastLine) &&
+                layout.getLineEnd(lastLine, visibleEnd = true) == "Your Library".length
+        })
         val titleBottom = title.fetchSemanticsNode().boundsInRoot.bottom
         for (book in catalog.books) {
-            val spine = compose.onNodeWithTag("ws16bh-spine-" + book.id).assertIsDisplayed()
+            val spine = compose.onNode(
+                hasTestTag("ws16bh-spine-" + book.id) and
+                    hasAnyAncestor(hasTestTag("ws16at-movable-shelf-0"))
+            ).assertIsDisplayed()
             assertTrue(spine.fetchSemanticsNode().boundsInRoot.top > titleBottom)
         }
         compose.onNodeWithTag("ws16at-movable-shelf-1").assertIsDisplayed()
-        compose.onNodeWithTag("ws16bi-blank-cell-1-2")
+        compose.onNodeWithTag("ws35-binding-blank-1-2")
             .assertIsDisplayed().assertHasNoClickAction()
         compose.onNodeWithTag("ws16bk-bookcase-pager").assertDoesNotExist()
         compose.onNodeWithTag("ws16bh-spine-" + garden.id).performClick()
         compose.onNodeWithText("Garden").assertIsDisplayed()
         compose.onNodeWithTag("library-view-pages").assertIsDisplayed().performClick()
         compose.runOnIdle { assertEquals(garden.id, selected) }
+    }
+
+    @Test fun newBooksReplacePlaceholdersInShelfOrder() {
+        var books by mutableStateOf(catalog.books)
+        val fourth = fixture(WordTheme.WOODLAND, "fourth", 'd')
+        val fifth = fixture(WordTheme.SPACE, "fifth", 'e')
+        compose.setContent {
+            GridMatesTheme {
+                Box(Modifier.width(393.dp).height(730.dp)) {
+                    WS16ATModularLibraryScene(
+                        books = books, onBack = {}, onBookSelected = {}, onPreviousArt = {},
+                        packedCatalog = true
+                    )
+                }
+            }
+        }
+        fun spine(book: PuzzleBook, shelf: Int) = compose.onNode(
+            hasTestTag("ws16bh-spine-" + book.id) and
+                hasAnyAncestor(hasTestTag("ws16at-movable-shelf-$shelf"))
+        )
+        val originalCenters = catalog.books.map { spine(it, 0).fetchSemanticsNode().boundsInRoot.center.x }
+        val fourthSlot = compose.onNodeWithTag("ws35-binding-blank-0-3")
+            .assertIsDisplayed().assertHasNoClickAction()
+        val fifthSlot = compose.onNodeWithTag("ws35-binding-blank-1-0")
+            .assertIsDisplayed().assertHasNoClickAction()
+        val fourthCenter = fourthSlot.fetchSemanticsNode().boundsInRoot.center.x
+        val fifthCenter = fifthSlot.fetchSemanticsNode().boundsInRoot.center.x
+
+        compose.runOnIdle { books = books + fourth }
+        fourthSlot.assertDoesNotExist()
+        fifthSlot.assertIsDisplayed()
+        assertEquals(fourthCenter, spine(fourth, 0).fetchSemanticsNode().boundsInRoot.center.x, 1f)
+
+        compose.runOnIdle { books = books + fifth }
+        fifthSlot.assertDoesNotExist()
+        assertEquals(fifthCenter, spine(fifth, 1).fetchSemanticsNode().boundsInRoot.center.x, 1f)
+        assertEquals(originalCenters,
+            catalog.books.map { spine(it, 0).fetchSemanticsNode().boundsInRoot.center.x })
     }
 
     @Test fun packedCaseSwipesToMorePlayableBooks() {

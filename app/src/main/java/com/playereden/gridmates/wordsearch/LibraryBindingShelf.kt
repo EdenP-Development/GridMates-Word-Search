@@ -83,16 +83,13 @@ internal fun LibraryBindingShelf(
     art: LibraryBindingArt,
     shelfIndex: Int,
     bookSlot: Dp,
+    slotCount: Int,
     height: Dp,
     onBookSelected: (String) -> Unit
 ) {
     BoxWithConstraints(Modifier.fillMaxWidth().height(height)) {
-        // Only real catalog books reserve touch cells. Distribute background
-        // books across the remaining width without adding pages or interactions.
-        val room = (maxWidth - bookSlot * books.size).coerceAtLeast(0.dp)
-        val decorativeCount = if (room >= 18.dp)
-            (room.value / 32.dp.value).roundToInt().coerceIn(1, 12) else 0
-        val decorativeSlot = if (decorativeCount > 0) room / decorativeCount else 0.dp
+        // Each decorative binding occupies a future book's position.
+        val decorativeCount = (slotCount - books.size).coerceAtLeast(0)
         val bindingHeight = (maxHeight - 6.dp).coerceAtLeast(12.dp)
         Row(
             Modifier.align(Alignment.BottomCenter)
@@ -132,7 +129,8 @@ internal fun LibraryBindingShelf(
                 }
             }
             repeat(decorativeCount) { index ->
-                val style = shelfIndex + index
+                val position = books.size + index
+                val style = shelfIndex + position
                 val bitmap = art.decorative[style % art.decorative.size]
                 val heightScale = when (style % 4) {
                     0 -> .86f
@@ -140,9 +138,9 @@ internal fun LibraryBindingShelf(
                     2 -> .92f
                     else -> .97f
                 }
-                val size = fittedBindingHeight(bitmap, decorativeSlot - 1.dp, bindingHeight) *
+                val size = fittedBindingHeight(bitmap, minOf(38.dp, bookSlot - 3.dp), bindingHeight) *
                     heightScale
-                Box(Modifier.width(decorativeSlot).clearAndSetSemantics { },
+                Box(Modifier.width(bookSlot).testTag("ws35-binding-blank-$shelfIndex-$position"),
                     contentAlignment = Alignment.BottomCenter) {
                     ShelfBinding(bitmap, size)
                 }
