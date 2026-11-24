@@ -1051,6 +1051,58 @@ jobs:
           if-no-files-found: warn
           retention-days: 30
 
+      - name: WS74 Verify v117 and prepare the signed v116 upgrade
+        if: ${{ (github.head_ref || github.ref_name) == 'feature/ws74-solo-daily-roundtrip-v117-2026-11-24' }}
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh run download 45427261820 --repo "$GITHUB_REPOSITORY" --name GridMates-WordSearch-Android-QA --dir qa-ws74-baseline
+          echo '74cac36d85436f1e5cb59cd4087981064d7a1fff91773a6313868e2e129fbcf9  qa-ws74-baseline/app-debug.apk' | sha256sum -c
+          gradle --no-daemon :app:assembleDebugAndroidTest
+          mkdir -p qa-ws74-solo-daily
+          APK=app/build/outputs/apk/debug/app-debug.apk
+          "$ANDROID_HOME/build-tools/35.0.0/aapt" dump badging "$APK" > qa-ws74-solo-daily/badging.txt
+          grep -F "name='com.playereden.gridmates.wordsearch.qa' versionCode='117'" qa-ws74-solo-daily/badging.txt
+          "$ANDROID_HOME/build-tools/35.0.0/apksigner" verify --print-certs "$APK" > qa-ws74-solo-daily/signer.txt
+          grep -F '75cc3c896247d71fbd51f7a3ed41f90c8218a8a5a70df8c0f6b494b5cc23d419' qa-ws74-solo-daily/signer.txt
+          sha256sum "$APK" > qa-ws74-solo-daily/apk-sha256.txt
+          python3 - <<'PY' | tee qa-ws74-solo-daily/packaged-assets.txt
+          from zipfile import ZipFile
+
+          with ZipFile('qa-ws74-baseline/app-debug.apk') as old, ZipFile('app/build/outputs/apk/debug/app-debug.apk') as new:
+              prior = {name for name in old.namelist() if name.startswith('assets/')}
+              current = {name for name in new.namelist() if name.startswith('assets/')}
+              assert current == prior
+              assert all(old.read(name) == new.read(name) for name in prior)
+          print(f'{len(prior)} v116 assets match byte for byte in v117.')
+          PY
+          echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=static_node"' | sudo tee /etc/udev/rules.d/99-kvm4all.rules
+          sudo udevadm control --reload-rules
+          sudo udevadm trigger --name-match=kvm
+
+      - name: WS74 Reproduce the Daily bug and play both complete Android journeys
+        if: ${{ (github.head_ref || github.ref_name) == 'feature/ws74-solo-daily-roundtrip-v117-2026-11-24' }}
+        uses: reactivecircus/android-emulator-runner@v2
+        with:
+          api-level: 35
+          target: google_apis
+          arch: x86_64
+          profile: pixel_4
+          avd-name: ws74-solo-daily
+          ram-size: 3072M
+          disable-animations: true
+          emulator-options: -no-window -gpu swiftshader -no-snapshot -noaudio -no-boot-anim
+          script: bash scripts/ws74_solo_daily_emulator.sh
+
+      - name: WS74 Archive Solo and Daily playthroughs and signed upgrade evidence
+        if: ${{ always() && (github.head_ref || github.ref_name) == 'feature/ws74-solo-daily-roundtrip-v117-2026-11-24' }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: GridMates-WS74-v117-Solo-Daily-Evidence
+          path: qa-ws74-solo-daily/
+          if-no-files-found: warn
+          retention-days: 30
+
       - name: WS61 Real v107 to v108 APK install-over preserving 6 private files
         if: ${{ (github.head_ref || github.ref_name) == 'feature/ws61-real-signed-v107-to-v108-upgrade-2026-11-22' }}
         uses: reactivecircus/android-emulator-runner@v2

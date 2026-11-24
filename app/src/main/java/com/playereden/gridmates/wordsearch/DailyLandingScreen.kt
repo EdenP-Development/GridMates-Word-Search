@@ -58,14 +58,14 @@ internal fun DailyLandingScreen(
                 style = MaterialTheme.typography.labelLarge, fontWeight = FontWeight.Bold)
             val progressLabel = when {
                 existing?.completed == true -> "Completed today"
-                (existing?.run?.foundIds?.size ?: 0) > 0 ->
-                    existing!!.run.foundIds.size.toString() +
+                existing != null ->
+                    existing.run.foundIds.size.toString() +
                         " of " + run.difficulty.targetCount + " found"
                 else -> "Ready to play"
             }
             val actionLabel = when {
                 existing?.completed == true -> "Review"
-                (existing?.run?.foundIds?.size ?: 0) > 0 -> "Continue"
+                existing != null -> "Continue"
                 else -> "Play today"
             }
             if (fontLarge) {

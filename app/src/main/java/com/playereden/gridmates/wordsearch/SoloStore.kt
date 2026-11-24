@@ -603,6 +603,10 @@ internal class SoloStore(
         }
     }
 
+    fun restoreDailySelection(date: String) {
+        if (profile.dailyEntries.any { it.date == date }) selectedDailyDate = date
+    }
+
     private fun replaceDaily(entry: DailyProgress) {
         profile = profile.copy(dailyEntries = profile.dailyEntries.map {
             if (it.date == entry.date) entry else it

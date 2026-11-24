@@ -84,8 +84,8 @@ androidComponents.onVariants(androidComponents.selector().withBuildType("debug")
     debug.sources.assets?.addGeneratedSourceDirectory(stageWs66PreviewAssets, StageFrozenPreviewAssets::output)
     debug.sources.assets?.addGeneratedSourceDirectory(stageWs73PreviewAssets, StageFrozenPreviewAssets::output)
     debug.outputs.forEach {
-        it.versionCode.set(providers.gradleProperty("qaVersionCode").map(String::toInt).orElse(116))
-        it.versionName.set("0.9.71-ws73-chapter-variety-qa")
+        it.versionCode.set(providers.gradleProperty("qaVersionCode").map(String::toInt).orElse(117))
+        it.versionName.set("0.9.72-ws74-solo-daily-qa")
     }
 }
 
