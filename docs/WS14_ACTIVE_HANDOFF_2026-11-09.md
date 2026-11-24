@@ -1,6 +1,6 @@
 # WS72 Home fit
 
-The v115 candidate builds from draft #192. It gives Daily Puzzle and Together shallower cards and trims the compact Home layout. Android QA is pending. Signed v114 is the fallback. [Pass record](devlog/2026-11-23_WS72_HOME_FIT.md) · [Signed v114](https://github.com/PlayerEden/GridMates-Word-Search/actions/runs/45325868213/artifacts/14890316451)
+Resume from [draft #193](https://github.com/PlayerEden/GridMates-Word-Search/pull/193). The tested source is `d59a8bd5df40463f163d29f9a6daea45fa0d003d`. Daily Puzzle and Together use 54dp cards. The compact portrait book carousel and footer take less height. Android measured zero vertical scroll at 360×820dp and standard text, with all Home actions visible. Horizontal swiping still works. The 320×640dp layout retains scrolling and reachable actions at 200% text. Signed v114 install-over kept both book journals byte-identical. Handset review is open. The next development task is the Quiet Clearings Expert and Our Solar System Relaxed vocabulary expansion. [Pass record](devlog/2026-11-23_WS72_HOME_FIT.md) · [Signed v115](https://github.com/PlayerEden/GridMates-Word-Search/actions/runs/45329658676/artifacts/14891551505) · [Comparison screenshots](https://github.com/PlayerEden/GridMates-Word-Search/actions/runs/45329658676/artifacts/14891447307) · [Signed v114 fallback](https://github.com/PlayerEden/GridMates-Word-Search/actions/runs/45325868213/artifacts/14890316451)
 
 # WS71 Book play polish
 
