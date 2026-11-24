@@ -35,6 +35,7 @@ internal fun BookPageCompletionScreen(
     completedPages: Int,
     pageCount: Int,
     nextPageNumber: Int?,
+    nextPageDetails: String?,
     status: String,
     backLabel: String,
     showPrototypeArt: Boolean,
@@ -107,6 +108,11 @@ internal fun BookPageCompletionScreen(
                 onClick = onNext ?: onBack,
                 modifier = Modifier.fillMaxWidth().testTag("book-result-primary")
             )
+            if (onNext != null && nextPageDetails != null) {
+                Text(nextPageDetails, modifier = Modifier.fillMaxWidth().testTag("book-next-page-details"),
+                    color = Muted, style = MaterialTheme.typography.bodyMedium,
+                    textAlign = TextAlign.Center)
+            }
             if (bookAlbum != null && onOpenAlbum != null) {
                 BookAlbumLink(bookAlbum, onOpenAlbum, newlyEarned)
             }

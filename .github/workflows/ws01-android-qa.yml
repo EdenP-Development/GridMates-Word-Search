@@ -43,7 +43,7 @@ jobs:
       - name: Checkout approved Sudoku Woodland art (pinned)
         uses: actions/checkout@v4
         with:
-          repository: PlayerEden/SudokuTogether
+          repository: EdenP-Development/SudokuTogether
           ref: 975e31a1e8cbfebad1fbbc7602b3340c357da7ef
           path: _approved_sudoku
           persist-credentials: false
@@ -393,7 +393,7 @@ jobs:
         run: |
           gradle --no-daemon :app:assembleDebugAndroidTest
           mkdir -p qa-baseline
-          curl -fLsS -H "Authorization: Bearer $GH_TOKEN" -H "Accept: application/vnd.github+json" https://api.github.com/repos/PlayerEden/GridMates-Word-Search/actions/artifacts/14397980688/zip -o qa-baseline.zip
+          curl -fLsS -H "Authorization: Bearer $GH_TOKEN" -H "Accept: application/vnd.github+json" https://api.github.com/repos/EdenP-Development/GridMates-Word-Search/actions/artifacts/14397980688/zip -o qa-baseline.zip
           python3 -c "import zipfile; zipfile.ZipFile('qa-baseline.zip').extractall('qa-baseline')"
           echo '19949e41b1ed9165781c7a39b89857c9996bd5e27cfe25227dc5afabcfe25359  qa-baseline/app-debug.apk' | sha256sum --check
           echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=static_node"' | sudo tee /etc/udev/rules.d/99-kvm4all.rules
@@ -459,7 +459,7 @@ jobs:
         run: |
           gradle --no-daemon :app:assembleDebugAndroidTest
           mkdir -p qa-baseline
-          curl -fLsS -H "Authorization: Bearer $GH_TOKEN" -H "Accept: application/vnd.github+json" https://api.github.com/repos/PlayerEden/GridMates-Word-Search/actions/artifacts/14377072810/zip -o qa-baseline.zip
+          curl -fLsS -H "Authorization: Bearer $GH_TOKEN" -H "Accept: application/vnd.github+json" https://api.github.com/repos/EdenP-Development/GridMates-Word-Search/actions/artifacts/14377072810/zip -o qa-baseline.zip
           python3 -c "import zipfile; zipfile.ZipFile('qa-baseline.zip').extractall('qa-baseline')"
           echo '3468befffa01b5e6b1f098389d775519274d95557ce00eac9d8b8514e9335d37  qa-baseline/app-debug.apk' | sha256sum --check
           echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=static_node"' | sudo tee /etc/udev/rules.d/99-kvm4all.rules
@@ -1152,6 +1152,58 @@ jobs:
         with:
           name: GridMates-WS75-v118-Garden-Album-Evidence
           path: qa-ws75-garden-album/
+          if-no-files-found: warn
+          retention-days: 30
+
+      - name: WS76 Verify v119 and prepare the signed v118 upgrade
+        if: ${{ (github.head_ref || github.ref_name) == 'feature/ws76-activity-album-v119-2026-11-24' }}
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh run download 45440988172 --repo "$GITHUB_REPOSITORY" --name GridMates-WordSearch-Android-QA --dir qa-ws76-baseline
+          echo 'e7d015f82a504331e92acaeb0f604f6ed5b120f1436f3face20a4b9a54b75695  qa-ws76-baseline/app-debug.apk' | sha256sum -c
+          gradle --no-daemon :app:assembleDebugAndroidTest
+          mkdir -p qa-ws76-activity-album
+          APK=app/build/outputs/apk/debug/app-debug.apk
+          "$ANDROID_HOME/build-tools/35.0.0/aapt" dump badging "$APK" > qa-ws76-activity-album/badging.txt
+          grep -F "name='com.playereden.gridmates.wordsearch.qa' versionCode='119'" qa-ws76-activity-album/badging.txt
+          "$ANDROID_HOME/build-tools/35.0.0/apksigner" verify --print-certs "$APK" > qa-ws76-activity-album/signer.txt
+          grep -F '75cc3c896247d71fbd51f7a3ed41f90c8218a8a5a70df8c0f6b494b5cc23d419' qa-ws76-activity-album/signer.txt
+          sha256sum "$APK" > qa-ws76-activity-album/apk-sha256.txt
+          python3 - <<'PY' | tee qa-ws76-activity-album/packaged-assets.txt
+          from zipfile import ZipFile
+
+          with ZipFile('qa-ws76-baseline/app-debug.apk') as old, ZipFile('app/build/outputs/apk/debug/app-debug.apk') as new:
+              prior = {name for name in old.namelist() if name.startswith('assets/')}
+              current = {name for name in new.namelist() if name.startswith('assets/')}
+              assert current == prior
+              assert all(old.read(name) == new.read(name) for name in prior)
+          print(f'{len(prior)} v118 assets match byte for byte in v119.')
+          PY
+          echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=kvm"' | sudo tee /etc/udev/rules.d/99-kvm4all.rules
+          sudo udevadm control --reload-rules
+          sudo udevadm trigger --name-match=kvm
+
+      - name: WS76 Earn Daily and Quick Play stamps and play Garden on Android
+        if: ${{ (github.head_ref || github.ref_name) == 'feature/ws76-activity-album-v119-2026-11-24' }}
+        uses: reactivecircus/android-emulator-runner@v2
+        with:
+          api-level: 35
+          target: google_apis
+          arch: x86_64
+          profile: pixel_4
+          avd-name: ws76-activity-album
+          ram-size: 3072M
+          disable-animations: true
+          emulator-options: -no-window -gpu swiftshader -no-snapshot -noaudio -no-boot-anim
+          script: bash scripts/ws76_activity_album_emulator.sh
+
+      - name: WS76 Archive activity stamps, Garden board metrics and signed upgrade evidence
+        if: ${{ always() && (github.head_ref || github.ref_name) == 'feature/ws76-activity-album-v119-2026-11-24' }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: GridMates-WS76-v119-Activity-Album-Evidence
+          path: qa-ws76-activity-album/
           if-no-files-found: warn
           retention-days: 30
 

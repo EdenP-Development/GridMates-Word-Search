@@ -299,6 +299,10 @@ internal fun BookPageGameplayScreen(
             completedPages = done,
             pageCount = pages.size,
             nextPageNumber = nextPageNumber,
+            nextPageDetails = next?.let {
+                val size = it.boardSize
+                "${size.cells}×${size.cells} · ${it.challenge.label} · ${size.targets} words"
+            },
             status = status,
             backLabel = backLabel,
             showPrototypeArt = showPrototypeArt,

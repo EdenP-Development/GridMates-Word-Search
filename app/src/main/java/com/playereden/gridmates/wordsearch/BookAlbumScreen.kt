@@ -96,20 +96,36 @@ internal fun BookAlbumLink(
     onClick: () -> Unit,
     newlyEarned: String? = null
 ) {
+    AlbumLink("${album.title} album", album.earnedCount, album.stamps.size, onClick,
+        Modifier.testTag("book-album-link"), newlyEarned) {
+        BookArt(album.theme, BookArtKind.EMBLEM, Modifier.size(32.dp), fieldNotes = true,
+            pageAccentCandidate = true)
+    }
+}
+
+@Composable
+internal fun AlbumLink(
+    title: String,
+    earnedCount: Int,
+    stampCount: Int,
+    onClick: () -> Unit,
+    modifier: Modifier = Modifier,
+    newlyEarned: String? = null,
+    emblem: @Composable () -> Unit
+) {
     GridMatesIllustratedFrame(
-        Modifier.fillMaxWidth().heightIn(min = 52.dp).testTag("book-album-link"),
+        modifier.fillMaxWidth().heightIn(min = 52.dp),
         variant = GridMatesFrameVariant.MEDIUM, onClick = onClick
     ) {
         Row(Modifier.fillMaxWidth().padding(horizontal = 12.dp, vertical = 7.dp),
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.spacedBy(10.dp)) {
-            BookArt(album.theme, BookArtKind.EMBLEM, Modifier.size(32.dp), fieldNotes = true,
-                pageAccentCandidate = true)
+            emblem()
             Column(Modifier.weight(1f), verticalArrangement = Arrangement.spacedBy(2.dp)) {
-                Text("${album.title} album", color = Forest,
+                Text(title, color = Forest,
                     style = MaterialTheme.typography.titleSmall)
                 Text(newlyEarned?.let { "Stamp earned · $it" }
-                    ?: "${album.earnedCount} of ${album.stamps.size} stamps earned",
+                    ?: "$earnedCount of $stampCount stamps earned",
                     modifier = if (newlyEarned != null) Modifier.semantics {
                         liveRegion = LiveRegionMode.Polite
                     } else Modifier,

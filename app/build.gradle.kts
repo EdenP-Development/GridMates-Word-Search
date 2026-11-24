@@ -84,8 +84,8 @@ androidComponents.onVariants(androidComponents.selector().withBuildType("debug")
     debug.sources.assets?.addGeneratedSourceDirectory(stageWs66PreviewAssets, StageFrozenPreviewAssets::output)
     debug.sources.assets?.addGeneratedSourceDirectory(stageWs73PreviewAssets, StageFrozenPreviewAssets::output)
     debug.outputs.forEach {
-        it.versionCode.set(providers.gradleProperty("qaVersionCode").map(String::toInt).orElse(118))
-        it.versionName.set("0.9.73-ws75-garden-album-qa")
+        it.versionCode.set(providers.gradleProperty("qaVersionCode").map(String::toInt).orElse(119))
+        it.versionName.set("0.9.74-ws76-activity-album-qa")
     }
 }
 

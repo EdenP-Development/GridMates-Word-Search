@@ -1,17 +1,19 @@
 package com.playereden.gridmates.wordsearch
 
+import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.ScrollState
 import androidx.compose.foundation.background
-import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.ExperimentalLayoutApi
+import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -56,22 +58,29 @@ import androidx.compose.ui.semantics.selected
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.playereden.gridmates.wordsearch.core.BookAlbumProgress
 import com.playereden.gridmates.wordsearch.core.AchievementProgress
+import com.playereden.gridmates.wordsearch.core.ActivityAlbumRules
 import com.playereden.gridmates.wordsearch.core.BoardFontCollection
 import com.playereden.gridmates.wordsearch.core.BoardFontProgress
 import com.playereden.gridmates.wordsearch.core.PortraitProgress
 import com.playereden.gridmates.wordsearch.core.WoodlandCollection
 import com.playereden.gridmates.wordsearch.core.WordSearchAchievements
 
+private enum class CollectionAlbum { BOOK, ACTIVITY }
+
+@OptIn(ExperimentalLayoutApi::class)
 @Composable
 internal fun CollectionScreen(
     store: SoloStore,
     onBack: () -> Unit,
     backLabel: String,
     modifier: Modifier = Modifier,
-    bookAlbum: BookAlbumProgress? = null
+    bookAlbum: BookAlbumProgress? = null,
+    activityAlbumAvailable: Boolean = false,
+    fromActivityResult: Boolean = false
 ) {
     val profile = store.profile
     val portraits = remember(profile) { WoodlandCollection.progress(profile) }
@@ -91,10 +100,28 @@ internal fun CollectionScreen(
     var draftName by remember(profile.identity.displayName) {
         mutableStateOf(profile.identity.displayName)
     }
-    val tabs = listOfNotNull("Portraits", "Fonts", "Achievements", bookAlbum?.let { "Albums" })
-    var selectedTab by rememberSaveable { mutableStateOf("Portraits") }
+    val activityAlbum = if (activityAlbumAvailable) {
+        remember(profile.results, profile.dailyEntries) { ActivityAlbumRules.progress(profile) }
+    } else null
+    val directAlbum = fromActivityResult && activityAlbum != null
+    val tabs = listOfNotNull("Portraits", "Fonts", "Achievements",
+        "Albums".takeIf { bookAlbum != null || activityAlbum != null })
+    var selectedTab by rememberSaveable { mutableStateOf(if (directAlbum) "Albums" else "Portraits") }
+    var selectedAlbum by rememberSaveable {
+        mutableStateOf(if (directAlbum) CollectionAlbum.ACTIVITY else null)
+    }
     val collectionTab = selectedTab.takeIf { it in tabs } ?: "Portraits"
-    val contentScroll = remember(collectionTab) { ScrollState(0) }
+    val shownAlbum = selectedAlbum?.takeIf {
+        collectionTab == "Albums" && when (it) {
+            CollectionAlbum.BOOK -> bookAlbum != null
+            CollectionAlbum.ACTIVITY -> activityAlbum != null
+        }
+    }
+    val navigateBack: () -> Unit = {
+        if (shownAlbum != null && !directAlbum) selectedAlbum = null else onBack()
+    }
+    BackHandler(enabled = shownAlbum != null, onBack = navigateBack)
+    val contentScroll = remember(collectionTab, shownAlbum) { ScrollState(0) }
     var portraitPage by rememberSaveable { mutableIntStateOf(0) }
     var achievementPage by rememberSaveable { mutableIntStateOf(0) }
     // Page capacity must be based on actual *content* width, not screen width.
@@ -164,30 +191,31 @@ internal fun CollectionScreen(
 
     Column(modifier.fillMaxSize(), verticalArrangement = Arrangement.spacedBy(8.dp)) {
         Ws15BackHeader(
-            title = "Your Collection",
-            onBack = onBack,
-            backLabel = backLabel,
+            title = if (shownAlbum == null) "Your Collection" else "Albums",
+            onBack = navigateBack,
+            backLabel = if (shownAlbum != null && !directAlbum) "Back to albums" else backLabel,
             titleMaxLines = 2
         )
-        // WS25: real native illustrated tabs; live labels, selection and 48dp
-        // targets stay in Compose rather than being baked into a sprite.
-        Row(Modifier.fillMaxWidth().horizontalScroll(rememberScrollState()),
-            horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-            for (label in tabs) {
-                val isSelected = collectionTab == label
-                GridMatesIllustratedFrame(
-                    modifier = Modifier.heightIn(min = 48.dp)
-                        .testTag("ws25-collection-tab-" + label.lowercase())
-                        .semantics { selected = isSelected },
-                    variant = if (isSelected) GridMatesFrameVariant.GREEN_ICON
-                        else GridMatesFrameVariant.MEDIUM,
-                    onClick = { selectedTab = label }
-                ) {
-                    Box(Modifier.padding(horizontal = 13.dp, vertical = 13.dp),
-                        contentAlignment = Alignment.Center) {
-                        Text(label, color = if (isSelected) Paper else Forest,
-                            fontWeight = if (isSelected) FontWeight.Bold else FontWeight.Medium,
-                            style = MaterialTheme.typography.labelLarge)
+        if (shownAlbum == null) {
+            FlowRow(Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.spacedBy(8.dp),
+                verticalArrangement = Arrangement.spacedBy(6.dp)) {
+                for (label in tabs) {
+                    val isSelected = collectionTab == label
+                    GridMatesIllustratedFrame(
+                        modifier = Modifier.heightIn(min = 48.dp)
+                            .testTag("ws25-collection-tab-" + label.lowercase())
+                            .semantics { selected = isSelected },
+                        variant = if (isSelected) GridMatesFrameVariant.GREEN_ICON
+                            else GridMatesFrameVariant.MEDIUM,
+                        onClick = { selectedTab = label }
+                    ) {
+                        Box(Modifier.padding(horizontal = 13.dp, vertical = 13.dp),
+                            contentAlignment = Alignment.Center) {
+                            Text(label, color = if (isSelected) Paper else Forest,
+                                fontWeight = if (isSelected) FontWeight.Bold else FontWeight.Medium,
+                                style = MaterialTheme.typography.labelLarge)
+                        }
                     }
                 }
             }
@@ -200,8 +228,19 @@ internal fun CollectionScreen(
                 .padding(top = 4.dp, bottom = 12.dp),
             verticalArrangement = Arrangement.spacedBy(14.dp)
         ) collectionContent@{
-            if (collectionTab == "Albums" && bookAlbum != null) {
-                BookAlbumContent(bookAlbum)
+            if (collectionTab == "Albums") {
+                when (shownAlbum) {
+                    CollectionAlbum.BOOK -> BookAlbumContent(requireNotNull(bookAlbum))
+                    CollectionAlbum.ACTIVITY -> ActivityAlbumContent(requireNotNull(activityAlbum))
+                    null -> {
+                        bookAlbum?.let {
+                            BookAlbumLink(it, onClick = { selectedAlbum = CollectionAlbum.BOOK })
+                        }
+                        activityAlbum?.let {
+                            ActivityAlbumLink(it, onClick = { selectedAlbum = CollectionAlbum.ACTIVITY })
+                        }
+                    }
+                }
                 return@collectionContent
             }
             Text("Earn portraits and fonts by finishing puzzles. Everything is free.",
@@ -686,7 +725,7 @@ private fun AchievementCard(item: AchievementProgress) {
 }
 
 @Composable
-private fun Ws29AchievementMedal(id: String, earned: Boolean) {
+internal fun Ws29AchievementMedal(id: String, earned: Boolean, size: Dp = 66.dp) {
     val context = LocalContext.current
     // Three blank WS21 SVG masters are reproducibly rendered for QA builds.
     // A source-free production build still has a native circular fallback.
@@ -699,11 +738,11 @@ private fun Ws29AchievementMedal(id: String, earned: Boolean) {
     // Today Counts sun bright orange while other locked motifs were muted.
     val motif = when (id) {
         "one_daily", "seven_dailies" -> "sun"
-        "no_hints", "hard_solo" -> "sparkle"
+        "no_hints", "hard_solo", ActivityAlbumRules.ALL_SIZES -> "sparkle"
         "all_themes" -> "flower"
         else -> "star"
     }
-    Box(Modifier.size(66.dp).testTag("ws29-achievement-medal-" + id),
+    Box(Modifier.size(size).testTag("ws29-achievement-medal-" + id),
         contentAlignment = Alignment.Center) {
         if (resource != 0) {
             Image(
@@ -713,7 +752,7 @@ private fun Ws29AchievementMedal(id: String, earned: Boolean) {
                     .alpha(if (earned) 1f else 0.68f)
             )
         } else {
-            Box(Modifier.size(57.dp)
+            Box(Modifier.size(size * (57f / 66f))
                 .background(
                     if (earned) Color(0xFFE5C775) else Color(0xFFE5DECE),
                     RoundedCornerShape(18.dp)))
@@ -723,12 +762,12 @@ private fun Ws29AchievementMedal(id: String, earned: Boolean) {
         if (id in setOf("twenty_puzzles", "seven_dailies", "hard_solo", "all_themes")) {
             Ws31MilestoneEngraving(
                 earned = earned,
-                modifier = Modifier.size(53.dp)
+                modifier = Modifier.size(size * (53f / 66f))
                     .testTag("ws31-milestone-engraving-" + id)
             )
         }
         Ws30AchievementSymbol(motif, earned,
-            Modifier.size(28.dp).testTag("ws30-medal-symbol-" + id))
+            Modifier.size(size * (28f / 66f)).testTag("ws30-medal-symbol-" + id))
     }
 }
 

@@ -83,6 +83,7 @@ import androidx.compose.ui.unit.IntSize
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.playereden.gridmates.wordsearch.core.BoardViewportTransform
+import com.playereden.gridmates.wordsearch.core.ActivityAlbumRules
 import com.playereden.gridmates.wordsearch.core.LargeBoardViewport
 import com.playereden.gridmates.wordsearch.core.LargeBoardBookmark
 import com.playereden.gridmates.wordsearch.core.BoardRenderWindow
@@ -129,7 +130,8 @@ internal fun WordSearchScreen(
     /** A route to separate pre-game setup; never changes a puzzle in-game. */
     onNewPuzzle: (() -> Unit)? = null,
     showBookArt: Boolean = false,
-    onPlayAnother: (() -> Unit)? = null
+    onPlayAnother: (() -> Unit)? = null,
+    onActivityAlbum: (() -> Unit)? = null
 ) {
     val dailyEntry = if (daily) store.selectedDaily else null
     val run = if (daily) dailyEntry?.run else store.profile.active
@@ -177,6 +179,14 @@ internal fun WordSearchScreen(
     }.map { it.positions }
     val currentResult = if (daily) null else
         store.profile.results.firstOrNull { it.puzzleId == puzzle.id }
+    var newlyEarnedActivityStamp by rememberSaveable(puzzle.id) { mutableStateOf<String?>(null) }
+    val activityAlbum = if (onActivityAlbum != null && finished && store.warning == null &&
+        (dailyEntry?.completed == true || currentResult?.quickPackId != null)
+    ) {
+        remember(store.profile.results, store.profile.dailyEntries) {
+            ActivityAlbumRules.progress(store.profile)
+        }
+    } else null
     LaunchedEffect(status, puzzle.id) {
         if (status.startsWith("✓")) {
             delay(2200L)
@@ -274,10 +284,20 @@ internal fun WordSearchScreen(
         }
 
         val select: (GridPoint, GridPoint) -> Unit = { start, end ->
+            val priorStamps = if (onActivityAlbum != null && (daily || run.frozen != null) &&
+                found.size == puzzle.targets.size - 1
+            ) {
+                ActivityAlbumRules.progress(store.profile).stamps
+                    .filter { it.unlocked }.map { it.id }.toSet()
+            } else null
             val result = if (daily) store.dailyClaim(start, end)
                 else store.claim(start, end)
             when (result.status) {
                 ClaimStatus.FOUND -> {
+                    if (priorStamps != null && store.warning == null) {
+                        newlyEarnedActivityStamp = ActivityAlbumRules.progress(store.profile).stamps
+                            .firstOrNull { it.unlocked && it.id !in priorStamps }?.title
+                    }
                     val target = requireNotNull(result.target)
                     status = "✓ " + target.display + " found! · " +
                         (found.size + 1) + " of " + puzzle.targets.size
@@ -421,7 +441,10 @@ internal fun WordSearchScreen(
                     onAnother = if (daily) null else onPlayAnother ?: onNewPuzzle,
                     onChangeSize = if (run.frozen != null) onNewPuzzle else null,
                     showBookArt = showBookArt,
-                    modifier = Modifier.weight(1f).fillMaxWidth()
+                    modifier = Modifier.weight(1f).fillMaxWidth(),
+                    activityAlbumLink = if (activityAlbum != null && onActivityAlbum != null) {
+                        { ActivityAlbumLink(activityAlbum, onActivityAlbum, newlyEarnedActivityStamp) }
+                    } else null
                 )
             } else if (landscape) {
                 Row(Modifier.weight(1f).fillMaxWidth(),
@@ -517,7 +540,8 @@ private fun CompletionPanel(
     onAnother: (() -> Unit)?,
     showBookArt: Boolean,
     modifier: Modifier = Modifier,
-    onChangeSize: (() -> Unit)? = null
+    onChangeSize: (() -> Unit)? = null,
+    activityAlbumLink: (@Composable () -> Unit)? = null
 ) {
     var shareText by remember(puzzle.id) { mutableStateOf<String?>(null) }
     val usedHints = run.hints.values.sum()
@@ -587,6 +611,8 @@ private fun CompletionPanel(
             GridMatesIllustratedPill("Play another puzzle", onClick = onAnother,
                 modifier = Modifier.fillMaxWidth())
         }
+
+        activityAlbumLink?.invoke()
 
         PuzzleTextAction("Share results", onClick = {
             shareText = PuzzleResultShare.text(puzzle, run, completedSeconds, daily)
