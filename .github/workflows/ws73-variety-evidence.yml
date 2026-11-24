@@ -1,0 +1,41 @@
+name: WS73 chapter variety evidence
+
+on:
+  workflow_dispatch:
+  pull_request:
+    paths:
+      - 'core/**/Ws73VarietyFixture.kt'
+      - 'core/src/test/resources/ws73-variety/**'
+      - '.github/workflows/ws73-variety-evidence.yml'
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ws73-variety-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  frozen-pages:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v5
+        with:
+          distribution: temurin
+          java-version: '17'
+      - uses: gradle/actions/setup-gradle@v4
+        with:
+          gradle-version: '8.11.1'
+      - name: Generate and solve the six frozen V5 puzzle boards
+        run: gradle --no-daemon :core:generateWs73Preview --console=plain
+      - name: Archive measured answers and exact board digests
+        uses: actions/upload-artifact@v4
+        with:
+          name: GridMates-WS73-Variety-Evidence
+          path: |
+            core/build/generated/ws73-preview/*.tsv
+            core/build/generated/ws73-preview/assets/ws73-v116/boards.tsv
+          if-no-files-found: error
+          retention-days: 30
