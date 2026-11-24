@@ -35,6 +35,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import com.playereden.gridmates.wordsearch.core.BookAlbumProgress
 import com.playereden.gridmates.wordsearch.core.BookCatalog
 import com.playereden.gridmates.wordsearch.core.BookLibraryProgress
 import com.playereden.gridmates.wordsearch.core.BookProgressRules
@@ -267,7 +268,9 @@ internal fun PuzzleBookDetailScreen(
     showPrototypeArt: Boolean = false,
     fieldNotesArt: Boolean = false,
     startedPageIds: Set<String> = emptySet(),
-    bookmarkedPageIds: Set<String> = emptySet()
+    bookmarkedPageIds: Set<String> = emptySet(),
+    bookAlbum: BookAlbumProgress? = null,
+    onOpenAlbum: (() -> Unit)? = null
 ) {
     val healthy = isBookStateReadable(catalog, progress)
     val book = catalog.book(bookId)
@@ -406,6 +409,9 @@ internal fun PuzzleBookDetailScreen(
                         } else {
                             Text("Book pages will be playable after content approval.",
                                 color = Muted, style = MaterialTheme.typography.bodyMedium)
+                        }
+                        if (bookAlbum != null && onOpenAlbum != null) {
+                            BookAlbumLink(bookAlbum, onOpenAlbum)
                         }
                     }
                 }

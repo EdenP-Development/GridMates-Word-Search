@@ -34,7 +34,8 @@ class HomeCollectionIntegrationTests(unittest.TestCase):
         for marker in (
             "GridMatesFrameVariant.GREEN_ICON",
             'testTag("ws25-collection-tab-" + label.lowercase())',
-            "onClick = { collectionTab = label }",
+            "onClick = { selectedTab = label }",
+            'val collectionTab = selectedTab.takeIf { it in tabs } ?: "Portraits"',
             "selected = isSelected",
             "WoodlandCollectionAccent()",
             "gm_ws25_collection_robin",

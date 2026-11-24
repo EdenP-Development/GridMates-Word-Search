@@ -29,6 +29,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import com.playereden.gridmates.wordsearch.core.BookAlbumProgress
 import com.playereden.gridmates.wordsearch.core.BookCatalog
 import com.playereden.gridmates.wordsearch.core.BookPageSessionRules
 import com.playereden.gridmates.wordsearch.core.BookProgressRules
@@ -86,7 +87,9 @@ internal fun BookPageGameplayScreen(
     fieldNotesArt: Boolean = false,
     onBookProgressSaved: () -> Unit = {},
     presentation: BookShelfPresentation? = null,
-    backLabel: String = "Back to book"
+    backLabel: String = "Back to book",
+    bookAlbum: BookAlbumProgress? = null,
+    onOpenAlbum: (() -> Unit)? = null
 ) {
     val book = catalog.book(bookId)
     val page = catalog.page(bookId, pageId)
@@ -106,6 +109,9 @@ internal fun BookPageGameplayScreen(
     var toolsOpen by remember(catalog, bookId, pageId) { mutableStateOf(false) }
     var completedView by remember(catalog, bookId, pageId) {
         mutableStateOf(CompletedPageView.RESULT)
+    }
+    val previouslyEarned = remember(bookId, pageId) {
+        bookAlbum?.stamps.orEmpty().filter { it.earned }.mapTo(mutableSetOf()) { it.goal.id }
     }
     val practice = completedView == CompletedPageView.PRACTICE
     var practiceFound by remember(catalog, bookId, pageId) { mutableStateOf(emptySet<String>()) }
@@ -299,6 +305,11 @@ internal fun BookPageGameplayScreen(
             fieldNotesArt = fieldNotesArt,
             onBack = onBack,
             onNext = nextAction,
+            bookAlbum = bookAlbum,
+            onOpenAlbum = onOpenAlbum,
+            newlyEarned = bookAlbum?.stamps?.firstOrNull {
+                it.earned && it.goal.id !in previouslyEarned
+            }?.goal?.title,
             onReview = {
                 status = ""
                 completedView = CompletedPageView.BOARD

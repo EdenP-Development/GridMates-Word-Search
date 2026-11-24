@@ -109,6 +109,11 @@ internal fun GridMatesShell(
         pageName = Page.SOLO_SETUP.name
     }
     val page = Page.entries.firstOrNull { it.name == pageName } ?: Page.PLAY
+    val bookAlbum = if (qa.enabled && (page == Page.BOOKS_QA || page == Page.COLLECTION)) {
+        remember(qa, soloStore.profile.bookAwards) {
+            BookQaPilot.bookAlbum(qa.catalog, soloStore.profile.bookAwards)
+        }
+    } else null
     LaunchedEffect(page) {
         if (page in setOf(Page.PLAY, Page.PROFILE, Page.COLLECTION, Page.RECORDS))
             qa.syncBookRewards(soloStore)
@@ -186,6 +191,7 @@ internal fun GridMatesShell(
                         safeContentPadding = contentPadding,
                         initialBookId = homeBookIntent,
                         presentation = qa.shelf,
+                        bookAlbum = bookAlbum,
                         onBookProgressSaved = { qa.syncBookRewards(soloStore) }
                     )
                 }
@@ -232,7 +238,8 @@ internal fun GridMatesShell(
                 backLabel = if (sectionReturnPageName == Page.PROFILE.name)
                     "Back to Profile" else "Back to Home",
                 modifier = Modifier.padding(contentPadding)
-                    .padding(horizontal = 18.dp, vertical = 12.dp)
+                    .padding(horizontal = 18.dp, vertical = 12.dp),
+                bookAlbum = bookAlbum
             )
         } else Column(
             modifier = Modifier

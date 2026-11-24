@@ -23,6 +23,7 @@ import androidx.compose.ui.semantics.heading
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import com.playereden.gridmates.wordsearch.core.BookAlbumProgress
 import com.playereden.gridmates.wordsearch.core.WordTheme
 
 @Composable
@@ -41,7 +42,10 @@ internal fun BookPageCompletionScreen(
     onBack: () -> Unit,
     onNext: (() -> Unit)?,
     onReview: () -> Unit,
-    onPractice: () -> Unit
+    onPractice: () -> Unit,
+    bookAlbum: BookAlbumProgress? = null,
+    onOpenAlbum: (() -> Unit)? = null,
+    newlyEarned: String? = null
 ) {
     Box(
         Modifier.fillMaxSize().testTag("book-page-result"),
@@ -103,6 +107,9 @@ internal fun BookPageCompletionScreen(
                 onClick = onNext ?: onBack,
                 modifier = Modifier.fillMaxWidth().testTag("book-result-primary")
             )
+            if (bookAlbum != null && onOpenAlbum != null) {
+                BookAlbumLink(bookAlbum, onOpenAlbum, newlyEarned)
+            }
             OutlinedButton(
                 onClick = onReview,
                 modifier = Modifier.fillMaxWidth().heightIn(min = 48.dp)

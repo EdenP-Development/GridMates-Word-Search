@@ -57,6 +57,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import com.playereden.gridmates.wordsearch.core.BookAlbumProgress
 import com.playereden.gridmates.wordsearch.core.AchievementProgress
 import com.playereden.gridmates.wordsearch.core.BoardFontCollection
 import com.playereden.gridmates.wordsearch.core.BoardFontProgress
@@ -69,7 +70,8 @@ internal fun CollectionScreen(
     store: SoloStore,
     onBack: () -> Unit,
     backLabel: String,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    bookAlbum: BookAlbumProgress? = null
 ) {
     val profile = store.profile
     val portraits = remember(profile) { WoodlandCollection.progress(profile) }
@@ -89,7 +91,9 @@ internal fun CollectionScreen(
     var draftName by remember(profile.identity.displayName) {
         mutableStateOf(profile.identity.displayName)
     }
-    var collectionTab by rememberSaveable { mutableStateOf("Portraits") }
+    val tabs = listOfNotNull("Portraits", "Fonts", "Achievements", bookAlbum?.let { "Albums" })
+    var selectedTab by rememberSaveable { mutableStateOf("Portraits") }
+    val collectionTab = selectedTab.takeIf { it in tabs } ?: "Portraits"
     val contentScroll = remember(collectionTab) { ScrollState(0) }
     var portraitPage by rememberSaveable { mutableIntStateOf(0) }
     var achievementPage by rememberSaveable { mutableIntStateOf(0) }
@@ -169,7 +173,7 @@ internal fun CollectionScreen(
         // targets stay in Compose rather than being baked into a sprite.
         Row(Modifier.fillMaxWidth().horizontalScroll(rememberScrollState()),
             horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-            for (label in listOf("Portraits", "Fonts", "Achievements")) {
+            for (label in tabs) {
                 val isSelected = collectionTab == label
                 GridMatesIllustratedFrame(
                     modifier = Modifier.heightIn(min = 48.dp)
@@ -177,7 +181,7 @@ internal fun CollectionScreen(
                         .semantics { selected = isSelected },
                     variant = if (isSelected) GridMatesFrameVariant.GREEN_ICON
                         else GridMatesFrameVariant.MEDIUM,
-                    onClick = { collectionTab = label }
+                    onClick = { selectedTab = label }
                 ) {
                     Box(Modifier.padding(horizontal = 13.dp, vertical = 13.dp),
                         contentAlignment = Alignment.Center) {
@@ -195,7 +199,11 @@ internal fun CollectionScreen(
                 .verticalScroll(contentScroll)
                 .padding(top = 4.dp, bottom = 12.dp),
             verticalArrangement = Arrangement.spacedBy(14.dp)
-        ) {
+        ) collectionContent@{
+            if (collectionTab == "Albums" && bookAlbum != null) {
+                BookAlbumContent(bookAlbum)
+                return@collectionContent
+            }
             Text("Earn portraits and fonts by finishing puzzles. Everything is free.",
                 modifier = Modifier.fillMaxWidth().testTag("ws16bb-collection-heading"),
                 color = Muted, style = MaterialTheme.typography.bodyMedium)

@@ -1,6 +1,9 @@
 package com.playereden.gridmates.wordsearch
 
 import android.content.Context
+import com.playereden.gridmates.wordsearch.core.BookAlbumGoal
+import com.playereden.gridmates.wordsearch.core.BookAlbumRules
+import com.playereden.gridmates.wordsearch.core.BookPageAward
 import com.playereden.gridmates.wordsearch.core.BookBoardDigest
 import com.playereden.gridmates.wordsearch.core.BookCatalog
 import com.playereden.gridmates.wordsearch.core.BookChapter
@@ -39,6 +42,22 @@ internal object BookQaPilot {
 
     fun appendVarietyPreview(context: Context, legacy: BookCatalog): BookCatalog =
         Ws73VarietyPreview.append(context, legacy)
+
+    private val gardenGoals by lazy {
+        val starterPages = setOf("garden-qa-page-one", "garden-qa-page-two")
+        val editionPages = starterPages + "garden-qa-page-three" +
+            (3..8).flatMap { chapter -> (1..3).map { "garden-qa-v5-ch$chapter-page$it" } }
+        val visitors = (1..3).mapTo(linkedSetOf()) { "garden-qa-v5-ch5-page$it" }
+        listOf(
+            BookAlbumGoal("garden-first-bloom", "First Bloom", "Finish any Garden page", editionPages, 1),
+            BookAlbumGoal("garden-new-shoots", "New Shoots", "Finish the Getting Started chapter", starterPages),
+            BookAlbumGoal("garden-visitors", "Garden Visitors", "Finish the Garden Visitors chapter", visitors),
+            BookAlbumGoal("garden-full-bloom", "In Full Bloom", "Finish all 21 Garden pages", editionPages)
+        )
+    }
+
+    fun bookAlbum(catalog: BookCatalog, awards: List<BookPageAward>) =
+        BookAlbumRules.progress(catalog, "garden-qa-volume-one", gardenGoals, awards)
 
     private fun buildCatalog(): BookCatalog {
         fun page(
