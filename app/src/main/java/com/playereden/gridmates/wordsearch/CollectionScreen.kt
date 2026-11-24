@@ -199,10 +199,10 @@ internal fun CollectionScreen(
                 .verticalScroll(contentScroll)
                 .padding(top = 4.dp, bottom = 12.dp),
             verticalArrangement = Arrangement.spacedBy(14.dp)
-        ) {
+        ) collectionContent@{
             if (collectionTab == "Albums" && bookAlbum != null) {
                 BookAlbumContent(bookAlbum)
-                return@Column
+                return@collectionContent
             }
             Text("Earn portraits and fonts by finishing puzzles. Everything is free.",
                 modifier = Modifier.fillMaxWidth().testTag("ws16bb-collection-heading"),

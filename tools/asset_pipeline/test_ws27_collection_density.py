@@ -26,10 +26,13 @@ class CollectionDensityTests(unittest.TestCase):
         self.assertIn('testTag("ws16bu-gallery")',src)
         self.assertIn('testTag("ws16bt-collection-progress")',src)
 
-    def test_collection_unlocks_tabs_and_gallery_layout_unchanged(self):
+    def test_collection_unlocks_and_gallery_layout_remain_reachable(self):
         src=(APP/"CollectionScreen.kt").read_text()
         for marker in (
-            'for (label in listOf("Portraits", "Fonts", "Achievements"))',
+            'listOfNotNull("Portraits", "Fonts", "Achievements", bookAlbum?.let { "Albums" })',
+            'for (label in tabs)',
+            'if (collectionTab == "Albums" && bookAlbum != null)',
+            "BookAlbumContent(bookAlbum)",
             "maxWidth < 320.dp || fontScale >= 1.3f",
             "if (columns == 2)",
             "PortraitTile(item, remaining",
