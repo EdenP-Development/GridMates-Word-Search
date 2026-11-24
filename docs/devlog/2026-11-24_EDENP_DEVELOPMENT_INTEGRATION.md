@@ -1,6 +1,6 @@
 # November 24, 2026 — EdenP Development integration
 
-The owner asked to connect GridMates: Word Search to the shared EdenP development standards while preserving the active game and its distribution identities. The [shared standards](https://github.com/EdenP-Development/Eden-Development-Standards) are maintained in the organization. This receipt records the pre-transfer state and the remaining account step.
+The owner asked to connect GridMates: Word Search to the shared EdenP development standards while preserving the active game and its distribution identities. The [shared standards](https://github.com/EdenP-Development/Eden-Development-Standards) are maintained in the organization. This receipt records the pre-transfer state. See the [completed transfer and verification](2026-11-24_EDENP_WORD_SEARCH_TRANSFER.md) for the current repository address and checks.
 
 ## Repository and development
 

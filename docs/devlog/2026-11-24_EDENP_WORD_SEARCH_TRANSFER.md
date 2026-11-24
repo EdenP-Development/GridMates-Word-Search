@@ -17,4 +17,10 @@ The signed fallback is v119, `com.playereden.gridmates.wordsearch.qa` version co
 
 ## Fresh Android verification
 
-Fresh Android QA and release isolation are pending on the transferred draft. The next development step is finishing the Woodland album from WS77 after the baseline passes.
+Both workflows passed at source `7df956c779d5047cd7bc7a5ad1d765b3873f81eb` on [draft #197](https://github.com/EdenP-Development/GridMates-Word-Search/pull/197). GitHub branch updates with the expected parent confirmed write access. The first Android attempt hit a Maven Central HTTP 429 during dependency retrieval. The retry passed at the same source.
+
+- Android built the signed v119 QA APK, installed it over v118, and preserved both the Solo and book journals byte for byte. The emulator verified the Activity stamps, Garden page 3, and a 320dp large-text layout. [Android run](https://github.com/EdenP-Development/GridMates-Word-Search/actions/runs/45489605994) · [Emulator evidence](https://github.com/EdenP-Development/GridMates-Word-Search/actions/runs/45489605994/artifacts/14965819598)
+- The rebuilt APK has the same application ID, version code, QA certificate and **244 byte-identical packaged assets** as the original v119. The rebuilt APK is 34,328,531 bytes with SHA-256 `0596dfa4c816ac766a0ec7f2fc95fb53f0c37787eab428f7657ed3098033b419`. The [APK ZIP](https://github.com/EdenP-Development/GridMates-Word-Search/actions/runs/45489605994/artifacts/14967370605) has SHA-256 `d129b65f5d6b7b0efb10fe473258ea93e0dea9c91dea5f4216dcda31bda53654`.
+- Release isolation passed, including verification of the pinned artwork sources and that debug artwork is excluded from release. [Release isolation run](https://github.com/EdenP-Development/GridMates-Word-Search/actions/runs/45489606038)
+
+Woodland resumes from [draft #198](https://github.com/EdenP-Development/GridMates-Word-Search/pull/198) on its own v120 test candidate. The draft stack is open for review. The public itch.io beta remains at pre-release planning.

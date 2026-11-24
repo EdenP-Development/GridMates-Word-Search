@@ -1,8 +1,8 @@
-# EdenP Development integration checkpoint
+# EdenP Development transfer verified
 
-The latest build remains signed QA v119 on [draft #197](https://github.com/PlayerEden/GridMates-Word-Search/pull/197), tested at `f0a7152b43d8fb69ecd629e34b0b1a789a35c9cd`. The repository's organization transfer and fresh Actions checks are pending. [Integration record](devlog/2026-11-24_EDENP_DEVELOPMENT_INTEGRATION.md) · [Shared standards](https://github.com/EdenP-Development/Eden-Development-Standards) · [Signed v119](https://github.com/PlayerEden/GridMates-Word-Search/actions/runs/45446328318/artifacts/14946605616)
+The project is now at [EdenP-Development/GridMates-Word-Search](https://github.com/EdenP-Development/GridMates-Word-Search). Both Android QA and release isolation passed for signed v119 at `7df956c779d5047cd7bc7a5ad1d765b3873f81eb`. The emulator kept the v118 Solo and book journals byte for byte. itch.io beta signing remains unconfigured. [Transfer record](devlog/2026-11-24_EDENP_WORD_SEARCH_TRANSFER.md) · [Signed v119](https://github.com/EdenP-Development/GridMates-Word-Search/actions/runs/45489605994/artifacts/14967370605)
 
-The [Woodland album checkpoint](https://github.com/PlayerEden/GridMates-Word-Search/commit/59030b660f47fd3abc6fba548206065764c9b327) on `feature/ws77-woodland-album-v120-2026-11-24` preserves the in-progress model and initial routing. Finish Collection and book navigation, then verify the v119 install-over with Woodland solves across the four saved editions. The checkpoint has no signed v120 APK.
+Continue Woodland on [draft #198](https://github.com/EdenP-Development/GridMates-Word-Search/pull/198), stacked on [#197](https://github.com/EdenP-Development/GridMates-Word-Search/pull/197). This draft implements Collection and book navigation, five stamps, and a signed v119 upgrade test covering all four saved Woodland editions. Check the current draft and its Android and release verification before distributing v120.
 
 # WS76 Activity album and Garden pacing
 

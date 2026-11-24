@@ -1,6 +1,6 @@
 # Current product roadmap
 
-**EdenP Development.** The integration receipt records the shared standards, verified QA identity and pending organization transfer. The next game work remains Woodland's book album from its saved checkpoint. [Integration record](devlog/2026-11-24_EDENP_DEVELOPMENT_INTEGRATION.md)
+**EdenP Development.** The repository transfer, write access, and signed v119 Android and release checks are verified. Woodland’s album is the active v120 candidate on [draft #198](https://github.com/EdenP-Development/GridMates-Word-Search/pull/198). [Transfer record](devlog/2026-11-24_EDENP_WORD_SEARCH_TRANSFER.md)
 
 **WS76 Activity album and Garden pacing.** Signed v119 adds Daily and Quick Play stamps to Collection and shows the next board’s size and challenge on book results. Android verified the upgrade, live unlocks, and Garden’s 20×20 transition. Woodland is the next candidate for a book album. Physical pacing review remains open. [Draft #197](https://github.com/PlayerEden/GridMates-Word-Search/pull/197) · [Pass record](devlog/2026-11-24_WS76_ACTIVITY_ALBUM_AND_GARDEN_PACING.md)
 
