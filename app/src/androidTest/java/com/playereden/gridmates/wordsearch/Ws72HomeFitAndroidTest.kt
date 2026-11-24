@@ -15,12 +15,16 @@ import androidx.compose.ui.test.performScrollTo
 import androidx.compose.ui.test.performTouchInput
 import androidx.compose.ui.test.swipeLeft
 import androidx.test.platform.app.InstrumentationRegistry
+import androidx.compose.ui.unit.Dp
+import androidx.compose.ui.unit.DpRect
 import androidx.compose.ui.unit.dp
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertTrue
 import org.junit.Rule
 import org.junit.Test
 import kotlin.math.abs
+
+private val DpRect.height: Dp get() = bottom - top
 
 class Ws72HomeFitAndroidTest {
     @get:Rule val compose = createAndroidComposeRule<MainActivity>()
