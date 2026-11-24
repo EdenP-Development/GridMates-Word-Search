@@ -1,8 +1,8 @@
 # Start here — GridMates: Word Search
 
-Read [current roadmap](CURRENT_PRODUCT_ROADMAP.md), the top of [active handoff](WS14_ACTIVE_HANDOFF_2026-11-09.md), [development journal](DEVELOPMENT_JOURNAL.md) and its latest dated pass. Inspect live GitHub PR/CI heads; `main` and historical APK banners are not the current source.
+Open [Continue here](../CONTINUE_HERE.md). Read [current roadmap](CURRENT_PRODUCT_ROADMAP.md), the top of [active handoff](WS14_ACTIVE_HANDOFF_2026-11-09.md), [development journal](DEVELOPMENT_JOURNAL.md) and its latest dated pass. Inspect live GitHub PR/CI heads; `main` and historical APK banners are not the current source.
 
-**Start with signed v111.** Android QA verified the grouped shelf, separate Home action, and a saved Solar System page upgraded from v110. WS68 integrates that source against `main` with a combined upgrade and Nearby test. [v111 baseline](https://github.com/PlayerEden/GridMates-Word-Search/pull/188) · [Beta integration checkpoint](devlog/2026-11-23_WS68_BETA_INTEGRATION.md)
+**Start with signed v119.** The Activity album, Garden's larger board and the signed v118 upgrade passed automated Android QA. [Build record](devlog/2026-11-24_WS76_ACTIVITY_ALBUM_AND_GARDEN_PACING.md) · [Signed APK ZIP](https://github.com/PlayerEden/GridMates-Word-Search/actions/runs/45446328318/artifacts/14946605616)
 
 Root lexicon data remains the historical negative-test fixture. The English and Fall internal-QA inventories total 787 distinct words. The 10,000-word goal across 30-plus topics requires curated and approved vocabulary. [WS40 recovery audit](audits/2026-11-17_WS40_GITHUB_PLAN_RECOVERY.md) · [Vocabulary expansion issue #87](https://github.com/PlayerEden/GridMates-Word-Search/issues/87)
 

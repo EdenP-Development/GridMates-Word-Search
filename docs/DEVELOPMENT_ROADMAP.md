@@ -81,7 +81,7 @@ Milestone sequence can be rearranged for risk reduction, but **no stage is marke
 **Goal:** an installable blank-but-real Word Search application without touching Sudoku.
 
 Work:
-1. Survey the latest Sudoku branch/source and reference manifests. Latest relevant reference as of this document: [draft PR #28](https://github.com/PlayerEden/SudokuTogether/pull/28), branch feat/gridmates-nearby-animals. Its feature branch includes the accepted Woodland assets and easiest-join UX. Default main is not its Android app source.
+1. Survey the latest Sudoku branch/source and reference manifests. Latest relevant reference as of this document: [draft PR #28](https://github.com/EdenP-Development/SudokuTogether/pull/28), branch feat/gridmates-nearby-animals. Its feature branch includes the accepted Woodland assets and easiest-join UX. Default main is not its Android app source.
 2. Record exact source commit and file-by-file reuse/replace/reject inventory. Do not copy Sudoku project wholesale without checking package IDs, saves, assets, font licenses, network namespace, and signing references.
 3. Bootstrap a Kotlin/Jetpack Compose Android project under this repo, with original title and launcher identity, a distinct proposed package such as com.playereden.gridmates.wordsearch (confirm before Play publication), and separately installable QA variant.
 4. Port only generic look-and-feel/navigation patterns and a minimal theme: paper/forest/ink/gold plus a **tentative** Word Search accent.

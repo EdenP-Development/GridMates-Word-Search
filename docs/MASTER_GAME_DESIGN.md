@@ -293,7 +293,7 @@ Word Search should keep a recognizable family identity and may introduce a disti
 Owl, Fox, Rabbit, Bear, Badger, Hedgehog, Robin, Deer, Squirrel, Otter, Tortoise, Cat.
 
 Source of truth at design-baseline review:
-- [Sudoku draft PR #28](https://github.com/PlayerEden/SudokuTogether/pull/28) / branch feat/gridmates-nearby-animals
+- [Sudoku draft PR #28](https://github.com/EdenP-Development/SudokuTogether/pull/28) / branch feat/gridmates-nearby-animals
 - portrait mapping in app/.../AnimalPortraits.kt
 - source art and provenance manifest in design/woodland/packaged-assets.json
 - packaged app resources in app/src/main/res/drawable-nodpi/
@@ -478,18 +478,18 @@ These are intentionally **not** silently decided by this document:
 ## 13. References / source trail
 
 ### GridMates and current Sudoku
-- [Sudoku repository](https://github.com/PlayerEden/SudokuTogether)
-- [Current v0.11C draft PR #28](https://github.com/PlayerEden/SudokuTogether/pull/28) — improved Nearby, room code option, 12 Woodland portraits, tests
-- [v0.11C QA evidence](https://github.com/PlayerEden/SudokuTogether/blob/feat/gridmates-nearby-animals/docs/V0.11C_NEARBY_WOODLAND_QA.md)
-- [GridMates series vision](https://github.com/PlayerEden/SudokuTogether/blob/development/docs/GRIDMATES_BRAND_AND_SERIES.md)
-- [GridMates visual identity](https://github.com/PlayerEden/SudokuTogether/blob/development/docs/GRIDMATES_VISUAL_IDENTITY_BRIEF.md)
-- [Reusable Android puzzle foundation](https://github.com/PlayerEden/SudokuTogether/blob/development/docs/REUSABLE_ANDROID_PUZZLE_FOUNDATION.md)
-- [Original approved LAN co-op design](https://github.com/PlayerEden/SudokuTogether/blob/development/docs/superpowers/specs/2026-10-25-sudoku-together-design.md)
-- [Puzzle coach and scoring proposal](https://github.com/PlayerEden/SudokuTogether/blob/development/docs/GRIDMATES_PUZZLE_COACH_AND_SCORING_PROPOSAL.md)
-- [Share results UX brief](https://github.com/PlayerEden/SudokuTogether/blob/development/docs/GRIDMATES_SHARE_RESULTS_UX_DESIGN.md)
-- [Collections/daily rewards/fonts design](https://github.com/PlayerEden/SudokuTogether/blob/development/docs/GRIDMATES_COLLECTIONS_DAILY_REWARDS_AND_FONTS_DESIGN.md)
-- [Monetization and play-testing direction](https://github.com/PlayerEden/SudokuTogether/blob/development/docs/GRIDMATES_MONETIZATION_AND_PLAY_TESTING_PLAN.md)
-- [Latest staged Sudoku delivery plan](https://github.com/PlayerEden/SudokuTogether/blob/feat/gridmates-nearby-animals/docs/GRIDMATES_DELIVERY_PLAN.md)
+- [Sudoku repository](https://github.com/EdenP-Development/SudokuTogether)
+- [Current v0.11C draft PR #28](https://github.com/EdenP-Development/SudokuTogether/pull/28) — improved Nearby, room code option, 12 Woodland portraits, tests
+- [v0.11C QA evidence](https://github.com/EdenP-Development/SudokuTogether/blob/feat/gridmates-nearby-animals/docs/V0.11C_NEARBY_WOODLAND_QA.md)
+- [GridMates series vision](https://github.com/EdenP-Development/SudokuTogether/blob/development/docs/GRIDMATES_BRAND_AND_SERIES.md)
+- [GridMates visual identity](https://github.com/EdenP-Development/SudokuTogether/blob/development/docs/GRIDMATES_VISUAL_IDENTITY_BRIEF.md)
+- [Reusable Android puzzle foundation](https://github.com/EdenP-Development/SudokuTogether/blob/development/docs/REUSABLE_ANDROID_PUZZLE_FOUNDATION.md)
+- [Original approved LAN co-op design](https://github.com/EdenP-Development/SudokuTogether/blob/development/docs/superpowers/specs/2026-10-25-sudoku-together-design.md)
+- [Puzzle coach and scoring proposal](https://github.com/EdenP-Development/SudokuTogether/blob/development/docs/GRIDMATES_PUZZLE_COACH_AND_SCORING_PROPOSAL.md)
+- [Share results UX brief](https://github.com/EdenP-Development/SudokuTogether/blob/development/docs/GRIDMATES_SHARE_RESULTS_UX_DESIGN.md)
+- [Collections/daily rewards/fonts design](https://github.com/EdenP-Development/SudokuTogether/blob/development/docs/GRIDMATES_COLLECTIONS_DAILY_REWARDS_AND_FONTS_DESIGN.md)
+- [Monetization and play-testing direction](https://github.com/EdenP-Development/SudokuTogether/blob/development/docs/GRIDMATES_MONETIZATION_AND_PLAY_TESTING_PLAN.md)
+- [Latest staged Sudoku delivery plan](https://github.com/EdenP-Development/SudokuTogether/blob/feat/gridmates-nearby-animals/docs/GRIDMATES_DELIVERY_PLAN.md)
 
 **Important:** These references are evolving documents. Before transplanting code, inspect the current source/PR and verify actual implementation status, rather than assuming a dated planning brief is the final build.
 
@@ -548,7 +548,7 @@ Cumulative [draft PR #47](https://github.com/PlayerEden/GridMates-Word-Search/pu
 
 ## November 7, 2026 — WS-06G Shared Co-op Board Appearance (free preview)
 
-Cumulative [draft PR #48](https://github.com/PlayerEden/GridMates-Word-Search/pull/48) now offers three baked-in free **Word Search** grid looks: Classic Paper, Linen Sketch and Blueprint Study. These have an explicit technical display priority **but no rarity, achievement requirement, paid item or unlock entitlement**. During Nearby **Co-op only**, host and guest can each choose before joining; a host-authoritative common look is resolved at the first acknowledged guest admission and frozen for the whole room, including reconnect. Per-phone board font and personal **Use Classic on my phone** visual override remain independent, as do public green/blue claim markers. Solo/Daily/Shared Board Race/Speed Duel remain Classic and do not borrow temporary looks. The change introduces allowlisted room `look` with **LAN v7**, preserving schema-4 saves. [Exact-source 71-test Android QA receipt](WS06G_BUILD_QA_2026-11-07.md) includes a real signed v0.7.3→v0.7.4 update retaining both competitive journals. The original inspiration was [Sudoku's Co-op themes design proposal](https://github.com/PlayerEden/SudokuTogether/blob/development/docs/GRIDMATES_SHARED_COOP_BOARD_THEMES_DESIGN.md), not a copy of Sudoku's cosmetic IDs or ownership. Real two-phone room-theme synchronization, accessibility at 200% font and hardware network testing remain OPEN.
+Cumulative [draft PR #48](https://github.com/PlayerEden/GridMates-Word-Search/pull/48) now offers three baked-in free **Word Search** grid looks: Classic Paper, Linen Sketch and Blueprint Study. These have an explicit technical display priority **but no rarity, achievement requirement, paid item or unlock entitlement**. During Nearby **Co-op only**, host and guest can each choose before joining; a host-authoritative common look is resolved at the first acknowledged guest admission and frozen for the whole room, including reconnect. Per-phone board font and personal **Use Classic on my phone** visual override remain independent, as do public green/blue claim markers. Solo/Daily/Shared Board Race/Speed Duel remain Classic and do not borrow temporary looks. The change introduces allowlisted room `look` with **LAN v7**, preserving schema-4 saves. [Exact-source 71-test Android QA receipt](WS06G_BUILD_QA_2026-11-07.md) includes a real signed v0.7.3→v0.7.4 update retaining both competitive journals. The original inspiration was [Sudoku's Co-op themes design proposal](https://github.com/EdenP-Development/SudokuTogether/blob/development/docs/GRIDMATES_SHARED_COOP_BOARD_THEMES_DESIGN.md), not a copy of Sudoku's cosmetic IDs or ownership. Real two-phone room-theme synchronization, accessibility at 200% font and hardware network testing remain OPEN.
 
 ---
 

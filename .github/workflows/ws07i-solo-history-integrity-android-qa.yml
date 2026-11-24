@@ -36,7 +36,7 @@ jobs:
       - name: Checkout approved Woodland originals
         uses: actions/checkout@v4
         with:
-          repository: PlayerEden/SudokuTogether
+          repository: EdenP-Development/SudokuTogether
           ref: 975e31a1e8cbfebad1fbbc7602b3340c357da7ef
           path: _approved_sudoku
           persist-credentials: false

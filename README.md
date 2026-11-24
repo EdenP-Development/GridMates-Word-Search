@@ -3,10 +3,12 @@
 An offline-first Android puzzle game with illustrated puzzle books, Solo/Custom,
 Daily, nearby Co-op, Shared Board Race and Speed Duel.
 
-**Current playable QA is v111.** The three illustrated books contain 87 frozen pages, with grouped chapters and saved progress. The signed install-over passed Android emulator QA. Handset, two-phone Nearby, and editorial release review remain open. [Signed APK ZIP](https://github.com/PlayerEden/GridMates-Word-Search/actions/runs/45273861695/artifacts/14866208722) · [v111 draft and test results](https://github.com/PlayerEden/GridMates-Word-Search/pull/188)
+**Latest verified QA is v119.** The illustrated books include 93 pages across Woodland, Space and Garden. Garden and Activity albums work, and the v118 install-over passed Android emulator QA. [Signed APK ZIP](https://github.com/PlayerEden/GridMates-Word-Search/actions/runs/45446328318/artifacts/14946605616) · [Draft #197](https://github.com/PlayerEden/GridMates-Word-Search/pull/197)
 
 The [beta integration checkpoint](docs/devlog/2026-11-23_WS68_BETA_INTEGRATION.md) brings the cumulative game forward against `main` and verifies the upgrade chain and Nearby on the same source.
 
+- [Continue here](CONTINUE_HERE.md)
+- [EdenP Development standards](https://github.com/EdenP-Development/Eden-Development-Standards)
 - [Current product roadmap](docs/CURRENT_PRODUCT_ROADMAP.md)
 - [Start here for development](docs/START_HERE.md)
 - [Active handoff](docs/WS14_ACTIVE_HANDOFF_2026-11-09.md)
@@ -67,7 +69,7 @@ GridMates: Word Search is a standalone, offline-first native Android word-search
 
 **Installing safely:** Stable-signed WS-05J v0.5.9 from PR #41 and later builds (including WS-06D v0.7.1) can normally update over the top to v0.7.4. The **actual v0.7.3→v0.7.4 path passed Android emulator QA**. Old ephemeral-signed v0.5.8 and the separate PR #40 screenshot v0.5.9 APK may require **Export backup → verify JSON → uninstall Word Search QA only → install v0.7.4 → Restore backup**. Never uninstall or clear app storage without verifying a backup. Read the [full QA receipt](docs/WS06G_BUILD_QA_2026-11-07.md).
 
-**Sister project:** [GridMates: Sudoku](https://github.com/PlayerEden/SudokuTogether). Word Search has its own package, saves, engine, LAN mode namespace, signing and repository.
+**Sister project:** [GridMates: Sudoku](https://github.com/EdenP-Development/SudokuTogether). Word Search has its own package, saves, engine, LAN mode namespace, signing and repository.
 
 
 </details>
