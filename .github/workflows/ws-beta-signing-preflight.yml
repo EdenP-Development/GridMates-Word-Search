@@ -1,0 +1,66 @@
+name: Word Search beta signing preflight
+
+on:
+  push:
+    branches:
+      - ci/word-search-beta-signing
+
+permissions: {}
+
+jobs:
+  verify:
+    if: ${{ github.repository_id == '1447522480' && github.ref == 'refs/heads/ci/word-search-beta-signing' }}
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    steps:
+      - name: Verify Word Search beta certificate and signing key
+        shell: bash
+        env:
+          KEYSTORE_BASE64: ${{ secrets.GRIDMATES_WORD_SEARCH_BETA_KEYSTORE_BASE64 }}
+          KEYSTORE_PASSWORD: ${{ secrets.GRIDMATES_WORD_SEARCH_BETA_KEYSTORE_PASSWORD }}
+          KEY_ALIAS: gridmates-word-search-beta
+          EXPECTED_CERT_SHA256: c29c0c593ac99ae81b5a5aaf5fca37bbed3bbd419e8f08287296de6681babba3
+        run: |
+          set -euo pipefail
+          umask 077
+          if [[ -z "${KEYSTORE_BASE64:-}" || -z "${KEYSTORE_PASSWORD:-}" ]]; then
+            echo 'Word Search beta organization secrets are missing or unavailable to this repository.' >&2
+            exit 1
+          fi
+
+          private_dir=$(mktemp -d)
+          trap 'rm -rf -- "$private_dir"' EXIT
+          keystore="$private_dir/word-search-beta.p12"
+          certificate="$private_dir/certificate.der"
+          proof="$private_dir/proof.csr"
+          if ! printf '%s' "$KEYSTORE_BASE64" | base64 --decode > "$keystore" 2>/dev/null; then
+            echo 'Word Search beta keystore must be valid Base64.' >&2
+            exit 1
+          fi
+
+          if ! keytool -exportcert -storetype PKCS12 -keystore "$keystore" \
+            -alias "$KEY_ALIAS" -storepass:env KEYSTORE_PASSWORD -file "$certificate" >/dev/null 2>&1; then
+            echo 'The dedicated beta keystore could not be opened with the configured password and alias.' >&2
+            exit 1
+          fi
+          actual=$(sha256sum "$certificate")
+          if [[ "${actual%% *}" != "$EXPECTED_CERT_SHA256" ]]; then
+            echo 'Word Search beta certificate differs from the pinned fingerprint.' >&2
+            exit 1
+          fi
+
+          if ! keytool -certreq -storetype PKCS12 -keystore "$keystore" \
+            -alias "$KEY_ALIAS" -storepass:env KEYSTORE_PASSWORD -sigalg SHA256withRSA \
+            -file "$proof" >/dev/null 2>&1; then
+            echo 'The Word Search beta private key could not sign the verification request.' >&2
+            exit 1
+          fi
+          verify_result=$(openssl req -in "$proof" -verify -noout 2>&1) || verify_result=
+          openssl req -in "$proof" -noout -pubkey > "$private_dir/proof.pub"
+          openssl x509 -inform DER -in "$certificate" -noout -pubkey > "$private_dir/certificate.pub"
+          if [[ "$verify_result" != 'Certificate request self-signature verify OK' ]] || \
+            ! cmp -s "$private_dir/proof.pub" "$private_dir/certificate.pub"; then
+            echo 'The signed verification request did not match the pinned beta certificate.' >&2
+            exit 1
+          fi
+          echo "Word Search beta signing key verified. Certificate SHA-256: $EXPECTED_CERT_SHA256"
