@@ -1,3 +1,7 @@
+# WS70 Home scrolling and shelf order
+
+Resume from `feature/ws70-home-scroll-shelf-order-v113-2026-11-23`. The owner reviewed v112 and asked to group the three playable books on the top shelf and improve Home scrolling. The v113 code implements these changes. Android QA is pending. Use signed v112 as the fallback. [Pass record and art review](devlog/2026-11-23_WS70_HOME_SCROLL_SHELF_ORDER.md) · [Signed v112](https://github.com/PlayerEden/GridMates-Word-Search/actions/runs/45294112307/artifacts/14876041667)
+
 # WS69 Library polish
 
 Resume from [draft #190](https://github.com/PlayerEden/GridMates-Word-Search/pull/190). The tested source is `fb7ffaabc6f085524dbd08e477ec2a88accc55b3`. The library uses the continuous cabinet shading, both shelf brackets clear the base, the full title fits on both widths, and Home covers sit on the shelf. Android verified the signed v111-to-v112 upgrade with identical book journals and reopened the saved Solar System puzzle at 320dp and 393dp. Release isolation passed. Handset review is open. Begin the next pass with vocabulary depth for Quiet Clearings Expert and Our Solar System Familiar. [Pass record](devlog/2026-11-23_WS69_LIBRARY_POLISH.md) · [Signed v112](https://github.com/PlayerEden/GridMates-Word-Search/actions/runs/45294112307/artifacts/14876041667) · [Screen captures](https://github.com/PlayerEden/GridMates-Word-Search/actions/runs/45294112307/artifacts/14875398966) · [Signed v111 fallback](https://github.com/PlayerEden/GridMates-Word-Search/actions/runs/45273861695/artifacts/14866208722)

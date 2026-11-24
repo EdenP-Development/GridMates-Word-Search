@@ -52,7 +52,6 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.drawBehind
-import androidx.compose.ui.draw.drawWithContent
 import androidx.compose.ui.graphics.TransformOrigin
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.draw.clipToBounds
@@ -711,24 +710,7 @@ internal fun WordList(
             val listScroll = remember(puzzle.id, remainingOnly, visiblePage) { ScrollState(0) }
             val scrollModifier = if (scrollAll) {
                 Modifier.testTag("word-list-scrollable")
-                    .drawWithContent {
-                        drawContent()
-                        val range = listScroll.maxValue
-                        val inset = 2.dp.toPx()
-                        val railHeight = size.height - inset * 2
-                        if (range in 1 until Int.MAX_VALUE && railHeight > 0f) {
-                            val railX = size.width - 3.dp.toPx()
-                            val thumbHeight = (railHeight * size.height / (size.height + range))
-                                .coerceAtLeast(minOf(18.dp.toPx(), railHeight))
-                            val top = inset + (railHeight - thumbHeight) *
-                                (listScroll.value.toFloat() / range)
-                            val stroke = 2.dp.toPx()
-                            drawLine(Forest.copy(alpha = 0.18f), Offset(railX, inset),
-                                Offset(railX, size.height - inset), stroke, StrokeCap.Round)
-                            drawLine(Forest.copy(alpha = 0.60f), Offset(railX, top),
-                                Offset(railX, top + thumbHeight), stroke, StrokeCap.Round)
-                        }
-                    }
+                    .gridMatesScrollIndicator(listScroll)
                     .verticalScroll(listScroll)
                     .padding(end = 8.dp)
             } else Modifier.verticalScroll(listScroll)

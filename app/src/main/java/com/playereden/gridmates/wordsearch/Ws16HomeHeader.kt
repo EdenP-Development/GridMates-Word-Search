@@ -4,6 +4,7 @@ import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -24,6 +25,7 @@ import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 
 /** WS-16M fullscreen-first native wordmarks plus two distinct art emblems.
@@ -34,7 +36,8 @@ import androidx.compose.ui.unit.dp
 internal fun Ws16HomeHeader(
     displayMode: DisplayMode = DisplayMode.FULLSCREEN,
     onProfile: () -> Unit,
-    onMenu: () -> Unit
+    onMenu: () -> Unit,
+    content: @Composable ColumnScope.(Dp) -> Unit = { Ws16HomeTitle(it) }
 ) {
     BoxWithConstraints(Modifier.fillMaxWidth()) {
         // WS-16J: Reserve a quiet border between title and hanging leaves.
@@ -50,60 +53,68 @@ internal fun Ws16HomeHeader(
             veryRoomy -> 24.dp
             else -> 17.dp
         }
-        Column(Modifier.fillMaxWidth().qaTrackBounds("Home header")
-            .testTag("ws16-home-header")) {
-        Row(Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.spacedBy(4.dp)) {
-            Row(Modifier.weight(1f).padding(start = leftInset),
+        Column(Modifier.fillMaxWidth()) {
+            Row(
+                Modifier.fillMaxWidth().qaTrackBounds("Home header")
+                    .testTag("ws16-home-header"),
                 verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.spacedBy(5.dp)) {
-                Ws16FamilyMark()
-                Text("GridMates", color = Forest,
-                    modifier = Modifier.weight(1f),
-                    style = MaterialTheme.typography.titleSmall,
-                    fontWeight = FontWeight.Bold, maxLines = 1,
-                    overflow = TextOverflow.Ellipsis)
-            }
-        IconButton(onClick = onProfile,
-            modifier = Modifier.size(48.dp)
-                .semantics { contentDescription = "Open player profile" }
-                .testTag("ws16-profile")) {
-            Canvas(Modifier.size(24.dp)) {
-                drawCircle(Forest, radius = size.width * .14f,
-                    center = Offset(size.width * .50f, size.height * .31f),
-                    style = Stroke(2.dp.toPx()))
-                drawArc(Forest, startAngle = 196f, sweepAngle = 148f,
-                    useCenter = false, topLeft = Offset(size.width * .18f, size.height * .42f),
-                    size = androidx.compose.ui.geometry.Size(size.width * .64f,
-                        size.height * .45f), style = Stroke(2.dp.toPx(),
-                        cap = StrokeCap.Round))
-            }
-        }
-        IconButton(onClick = onMenu,
-            modifier = Modifier.size(48.dp)
-                .semantics { contentDescription = "Open menu" }
-                .testTag("ws16-menu")) {
-            Canvas(Modifier.size(24.dp)) {
-                for (fraction in listOf(.25f, .50f, .75f)) {
-                    drawLine(Forest,
-                        Offset(size.width * .16f, size.height * fraction),
-                        Offset(size.width * .84f, size.height * fraction),
-                        strokeWidth = 2.2.dp.toPx(), cap = StrokeCap.Round)
+                horizontalArrangement = Arrangement.spacedBy(4.dp)
+            ) {
+                Row(Modifier.weight(1f).padding(start = leftInset),
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.spacedBy(5.dp)) {
+                    Ws16FamilyMark()
+                    Text("GridMates", color = Forest,
+                        modifier = Modifier.weight(1f),
+                        style = MaterialTheme.typography.titleSmall,
+                        fontWeight = FontWeight.Bold, maxLines = 1,
+                        overflow = TextOverflow.Ellipsis)
+                }
+                IconButton(onClick = onProfile,
+                    modifier = Modifier.size(48.dp)
+                        .semantics { contentDescription = "Open player profile" }
+                        .testTag("ws16-profile")) {
+                    Canvas(Modifier.size(24.dp)) {
+                        drawCircle(Forest, radius = size.width * .14f,
+                            center = Offset(size.width * .50f, size.height * .31f),
+                            style = Stroke(2.dp.toPx()))
+                        drawArc(Forest, startAngle = 196f, sweepAngle = 148f,
+                            useCenter = false, topLeft = Offset(size.width * .18f, size.height * .42f),
+                            size = androidx.compose.ui.geometry.Size(size.width * .64f,
+                                size.height * .45f), style = Stroke(2.dp.toPx(),
+                                cap = StrokeCap.Round))
+                    }
+                }
+                IconButton(onClick = onMenu,
+                    modifier = Modifier.size(48.dp)
+                        .semantics { contentDescription = "Open menu" }
+                        .testTag("ws16-menu")) {
+                    Canvas(Modifier.size(24.dp)) {
+                        for (fraction in listOf(.25f, .50f, .75f)) {
+                            drawLine(Forest,
+                                Offset(size.width * .16f, size.height * fraction),
+                                Offset(size.width * .84f, size.height * fraction),
+                                strokeWidth = 2.2.dp.toPx(), cap = StrokeCap.Round)
+                        }
+                    }
                 }
             }
+            content(leftInset)
         }
-        }
-        Row(Modifier.fillMaxWidth().padding(start = leftInset),
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.spacedBy(5.dp)) {
-            Ws16WordSearchMark()
-            Text("Word Search", color = Forest,
-                modifier = Modifier.weight(1f).testTag("ws41-home-title"),
-                style = MaterialTheme.typography.titleLarge,
-                fontWeight = FontWeight.Bold, maxLines = 2,
-                overflow = TextOverflow.Ellipsis)
-        }
-        }
+    }
+}
+
+@Composable
+internal fun Ws16HomeTitle(leftInset: Dp) {
+    Row(Modifier.fillMaxWidth().padding(start = leftInset),
+        verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.spacedBy(5.dp)) {
+        Ws16WordSearchMark()
+        Text("Word Search", color = Forest,
+            modifier = Modifier.weight(1f).testTag("ws41-home-title"),
+            style = MaterialTheme.typography.titleLarge,
+            fontWeight = FontWeight.Bold, maxLines = 2,
+            overflow = TextOverflow.Ellipsis)
     }
 }
 
