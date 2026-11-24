@@ -1,8 +1,8 @@
 # Continue GridMates: Word Search
 
-**Latest verified APK is signed QA v119.** Its Android run passed the v118 install-over and kept the Solo and book journals intact. Garden and Activity albums work, including the live Daily and Quick Play rewards. [APK ZIP](https://github.com/EdenP-Development/GridMates-Word-Search/actions/runs/45446328318/artifacts/14946605616) · [Build receipt](docs/devlog/2026-11-24_WS76_ACTIVITY_ALBUM_AND_GARDEN_PACING.md)
+**Latest verified APK is signed QA v120.** Woodland has five stamps for the existing 45 pages. The signed upgrade from v119 kept all three journals and recognized prior saves. [APK ZIP](https://github.com/EdenP-Development/GridMates-Word-Search/actions/runs/45491802328/artifacts/14967073059) · [Build record](docs/devlog/2026-11-24_WS77_WOODLAND_ALBUM.md)
 
-**Current work** is Woodland's book album. [Draft #197](https://github.com/EdenP-Development/GridMates-Word-Search/pull/197) is its stacked development base. [WS77 checkpoint](https://github.com/EdenP-Development/GridMates-Word-Search/commit/59030b660f47fd3abc6fba548206065764c9b327) has the five goals and the existing-journal progress model started. Resume by finishing Collection and book navigation, then test the signed upgrade with completed pages from the original and appended Woodland chapters.
+**Current branch** is [draft #198](https://github.com/EdenP-Development/GridMates-Word-Search/pull/198), stacked on the verified v119 [draft #197](https://github.com/EdenP-Development/GridMates-Word-Search/pull/197). Continue with the Space album and its grouped-page upgrade test. Woodland’s handset check is open.
 
 **EdenP Development** maintains the shared [standards](https://github.com/EdenP-Development/Eden-Development-Standards) and [app registry](https://github.com/EdenP-Development/Eden-Development-Standards/blob/main/APP_REGISTRY.json). Follow the [integration receipt](docs/devlog/2026-11-24_EDENP_WORD_SEARCH_TRANSFER.md) for the transfer, known signing identities and fresh Android checks. itch.io is the planned public beta channel. Signed v119 is a persistent QA build.
 

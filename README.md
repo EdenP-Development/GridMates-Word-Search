@@ -3,7 +3,7 @@
 An offline-first Android puzzle game with illustrated puzzle books, Solo/Custom,
 Daily, nearby Co-op, Shared Board Race and Speed Duel.
 
-**Latest verified QA is v119.** The illustrated books include 93 pages across Woodland, Space and Garden. Garden and Activity albums work, and the v118 install-over passed Android emulator QA. [Signed APK ZIP](https://github.com/EdenP-Development/GridMates-Word-Search/actions/runs/45446328318/artifacts/14946605616) · [Draft #197](https://github.com/EdenP-Development/GridMates-Word-Search/pull/197)
+**Latest verified QA is v120.** The illustrated books include 93 pages across Woodland, Space and Garden. Collection has Woodland, Garden and Activity albums, and the signed v119-to-v120 upgrade passed Android emulator QA. [Signed APK ZIP](https://github.com/EdenP-Development/GridMates-Word-Search/actions/runs/45491802328/artifacts/14967073059) · [Draft #198](https://github.com/EdenP-Development/GridMates-Word-Search/pull/198)
 
 The [beta integration checkpoint](docs/devlog/2026-11-23_WS68_BETA_INTEGRATION.md) brings the cumulative game forward against `main` and verifies the upgrade chain and Nearby on the same source.
 
