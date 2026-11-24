@@ -77,8 +77,8 @@ val stageWs66PreviewAssets = tasks.register<StageWs66PreviewAssets>("stageWs66Pr
 androidComponents.onVariants(androidComponents.selector().withBuildType("debug")) { debug ->
     debug.sources.assets?.addGeneratedSourceDirectory(stageWs66PreviewAssets, StageWs66PreviewAssets::output)
     debug.outputs.forEach {
-        it.versionCode.set(providers.gradleProperty("qaVersionCode").map(String::toInt).orElse(114))
-        it.versionName.set("0.9.69-ws71-book-play-qa")
+        it.versionCode.set(providers.gradleProperty("qaVersionCode").map(String::toInt).orElse(115))
+        it.versionName.set("0.9.70-ws72-home-fit-qa")
     }
 }
 

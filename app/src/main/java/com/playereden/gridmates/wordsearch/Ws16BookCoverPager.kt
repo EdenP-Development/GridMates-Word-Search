@@ -48,7 +48,8 @@ internal fun Ws16BookCoverPager(
     pagerState: PagerState,
     fieldNotesArt: Boolean,
     onCoverTap: (Int, Boolean) -> Unit,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    compact: Boolean = false
 ) {
     if (books.isEmpty()) return
 
@@ -62,7 +63,8 @@ internal fun Ws16BookCoverPager(
         val coverWidth = (contentWidth * .59f).coerceIn(136.dp, 186.dp)
             .coerceAtMost((contentWidth - 80.dp).coerceAtLeast(120.dp))
         val sidePadding = ((viewportWidth - coverWidth) / 2).coerceAtLeast(0.dp)
-        val carouselHeight = 252.dp
+        // Compact Home uses the space above the covers for the remaining actions.
+        val carouselHeight = if (compact) 228.dp else 252.dp
         val shelfRise = 6.dp
         val shelfTop = carouselHeight - 42.dp - shelfRise
 
