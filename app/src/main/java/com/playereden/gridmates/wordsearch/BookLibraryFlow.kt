@@ -18,6 +18,7 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import com.playereden.gridmates.wordsearch.core.BookAlbumProgress
 import com.playereden.gridmates.wordsearch.core.BookCatalog
 import com.playereden.gridmates.wordsearch.core.BookProgressRules
 
@@ -42,7 +43,8 @@ internal fun BookLibraryFlow(
     initialBookId: String? = null,
     safeContentPadding: PaddingValues = PaddingValues(0.dp),
     onBookProgressSaved: () -> Unit = {},
-    presentation: BookShelfPresentation? = null
+    presentation: BookShelfPresentation? = null,
+    bookAlbum: BookAlbumProgress? = null
 ) {
     val shelf = presentation ?: remember(catalog) { BookShelfPresentation(catalog, BookQaPilot.editorialBookIds) }
     val initialBook = initialBookId?.let(shelf::displayBookId)
@@ -62,6 +64,7 @@ internal fun BookLibraryFlow(
     }
     var bookId by rememberSaveable(initialBook) { mutableStateOf(initialBook) }
     var pageId by rememberSaveable(initialBook) { mutableStateOf(initialPage) }
+    var albumOpen by rememberSaveable { mutableStateOf(false) }
     var update by remember(catalog) { mutableIntStateOf(0) }
     var feedback by remember(catalog) { mutableStateOf<String?>(null) }
     // QA-only in-memory style choice: does NOT affect book progress or saves.
@@ -99,6 +102,15 @@ internal fun BookLibraryFlow(
         return
     }
 
+    val shownAlbum = bookAlbum?.takeIf { it.bookId == shownBook }
+    if (albumOpen && shownAlbum != null) {
+        BackHandler { albumOpen = false }
+        BookAlbumScreen(shownAlbum, onBack = { albumOpen = false },
+            modifier = Modifier.padding(safeContentPadding))
+        return
+    }
+    val openAlbum: (() -> Unit)? = shownAlbum?.let { { albumOpen = true } }
+
     when {
         pageId != null && shownBook != null -> {
             val activePage = requireNotNull(pageId)
@@ -116,6 +128,8 @@ internal fun BookLibraryFlow(
                 fieldNotesArt = fieldNotesArt,
                 onBookProgressSaved = onBookProgressSaved,
                 presentation = shelf,
+                bookAlbum = shownAlbum,
+                onOpenAlbum = openAlbum,
                 backLabel = if (directFromHome) "Back to Home" else "Back to book",
                 onBack = {
                     if (directFromHome) onExit()
@@ -174,7 +188,9 @@ internal fun BookLibraryFlow(
                     showPrototypeArt = showPrototypeArt,
                     fieldNotesArt = fieldNotesArt,
                     startedPageIds = started,
-                    bookmarkedPageIds = shelf.bookmarks(snapshot, currentBook)
+                    bookmarkedPageIds = shelf.bookmarks(snapshot, currentBook),
+                    bookAlbum = shownAlbum,
+                    onOpenAlbum = openAlbum
                 )
             }
         }

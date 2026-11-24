@@ -1,7 +1,9 @@
 package com.playereden.gridmates.wordsearch
 
 import android.content.Context
+import com.playereden.gridmates.wordsearch.core.BookAlbumProgress
 import com.playereden.gridmates.wordsearch.core.BookCatalog
+import com.playereden.gridmates.wordsearch.core.BookPageAward
 
 /**
  * RELEASE BUILD: no unpublished/temporary/test puzzle-book content ships.
@@ -17,4 +19,6 @@ internal object BookQaPilot {
     fun appendChapterPreview(context: Context, legacy: BookCatalog): BookCatalog = legacy
     @Suppress("UNUSED_PARAMETER")
     fun appendVarietyPreview(context: Context, legacy: BookCatalog): BookCatalog = legacy
+    @Suppress("UNUSED_PARAMETER")
+    fun bookAlbum(catalog: BookCatalog, awards: List<BookPageAward>): BookAlbumProgress? = null
 }
