@@ -52,11 +52,10 @@ internal fun WS16BHDenseSpineBay(
         val bindingHeight = bindingWidth / bindingRatio
         // Environment decoration must not consume book IDs, capacity or taps.
         val room = (maxSlots - books.size).coerceAtLeast(0)
-        val blanks = when {
-            fillShelf || (showDecorativeBlanks && fullPlaceholderShelf && books.isEmpty()) -> room
-            showDecorativeBlanks -> room.coerceAtMost(if (books.isEmpty()) 4 else 2)
-            else -> 0
-        }
+        val blanks = if (fillShelf) room else if (showDecorativeBlanks) {
+            if (fullPlaceholderShelf && books.isEmpty()) room
+            else room.coerceAtMost(if (books.isEmpty()) 4 else 2)
+        } else 0
         val displayCount = books.size + blanks
         if (displayCount > 0) {
             Row(
