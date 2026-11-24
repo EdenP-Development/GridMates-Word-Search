@@ -22,7 +22,7 @@ class MedalSymbolTests(unittest.TestCase):
             'if (earned) Color(0xFF875C1C) else Color(0xFF798376)',
         ):
             self.assertIn(needle,section)
-        card=src.split("private fun Ws29AchievementMedal(",1)[1].split(
+        card=src.split("internal fun Ws29AchievementMedal(",1)[1].split(
             "private fun Ws30AchievementSymbol(",1)[0]
         self.assertIn("Ws30AchievementSymbol(motif, earned",card)
         self.assertIn('testTag("ws30-medal-symbol-" + id)',card)

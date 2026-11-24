@@ -60,7 +60,7 @@ class CabinetRefinementTests(unittest.TestCase):
         # Collection uses the shared Back header and reusable panel artwork.
         panel=(APP/"GridMatesInfoPanel.kt").read_text()
         self.assertIn("ws16bb-collection-heading",collection)
-        self.assertIn('Ws15BackHeader(\n            title = "Your Collection"',collection)
+        self.assertIn('Ws15BackHeader(\n            title = if (shownAlbum == null) "Your Collection" else "Albums"',collection)
         self.assertIn("GridMatesInfoPanel(",collection)
         self.assertIn("variant = GridMatesFrameVariant.PANEL",panel)
         self.assertNotIn("StorybookHeading(",collection)
