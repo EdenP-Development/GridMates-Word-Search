@@ -57,10 +57,16 @@ class Ws69LibraryPolishAndroidTest {
         openLibrary()
         capture("$capturePrefix-library.png")
         val titleLayouts = mutableListOf<TextLayoutResult>()
-        compose.onNodeWithText("Your Library").assertIsDisplayed()
+        compose.onNodeWithText("Your Library", useUnmergedTree = true).assertIsDisplayed()
             .performSemanticsAction(SemanticsActions.GetTextLayoutResult) { it(titleLayouts) }
-        assertTrue("Library plaque must show its full title",
-            titleLayouts.isNotEmpty() && titleLayouts.none { it.hasVisualOverflow })
+        val title = titleLayouts.firstOrNull { it.layoutInput.text.text == "Your Library" }
+            ?: error("Missing native Library title layout")
+        val lastTitleLine = title.lineCount - 1
+        val visibleTitleLength = title.getLineEnd(lastTitleLine, visibleEnd = true)
+        val fullTitleLength = title.layoutInput.text.length
+        assertTrue("Library plaque shows $visibleTitleLength of $fullTitleLength characters",
+            visibleTitleLength == fullTitleLength && !title.isLineEllipsized(lastTitleLine))
+        Log.i("WS69_LAYOUT", "Library title characters $visibleTitleLength/$fullTitleLength")
 
         val base = compose.onNodeWithTag("ws16at-cabinet-base", useUnmergedTree = true)
             .getUnclippedBoundsInRoot()

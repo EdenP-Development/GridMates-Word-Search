@@ -40,15 +40,23 @@ echo 'Signed v111 to v112 upgrade kept both book journals byte-identical.' \
 
 check_layout() {
   local width="$1"
+  local failed=0
   adb shell am instrument -w -r -e expectedWidthDp "$width" -e class \
     "$layout_test#shelfBracketsClearTheBaseAndSavedPuzzleFitsThePhone" "$runner" \
-    | tee "$report/v112-${width}dp.txt"
+    | tee "$report/v112-${width}dp.txt" || failed=1
   for screen in home library puzzle; do
-    adb exec-out run-as "$package" cat "files/ws69-$width-$screen.png" > "$report/v112-$width-$screen.png"
-    test -s "$report/v112-$width-$screen.png"
+    local capture="$report/v112-$width-$screen.png"
+    if ! adb exec-out run-as "$package" cat "files/ws69-$width-$screen.png" > "$capture" ||
+       [ ! -s "$capture" ]; then
+      rm -f -- "$capture"
+      failed=1
+    fi
   done
-  grep -Eq '^OK \(1 test\)' "$report/v112-${width}dp.txt"
+  grep -Eq '^OK \(1 test\)' "$report/v112-${width}dp.txt" || failed=1
+  return "$failed"
 }
-check_layout 393
+layout_failed=0
+check_layout 393 || layout_failed=1
 adb shell wm size 880x1760
-check_layout 320
+check_layout 320 || layout_failed=1
+exit "$layout_failed"
