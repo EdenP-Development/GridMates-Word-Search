@@ -1,5 +1,7 @@
 # Current product roadmap
 
+**WS76 Activity album and Garden pacing.** Signed v119 adds Daily and Quick Play stamps to Collection and shows the next board’s size and challenge on book results. Android verified the upgrade, live unlocks, and Garden’s 20×20 transition. Woodland is the next candidate for a book album. Physical pacing review remains open. [Draft #197](https://github.com/PlayerEden/GridMates-Word-Search/pull/197) · [Pass record](devlog/2026-11-24_WS76_ACTIVITY_ALBUM_AND_GARDEN_PACING.md)
+
 **WS75 Garden album and progression.** The signed v118 QA preview adds four stamps for Garden pages and chapters, a visible next goal, and a route from Collection and the book itself. Android verified existing Garden progress earns the first stamp and completing the next page earns New Shoots. Phone playtesting will check the jump to 20×20 on page 3. The next Collection pass can use existing Daily and Quick Play records for activity milestones. [Draft #196](https://github.com/PlayerEden/GridMates-Word-Search/pull/196) · [Pass record](devlog/2026-11-24_WS75_GARDEN_ALBUM_AND_PUZZLE_PROGRESS.md)
 
 **WS69 Library and Home polish.** Signed v112 passed the Android emulator upgrade and checked both 320dp and 393dp widths. The cabinet shading is continuous, the lower brackets clear the base, the full title fits, and covers rest on the Home shelf. The next content pass deepens Quiet Clearings Expert and Our Solar System Familiar. [Draft #190](https://github.com/PlayerEden/GridMates-Word-Search/pull/190) · [Pass record](devlog/2026-11-23_WS69_LIBRARY_POLISH.md)
