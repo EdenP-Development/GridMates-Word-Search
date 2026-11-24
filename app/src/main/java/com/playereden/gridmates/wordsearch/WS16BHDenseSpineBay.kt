@@ -117,7 +117,7 @@ internal fun WS16BHDenseSpineBay(
                         bindingHeight * (0.84f + 0.04f * (position % 4)) else bindingHeight
                     Box(
                         Modifier.width(slot).height(bindingHeight + 4.dp)
-                            .testTag("ws16bi-blank-cell-$shelfIndex-$position"),
+                            .testTag("ws16bi-blank-cell-$shelfIndex-$i"),
                             contentAlignment = Alignment.BottomCenter
                     ) {
                         Box(
