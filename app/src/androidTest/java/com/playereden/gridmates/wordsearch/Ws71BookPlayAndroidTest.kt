@@ -2,13 +2,18 @@ package com.playereden.gridmates.wordsearch
 
 import android.graphics.Bitmap
 import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.graphics.asAndroidBitmap
+import androidx.compose.ui.test.SemanticsNodeInteraction
 import androidx.compose.ui.test.assertIsDisplayed
+import androidx.compose.ui.test.captureToImage
 import androidx.compose.ui.test.hasTestTag
+import androidx.compose.ui.test.hasContentDescription
 import androidx.compose.ui.test.hasText
 import androidx.compose.ui.test.junit4.createAndroidComposeRule
 import androidx.compose.ui.test.onNodeWithContentDescription
 import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.onNodeWithText
+import androidx.compose.ui.test.onRoot
 import androidx.compose.ui.test.performClick
 import androidx.compose.ui.test.performScrollTo
 import androidx.compose.ui.test.performScrollToNode
@@ -98,12 +103,17 @@ class Ws71BookPlayAndroidTest {
         val lastChapter = book.chapters.last()
         val jump = compose.onNodeWithTag("book-chapter-jump-${lastChapter.id}")
         jump.performScrollTo().assertIsDisplayed()
-        capture("chapters-200")
+        capture("chapters-200", compose.onNodeWithTag("book-chapter-picker"))
         jump.performClick()
         compose.onNodeWithText(lastChapter.title.removeSuffix(" · TEST")).assertIsDisplayed()
 
-        detail.performScrollToNode(hasText("Review page 1"))
-        compose.onNodeWithText("Review page 1").assertIsDisplayed().performClick()
+        detail.performScrollToNode(hasText("Page 1"))
+        compose.onNodeWithText("Page 1").assertIsDisplayed()
+        compose.onNodeWithText("Completed").assertIsDisplayed()
+        capture("detail-200")
+        val reviewPage = hasContentDescription("Review page 1")
+        detail.performScrollToNode(reviewPage)
+        compose.onNode(reviewPage).assertIsDisplayed().performClick()
         compose.onNodeWithText("Page complete").assertIsDisplayed()
         capture("result-200")
         compose.onNodeWithTag("book-result-practice").performScrollTo().assertIsDisplayed()
@@ -145,9 +155,9 @@ class Ws71BookPlayAndroidTest {
         }
     }
 
-    private fun capture(name: String) {
+    private fun capture(name: String, node: SemanticsNodeInteraction = compose.onRoot()) {
         compose.waitForIdle()
-        val bitmap = checkNotNull(instrumentation.uiAutomation.takeScreenshot())
+        val bitmap = node.captureToImage().asAndroidBitmap()
         try {
             context.openFileOutput("ws71-$name.png", 0).use {
                 check(bitmap.compress(Bitmap.CompressFormat.PNG, 100, it))

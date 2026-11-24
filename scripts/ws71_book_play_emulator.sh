@@ -25,6 +25,7 @@ collect_capture() {
 adb shell wm density 440
 adb shell wm size 1080x2200
 adb shell settings put system font_scale 1.0
+adb shell settings put secure immersive_mode_confirmations confirmed
 adb install -r qa-ws71-baseline/app-debug.apk
 adb install -r -t app/build/outputs/apk/androidTest/debug/app-debug-androidTest.apk
 run_test Ws67V110SeedAndroidTest v113-seed
@@ -53,5 +54,5 @@ adb shell wm size 880x1760
 adb shell settings put system font_scale 2.0
 run_test 'Ws71BookPlayAndroidTest#chaptersAndResultsRemainReachableAtLargeText' \
   v114-book-large-text || failed=1
-for name in chapters-200 result-200; do collect_capture "$name" || failed=1; done
+for name in chapters-200 detail-200 result-200; do collect_capture "$name" || failed=1; done
 exit "$failed"

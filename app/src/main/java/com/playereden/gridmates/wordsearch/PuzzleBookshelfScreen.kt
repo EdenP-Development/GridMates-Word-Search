@@ -280,6 +280,7 @@ internal fun PuzzleBookDetailScreen(
         progress.volumes[bookId]?.bookmarkedPageId else null
 
     val listState = rememberLazyListState()
+    val largeText = LocalDensity.current.fontScale >= 1.5f
     val chapters = if (healthy) book?.chapters.orEmpty() else emptyList()
     var chaptersOpen by rememberSaveable(bookId) { mutableStateOf(false) }
 
@@ -471,15 +472,22 @@ internal fun PuzzleBookDetailScreen(
                                         Modifier.size(43.dp).testTag("book-page-complete-" + page.id), fieldNotes = fieldNotesArt)
                                 }
                                 Column(Modifier.weight(1f)) {
-                                    Text("Page " + ordinal + when {
-                                        isComplete -> " · Completed"
-                                        inProgress -> " · In progress"
-                                        isCurrent -> " · Next page"
-                                        else -> " · Not started"
-                                    },
+                                    val status = when {
+                                        isComplete -> "Completed"
+                                        inProgress -> "In progress"
+                                        isCurrent -> "Next page"
+                                        else -> "Not started"
+                                    }
+                                    Text(
+                                        if (largeText) "Page $ordinal" else "Page $ordinal · $status",
                                         color = Forest,
                                         style = MaterialTheme.typography.titleMedium,
-                                        fontWeight = FontWeight.SemiBold)
+                                        fontWeight = FontWeight.SemiBold
+                                    )
+                                    if (largeText) {
+                                        Text(status, color = Forest,
+                                            style = MaterialTheme.typography.bodyMedium)
+                                    }
                                     Text(page.boardSize.cells.toString() + "×" +
                                         page.boardSize.cells + " · " + page.challenge.label,
                                         color = Muted,
@@ -544,10 +552,14 @@ internal fun PuzzleBookDetailScreen(
                             } else {
                                 if (onPlayPage != null) {
                                     if (isComplete) {
+                                        val reviewLabel = "Review page $ordinal"
                                         OutlinedButton(
                                             onClick = { onPlayPage(bookId, page.id) },
                                             modifier = Modifier.fillMaxWidth().heightIn(min = 48.dp)
-                                        ) { Text("Review page $ordinal") }
+                                                .semantics {
+                                                    if (largeText) contentDescription = reviewLabel
+                                                }
+                                        ) { Text(if (largeText) "Review" else reviewLabel) }
                                     } else {
                                         GridMatesIllustratedPill(
                                             label = "$action page $ordinal",
