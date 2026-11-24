@@ -48,6 +48,7 @@ class Ws75GardenAlbumAndroidTest {
         openCollectionAlbum()
         assertAlbum(1, "New Shoots")
         capture("upgraded-collection")
+        compose.onNodeWithContentDescription("Back to albums").performClick()
         compose.onNodeWithContentDescription("Back to Home").performClick()
 
         compose.onNodeWithTag("ws16-full-shelf").performScrollTo().performClick()
@@ -101,7 +102,8 @@ class Ws75GardenAlbumAndroidTest {
 
     private fun openCollectionAlbum() {
         compose.onNodeWithTag("ws16d-home-collection").performScrollTo().performClick()
-        compose.onNodeWithTag("ws25-collection-tab-albums").performScrollTo().performClick()
+        compose.onNodeWithTag("ws25-collection-tab-albums").assertIsDisplayed().performClick()
+        compose.onNodeWithTag("book-album-link").assertIsDisplayed().performClick()
     }
 
     private fun assertAlbum(earned: Int, next: String) {

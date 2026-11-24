@@ -29,10 +29,13 @@ class CollectionDensityTests(unittest.TestCase):
     def test_collection_unlocks_and_gallery_layout_remain_reachable(self):
         src=(APP/"CollectionScreen.kt").read_text()
         for marker in (
-            'listOfNotNull("Portraits", "Fonts", "Achievements", bookAlbum?.let { "Albums" })',
+            'listOfNotNull("Portraits", "Fonts", "Achievements",',
+            '"Albums".takeIf { bookAlbum != null || activityAlbum != null }',
+            'FlowRow(Modifier.fillMaxWidth(),',
             'for (label in tabs)',
-            'if (collectionTab == "Albums" && bookAlbum != null)',
-            "BookAlbumContent(bookAlbum)",
+            'if (collectionTab == "Albums")',
+            "BookAlbumContent(requireNotNull(bookAlbum))",
+            "ActivityAlbumContent(requireNotNull(activityAlbum))",
             "maxWidth < 320.dp || fontScale >= 1.3f",
             "if (columns == 2)",
             "PortraitTile(item, remaining",

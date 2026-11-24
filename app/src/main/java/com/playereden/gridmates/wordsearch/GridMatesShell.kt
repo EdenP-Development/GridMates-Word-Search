@@ -109,6 +109,7 @@ internal fun GridMatesShell(
         pageName = Page.SOLO_SETUP.name
     }
     val page = Page.entries.firstOrNull { it.name == pageName } ?: Page.PLAY
+    val activityAlbumAvailable = remember { QuickPlayContent.mixed != null }
     val bookAlbum = if (qa.enabled && (page == Page.BOOKS_QA || page == Page.COLLECTION)) {
         remember(qa, soloStore.profile.bookAwards) {
             BookQaPilot.bookAlbum(qa.catalog, soloStore.profile.bookAwards)
@@ -228,18 +229,30 @@ internal fun GridMatesShell(
                             }
                         }
                     } else null,
-                    showBookArt = qa.enabled
+                    showBookArt = qa.enabled,
+                    onActivityAlbum = if (activityAlbumAvailable) {
+                        {
+                            sectionReturnPageName = page.name
+                            pageName = Page.COLLECTION.name
+                        }
+                    } else null
                 )
             }
         } else if (page == Page.COLLECTION) {
             CollectionScreen(
                 store = soloStore,
                 onBack = { pageName = sectionReturnPageName },
-                backLabel = if (sectionReturnPageName == Page.PROFILE.name)
-                    "Back to Profile" else "Back to Home",
+                backLabel = when (sectionReturnPageName) {
+                    Page.PROFILE.name -> "Back to Profile"
+                    Page.PUZZLE.name, Page.DAILY_PUZZLE.name -> "Back to results"
+                    else -> "Back to Home"
+                },
                 modifier = Modifier.padding(contentPadding)
                     .padding(horizontal = 18.dp, vertical = 12.dp),
-                bookAlbum = bookAlbum
+                bookAlbum = bookAlbum,
+                activityAlbumAvailable = activityAlbumAvailable,
+                fromActivityResult = sectionReturnPageName == Page.PUZZLE.name ||
+                    sectionReturnPageName == Page.DAILY_PUZZLE.name
             )
         } else Column(
             modifier = Modifier
