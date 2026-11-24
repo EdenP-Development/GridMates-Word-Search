@@ -1,8 +1,8 @@
-# EdenP Word Search beta signing
+# EdenP Word Search beta signing verified
 
-The two required organization secrets are `GRIDMATES_WORD_SEARCH_BETA_KEYSTORE_BASE64` and `GRIDMATES_WORD_SEARCH_BETA_KEYSTORE_PASSWORD`, both scoped to `GridMates-Word-Search`. The first itch.io package is planned as `com.playereden.gridmates.wordsearch.beta`. The dedicated key signed and verified a request locally. The [first Actions run](https://github.com/EdenP-Development/GridMates-Word-Search/actions/runs/45496175839) at `768a179b1d9da1be061a938d116eeeff0a9f201e` confirmed the secrets are unavailable. After the owner saves the values, run the dedicated preflight again and verify the pinned certificate. [Signing draft #199](https://github.com/EdenP-Development/GridMates-Word-Search/pull/199) · [Setup and verification record](devlog/2026-11-24_EDENP_WORD_SEARCH_BETA_SIGNING.md)
+[Draft #199](https://github.com/EdenP-Development/GridMates-Word-Search/pull/199) passed the GitHub signing check at `768a179b1d9da1be061a938d116eeeff0a9f201e` on attempt 2. The two organization secrets opened the dedicated key and produced a valid signature that matched the pinned certificate. The planned itch.io package is `com.playereden.gridmates.wordsearch.beta`. [Verification record](devlog/2026-11-24_EDENP_WORD_SEARCH_BETA_SIGNING_VERIFIED.md) · [Actions pass](https://github.com/EdenP-Development/GridMates-Word-Search/actions/runs/45496175839)
 
-[Signed QA v120](https://github.com/EdenP-Development/GridMates-Word-Search/actions/runs/45491802328/artifacts/14967073059) remains the playable QA build. For game development continue from [draft #198](https://github.com/EdenP-Development/GridMates-Word-Search/pull/198) into Space’s album. The signing workflow runs independently from the game.
+[Signed QA v120](https://github.com/EdenP-Development/GridMates-Word-Search/actions/runs/45491802328/artifacts/14967073059) is the playable QA build. The next distribution step is a signed beta APK with its package and certificate verified, followed by save-import rehearsal. Continue Space’s album from [gameplay draft #198](https://github.com/EdenP-Development/GridMates-Word-Search/pull/198).
 
 # WS77 Woodland album
 
