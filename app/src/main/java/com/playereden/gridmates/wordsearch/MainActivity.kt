@@ -15,6 +15,10 @@ import androidx.core.view.WindowInsetsControllerCompat
 import androidx.lifecycle.ViewModelProvider
 
 class MainActivity : ComponentActivity() {
+    private companion object {
+        const val DAILY_DATE_STATE = "gridmates.selectedDailyDate"
+    }
+
     private val soloStore by lazy { SoloStore(applicationContext) }
     private val nearbyRooms by lazy { ViewModelProvider(this)[NearbyRoomViewModel::class.java] }
     private val qaBookshelf by lazy { QaBookshelfRuntime.installed(applicationContext) }
@@ -25,6 +29,7 @@ class MainActivity : ComponentActivity() {
         // Native Android splash only. No timer or artificial loading overlay.
         installSplashScreen()
         super.onCreate(savedInstanceState)
+        savedInstanceState?.getString(DAILY_DATE_STATE)?.let(soloStore::restoreDailySelection)
         // Drawing parchment behind transparent bars works on older Android too.
         // Android 15 (targetSdk 35) otherwise forces edge-to-edge anyway.
         enableEdgeToEdge()
@@ -72,6 +77,11 @@ class MainActivity : ComponentActivity() {
         // Restore fullscreen after an external document picker or app switch.
         // Transient swipe-revealed bars do not change window focus.
         if (hasFocus) applyDisplayMode(displayMode)
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        outState.putString(DAILY_DATE_STATE, soloStore.selectedDaily?.date)
     }
 
     override fun onStart() {
