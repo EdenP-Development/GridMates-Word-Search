@@ -98,7 +98,7 @@ internal fun Ws16HomeScreen(
         ) { leftInset ->
             Column(
                 Modifier.weight(1f).fillMaxWidth().testTag("home-mode-scroll")
-                    .gridMatesScrollIndicator(scrollState, endInset = (-6).dp)
+                    .gridMatesScrollIndicator(scrollState, endInset = (-15).dp, opacity = .55f)
                     .verticalScroll(scrollState)
                     .padding(bottom = 10.dp),
                 verticalArrangement = Arrangement.spacedBy(sectionSpacing)

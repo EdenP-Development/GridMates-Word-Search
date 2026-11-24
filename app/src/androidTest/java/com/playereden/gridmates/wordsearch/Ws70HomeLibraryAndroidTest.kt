@@ -4,6 +4,7 @@ import android.graphics.Bitmap
 import androidx.compose.ui.graphics.asAndroidBitmap
 import androidx.compose.ui.test.assertHasNoClickAction
 import androidx.compose.ui.test.assertIsDisplayed
+import androidx.compose.ui.test.assertTextContains
 import androidx.compose.ui.test.captureToImage
 import androidx.compose.ui.test.getUnclippedBoundsInRoot
 import androidx.compose.ui.test.hasAnyAncestor
@@ -27,12 +28,17 @@ import kotlin.math.abs
 class Ws70HomeLibraryAndroidTest {
     @get:Rule val compose = createAndroidComposeRule<MainActivity>()
 
-    @Test fun homeGesturesShelfOrderAndSavedBook() {
+    private fun checkWidth(): Int {
         val arguments = InstrumentationRegistry.getArguments()
         val expectedWidth = requireNotNull(arguments.getString("expectedWidthDp")).toInt()
         val actualWidth = compose.activity.resources.configuration.screenWidthDp
         assertTrue("Expected ${expectedWidth}dp, received ${actualWidth}dp",
             abs(expectedWidth - actualWidth) <= 1)
+        return expectedWidth
+    }
+
+    @Test fun homeGesturesFollowSeparateAxes() {
+        val expectedWidth = checkWidth()
         val title = compose.onNodeWithTag("ws41-home-title").assertIsDisplayed()
         val heading = compose.onNodeWithText("Your puzzle books").assertIsDisplayed()
         val menu = compose.onNodeWithTag("ws16-menu").assertIsDisplayed()
@@ -43,7 +49,10 @@ class Ws70HomeLibraryAndroidTest {
         val profileBounds = profile.getUnclippedBoundsInRoot()
         capture("ws70-$expectedWidth-home.png")
 
-        compose.onNodeWithTag("ws14d-cover-pager").performTouchInput { swipeLeft() }
+        compose.onNodeWithTag("ws14d-cover-pager").performTouchInput {
+            swipeLeft(startX = width * .76f, endX = width * .23f)
+        }
+        compose.onNodeWithTag("ws16-selected-book").assertTextContains("Space", substring = true)
         compose.onNodeWithText("2 of 3").assertIsDisplayed()
         assertEquals(titleTop, title.getUnclippedBoundsInRoot().top.value, 1f)
 
@@ -61,7 +70,10 @@ class Ws70HomeLibraryAndroidTest {
         menu.performClick()
         compose.onNodeWithText("Settings & backup").assertIsDisplayed()
         compose.onNodeWithText("Close").performClick()
+    }
 
+    @Test fun libraryShelvesFillInOrderAndReopenSavedPuzzle() {
+        val expectedWidth = checkWidth()
         compose.onNodeWithTag("ws16-full-shelf").performScrollTo().performClick()
         val spines = listOf("woodland", "space", "garden").map { theme ->
             compose.onNode(
