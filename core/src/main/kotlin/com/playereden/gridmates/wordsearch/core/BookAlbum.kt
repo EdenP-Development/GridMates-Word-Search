@@ -26,23 +26,38 @@ data class BookAlbumProgress(
 }
 
 object BookAlbumRules {
-    /** Read the existing durable page ledger so upgrades and restores credit earlier solves. */
+    /** A displayed book can combine pages that retain different owners in the journal. */
     fun progress(
         catalog: BookCatalog,
         bookId: String,
         goals: List<BookAlbumGoal>,
-        awards: List<BookPageAward>
+        awards: List<BookPageAward>,
+        journal: BookLibraryProgress? = null,
+        editionIds: Set<String> = setOf(bookId)
     ): BookAlbumProgress? {
         val book = catalog.book(bookId) ?: return null
-        val pages = catalog.pages(bookId).associateBy { it.id }
-        if (goals.isEmpty() || goals.any { goal -> !pages.keys.containsAll(goal.qualifyingPages) })
+        val ownedPages = buildMap {
+            for (owner in editionIds + bookId) {
+                for (page in catalog.pages(owner)) put(page.id, owner to page)
+            }
+        }
+        if (goals.isEmpty() || goals.any { goal -> !ownedPages.keys.containsAll(goal.qualifyingPages) })
             return null
 
-        val completed = awards.asSequence().filter { award ->
-            val page = pages[award.pageId]
-            award.bookId == bookId && page != null &&
-                page.puzzleId == award.puzzleId && page.boardSha256 == award.boardSha256
-        }.map { it.pageId }.toSet()
+        val completed = buildSet {
+            for ((owner, saved) in journal?.volumes.orEmpty()) {
+                if (saved.bookId == owner) {
+                    saved.completedPageIds.filterTo(this) { ownedPages[it]?.first == owner }
+                }
+            }
+            for (award in awards) {
+                val (owner, page) = ownedPages[award.pageId] ?: continue
+                if (award.bookId == owner && award.puzzleId == page.puzzleId &&
+                    award.boardSha256 == page.boardSha256) {
+                    add(page.id)
+                }
+            }
+        }
 
         val stamps = goals.map { goal ->
             val count = goal.qualifyingPages.count { it in completed }.coerceAtMost(goal.target)

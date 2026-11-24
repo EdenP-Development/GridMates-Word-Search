@@ -3,6 +3,7 @@ package com.playereden.gridmates.wordsearch
 import android.content.Context
 import com.playereden.gridmates.wordsearch.core.BookAlbumProgress
 import com.playereden.gridmates.wordsearch.core.BookCatalog
+import com.playereden.gridmates.wordsearch.core.BookLibraryProgress
 import com.playereden.gridmates.wordsearch.core.BookPageAward
 
 /**
@@ -20,5 +21,10 @@ internal object BookQaPilot {
     @Suppress("UNUSED_PARAMETER")
     fun appendVarietyPreview(context: Context, legacy: BookCatalog): BookCatalog = legacy
     @Suppress("UNUSED_PARAMETER")
-    fun bookAlbum(catalog: BookCatalog, awards: List<BookPageAward>): BookAlbumProgress? = null
+    fun bookAlbums(
+        catalog: BookCatalog,
+        shelf: BookShelfPresentation,
+        journal: BookLibraryProgress?,
+        awards: List<BookPageAward>
+    ): Map<String, BookAlbumProgress> = emptyMap()
 }

@@ -2,6 +2,9 @@ package com.playereden.gridmates.wordsearch
 
 import android.content.Context
 import android.util.AtomicFile
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
 import com.playereden.gridmates.wordsearch.core.BookCatalog
 import com.playereden.gridmates.wordsearch.core.BookLibraryProgress
 import com.playereden.gridmates.wordsearch.core.BookProgressCodec
@@ -23,7 +26,7 @@ internal class BookLibraryStore(
     saveName: String = "gridmates_wordsearch_book_progress_v1.dat"
 ) {
     private val atomic: AtomicFile
-    private var current: BookLibraryProgress = BookLibraryProgress()
+    private var current by mutableStateOf(BookLibraryProgress())
     var warning: String? = null
         private set
     var blocked: Boolean = false

@@ -2,11 +2,13 @@ package com.playereden.gridmates.wordsearch
 
 import android.content.Context
 import com.playereden.gridmates.wordsearch.core.BookAlbumGoal
+import com.playereden.gridmates.wordsearch.core.BookAlbumProgress
 import com.playereden.gridmates.wordsearch.core.BookAlbumRules
 import com.playereden.gridmates.wordsearch.core.BookPageAward
 import com.playereden.gridmates.wordsearch.core.BookBoardDigest
 import com.playereden.gridmates.wordsearch.core.BookCatalog
 import com.playereden.gridmates.wordsearch.core.BookChapter
+import com.playereden.gridmates.wordsearch.core.BookLibraryProgress
 import com.playereden.gridmates.wordsearch.core.BookPage
 import com.playereden.gridmates.wordsearch.core.PuzzleBoardSize
 import com.playereden.gridmates.wordsearch.core.PuzzleBook
@@ -26,6 +28,8 @@ import com.playereden.gridmates.wordsearch.core.WordSearchGeneratorV5
  */
 internal object BookQaPilot {
     const val enabled = true
+    private const val gardenId = "garden-qa-volume-one"
+    private const val woodlandId = "woodland-qa-volume-one"
     val editorialBookIds = setOf(Ws57WoodlandPreview.BOOK_ID,
         Ws66ChapterPreview.SOLAR, Ws66ChapterPreview.CLEARINGS,
         Ws73VarietyPreview.SOLAR, Ws73VarietyPreview.CLEARINGS)
@@ -43,10 +47,16 @@ internal object BookQaPilot {
     fun appendVarietyPreview(context: Context, legacy: BookCatalog): BookCatalog =
         Ws73VarietyPreview.append(context, legacy)
 
+    private fun starterPages(prefix: String) =
+        setOf("$prefix-qa-page-one", "$prefix-qa-page-two")
+
+    private fun originalEditionPages(prefix: String) =
+        starterPages(prefix) + "$prefix-qa-page-three" +
+            (3..8).flatMap { chapter -> (1..3).map { "$prefix-qa-v5-ch$chapter-page$it" } }
+
     private val gardenGoals by lazy {
-        val starterPages = setOf("garden-qa-page-one", "garden-qa-page-two")
-        val editionPages = starterPages + "garden-qa-page-three" +
-            (3..8).flatMap { chapter -> (1..3).map { "garden-qa-v5-ch$chapter-page$it" } }
+        val starterPages = starterPages("garden")
+        val editionPages = originalEditionPages("garden")
         val visitors = (1..3).mapTo(linkedSetOf()) { "garden-qa-v5-ch5-page$it" }
         listOf(
             BookAlbumGoal("garden-first-bloom", "First Bloom", "Finish any Garden page", editionPages, 1),
@@ -56,8 +66,41 @@ internal object BookQaPilot {
         )
     }
 
-    fun bookAlbum(catalog: BookCatalog, awards: List<BookPageAward>) =
-        BookAlbumRules.progress(catalog, "garden-qa-volume-one", gardenGoals, awards)
+    private val woodlandGoals by lazy {
+        val birdsong = (1..3).flatMap { page ->
+            listOf("woodland-qa-v5-ch5-page$page", "ws57-woodland-qa-ch5-page$page")
+        }.toSet()
+        // The final stamp belongs to this 45-page edition even if more pages are added.
+        val editionPages = originalEditionPages("woodland") +
+            (3..8).flatMap { chapter -> (1..3).map { "ws57-woodland-qa-ch$chapter-page$it" } } +
+            (1..3).flatMap { page ->
+                listOf("${Ws66ChapterPreview.CLEARINGS}-page-$page",
+                    "${Ws73VarietyPreview.CLEARINGS}-page-$page")
+            }
+        listOf(
+            BookAlbumGoal("woodland-first-footsteps", "First Footsteps",
+                "Finish any Woodland page", editionPages, 1),
+            BookAlbumGoal("woodland-trailhead", "Trailhead",
+                "Finish the Getting Started chapter", starterPages("woodland")),
+            BookAlbumGoal("woodland-dawn-chorus", "Dawn Chorus",
+                "Finish the six Birdsong pages", birdsong),
+            BookAlbumGoal("woodland-deep-woods", "Deep in the Woods",
+                "Finish 30 Woodland pages", editionPages, 30),
+            BookAlbumGoal("woodland-wanderer", "Woodland Wanderer",
+                "Finish all 45 Woodland pages", editionPages)
+        )
+    }
+
+    fun bookAlbums(
+        catalog: BookCatalog,
+        shelf: BookShelfPresentation,
+        journal: BookLibraryProgress?,
+        awards: List<BookPageAward>
+    ): Map<String, BookAlbumProgress> = listOfNotNull(
+        BookAlbumRules.progress(catalog, woodlandId, woodlandGoals, awards,
+            journal, shelf.editionIds(woodlandId)),
+        BookAlbumRules.progress(catalog, gardenId, gardenGoals, awards)
+    ).associateBy { it.bookId }
 
     private fun buildCatalog(): BookCatalog {
         fun page(

@@ -44,7 +44,7 @@ internal fun BookLibraryFlow(
     safeContentPadding: PaddingValues = PaddingValues(0.dp),
     onBookProgressSaved: () -> Unit = {},
     presentation: BookShelfPresentation? = null,
-    bookAlbum: BookAlbumProgress? = null
+    bookAlbums: Map<String, BookAlbumProgress> = emptyMap()
 ) {
     val shelf = presentation ?: remember(catalog) { BookShelfPresentation(catalog, BookQaPilot.editorialBookIds) }
     val initialBook = initialBookId?.let(shelf::displayBookId)
@@ -102,7 +102,7 @@ internal fun BookLibraryFlow(
         return
     }
 
-    val shownAlbum = bookAlbum?.takeIf { it.bookId == shownBook }
+    val shownAlbum = shownBook?.let(bookAlbums::get)
     if (albumOpen && shownAlbum != null) {
         BackHandler { albumOpen = false }
         BookAlbumScreen(shownAlbum, onBack = { albumOpen = false },
