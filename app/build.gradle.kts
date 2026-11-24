@@ -55,7 +55,7 @@ android {
     }
 }
 
-abstract class StageWs66PreviewAssets : DefaultTask() {
+abstract class StageFrozenPreviewAssets : DefaultTask() {
     @get:InputDirectory abstract val snapshots: DirectoryProperty
     @get:OutputDirectory abstract val output: DirectoryProperty
     @get:Inject abstract val files: FileSystemOperations
@@ -68,17 +68,24 @@ abstract class StageWs66PreviewAssets : DefaultTask() {
     }
 }
 
-val stageWs66PreviewAssets = tasks.register<StageWs66PreviewAssets>("stageWs66PreviewAssets") {
+val stageWs66PreviewAssets = tasks.register<StageFrozenPreviewAssets>("stageWs66PreviewAssets") {
     dependsOn(":core:generateWs66Preview")
     snapshots.set(project(":core").layout.buildDirectory.dir("generated/ws66-preview/assets"))
     output.convention(layout.buildDirectory.dir("generated/assets/ws66Preview"))
 }
 
+val stageWs73PreviewAssets = tasks.register<StageFrozenPreviewAssets>("stageWs73PreviewAssets") {
+    dependsOn(":core:generateWs73Preview")
+    snapshots.set(project(":core").layout.buildDirectory.dir("generated/ws73-preview/assets"))
+    output.convention(layout.buildDirectory.dir("generated/assets/ws73Preview"))
+}
+
 androidComponents.onVariants(androidComponents.selector().withBuildType("debug")) { debug ->
-    debug.sources.assets?.addGeneratedSourceDirectory(stageWs66PreviewAssets, StageWs66PreviewAssets::output)
+    debug.sources.assets?.addGeneratedSourceDirectory(stageWs66PreviewAssets, StageFrozenPreviewAssets::output)
+    debug.sources.assets?.addGeneratedSourceDirectory(stageWs73PreviewAssets, StageFrozenPreviewAssets::output)
     debug.outputs.forEach {
-        it.versionCode.set(providers.gradleProperty("qaVersionCode").map(String::toInt).orElse(115))
-        it.versionName.set("0.9.70-ws72-home-fit-qa")
+        it.versionCode.set(providers.gradleProperty("qaVersionCode").map(String::toInt).orElse(116))
+        it.versionName.set("0.9.71-ws73-chapter-variety-qa")
     }
 }
 

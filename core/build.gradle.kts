@@ -24,3 +24,17 @@ tasks.register<JavaExec>("generateWs66Preview") {
     inputs.files(tests.output, sourceSets["main"].output)
     outputs.dir(ws66Preview)
 }
+
+val ws73Preview = layout.buildDirectory.dir("generated/ws73-preview")
+tasks.register<JavaExec>("generateWs73Preview") {
+    val tests = sourceSets["test"]
+    val previousBoards = ws66Preview.map { it.dir("assets/ws66-v110") }
+    dependsOn(tests.classesTaskName, "generateWs66Preview")
+    classpath = tests.runtimeClasspath
+    mainClass.set("com.playereden.gridmates.wordsearch.core.Ws73VarietyFixture")
+    args(previousBoards.get().asFile.absolutePath,
+        ws73Preview.get().dir("assets/ws73-v116").asFile.absolutePath)
+    inputs.files(tests.output, sourceSets["main"].output)
+    inputs.dir(previousBoards)
+    outputs.dir(ws73Preview)
+}

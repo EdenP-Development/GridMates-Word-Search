@@ -1,0 +1,163 @@
+chapter	page	title	word_id	answer	display	source
+solar-system	1	Mission to Mars	gm000191	MARS	Mars	ws66-preview
+solar-system	1	Mission to Mars	gm000017	SATELLITE	Satellite	ws66-preview
+solar-system	1	Mission to Mars	gm000014	ROCKET	Rocket	english-qa
+solar-system	1	Mission to Mars	gm000275	ASTRONAUT	Astronaut	english-qa
+solar-system	1	Mission to Mars	gm000278	LANDING	Landing	english-qa
+solar-system	1	Mission to Mars	gm000254	CAMERA	Camera	english-qa
+solar-system	1	Mission to Mars	gm000252	ANTENNA	Antenna	english-qa
+solar-system	1	Mission to Mars	gm000247	BOOSTER	Booster	english-qa
+solar-system	1	Mission to Mars	gm000244	CAPSULE	Capsule	english-qa
+solar-system	1	Mission to Mars	gm000268	SIGNAL	Signal	english-qa
+solar-system	1	Mission to Mars	gm000263	PARACHUTE	Parachute	english-qa
+solar-system	1	Mission to Mars	gm000276	MISSION	Mission	english-qa
+solar-system	1	Mission to Mars	gm000277	LAUNCH	Launch	english-qa
+solar-system	1	Mission to Mars	gm000265	SENSOR	Sensor	english-qa
+solar-system	1	Mission to Mars	gm000264	SHIELD	Shield	english-qa
+solar-system	1	Mission to Mars	gm000266	ROBOT	Robot	english-qa
+solar-system	1	Mission to Mars	gm000291	SAMPLE	Sample	english-qa
+solar-system	1	Mission to Mars	gm000208	DUST	Dust	ws66-preview
+solar-system	1	Mission to Mars	ws73-drill	DRILL	Drill	original-ws73-qa
+solar-system	1	Mission to Mars	ws73-wheel	WHEEL	Wheel	original-ws73-qa
+solar-system	1	Mission to Mars	gm000253	BATTERY	Battery	english-qa
+solar-system	1	Mission to Mars	ws73-beacon	BEACON	Beacon	original-ws73-qa
+solar-system	1	Mission to Mars	ws73-panorama	PANORAMA	Panorama	original-ws73-qa
+solar-system	1	Mission to Mars	ws73-solarpanel	SOLARPANEL	Solar Panel	original-ws73-qa
+solar-system	2	Between the Planets	gm000192	VENUS	Venus	ws66-preview
+solar-system	2	Between the Planets	gm000196	URANUS	Uranus	ws66-preview
+solar-system	2	Between the Planets	gm000197	NEPTUNE	Neptune	ws66-preview
+solar-system	2	Between the Planets	gm000195	SATURN	Saturn	ws66-preview
+solar-system	2	Between the Planets	gm000198	PLUTO	Pluto	ws66-preview
+solar-system	2	Between the Planets	gm000193	MERCURY	Mercury	ws66-preview
+solar-system	2	Between the Planets	gm000194	JUPITER	Jupiter	ws66-preview
+solar-system	2	Between the Planets	gm000190	EARTH	Earth	ws66-preview
+solar-system	2	Between the Planets	gm000012	ASTEROID	Asteroid	ws66-preview
+solar-system	2	Between the Planets	gm000199	COMET	Comet	ws66-preview
+solar-system	2	Between the Planets	gm000201	CRATER	Crater	ws66-preview
+solar-system	2	Between the Planets	gm000200	METEOR	Meteor	ws66-preview
+solar-system	2	Between the Planets	gm000209	ICE	Ice	ws66-preview
+solar-system	2	Between the Planets	gm000210	ROCK	Rock	ws66-preview
+solar-system	2	Between the Planets	gm000212	SURFACE	Surface	ws66-preview
+solar-system	2	Between the Planets	gm000213	CORE	Core	ws66-preview
+solar-system	2	Between the Planets	gm000202	ORBIT	Orbit	ws66-preview
+solar-system	2	Between the Planets	gm000207	RING	Ring	ws66-preview
+solar-system	2	Between the Planets	gm000204	GRAVITY	Gravity	ws66-preview
+solar-system	2	Between the Planets	gm000211	ATMOSPHERE	Atmosphere	ws66-preview
+solar-system	2	Between the Planets	ws73-tail	TAIL	Tail	original-ws73-qa
+solar-system	2	Between the Planets	gm000600	BELT	Belt	english-qa
+solar-system	2	Between the Planets	gm000011	PLANET	Planet	ws66-preview
+solar-system	2	Between the Planets	ws73-gas	GAS	Gas	original-ws73-qa
+solar-system	3	Sky Watch	gm000203	ECLIPSE	Eclipse	ws66-preview
+solar-system	3	Sky Watch	gm000156	SHADOW	Shadow	ws66-preview
+solar-system	3	Sky Watch	gm000154	SUNLIGHT	Sunlight	ws66-preview
+solar-system	3	Sky Watch	gm000226	MOONLIGHT	Moonlight	ws66-preview
+solar-system	3	Sky Watch	gm000018	STARLIGHT	Starlight	english-qa
+solar-system	3	Sky Watch	gm000316	HORIZON	Horizon	english-qa
+solar-system	3	Sky Watch	gm000227	SKY	Sky	english-qa
+solar-system	3	Sky Watch	gm000218	SUNSET	Sunset	ws66-preview
+solar-system	3	Sky Watch	gm000217	SUNRISE	Sunrise	ws66-preview
+solar-system	3	Sky Watch	gm000219	DAYLIGHT	Daylight	ws66-preview
+solar-system	3	Sky Watch	gm000220	NIGHT	Night	ws66-preview
+solar-system	3	Sky Watch	gm000711	TWILIGHT	Twilight	fall-qa
+solar-system	3	Sky Watch	gm000230	AURORA	Aurora	english-qa
+solar-system	3	Sky Watch	gm000305	LENS	Lens	english-qa
+solar-system	3	Sky Watch	gm000020	TELESCOPE	Telescope	ws66-preview
+solar-system	3	Sky Watch	gm000306	MIRROR	Mirror	english-qa
+solar-system	3	Sky Watch	gm000167	BINOCULARS	Binoculars	english-qa
+solar-system	3	Sky Watch	gm000311	FILTER	Filter	english-qa
+solar-system	3	Sky Watch	ws73-viewfinder	VIEWFINDER	Viewfinder	original-ws73-qa
+solar-system	3	Sky Watch	gm000318	ANGLE	Angle	english-qa
+solar-system	3	Sky Watch	gm000308	OBSERVATORY	Observatory	english-qa
+solar-system	3	Sky Watch	gm000037	COMPASS	Compass	english-qa
+solar-system	3	Sky Watch	gm000223	AXIS	Axis	ws66-preview
+solar-system	3	Sky Watch	gm000216	SEASON	Season	ws66-preview
+quiet-clearings	1	Meadow Edge	gm000119	MEADOW	Meadow	ws66-preview
+quiet-clearings	1	Meadow Edge	ws73-fescue	FESCUE	Fescue	original-ws73-qa
+quiet-clearings	1	Meadow Edge	ws73-orchardgrass	ORCHARDGRASS	Orchardgrass	original-ws73-qa
+quiet-clearings	1	Meadow Edge	ws73-switchgrass	SWITCHGRASS	Switchgrass	original-ws73-qa
+quiet-clearings	1	Meadow Edge	ws73-sedge	SEDGE	Sedge	original-ws73-qa
+quiet-clearings	1	Meadow Edge	ws73-sorrel	SORREL	Sorrel	original-ws73-qa
+quiet-clearings	1	Meadow Edge	ws73-yarrow	YARROW	Yarrow	original-ws73-qa
+quiet-clearings	1	Meadow Edge	ws73-queenanneslace	QUEENANNESLACE	Queen Anne's Lace	original-ws73-qa
+quiet-clearings	1	Meadow Edge	ws73-thistle	THISTLE	Thistle	original-ws73-qa
+quiet-clearings	1	Meadow Edge	ws73-milkweed	MILKWEED	Milkweed	original-ws73-qa
+quiet-clearings	1	Meadow Edge	gm000691	GOLDENROD	Goldenrod	ws66-preview
+quiet-clearings	1	Meadow Edge	ws73-plantain	PLANTAIN	Plantain	original-ws73-qa
+quiet-clearings	1	Meadow Edge	ws73-tansy	TANSY	Tansy	original-ws73-qa
+quiet-clearings	1	Meadow Edge	ws73-aster	ASTER	Aster	original-ws73-qa
+quiet-clearings	1	Meadow Edge	ws73-lupine	LUPINE	Lupine	original-ws73-qa
+quiet-clearings	1	Meadow Edge	ws73-chicory	CHICORY	Chicory	original-ws73-qa
+quiet-clearings	1	Meadow Edge	ws73-spittlebug	SPITTLEBUG	Spittlebug	original-ws73-qa
+quiet-clearings	1	Meadow Edge	ws73-grasshopper	GRASSHOPPER	Grasshopper	original-ws73-qa
+quiet-clearings	1	Meadow Edge	ws73-cricket	CRICKET	Cricket	original-ws73-qa
+quiet-clearings	1	Meadow Edge	ws73-katydid	KATYDID	Katydid	original-ws73-qa
+quiet-clearings	1	Meadow Edge	ws73-skipper	SKIPPER	Skipper	original-ws73-qa
+quiet-clearings	1	Meadow Edge	ws73-swallowtail	SWALLOWTAIL	Swallowtail	original-ws73-qa
+quiet-clearings	1	Meadow Edge	gm000447	BUMBLEBEE	Bumblebee	english-qa
+quiet-clearings	1	Meadow Edge	ws73-hoverfly	HOVERFLY	Hoverfly	original-ws73-qa
+quiet-clearings	1	Meadow Edge	gm000028	LADYBUG	Ladybug	english-qa
+quiet-clearings	1	Meadow Edge	gm000449	DRAGONFLY	Dragonfly	english-qa
+quiet-clearings	1	Meadow Edge	ws73-damselfly	DAMSELFLY	Damselfly	original-ws73-qa
+quiet-clearings	1	Meadow Edge	gm000084	PHEASANT	Pheasant	english-qa
+quiet-clearings	1	Meadow Edge	gm000085	QUAIL	Quail	english-qa
+quiet-clearings	1	Meadow Edge	ws73-fieldsparrow	FIELDSPARROW	Field Sparrow	original-ws73-qa
+quiet-clearings	2	Under the Fallen Log	gm000140	FERN	Fern	ws66-preview
+quiet-clearings	2	Under the Fallen Log	gm000141	LICHEN	Lichen	ws66-preview
+quiet-clearings	2	Under the Fallen Log	gm000005	MUSHROOM	Mushroom	ws66-preview
+quiet-clearings	2	Under the Fallen Log	ws73-slimemold	SLIMEMOLD	Slime Mold	original-ws73-qa
+quiet-clearings	2	Under the Fallen Log	gm000456	SNAIL	Snail	english-qa
+quiet-clearings	2	Under the Fallen Log	ws73-slug	SLUG	Slug	original-ws73-qa
+quiet-clearings	2	Under the Fallen Log	ws73-woodlouse	WOODLOUSE	Woodlouse	original-ws73-qa
+quiet-clearings	2	Under the Fallen Log	ws73-earwig	EARWIG	Earwig	original-ws73-qa
+quiet-clearings	2	Under the Fallen Log	ws73-millipede	MILLIPEDE	Millipede	original-ws73-qa
+quiet-clearings	2	Under the Fallen Log	ws73-centipede	CENTIPEDE	Centipede	original-ws73-qa
+quiet-clearings	2	Under the Fallen Log	gm000067	SALAMANDER	Salamander	english-qa
+quiet-clearings	2	Under the Fallen Log	ws73-newt	NEWT	Newt	original-ws73-qa
+quiet-clearings	2	Under the Fallen Log	gm000060	SHREW	Shrew	english-qa
+quiet-clearings	2	Under the Fallen Log	gm000059	VOLE	Vole	english-qa
+quiet-clearings	2	Under the Fallen Log	gm000047	MOUSE	Mouse	english-qa
+quiet-clearings	2	Under the Fallen Log	gm000448	BEETLE	Beetle	english-qa
+quiet-clearings	2	Under the Fallen Log	gm000455	EARTHWORM	Earthworm	english-qa
+quiet-clearings	2	Under the Fallen Log	gm000457	SPIDER	Spider	english-qa
+quiet-clearings	2	Under the Fallen Log	ws73-cobweb	COBWEB	Cobweb	original-ws73-qa
+quiet-clearings	2	Under the Fallen Log	gm000024	SEEDLING	Seedling	english-qa
+quiet-clearings	2	Under the Fallen Log	gm000110	BARK	Bark	english-qa
+quiet-clearings	2	Under the Fallen Log	ws73-fallenlog	FALLENLOG	Fallen Log	original-ws73-qa
+quiet-clearings	2	Under the Fallen Log	gm000689	LEAFLITTER	Leaf Litter	fall-qa
+quiet-clearings	2	Under the Fallen Log	ws73-decayingwood	DECAYINGWOOD	Decaying Wood	original-ws73-qa
+quiet-clearings	2	Under the Fallen Log	ws73-spore	SPORE	Spore	original-ws73-qa
+quiet-clearings	2	Under the Fallen Log	ws73-mycelium	MYCELIUM	Mycelium	original-ws73-qa
+quiet-clearings	2	Under the Fallen Log	ws73-humus	HUMUS	Humus	original-ws73-qa
+quiet-clearings	2	Under the Fallen Log	ws73-damp	DAMP	Damp	original-ws73-qa
+quiet-clearings	2	Under the Fallen Log	gm000466	TOPSOIL	Topsoil	english-qa
+quiet-clearings	2	Under the Fallen Log	ws73-fungusgnat	FUNGUSGNAT	Fungus Gnat	original-ws73-qa
+quiet-clearings	3	Dusk in the Glade	gm000146	GLADE	Glade	ws66-preview
+quiet-clearings	3	Dusk in the Glade	ws56q021	FIREFLIES	Fireflies	ws66-preview
+quiet-clearings	3	Dusk in the Glade	gm000711	TWILIGHT	Twilight	fall-qa
+quiet-clearings	3	Dusk in the Glade	ws73-nightfall	NIGHTFALL	Nightfall	original-ws73-qa
+quiet-clearings	3	Dusk in the Glade	ws73-moonrise	MOONRISE	Moonrise	original-ws73-qa
+quiet-clearings	3	Dusk in the Glade	gm000156	SHADOW	Shadow	ws66-preview
+quiet-clearings	3	Dusk in the Glade	gm000042	OWL	Owl	english-qa
+quiet-clearings	3	Dusk in the Glade	gm000062	BAT	Bat	english-qa
+quiet-clearings	3	Dusk in the Glade	gm000050	RACCOON	Raccoon	english-qa
+quiet-clearings	3	Dusk in the Glade	gm000061	SKUNK	Skunk	english-qa
+quiet-clearings	3	Dusk in the Glade	ws73-opossum	OPOSSUM	Opossum	original-ws73-qa
+quiet-clearings	3	Dusk in the Glade	ws73-coyote	COYOTE	Coyote	original-ws73-qa
+quiet-clearings	3	Dusk in the Glade	gm000044	DEER	Deer	ws66-preview
+quiet-clearings	3	Dusk in the Glade	gm000041	FOX	Fox	english-qa
+quiet-clearings	3	Dusk in the Glade	gm000045	HARE	Hare	english-qa
+quiet-clearings	3	Dusk in the Glade	gm000444	MOTH	Moth	english-qa
+quiet-clearings	3	Dusk in the Glade	ws73-nighthawk	NIGHTHAWK	Nighthawk	original-ws73-qa
+quiet-clearings	3	Dusk in the Glade	ws73-whippoorwill	WHIPPOORWILL	Whip-poor-will	original-ws73-qa
+quiet-clearings	3	Dusk in the Glade	ws73-nightjar	NIGHTJAR	Nightjar	original-ws73-qa
+quiet-clearings	3	Dusk in the Glade	ws73-echo	ECHO	Echo	original-ws73-qa
+quiet-clearings	3	Dusk in the Glade	ws73-chirping	CHIRPING	Chirping	original-ws73-qa
+quiet-clearings	3	Dusk in the Glade	gm000152	TRACKS	Tracks	english-qa
+quiet-clearings	3	Dusk in the Glade	gm000151	FOOTPRINT	Footprint	english-qa
+quiet-clearings	3	Dusk in the Glade	ws73-silhouette	SILHOUETTE	Silhouette	original-ws73-qa
+quiet-clearings	3	Dusk in the Glade	gm000241	CLOUD	Cloud	english-qa
+quiet-clearings	3	Dusk in the Glade	gm000089	OAK	Oak	ws66-preview
+quiet-clearings	3	Dusk in the Glade	ws56q034	DEWDROPS	Dewdrops	ws66-preview
+quiet-clearings	3	Dusk in the Glade	gm000693	CHILL	Chill	fall-qa
+quiet-clearings	3	Dusk in the Glade	gm000166	LANTERN	Lantern	english-qa
+quiet-clearings	3	Dusk in the Glade	ws73-coolness	COOLNESS	Coolness	original-ws73-qa
