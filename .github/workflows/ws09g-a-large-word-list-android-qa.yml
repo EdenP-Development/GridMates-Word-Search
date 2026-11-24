@@ -35,7 +35,7 @@ jobs:
           name: GridMates-WordSearch-WS09F-B-CulledV093
           run-id: 42464409118
           github-token: ${{ github.token }}
-          repository: PlayerEden/GridMates-Word-Search
+          repository: EdenP-Development/GridMates-Word-Search
           path: qa-baseline
       - name: Verify historical source-matched artifact checksum
         run: |

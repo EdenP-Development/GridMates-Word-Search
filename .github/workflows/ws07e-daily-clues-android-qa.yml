@@ -35,7 +35,7 @@ jobs:
           name: GridMates-WordSearch-WS07D-Claim-Confirmation-v080
           run-id: 42420714493
           github-token: ${{ github.token }}
-          repository: PlayerEden/GridMates-Word-Search
+          repository: EdenP-Development/GridMates-Word-Search
           path: qa-baseline
       - name: Verify historical source-matched artifact checksum
         run: |

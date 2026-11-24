@@ -33,7 +33,7 @@ jobs:
           name: GridMates-WordSearch-WS06I-Save-Integrity-v076
           run-id: 42363556598
           github-token: ${{ github.token }}
-          repository: PlayerEden/GridMates-Word-Search
+          repository: EdenP-Development/GridMates-Word-Search
           path: qa-baseline
       - name: Verify historical source-matched artifact checksum
         run: |

@@ -34,7 +34,7 @@ jobs:
           name: GridMates-WordSearch-WS07A-Touch-And-Gameplay-v077
           run-id: 42413940520
           github-token: ${{ github.token }}
-          repository: PlayerEden/GridMates-Word-Search
+          repository: EdenP-Development/GridMates-Word-Search
           path: qa-baseline
       - name: Verify historical source-matched artifact checksum
         run: |

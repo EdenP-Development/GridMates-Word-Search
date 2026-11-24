@@ -29,7 +29,7 @@ jobs:
           name: GridMates-WordSearch-Android-QA
           run-id: 43753383159
           github-token: ${{ github.token }}
-          repository: PlayerEden/GridMates-Word-Search
+          repository: EdenP-Development/GridMates-Word-Search
           path: qa-baseline
       - name: Verify downloaded APK identity and signing input
         run: |

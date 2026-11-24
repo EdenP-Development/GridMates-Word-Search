@@ -393,7 +393,7 @@ jobs:
         run: |
           gradle --no-daemon :app:assembleDebugAndroidTest
           mkdir -p qa-baseline
-          curl -fLsS -H "Authorization: Bearer $GH_TOKEN" -H "Accept: application/vnd.github+json" https://api.github.com/repos/PlayerEden/GridMates-Word-Search/actions/artifacts/14397980688/zip -o qa-baseline.zip
+          curl -fLsS -H "Authorization: Bearer $GH_TOKEN" -H "Accept: application/vnd.github+json" https://api.github.com/repos/EdenP-Development/GridMates-Word-Search/actions/artifacts/14397980688/zip -o qa-baseline.zip
           python3 -c "import zipfile; zipfile.ZipFile('qa-baseline.zip').extractall('qa-baseline')"
           echo '19949e41b1ed9165781c7a39b89857c9996bd5e27cfe25227dc5afabcfe25359  qa-baseline/app-debug.apk' | sha256sum --check
           echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=static_node"' | sudo tee /etc/udev/rules.d/99-kvm4all.rules
@@ -459,7 +459,7 @@ jobs:
         run: |
           gradle --no-daemon :app:assembleDebugAndroidTest
           mkdir -p qa-baseline
-          curl -fLsS -H "Authorization: Bearer $GH_TOKEN" -H "Accept: application/vnd.github+json" https://api.github.com/repos/PlayerEden/GridMates-Word-Search/actions/artifacts/14377072810/zip -o qa-baseline.zip
+          curl -fLsS -H "Authorization: Bearer $GH_TOKEN" -H "Accept: application/vnd.github+json" https://api.github.com/repos/EdenP-Development/GridMates-Word-Search/actions/artifacts/14377072810/zip -o qa-baseline.zip
           python3 -c "import zipfile; zipfile.ZipFile('qa-baseline.zip').extractall('qa-baseline')"
           echo '3468befffa01b5e6b1f098389d775519274d95557ce00eac9d8b8514e9335d37  qa-baseline/app-debug.apk' | sha256sum --check
           echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=static_node"' | sudo tee /etc/udev/rules.d/99-kvm4all.rules

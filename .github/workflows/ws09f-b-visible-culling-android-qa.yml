@@ -31,7 +31,7 @@ jobs:
           name: GridMates-WordSearch-WS09F-A-RegionMap-v092
           run-id: 42462316597
           github-token: ${{ github.token }}
-          repository: PlayerEden/GridMates-Word-Search
+          repository: EdenP-Development/GridMates-Word-Search
           path: qa-baseline
       - name: Verify historical source-matched artifact checksum
         run: |
