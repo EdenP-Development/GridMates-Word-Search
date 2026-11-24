@@ -26,8 +26,12 @@ import androidx.compose.ui.graphics.Path
 import androidx.compose.ui.graphics.StrokeCap
 import androidx.compose.ui.graphics.drawscope.DrawScope
 import androidx.compose.ui.graphics.drawscope.Stroke
+import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.semantics.clearAndSetSemantics
+import androidx.compose.ui.semantics.role
+import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
 
@@ -77,7 +81,8 @@ internal fun GridMatesIllustratedPill(
     modifier: Modifier = Modifier, enabled: Boolean = true
 ) {
     GridMatesIllustratedFrame(
-        modifier = modifier.heightIn(min = 48.dp),
+        modifier = modifier.heightIn(min = 48.dp)
+            .semantics { if (onClick != null) role = Role.Button },
         variant = GridMatesFrameVariant.PRIMARY_PILL,
         onClick = onClick, enabled = enabled
     ) {
@@ -85,7 +90,8 @@ internal fun GridMatesIllustratedPill(
             contentAlignment = Alignment.Center) {
             Text(label, color = Color(0xFFFFF8E8),
                 style = MaterialTheme.typography.titleSmall,
-                fontWeight = FontWeight.Bold)
+                fontWeight = FontWeight.Bold,
+                textAlign = TextAlign.Center)
         }
     }
 }

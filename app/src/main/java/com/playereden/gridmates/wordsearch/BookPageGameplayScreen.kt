@@ -58,6 +58,8 @@ internal fun shouldRememberBookPageNotice(message: String): Boolean =
         message != "No matching word in that selection." &&
         message != "You've already found that word."
 
+private enum class CompletedPageView { RESULT, BOARD, PRACTICE }
+
 /**
  * WS-11D2B — a real book-page playing screen, independent of SoloStore.
  *
@@ -83,9 +85,9 @@ internal fun BookPageGameplayScreen(
     showPrototypeArt: Boolean = false,
     fieldNotesArt: Boolean = false,
     onBookProgressSaved: () -> Unit = {},
-    presentation: BookShelfPresentation? = null
+    presentation: BookShelfPresentation? = null,
+    backLabel: String = "Back to book"
 ) {
-    BackHandler(onBack = onBack)
     val book = catalog.book(bookId)
     val page = catalog.page(bookId, pageId)
     val visibleCatalog = presentation?.catalog ?: catalog
@@ -102,8 +104,23 @@ internal fun BookPageGameplayScreen(
     val noticeHistory = remember(catalog, bookId, pageId) { mutableStateListOf<String>() }
     var noticeHistoryOpen by remember(catalog, bookId, pageId) { mutableStateOf(false) }
     var toolsOpen by remember(catalog, bookId, pageId) { mutableStateOf(false) }
-    var practice by remember(catalog, bookId, pageId) { mutableStateOf(false) }
+    var completedView by remember(catalog, bookId, pageId) {
+        mutableStateOf(CompletedPageView.RESULT)
+    }
+    val practice = completedView == CompletedPageView.PRACTICE
     var practiceFound by remember(catalog, bookId, pageId) { mutableStateOf(emptySet<String>()) }
+
+    fun leaveBoard() {
+        if (completedView == CompletedPageView.RESULT) {
+            onBack()
+        } else {
+            completedView = CompletedPageView.RESULT
+            practiceFound = emptySet()
+            status = ""
+        }
+    }
+
+    BackHandler { leaveBoard() }
 
     // Session construction and solved-sidecar recovery happen outside Compose
     // rendering; an invalid publisher manifest leaves previous files untouched.
@@ -192,8 +209,7 @@ internal fun BookPageGameplayScreen(
                             progressStore.progress.volumes[bookId]?.completedPageIds.orEmpty()
                         status = if (awardCommitted) {
                             onBookProgressSaved()
-                            if (finalized) "Book page complete! Continue when you're ready."
-                            else "Page completed and saved. Cleanup will retry safely."
+                            if (finalized) "" else "Page saved. Cleanup will retry safely."
                         } else "Page solved and saved. The completion record needs recovery."
                     } else {
                         revision++
@@ -214,7 +230,7 @@ internal fun BookPageGameplayScreen(
             verticalArrangement = Arrangement.spacedBy(16.dp)
         ) {
             TextButton(onClick = onBack, modifier = Modifier.heightIn(min = 48.dp)) {
-                Text("Back to book")
+                Text(backLabel)
             }
             PaperEyebrow("GridMates · Puzzle Books")
             Text(if (error != null) "Page unavailable" else "Opening book page",
@@ -252,13 +268,48 @@ internal fun BookPageGameplayScreen(
         }
     }
 
-    val next = if (committed) {
-        runCatching {
-            val raw = progressStore.progress
-            BookProgressRules.continuePage(visibleCatalog,
-                presentation?.progress(raw, preferredEdition = bookId) ?: raw, visibleBook)
+    val pages = visibleCatalog.pages(visibleBook)
+    val pageNumber = pages.indexOfFirst { it.id == pageId } + 1
+    val displayedBook = visibleCatalog.book(visibleBook) ?: book
+    val bookTitle = displayedBook.title.removeSuffix(" · TEST BOOK")
+    if (committed && completedView == CompletedPageView.RESULT) {
+        val raw = progressStore.progress
+        val progress = presentation?.progress(raw, preferredEdition = bookId) ?: raw
+        val done = progress.volumes[visibleBook]?.completedPageIds.orEmpty().size
+        val next = runCatching {
+            BookProgressRules.continuePage(visibleCatalog, progress, visibleBook)
         }.getOrNull()
-    } else null
+        val nextPageNumber = next?.let { candidate ->
+            pages.indexOfFirst { it.id == candidate.id } + 1
+        }
+        val nextAction: (() -> Unit)? = if (next != null && onNextPage != null) {
+            { onNextPage(presentation?.ownerOf(next.id) ?: bookId, next.id) }
+        } else null
+        BookPageCompletionScreen(
+            bookTitle = bookTitle,
+            theme = displayedBook.theme,
+            pageNumber = pageNumber,
+            wordCount = board.targets.size,
+            completedPages = done,
+            pageCount = pages.size,
+            nextPageNumber = nextPageNumber,
+            status = status,
+            backLabel = backLabel,
+            showPrototypeArt = showPrototypeArt,
+            fieldNotesArt = fieldNotesArt,
+            onBack = onBack,
+            onNext = nextAction,
+            onReview = {
+                status = ""
+                completedView = CompletedPageView.BOARD
+            },
+            onPractice = {
+                status = ""
+                completedView = CompletedPageView.PRACTICE
+            }
+        )
+        return
+    }
 
     BoxWithConstraints(
         Modifier.fillMaxSize()
@@ -281,8 +332,6 @@ internal fun BookPageGameplayScreen(
         }
         val choose: (GridPoint, GridPoint) -> Unit = { start, end -> select(start, end) }
         Column(Modifier.fillMaxSize(), verticalArrangement = Arrangement.spacedBy(5.dp)) {
-            val pageNumber = visibleCatalog.pages(visibleBook).indexOfFirst { it.id == pageId } + 1
-            val bookTitle = (visibleCatalog.book(visibleBook)?.title ?: book.title).removeSuffix(" · TEST BOOK")
             PuzzleTitleBar(
                 title = if (compactReadability) "Page $pageNumber"
                     else bookTitle,
@@ -296,7 +345,12 @@ internal fun BookPageGameplayScreen(
                     committed -> " · Completed"
                     else -> ""
                 },
-                leading = { BookPageBackButton(onBack = onBack) }
+                leading = {
+                    BookPageBackButton(
+                        onBack = ::leaveBoard,
+                        label = if (committed) "Back to results" else backLabel
+                    )
+                }
             ) {
                 BookPageToolsButton(onClick = { toolsOpen = true })
                 BookPageNoticeHistoryButton(
@@ -312,7 +366,8 @@ internal fun BookPageGameplayScreen(
                 spokenLabel = if (compactReadability)
                     "${wordsFound.size} of ${board.targets.size} words found"
                     else null,
-                detail = "Elapsed ${elapsed / 60}:${(elapsed % 60).toString().padStart(2, '0')}",
+                detail = if (committed) null
+                    else "Elapsed ${elapsed / 60}:${(elapsed % 60).toString().padStart(2, '0')}",
                 found = wordsFound.size,
                 total = board.targets.size
             ) {
@@ -348,30 +403,10 @@ internal fun BookPageGameplayScreen(
                     })
                 }
             }
-            if (committed && !practice) {
-                Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                    PuzzleTextAction(
-                        label = "Practice again",
-                        onClick = {
-                            practice = true
-                            practiceFound = emptySet()
-                            status = "Practice replay will not change your book progress."
-                        },
-                        modifier = Modifier.weight(1f)
-                    )
-                    if (next != null && onNextPage != null) {
-                        GridMatesIllustratedPill(
-                            label = "Next page",
-                            onClick = { onNextPage(presentation?.ownerOf(next.id) ?: bookId, next.id) },
-                            modifier = Modifier.weight(1f)
-                        )
-                    }
-                }
-            }
             if (practice) {
                 PuzzleTextAction(
                     label = "Finish practice",
-                    onClick = { practice = false; practiceFound = emptySet() },
+                    onClick = ::leaveBoard,
                     modifier = Modifier.fillMaxWidth()
                 )
             }

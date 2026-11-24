@@ -125,7 +125,7 @@ class BookPageGameplayScreenAndroidTest {
             compose.waitForIdle()
             compose.onNodeWithText("Practice again").assertExists().performClick()
             compose.waitForIdle()
-            compose.onNodeWithText("Practice · unsaved").assertExists()
+            compose.onNodeWithText("Page 1 · Practice (unsaved)").assertExists()
             compose.onNodeWithText("Finish practice").assertExists().performClick()
             compose.waitForIdle()
             assertTrue(sessions.journal.sessions.isEmpty())

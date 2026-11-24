@@ -65,7 +65,7 @@ class BookLibraryFlowAndroidTest {
             rule.waitForIdle()
             rule.onNodeWithContentDescription("Select a word without dragging").assertExists()
             assertEquals(1, sessions.journal.sessions.size)
-            rule.onNodeWithText("Back to book").performClick()
+            rule.onNodeWithContentDescription("Back to book").performClick()
             rule.waitForIdle()
             rule.onNodeWithText("Bookmark saved").assertExists()
             assertTrue(BookPageSessionStore(ctx, catalog, sessionName)

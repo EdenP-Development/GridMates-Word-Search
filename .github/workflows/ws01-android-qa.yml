@@ -907,6 +907,48 @@ jobs:
           if-no-files-found: warn
           retention-days: 30
 
+      - name: WS71 Verify v114 and prepare the signed v113 upgrade
+        if: ${{ (github.head_ref || github.ref_name) == 'feature/ws71-book-play-polish-v114-2026-11-23' }}
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh run download 45317919000 --repo "$GITHUB_REPOSITORY" --name GridMates-WordSearch-Android-QA --dir qa-ws71-baseline
+          echo 'fa870141851fce3c119b976c9c96c7364b8fb1dec978870a3e51f5da78962f1d  qa-ws71-baseline/app-debug.apk' | sha256sum -c
+          gradle --no-daemon :app:assembleDebugAndroidTest
+          mkdir -p qa-ws71-book-play
+          APK=app/build/outputs/apk/debug/app-debug.apk
+          "$ANDROID_HOME/build-tools/35.0.0/aapt" dump badging "$APK" > qa-ws71-book-play/badging.txt
+          grep -F "name='com.playereden.gridmates.wordsearch.qa' versionCode='114'" qa-ws71-book-play/badging.txt
+          "$ANDROID_HOME/build-tools/35.0.0/apksigner" verify --print-certs "$APK" > qa-ws71-book-play/signer.txt
+          grep -F '75cc3c896247d71fbd51f7a3ed41f90c8218a8a5a70df8c0f6b494b5cc23d419' qa-ws71-book-play/signer.txt
+          sha256sum "$APK" > qa-ws71-book-play/apk-sha256.txt
+          echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=static_node"' | sudo tee /etc/udev/rules.d/99-kvm4all.rules
+          sudo udevadm control --reload-rules
+          sudo udevadm trigger --name-match=kvm
+
+      - name: WS71 Run the book play journey and large-text checks
+        if: ${{ (github.head_ref || github.ref_name) == 'feature/ws71-book-play-polish-v114-2026-11-23' }}
+        uses: reactivecircus/android-emulator-runner@v2
+        with:
+          api-level: 35
+          target: google_apis
+          arch: x86_64
+          profile: pixel_4
+          avd-name: ws71-book-play
+          ram-size: 3072M
+          disable-animations: true
+          emulator-options: -no-window -gpu swiftshader -no-snapshot -noaudio -no-boot-anim
+          script: bash scripts/ws71_book_play_emulator.sh
+
+      - name: WS71 Archive book play captures and upgrade evidence
+        if: ${{ always() && (github.head_ref || github.ref_name) == 'feature/ws71-book-play-polish-v114-2026-11-23' }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: GridMates-WS71-v114-Book-Play-Evidence
+          path: qa-ws71-book-play/
+          if-no-files-found: warn
+          retention-days: 30
+
       - name: WS61 Real v107 to v108 APK install-over preserving 6 private files
         if: ${{ (github.head_ref || github.ref_name) == 'feature/ws61-real-signed-v107-to-v108-upgrade-2026-11-22' }}
         uses: reactivecircus/android-emulator-runner@v2
