@@ -1,3 +1,5 @@
+**WS72 Home fit (November 23).** v115 shortens Daily Puzzle and Together and trims spare Home spacing to help the main actions fit without a swipe. Android QA is pending. [Pass record](devlog/2026-11-23_WS72_HOME_FIT.md)
+
 **WS71 Book play polish (November 23).** Signed v114 passed the Woodland playthrough, the 200% text screens, and a signed install-over from v113 that reopened the saved Solar System page. Handset review is open. [Draft #192](https://github.com/PlayerEden/GridMates-Word-Search/pull/192) · [Pass record](devlog/2026-11-23_WS71_BOOK_PLAY_POLISH.md) · [Signed v114](https://github.com/PlayerEden/GridMates-Word-Search/actions/runs/45325868213/artifacts/14890316451)
 
 **WS70 Home scrolling and shelf order (November 23).** Signed v113 passed Android gestures at 320dp and 393dp, top-shelf order, placeholder replacement, and the v112 install-over. Handset review is open. [Draft #191](https://github.com/PlayerEden/GridMates-Word-Search/pull/191) · [Pass receipt](devlog/2026-11-23_WS70_HOME_SCROLL_SHELF_ORDER.md) · [Signed v113](https://github.com/PlayerEden/GridMates-Word-Search/actions/runs/45317919000/artifacts/14886522521)

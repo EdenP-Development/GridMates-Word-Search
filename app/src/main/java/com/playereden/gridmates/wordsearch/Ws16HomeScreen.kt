@@ -100,7 +100,7 @@ internal fun Ws16HomeScreen(
                 Modifier.weight(1f).fillMaxWidth().testTag("home-mode-scroll")
                     .gridMatesScrollIndicator(scrollState, endInset = (-15).dp, opacity = .55f)
                     .verticalScroll(scrollState)
-                    .padding(bottom = 10.dp),
+                    .padding(bottom = if (compactHome) 4.dp else 10.dp),
                 verticalArrangement = Arrangement.spacedBy(sectionSpacing)
             ) {
                 Ws16HomeTitle(leftInset)
@@ -116,7 +116,7 @@ internal fun Ws16HomeScreen(
                         books.getOrNull(pager.settledPage)?.let { onFocusedBookChanged(it.id) }
                     }
                     Column(Modifier.fillMaxWidth().qaTrackBounds("Books + progress").testTag("ws16-home-books"),
-                        verticalArrangement = Arrangement.spacedBy(6.dp)) {
+                        verticalArrangement = Arrangement.spacedBy(if (compactHome) 5.dp else 6.dp)) {
                         Row(Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically,
                             horizontalArrangement = Arrangement.SpaceBetween) {
                             Text("Your puzzle books", color = Forest, fontWeight = FontWeight.Bold,
@@ -128,6 +128,7 @@ internal fun Ws16HomeScreen(
                             books = books,
                             pagerState = pager,
                             fieldNotesArt = true,
+                            compact = compactHome,
                             onCoverTap = { index, focused ->
                                 if (focused) onPlayBook(books[index].id)
                                 else scope.launch { pager.animateScrollToPage(index) }

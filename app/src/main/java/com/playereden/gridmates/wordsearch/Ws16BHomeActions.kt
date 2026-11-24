@@ -29,6 +29,8 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 
+private val HomeModeCardMinHeight = 54.dp
+
 /** Asset-first Home actions, retaining the accessible native button hit boxes. */
 @Composable
 internal fun Ws16BHomeActions(
@@ -109,15 +111,15 @@ internal fun Ws16BHomeActions(
 @Composable
 private fun Ws16BDailyButton(onClick: () -> Unit, modifier: Modifier) {
     GridMatesIllustratedFrame(
-        modifier = modifier.heightIn(min = 68.dp)
+        modifier = modifier.heightIn(min = HomeModeCardMinHeight)
             .qaTrackBounds("Daily Puzzle")
             .testTag("ws16-action-daily")
             .semantics { contentDescription = "Open Daily Puzzle" },
         variant = GridMatesFrameVariant.MEDIUM,
         onClick = onClick
     ) {
-        Row(Modifier.fillMaxWidth().heightIn(min = 68.dp)
-            .padding(horizontal = 9.dp, vertical = 5.dp),
+        Row(Modifier.fillMaxWidth().heightIn(min = HomeModeCardMinHeight)
+            .padding(horizontal = 9.dp, vertical = 4.dp),
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.spacedBy(7.dp)) {
             Ws16BActionArt(Ws16BArt.DAILY, iconSize = 42.dp)
@@ -133,7 +135,7 @@ private fun Ws16BDailyButton(onClick: () -> Unit, modifier: Modifier) {
 private fun Ws16BTogetherButton(onClick: () -> Unit, modifier: Modifier,
                                  stacked: Boolean) {
     GridMatesIllustratedFrame(
-        modifier = modifier.heightIn(min = 68.dp)
+        modifier = modifier.heightIn(min = HomeModeCardMinHeight)
             .qaTrackBounds("Together")
             .testTag("ws16-action-together")
             .semantics { contentDescription = "Open Together on local Wi-Fi" },
@@ -141,8 +143,8 @@ private fun Ws16BTogetherButton(onClick: () -> Unit, modifier: Modifier,
         onClick = onClick
     ) {
         if (stacked) {
-            Row(Modifier.fillMaxWidth().heightIn(min = 68.dp)
-                .padding(horizontal = 12.dp, vertical = 5.dp),
+            Row(Modifier.fillMaxWidth().heightIn(min = HomeModeCardMinHeight)
+                .padding(horizontal = 12.dp, vertical = 4.dp),
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.spacedBy(9.dp)) {
                 Ws16BActionArt(Ws16BArt.TOGETHER, iconSize = 42.dp)
@@ -153,8 +155,8 @@ private fun Ws16BTogetherButton(onClick: () -> Unit, modifier: Modifier,
         } else {
             // Same art size and title hierarchy as Daily, adjusted for this
             // narrower card. No top-stacked squirrel icon or tiny caption.
-            Row(Modifier.fillMaxWidth().heightIn(min = 68.dp)
-                .padding(horizontal = 7.dp, vertical = 5.dp),
+            Row(Modifier.fillMaxWidth().heightIn(min = HomeModeCardMinHeight)
+                .padding(horizontal = 7.dp, vertical = 4.dp),
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.spacedBy(4.dp)) {
                 Ws16BActionArt(Ws16BArt.TOGETHER, iconSize = 39.dp)

@@ -1,3 +1,7 @@
+# WS72 Home fit
+
+The v115 candidate builds from draft #192. It gives Daily Puzzle and Together shallower cards and trims the compact Home layout. Android QA is pending. Signed v114 is the fallback. [Pass record](devlog/2026-11-23_WS72_HOME_FIT.md) · [Signed v114](https://github.com/PlayerEden/GridMates-Word-Search/actions/runs/45325868213/artifacts/14890316451)
+
 # WS71 Book play polish
 
 Resume from [draft #192](https://github.com/PlayerEden/GridMates-Word-Search/pull/192). The tested source is `d8d7e7b6131ff6fd469841bc4a57e9c946a68f54`. Book pages have a completion screen with book progress, Next Page, Review, and Practice. Chapters uses simple table-of-contents rows, and book Start, Play, and Resume use the shared green button. Android passed actual word drags, resume, completion, review, practice, next page, large-text navigation at 320dp, and signed install-over from v113. The saved Solar System page reopened and both prior book journals matched byte for byte. Release isolation passed. Handset review is open. Next, deepen the Quiet Clearings Expert and Our Solar System Relaxed test pools and measure three generated pages per chapter. [Pass record](devlog/2026-11-23_WS71_BOOK_PLAY_POLISH.md) · [Signed v114](https://github.com/PlayerEden/GridMates-Word-Search/actions/runs/45325868213/artifacts/14890316451) · [Emulator captures](https://github.com/PlayerEden/GridMates-Word-Search/actions/runs/45325868213/artifacts/14890007742) · [Signed v113 fallback](https://github.com/PlayerEden/GridMates-Word-Search/actions/runs/45317919000/artifacts/14886522521)
