@@ -15,4 +15,6 @@ internal object BookQaPilot {
     fun catalog(context: Context): BookCatalog = BookCatalog()
     @Suppress("UNUSED_PARAMETER")
     fun appendChapterPreview(context: Context, legacy: BookCatalog): BookCatalog = legacy
+    @Suppress("UNUSED_PARAMETER")
+    fun appendVarietyPreview(context: Context, legacy: BookCatalog): BookCatalog = legacy
 }

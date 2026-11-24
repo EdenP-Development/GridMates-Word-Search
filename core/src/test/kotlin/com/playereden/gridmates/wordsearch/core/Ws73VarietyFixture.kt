@@ -77,9 +77,8 @@ object Ws73VarietyFixture {
         }
 
         val manifest = index.joinToString("\n", postfix = "\n")
-        javaClass.getResource("/ws73-variety/expected-boards.tsv")?.let {
-            check(manifest == it.readText()) { "WS73 pinned page digest changed" }
-        }
+        val expected = requireNotNull(javaClass.getResource("/ws73-variety/expected-boards.tsv")).readText()
+        check(manifest == expected) { "WS73 pinned page digest changed" }
         File(assets, "boards.tsv").writeText(manifest)
         val evidence = assets.parentFile.parentFile
         File(evidence, "answers.tsv").writeText(answers.joinToString("\n", postfix = "\n"))

@@ -470,14 +470,17 @@ jobs:
           from zipfile import ZipFile
 
           release, = Path('app/build/outputs/apk/release').glob('*.apk')
-          prefix = 'assets/ws66-v110/'
           with ZipFile('app/build/outputs/apk/debug/app-debug.apk') as debug, ZipFile(release) as packaged:
-              preview = [name for name in debug.namelist() if name.startswith(prefix)]
-              assert len(preview) == 7, preview
-              assert not any(name.startswith(prefix) for name in packaged.namelist())
-              assert not any(b'Ws66ChapterPreview' in packaged.read(name)
-                             for name in packaged.namelist() if name.endswith('.dex'))
-          print('QA has six frozen boards and their index. Release excludes the QA preview assets and code.')
+              for prefix, class_name in [
+                  ('assets/ws66-v110/', b'Ws66ChapterPreview'),
+                  ('assets/ws73-v116/', b'Ws73VarietyPreview'),
+              ]:
+                  preview = [name for name in debug.namelist() if name.startswith(prefix)]
+                  assert len(preview) == 7, preview
+                  assert not any(name.startswith(prefix) for name in packaged.namelist())
+                  assert not any(class_name in packaged.read(name)
+                                 for name in packaged.namelist() if name.endswith('.dex'))
+          print('QA has both sets of six frozen boards and their indexes. Release excludes the QA preview assets and code.')
           PY
       - name: Upload install-over QA Art Lab APK
         uses: actions/upload-artifact@v4

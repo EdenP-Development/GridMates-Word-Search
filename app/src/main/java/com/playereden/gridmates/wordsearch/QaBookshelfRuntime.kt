@@ -5,9 +5,8 @@ import com.playereden.gridmates.wordsearch.core.BookCatalog
 import java.io.File
 
 /**
- * QA-only books use separate local, offline AtomicFile journals. WS57 adds an
- * unapproved preview book with NEW IDs; NEVER rewrite the old WS11 QA save
- * files just to show it. Older signed QA APKs must remain safely installable.
+ * Each QA catalog extension copies the latest compatible book journals into
+ * its own namespace so earlier signed builds can still read their journals.
  */
 internal class QaBookshelfRuntime(
     context: Context,
@@ -18,10 +17,14 @@ internal class QaBookshelfRuntime(
     private val previewProgress: String = "gridmates_wordsearch_ws57_qa_progress_v1.dat",
     private val previewSessions: String = "gridmates_wordsearch_ws57_qa_sessions_v1.dat",
     private val chapterProgress: String? = null,
-    private val chapterSessions: String? = null
+    private val chapterSessions: String? = null,
+    private val varietyProgress: String? = null,
+    private val varietySessions: String? = null
 ) {
     init {
         require((chapterProgress == null) == (chapterSessions == null))
+        require((varietyProgress == null) == (varietySessions == null))
+        require(varietyProgress == null || chapterProgress != null)
     }
 
     private val applicationContext = context.applicationContext
@@ -33,10 +36,15 @@ internal class QaBookshelfRuntime(
     private val woodlandCatalog by lazy {
         if (enabled) BookQaPilot.catalog(applicationContext) else BookCatalog()
     }
-    val catalog: BookCatalog by lazy {
+    private val chapterCatalog: BookCatalog by lazy {
         if (enabled && chapterProgress != null)
             BookQaPilot.appendChapterPreview(applicationContext, woodlandCatalog)
         else woodlandCatalog
+    }
+    val catalog: BookCatalog by lazy {
+        if (enabled && varietyProgress != null)
+            BookQaPilot.appendVarietyPreview(applicationContext, chapterCatalog)
+        else chapterCatalog
     }
     val shelf by lazy { BookShelfPresentation(catalog, BookQaPilot.editorialBookIds) }
 
@@ -44,7 +52,9 @@ internal class QaBookshelfRuntime(
         fun installed(context: Context) = QaBookshelfRuntime(
             context,
             chapterProgress = "gridmates_wordsearch_ws66_v110_qa_progress_v1.dat",
-            chapterSessions = "gridmates_wordsearch_ws66_v110_qa_sessions_v1.dat"
+            chapterSessions = "gridmates_wordsearch_ws66_v110_qa_sessions_v1.dat",
+            varietyProgress = "gridmates_wordsearch_ws73_v116_qa_progress_v1.dat",
+            varietySessions = "gridmates_wordsearch_ws73_v116_qa_sessions_v1.dat"
         )
     }
 
@@ -53,30 +63,34 @@ internal class QaBookshelfRuntime(
         return path.exists() || File(path.path + ".bak").exists()
     }
 
+    private data class SourceJournal(val name: String, val catalog: BookCatalog)
+
+    private fun migrationSource(previous: String, preview: String, chapter: String?): SourceJournal? =
+        when {
+            varietyProgress != null && chapter != null && alreadySaved(chapter) ->
+                SourceJournal(chapter, chapterCatalog)
+            chapter != null && alreadySaved(preview) -> SourceJournal(preview, woodlandCatalog)
+            alreadySaved(previous) -> SourceJournal(previous, originalCatalog)
+            else -> null
+        }
+
     private fun copiedProgress(): BookLibraryStore? {
-        val destination = chapterProgress ?: previewProgress
+        val destination = varietyProgress ?: chapterProgress ?: previewProgress
         val newer = BookLibraryStore(applicationContext, catalog, destination)
         if (newer.blocked || alreadySaved(destination)) return newer
-        val useWoodland = chapterProgress != null && alreadySaved(previewProgress)
-        val source = if (useWoodland) previewProgress else previousProgress
-        if (!alreadySaved(source)) return newer
-        val older = BookLibraryStore(applicationContext,
-            if (useWoodland) woodlandCatalog else originalCatalog, source)
-        // Fail closed: a corrupt/unknown legacy journal must be preserved for
-        // recovery, not replaced by a silent blank new journal.
+        val source = migrationSource(previousProgress, previewProgress, chapterProgress) ?: return newer
+        val older = BookLibraryStore(applicationContext, source.catalog, source.name)
+        // Unknown or corrupt source data must block migration and preserve the original.
         val savedBytes = older.exportForManualBackup() ?: return null
         return newer.takeIf { it.importManualBackup(savedBytes) }
     }
 
     private fun copiedSessions(): BookPageSessionStore? {
-        val destination = chapterSessions ?: previewSessions
+        val destination = varietySessions ?: chapterSessions ?: previewSessions
         val newer = BookPageSessionStore(applicationContext, catalog, destination)
         if (newer.blocked || alreadySaved(destination)) return newer
-        val useWoodland = chapterSessions != null && alreadySaved(previewSessions)
-        val source = if (useWoodland) previewSessions else previousSessions
-        if (!alreadySaved(source)) return newer
-        val older = BookPageSessionStore(applicationContext,
-            if (useWoodland) woodlandCatalog else originalCatalog, source)
+        val source = migrationSource(previousSessions, previewSessions, chapterSessions) ?: return newer
+        val older = BookPageSessionStore(applicationContext, source.catalog, source.name)
         val savedBytes = older.exportForManualBackup() ?: return null
         return newer.takeIf { it.importManualBackup(savedBytes) }
     }
