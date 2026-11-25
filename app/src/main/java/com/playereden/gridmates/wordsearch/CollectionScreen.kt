@@ -213,8 +213,7 @@ internal fun CollectionScreen(
                 val pairTabs = tabs.size == 4 &&
                     tabWidths.sum() + gapPx * (tabs.size - 1) > constraints.maxWidth
                 val equalWidths = pairTabs && tabWidths.max() * 2 + gapPx <= constraints.maxWidth
-                FlowRow(
-                    Modifier.fillMaxWidth(),
+                FlowRow(Modifier.fillMaxWidth(),
                     horizontalArrangement = Arrangement.spacedBy(tabGap),
                     verticalArrangement = Arrangement.spacedBy(6.dp),
                     maxItemsInEachRow = if (pairTabs) 2 else tabs.size
