@@ -1,3 +1,11 @@
+# Signed Word Search Beta 1 and save import verified
+
+Continue from [draft #199](https://github.com/EdenP-Development/GridMates-Word-Search/pull/199) on `ci/word-search-beta-signing`. The tested source is `06f03af17835192bd189936508608a50d4bfb92c`. Beta 1 is `com.playereden.gridmates.wordsearch.beta`, version `0.9.75-beta.1` (code `121`). Its APK SHA-256 is `b43fabba58bbefe0ab042bf6bf8b708dde874c2b5cdc70d4ea96d002ca6cfdc3`. [Signed APK](https://github.com/EdenP-Development/GridMates-Word-Search/actions/runs/45538637429/artifacts/14988966094) · [Android rehearsal](https://github.com/EdenP-Development/GridMates-Word-Search/actions/runs/45538637429) · [Verification files](https://github.com/EdenP-Development/GridMates-Word-Search/actions/runs/45538637429/artifacts/14988223062)
+
+Android 35 verified the real v120 Settings export, preview, cancel, restore, and process restart. The imported profile contains the same Quick Play progress, Daily records, earned rewards, and font choice as the source. Preview books use the QA catalog. The v120 Solo, book progress, and book session files matched byte for byte after the test. Backup feedback now appears beside the controls. [Pass record](devlog/2026-11-24_EDENP_WORD_SEARCH_BETA_CANDIDATE.md)
+
+Signed QA v120 remains the build for testing the Woodland album and the preview bookshelf. The next distribution check is handset acceptance of Beta 1. Public catalog approval and itch.io publication are open. Space’s album continues from [gameplay draft #198](https://github.com/EdenP-Development/GridMates-Word-Search/pull/198).
+
 # EdenP Word Search beta signing verified
 
 [Draft #199](https://github.com/EdenP-Development/GridMates-Word-Search/pull/199) passed the GitHub signing check at `768a179b1d9da1be061a938d116eeeff0a9f201e` on attempt 2. The two organization secrets opened the dedicated key and produced a valid signature that matched the pinned certificate. The planned itch.io package is `com.playereden.gridmates.wordsearch.beta`. [Verification record](devlog/2026-11-24_EDENP_WORD_SEARCH_BETA_SIGNING_VERIFIED.md) · [Actions pass](https://github.com/EdenP-Development/GridMates-Word-Search/actions/runs/45496175839)
