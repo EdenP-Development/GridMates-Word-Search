@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp" android:height="108dp"
+    android:viewportWidth="108" android:viewportHeight="108">
+    <!-- The frame shares the palette and geometry of Sudoku Beta 3. -->
+    <path android:fillColor="#D2A657"
+        android:pathData="M34,21H74Q87,21 87,34V74Q87,87 74,87H34Q21,87 21,74V34Q21,21 34,21Z" />
+    <path android:fillColor="#F8F5EC"
+        android:pathData="M34,24H74Q84,24 84,34V74Q84,84 74,84H34Q24,84 24,74V34Q24,24 34,24Z" />
+    <path android:strokeColor="#214F3F" android:strokeWidth="1.65" android:strokeLineCap="round"
+        android:pathData="M39,24V84M54,24V84M69,24V84M24,39H84M24,54H84M24,69H84" />
+    <path android:strokeColor="#E6B650" android:strokeWidth="12.5" android:strokeLineCap="round"
+        android:pathData="M34,34L74,74" />
+    <!-- Four hand-drawn FIND letter paths stay readable without an installed font. -->
+    <path android:strokeColor="#214F3F" android:strokeWidth="2.15"
+        android:strokeLineCap="round" android:strokeLineJoin="round"
+        android:pathData="M30.5,37.4V29.5H36.8M30.5,33.4H35.7
+            M43.4,42H49.5M46.45,42V51.2M43.4,51.2H49.5
+            M57.6,66.4V57.1L65.5,66.4V57.1
+            M71.3,78.6V70.9H74.6C80.3,70.9 80.3,78.6 74.6,78.6Z" />
+    <path android:strokeColor="#214F3F" android:strokeAlpha="0.68" android:strokeWidth="1.75"
+        android:strokeLineCap="round" android:strokeLineJoin="round"
+        android:pathData="M76,29.5C80.8,29.5 80.8,36.6 76,36.6C71.2,36.6 71.2,29.5 76,29.5Z
+            M28.5,78.5L32.2,70.8L35.9,78.5M29.8,76.1H34.6" />
+</vector>
