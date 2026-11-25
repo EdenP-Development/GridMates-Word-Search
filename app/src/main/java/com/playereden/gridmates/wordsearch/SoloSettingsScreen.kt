@@ -112,11 +112,13 @@ internal fun SoloSettingsScreen(
                     Text(preview.duelResults.size.toString() +
                         " completed Speed Duel results.",
                         color = Muted)
-                    Text(if (backup.includesBooks)
-                        "${backup.completedPages} completed book pages · " +
+                    Text(when {
+                        backup.includesBooks -> "${backup.completedPages} completed book pages · " +
                             "${backup.savedPages} saved book pages. Bookmarks, words, hints and time are included."
-                        else "This older or Solo-only backup has no book pages. " +
-                            "Your current book progress will be kept.", color = Muted)
+                        backup.portableRestoreJournal != null ->
+                            "Earned rewards carry over. Preview book saves stay in the QA app."
+                        else -> "This backup has no book pages. Your current book progress will be kept."
+                    }, color = Muted)
                     Text("Restoring replaces your current Word Search profile, " +
                         "puzzle and records on this phone. Export the current " +
                         "progress first if you want a copy.",

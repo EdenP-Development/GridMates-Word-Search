@@ -6,6 +6,9 @@ plugins {
     kotlin("plugin.compose")
 }
 
+val wordSearchBetaCandidate = providers.gradleProperty("wordSearchBetaCandidate")
+    .map(String::toBooleanStrict).orElse(false).get()
+
 android {
     namespace = "com.playereden.gridmates.wordsearch"
     compileSdk = 35
@@ -39,7 +42,8 @@ android {
         }
         getByName("release") {
             isMinifyEnabled = false
-            // Production signing will be configured in a separate approved release pass.
+            // The beta uses the release source set and installs alongside QA.
+            if (wordSearchBetaCandidate) applicationIdSuffix = ".beta"
         }
     }
 
@@ -86,6 +90,15 @@ androidComponents.onVariants(androidComponents.selector().withBuildType("debug")
     debug.outputs.forEach {
         it.versionCode.set(providers.gradleProperty("qaVersionCode").map(String::toInt).orElse(120))
         it.versionName.set("0.9.75-ws77-woodland-album-qa")
+    }
+}
+
+androidComponents.onVariants(androidComponents.selector().withBuildType("release")) { release ->
+    if (wordSearchBetaCandidate) {
+        release.outputs.forEach {
+            it.versionCode.set(121)
+            it.versionName.set("0.9.75-beta.1")
+        }
     }
 }
 
