@@ -1,6 +1,6 @@
 # November 24, 2026 — First Word Search beta candidate and save-import rehearsal
 
-> **Status:** Build and Android rehearsal pending.
+> **Status:** Beta APK signature and package verified. Android import rehearsal is running again.
 
 ## Starting checkpoint
 
@@ -10,10 +10,14 @@ The owner asked to resume the first signed Word Search Android beta after the pr
 
 - The release configuration builds version `0.9.75-beta.1` (Android version code `121`) under `com.playereden.gridmates.wordsearch.beta`. Its signer is the dedicated itch.io beta certificate pinned in the Actions workflow.
 - The restore preview identifies which parts of a QA backup carry over. The beta imports the profile, earned rewards, Solo and Daily progress, Race and Duel records, and board font. QA book pages use a separate catalog and stay available in QA. The recovery journal records the confirmed scope before applying any changes.
-- The Android rehearsal uses the published, hash-checked QA v120 APK and the signed release candidate side by side. Settings exports a test save from QA, previews it in beta, cancels once, restores it and checks the complete portable profile after restarting. Checks include the equipped font and the three QA journal checksums.
+- The Android rehearsal uses the archived, hash-checked QA v120 APK and the signed release candidate side by side. Settings exports a test save from QA, previews it in beta, cancels once, restores it and checks the complete portable profile after restarting. Checks include the equipped font and the three QA journal checksums.
 
 ## Build and follow-through
 
-The beta APK and emulator result are pending. Signed QA v120 is the fallback. Its APK SHA-256 is `0650e7fc6fb6198e22b20b8f6360c7379fe668a263b4eebb9d522f787b286a09`. [QA v120 ZIP](https://github.com/EdenP-Development/GridMates-Word-Search/actions/runs/45491802328/artifacts/14967073059)
+- [First build run 45534794555](https://github.com/EdenP-Development/GridMates-Word-Search/actions/runs/45534794555) at `d3bdee142be2d79f0be3fc7f3d9ae6c17b73be9d` stopped at SDK setup because `sdkmanager` was outside PATH. The workflow now finds it under the runner's Android SDK.
+- [Run 45534953388](https://github.com/EdenP-Development/GridMates-Word-Search/actions/runs/45534953388) at `53f676f243b915f5c8008be93344027f20e0f4fd` compiled the APK, verified its package and dedicated certificate, and excluded 239 QA assets. [Signing and emulator evidence](https://github.com/EdenP-Development/GridMates-Word-Search/actions/runs/45534953388/artifacts/14987465112) records APK SHA-256 `1d6c58d94dbf323b7de2317cfa4f4e526cfbfc4e96120c0a8e1560a132ef11a8`. The exact installed v120 passed the save fixture test. Android's first-use full-screen prompt blocked opening the Home menu. [Android QA](https://github.com/EdenP-Development/GridMates-Word-Search/actions/runs/45534959161) and [release isolation](https://github.com/EdenP-Development/GridMates-Word-Search/actions/runs/45534959134) passed at this source.
+- [Run 45536006825](https://github.com/EdenP-Development/GridMates-Word-Search/actions/runs/45536006825) at `67fee12f699c8150ca73a49bcce58b85606414a6` handles the full-screen prompt before opening Settings.
+
+Signed QA v120 is the fallback. Its APK SHA-256 is `0650e7fc6fb6198e22b20b8f6360c7379fe668a263b4eebb9d522f787b286a09`. [QA v120 ZIP](https://github.com/EdenP-Development/GridMates-Word-Search/actions/runs/45491802328/artifacts/14967073059)
 
 Continue from draft #199. Verify the beta package, signer and Android rehearsal. Owner handset review and public catalog approval remain open. Space's album continues from [gameplay draft #198](https://github.com/EdenP-Development/GridMates-Word-Search/pull/198).
