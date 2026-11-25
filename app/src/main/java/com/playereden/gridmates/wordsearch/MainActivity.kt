@@ -26,7 +26,7 @@ class MainActivity : ComponentActivity() {
     private var displayMode by mutableStateOf(DisplayMode.FULLSCREEN)
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        // Native Android splash only. No timer or artificial loading overlay.
+        // Keep the platform splash readiness-based; shared branding follows in Compose.
         installSplashScreen()
         super.onCreate(savedInstanceState)
         savedInstanceState?.getString(DAILY_DATE_STATE)?.let(soloStore::restoreDailySelection)
@@ -43,6 +43,7 @@ class MainActivity : ComponentActivity() {
 
         setContent {
             GridMatesTheme {
+                StartupBranding(showInitially = savedInstanceState == null, lifecycle = lifecycle) {
                 GridMatesShell(
                     soloStore, nearbyRooms, qaBookshelf,
                     displayMode = displayMode,
@@ -54,6 +55,7 @@ class MainActivity : ComponentActivity() {
                         }
                     }
                 )
+                }
             }
         }
     }

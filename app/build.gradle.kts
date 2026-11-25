@@ -203,3 +203,38 @@ val rasterizeWs12FieldNotes by tasks.registering(Exec::class) {
 tasks.matching { it.name in previewAssetTasks }.configureEach {
     dependsOn(rasterizeWs12FieldNotes)
 }
+
+
+// Exact master artwork, fetched only at build time and verified on every build.
+val startupAssetsDir = layout.buildDirectory.dir("generated/startupBranding/assets")
+val prepareStartupBranding = tasks.register("prepareStartupBranding") {
+    val pins = listOf(
+        Triple("spudacus.png", "015645bffb612e0f4311ec5a2d29e9c8bad91289/branding/spudacus/v1.0/full-transparent.png", "74773dbda822161f73a639f959e8bce5c6e0b333a94ebeb8ee27f620d4995d25"),
+        Triple("gridmates.png", "9affedc94ca5a6b896d36148f46f14a4e8218c3a/branding/gridmates/v1.0/runtime-transparent.png", "eef6d631cac0b9523f7e0dbebac229f9a2458d36fe2e73e111d251704d9ff292")
+    )
+    inputs.property("startupPins", pins.toString())
+    outputs.dir(startupAssetsDir)
+    outputs.upToDateWhen { false }
+    doLast {
+        val folder = startupAssetsDir.get().dir("branding/startup/v1").asFile
+        folder.mkdirs()
+        fun hash(bytes: ByteArray) = java.security.MessageDigest.getInstance("SHA-256")
+            .digest(bytes).joinToString("") { "%02x".format(it.toInt() and 255) }
+        for ((name, source, expected) in pins) {
+            val dest = folder.resolve(name)
+            if (!dest.isFile || hash(dest.readBytes()) != expected) {
+                check(!gradle.startParameter.isOffline) { "Missing verified startup artwork: " + name }
+                val connection = java.net.URI("https://raw.githubusercontent.com/EdenP-Development/Eden-Development-Standards/" + source).toURL()
+                    .openConnection().apply { connectTimeout = 15000; readTimeout = 30000 }
+                val bytes = connection.getInputStream().use { it.readNBytes(16 * 1024 * 1024 + 1) }
+                check(bytes.size <= 16 * 1024 * 1024 && hash(bytes) == expected) { "Startup artwork verification failed: " + name }
+                dest.writeBytes(bytes)
+            }
+            check(hash(dest.readBytes()) == expected) { "Startup artwork verification failed: " + name }
+        }
+    }
+}
+android.sourceSets.getByName("main").assets.srcDir(startupAssetsDir)
+tasks.matching { it.name.startsWith("merge") && it.name.endsWith("Assets") }.configureEach {
+    dependsOn(prepareStartupBranding)
+}
