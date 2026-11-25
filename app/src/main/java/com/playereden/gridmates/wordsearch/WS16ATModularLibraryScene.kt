@@ -153,7 +153,7 @@ internal fun WS16ATModularLibraryScene(
     books: List<PuzzleBook>,
     onBack: () -> Unit,
     onBookSelected: (String) -> Unit,
-    onPreviousArt: () -> Unit,
+    onPreviousArt: (() -> Unit)?,
     initialPage: Int = 0,
     onPageChanged: (Int) -> Unit = {},
     safeContentPadding: PaddingValues = PaddingValues(0.dp),
@@ -424,16 +424,17 @@ internal fun WS16ATModularLibraryScene(
                     .testTag("ws16at-pagination")
             )
         }
-        // Keep the old Library renderer one tap away for visual comparison.
-        WS16BIAdaptiveControl(
-            styled = cabinetPortrait,
-            glyph = Ws16AZCabinetGlyph.ART_OPTIONS,
-            description = if (packedCatalog) "Library options" else "Previous Library artwork",
-            onClick = onPreviousArt,
-            modifier = Modifier.align(Alignment.TopEnd)
-                .padding(end = 9.dp, top = 10.dp)
-                .testTag("ws16at-previous-art")
-        )
+        if (onPreviousArt != null) {
+            WS16BIAdaptiveControl(
+                styled = cabinetPortrait,
+                glyph = Ws16AZCabinetGlyph.ART_OPTIONS,
+                description = if (packedCatalog) "Library options" else "Previous Library artwork",
+                onClick = onPreviousArt,
+                modifier = Modifier.align(Alignment.TopEnd)
+                    .padding(end = 9.dp, top = 10.dp)
+                    .testTag("ws16at-previous-art")
+            )
+        }
         } // inset overlay only; original shell fills the outer Box
     }
 }

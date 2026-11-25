@@ -1,5 +1,7 @@
 package com.playereden.gridmates.wordsearch
 
+import android.content.pm.ApplicationInfo
+
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -90,6 +92,7 @@ internal fun BookcaseBookshelfScreen(
         // Keep the working WS16AI bookcase as a manually selectable QA rollback.
         var immersiveBooksPreview by rememberSaveable { mutableStateOf(true) }
         val context = LocalContext.current
+        val showPreviewTools = (context.applicationInfo.flags and ApplicationInfo.FLAG_DEBUGGABLE) != 0
         // Only the verified five-piece QA art can enable this experiment.
         // When available, show it first for immediate phone review; the old
         // illustrated case remains one tap away from the top QA escape.
@@ -106,10 +109,12 @@ internal fun BookcaseBookshelfScreen(
                     books = catalog.books,
                     onBack = onBack,
                     onBookSelected = { selectedBookId = it },
-                    onPreviousArt = {
-                        if (packedCatalog) previewToolsOpen = true
-                        else modularPreview = false
-                    },
+                    onPreviousArt = if (showPreviewTools) {
+                        {
+                            if (packedCatalog) previewToolsOpen = true
+                            else modularPreview = false
+                        }
+                    } else null,
                     initialPage = initialCabinetPage,
                     onPageChanged = onCabinetPageChanged,
                     safeContentPadding = safeContentPadding,
@@ -133,7 +138,8 @@ internal fun BookcaseBookshelfScreen(
                 onModularCase = if (modularAssetsAvailable) {
                     { modularPreview = true }
                 } else null,
-                modifier = Modifier.fillMaxSize().padding(safeContentPadding)
+                modifier = Modifier.fillMaxSize().padding(safeContentPadding),
+                showPreviewTools = showPreviewTools
             )
         } else if (fieldNotesArt && emptyCabinetPreview) {
             WS16ALImmersiveEmptyLibraryScene(
@@ -143,7 +149,8 @@ internal fun BookcaseBookshelfScreen(
                     immersiveBooksPreview = true
                     emptyCabinetPreview = false
                 },
-                onPreviewOptions = if (onToggleLayout != null || onToggleArt != null) {
+                onPreviewOptions = if (showPreviewTools &&
+                    (onToggleLayout != null || onToggleArt != null)) {
                     { previewToolsOpen = true }
                 } else null,
                 modifier = Modifier.fillMaxSize().padding(safeContentPadding)
@@ -155,11 +162,12 @@ internal fun BookcaseBookshelfScreen(
                 subtitle = "Browse your puzzle books",
                 onBack = onBack,
                 backLabel = "Back to Play",
-                onPreviewOptions = if (onToggleLayout != null || onToggleArt != null) {
+                onPreviewOptions = if (showPreviewTools &&
+                    (onToggleLayout != null || onToggleArt != null)) {
                     { previewToolsOpen = true }
                 } else null
             )
-            if (fieldNotesArt) {
+            if (showPreviewTools && fieldNotesArt) {
                 Row(Modifier.fillMaxWidth().heightIn(min = 48.dp),
                     verticalAlignment = Alignment.CenterVertically) {
                     Text(if (emptyCabinetPreview) "Inspect the empty bookcase artwork"
@@ -258,7 +266,7 @@ internal fun BookcaseBookshelfScreen(
                 }
             )
         }
-        if (previewToolsOpen) {
+        if (showPreviewTools && previewToolsOpen) {
             Ws15LibraryPreviewDialog(
                 fieldNotesArt = fieldNotesArt,
                 onToggleArt = onToggleArt,

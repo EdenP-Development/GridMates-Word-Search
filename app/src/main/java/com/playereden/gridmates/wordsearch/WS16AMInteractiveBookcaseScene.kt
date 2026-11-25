@@ -37,7 +37,8 @@ internal fun WS16AMInteractiveBookcaseScene(
     onInspectEmpty: () -> Unit,
     onOldCase: () -> Unit,
     onModularCase: (() -> Unit)? = null,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    showPreviewTools: Boolean = true
 ) {
     val fontScale = LocalDensity.current.fontScale
     val hitSlot = if (fontScale >= 1.65f) 54.dp else 48.dp
@@ -46,7 +47,7 @@ internal fun WS16AMInteractiveBookcaseScene(
         .testTag("ws16am-interactive-library")) {
         Ws15BackHeader(
             title = "Your Library", onBack = onBack, backLabel = "Back to Play",
-            onPreviewOptions = { qaMenuOpen = true },
+            onPreviewOptions = if (showPreviewTools) { { qaMenuOpen = true } } else null,
             modifier = Modifier.padding(horizontal = 6.dp)
         )
         BoxWithConstraints(Modifier.fillMaxWidth().weight(1f)
@@ -104,7 +105,7 @@ internal fun WS16AMInteractiveBookcaseScene(
             }
         }
     }
-    if (qaMenuOpen) {
+    if (showPreviewTools && qaMenuOpen) {
         AlertDialog(
             onDismissRequest = { qaMenuOpen = false },
             title = { Text("Library visual test") },

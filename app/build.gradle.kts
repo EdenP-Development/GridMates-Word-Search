@@ -112,8 +112,8 @@ androidComponents.onVariants(androidComponents.selector().withBuildType("debug")
 
 androidComponents.onVariants(androidComponents.selector().withBuildType("betaPlaytest")) { playtest ->
     playtest.outputs.forEach {
-        it.versionCode.set(124)
-        it.versionName.set("0.9.75-beta.1-owl-icon-playtest")
+        it.versionCode.set(125)
+        it.versionName.set("0.9.75-beta.1-library-polish-playtest")
     }
 }
 

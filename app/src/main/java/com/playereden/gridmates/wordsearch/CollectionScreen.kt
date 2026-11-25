@@ -55,7 +55,9 @@ import kotlin.math.sin
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.semantics.selected
+import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.rememberTextMeasurer
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.Dp
@@ -195,24 +197,48 @@ internal fun CollectionScreen(
             titleMaxLines = 2
         )
         if (shownAlbum == null) {
-            FlowRow(Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.spacedBy(8.dp),
-                verticalArrangement = Arrangement.spacedBy(6.dp)) {
-                for (label in tabs) {
-                    val isSelected = collectionTab == label
-                    GridMatesIllustratedFrame(
-                        modifier = Modifier.heightIn(min = 48.dp)
-                            .testTag("ws25-collection-tab-" + label.lowercase())
-                            .semantics { selected = isSelected },
-                        variant = if (isSelected) GridMatesFrameVariant.GREEN_ICON
-                            else GridMatesFrameVariant.MEDIUM,
-                        onClick = { selectedTab = label }
-                    ) {
-                        Box(Modifier.padding(horizontal = 13.dp, vertical = 13.dp),
-                            contentAlignment = Alignment.Center) {
-                            Text(label, color = if (isSelected) Paper else Forest,
-                                fontWeight = if (isSelected) FontWeight.Bold else FontWeight.Medium,
-                                style = MaterialTheme.typography.labelLarge)
+            val tabStyle = MaterialTheme.typography.labelLarge
+            val horizontalPadding = 13.dp
+            val tabGap = 8.dp
+            val density = LocalDensity.current
+            val textMeasurer = rememberTextMeasurer()
+            BoxWithConstraints(Modifier.fillMaxWidth()) {
+                val paddingPx = with(density) { horizontalPadding.roundToPx() } * 2
+                val gapPx = with(density) { tabGap.roundToPx() }
+                val tabWidths = tabs.map { label ->
+                    textMeasurer.measure(AnnotatedString(label),
+                        style = tabStyle.copy(fontWeight = FontWeight.Bold), maxLines = 1
+                    ).size.width + paddingPx
+                }
+                val pairTabs = tabs.size == 4 &&
+                    tabWidths.sum() + gapPx * (tabs.size - 1) > constraints.maxWidth
+                val equalWidths = pairTabs && tabWidths.max() * 2 + gapPx <= constraints.maxWidth
+                FlowRow(
+                    Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.spacedBy(tabGap),
+                    verticalArrangement = Arrangement.spacedBy(6.dp),
+                    maxItemsInEachRow = if (pairTabs) 2 else tabs.size
+                ) {
+                    for (label in tabs) {
+                        val isSelected = collectionTab == label
+                        val width = if (equalWidths) Modifier.weight(1f) else Modifier
+                        GridMatesIllustratedFrame(
+                            modifier = width.heightIn(min = 48.dp)
+                                .testTag("ws25-collection-tab-" + label.lowercase())
+                                .semantics { selected = isSelected },
+                            variant = if (isSelected) GridMatesFrameVariant.GREEN_ICON
+                                else GridMatesFrameVariant.MEDIUM,
+                            onClick = { selectedTab = label }
+                        ) {
+                            Box(
+                                Modifier.align(Alignment.Center)
+                                    .padding(horizontal = horizontalPadding, vertical = 13.dp),
+                                contentAlignment = Alignment.Center
+                            ) {
+                                Text(label, color = if (isSelected) Paper else Forest,
+                                    fontWeight = if (isSelected) FontWeight.Bold else FontWeight.Medium,
+                                    style = tabStyle)
+                            }
                         }
                     }
                 }
