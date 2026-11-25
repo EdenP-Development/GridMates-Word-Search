@@ -96,9 +96,9 @@ jobs:
           gh run download 45491802328 --repo "$GITHUB_REPOSITORY" \
             --name GridMates-WordSearch-Android-QA --dir qa-v120
           echo '0650e7fc6fb6198e22b20b8f6360c7379fe668a263b4eebb9d522f787b286a09  qa-v120/app-debug.apk' | sha256sum -c
-          gh run download 45545457282 --repo "$GITHUB_REPOSITORY" \
-            --name GridMates-WordSearch-Beta1-Playtest --dir beta-v122
-          echo 'f5db0a080959f30112b268ed9fa38d9c6ae88284f39ba7e1c68e5bd0833eba35  beta-v122/GridMates-WordSearch-Beta1-Playtest.apk' | sha256sum -c
+          gh run download 45551647183 --repo "$GITHUB_REPOSITORY" \
+            --name GridMates-WordSearch-Beta1-Icon-Playtest --dir beta-v123
+          echo '09ecf1f0ce860083d4d8e5eb1e84ae13a86c954277c5bdea00c7c74faef54f64  beta-v123/GridMates-WordSearch-Beta1-Icon-Playtest.apk' | sha256sum -c
       - name: Compare packaged art and book previews with QA v120
         run: |
           mkdir -p beta-import-report
@@ -123,7 +123,7 @@ jobs:
           fi
           test -n "$sdkmanager_path"
           "$sdkmanager_path" "build-tools;35.0.0"
-      - name: Sign and verify playtest code 123
+      - name: Sign and verify playtest code 124
         shell: bash
         env:
           KEYSTORE_BASE64: ${{ secrets.GRIDMATES_WORD_SEARCH_BETA_KEYSTORE_BASE64 }}
@@ -139,7 +139,7 @@ jobs:
           printf '%s' "$KEYSTORE_BASE64" | base64 --decode > "$private_dir/signer.p12"
           tools="$ANDROID_HOME/build-tools/35.0.0"
           mkdir -p beta-playtest
-          apk=beta-playtest/GridMates-WordSearch-Beta1-Icon-Playtest.apk
+          apk=beta-playtest/GridMates-WordSearch-Beta1-Owl-Icon-Playtest.apk
           "$tools/zipalign" -P 16 -f 4 beta-playtest-input/app-unsigned.apk "$private_dir/aligned.apk"
           "$tools/apksigner" sign --ks "$private_dir/signer.p12" --ks-type PKCS12 \
             --ks-key-alias gridmates-word-search-beta --ks-pass env:KEYSTORE_PASSWORD \
@@ -150,21 +150,48 @@ jobs:
           actual=$(sed -n 's/^Signer #[0-9]\+ certificate SHA-256 digest: //p' beta-import-report/beta-signer.txt)
           test "$actual" = "$EXPECTED_CERT_SHA256"
           "$tools/aapt" dump badging "$apk" | tee beta-import-report/beta-badging.txt
-          grep -F "name='com.playereden.gridmates.wordsearch.beta' versionCode='123' versionName='0.9.75-beta.1-icon-playtest'" \
+          grep -F "name='com.playereden.gridmates.wordsearch.beta' versionCode='124' versionName='0.9.75-beta.1-owl-icon-playtest'" \
             beta-import-report/beta-badging.txt
           if grep -Fxq application-debuggable beta-import-report/beta-badging.txt; then
             echo 'The signed playtest must be non-debuggable.' >&2
             exit 1
           fi
           "$tools/aapt2" dump resources "$apk" > "$private_dir/resources.txt"
-          grep -F 'drawable/ic_wordsearch_find_foreground' "$private_dir/resources.txt" | tee beta-import-report/launcher-resources.txt
-          grep -F 'drawable/ic_wordsearch_find_monochrome' "$private_dir/resources.txt" | tee -a beta-import-report/launcher-resources.txt
-          (cd beta-playtest && sha256sum GridMates-WordSearch-Beta1-Icon-Playtest.apk) | tee beta-import-report/beta-sha256.txt
+          grep -F 'drawable/ic_wordsearch_owl_foreground' "$private_dir/resources.txt" | tee beta-import-report/launcher-resources.txt
+          grep -F 'drawable/ic_wordsearch_owl_monochrome' "$private_dir/resources.txt" | tee -a beta-import-report/launcher-resources.txt
+          grep -F 'color/wordsearch_owl_launcher_background' "$private_dir/resources.txt" | tee -a beta-import-report/launcher-resources.txt
+          (cd beta-playtest && sha256sum GridMates-WordSearch-Beta1-Owl-Icon-Playtest.apk) | tee beta-import-report/beta-sha256.txt
+      - name: Verify the source illustration and packaged launcher raster
+        shell: bash
+        run: |
+          python3 - beta-playtest/GridMates-WordSearch-Beta1-Owl-Icon-Playtest.apk <<'PY' | tee beta-import-report/launcher-artwork.txt
+          import hashlib
+          import json
+          from pathlib import Path
+          import sys
+          from zipfile import ZipFile
+
+          manifest = json.loads(Path('design/visual-system/masters/ws-launcher-owl-v1/manifest.json').read_text())
+          for role in ('master', 'foreground', 'monochrome'):
+              asset = manifest[role]
+              source = Path(asset['path']).read_bytes()
+              assert hashlib.sha256(source).hexdigest() == asset['sha256'], asset['path']
+
+          foreground = Path(manifest['foreground']['path']).read_bytes()
+          with ZipFile(sys.argv[1]) as apk:
+              assert any(
+                  entry.filename.startswith('res/') and entry.file_size == len(foreground)
+                  and apk.read(entry) == foreground
+                  for entry in apk.infolist()
+              ), 'The signed APK does not contain the owl foreground bytes'
+          print('PASS: The original artwork and adaptive layers match their source hashes.')
+          print('PASS: The signed APK contains the exact illustrated owl foreground.')
+          PY
       - name: Archive the signed illustrated playtest
         uses: actions/upload-artifact@v4
         with:
-          name: GridMates-WordSearch-Beta1-Icon-Playtest
-          path: beta-playtest/GridMates-WordSearch-Beta1-Icon-Playtest.apk
+          name: GridMates-WordSearch-Beta1-Owl-Icon-Playtest
+          path: beta-playtest/GridMates-WordSearch-Beta1-Owl-Icon-Playtest.apk
           if-no-files-found: error
           retention-days: 14
       - name: Enable Android emulator acceleration
@@ -188,6 +215,6 @@ jobs:
         if: ${{ always() }}
         uses: actions/upload-artifact@v4
         with:
-          name: GridMates-WordSearch-Beta1-Icon-Playtest-Verification
+          name: GridMates-WordSearch-Beta1-Owl-Icon-Playtest-Verification
           path: beta-import-report/
           retention-days: 14

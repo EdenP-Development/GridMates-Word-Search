@@ -1,4 +1,4 @@
-"""Install the icon playtest over the illustrated beta with a full QA save."""
+"""Install the illustrated owl playtest over the prior signed beta with a full QA save."""
 
 import ws_beta_import_emulator as device
 
@@ -26,19 +26,19 @@ def main():
     assert source["boardFont"] == "plex" and len(source["solo"]["bookAwards"]) == 1
     qa_before = device.qa_journal_hashes()
 
-    device.adb("install", "beta-v122/GridMates-WordSearch-Beta1-Playtest.apk")
+    device.adb("install", "beta-v123/GridMates-WordSearch-Beta1-Icon-Playtest.apk")
     device.open_settings(device.BETA)
     device.open_restore_preview("1 completed book pages · 1 saved book pages.")
     device.tap(device.ui("Restore backup"))
     device.ui("Backup restored. Your saved progress is ready.")
 
     # Android's package manager checks that the new APK can update the old one.
-    device.adb("install", "-r", "beta-playtest/GridMates-WordSearch-Beta1-Icon-Playtest.apk")
+    device.adb("install", "-r", "beta-playtest/GridMates-WordSearch-Beta1-Owl-Icon-Playtest.apk")
     device.open_settings(device.BETA)
-    updated = export_playtest("WordSearch-Beta1-Icon-Updated.json")
+    updated = export_playtest("WordSearch-Beta1-Owl-Icon-Updated.json")
     assert updated == source, "The signed update changed the profile or book saves"
     assert device.qa_journal_hashes() == qa_before, "The original v120 saves changed"
-    print("PASS: The full save survived the signed update from code 122 to code 123.")
+    print("PASS: The full save survived the signed update from code 123 to code 124.")
 
     device.tap(device.ui("Back to Home"))
     device.ui("Your puzzle books")
@@ -65,7 +65,7 @@ def main():
     screenshot("installed-app-icon")
 
     result = (
-        "PASS: Illustrated Beta 1 code 122 updated to the signed code 123 icon playtest. "
+        "PASS: Beta 1 code 123 updated to the signed code 124 owl icon playtest. "
         "The full portable profile, font, book bookmarks and page sessions matched after restart. "
         "Home and the illustrated Library loaded with Woodland, Space and Garden, "
         "and Woodland resumed its saved page with one word found. "

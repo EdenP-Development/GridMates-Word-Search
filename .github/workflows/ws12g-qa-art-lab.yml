@@ -483,13 +483,13 @@ jobs:
           print('QA has both sets of six frozen boards and their indexes. Release excludes the QA preview assets and code.')
           PY
       - name: Keep the playtest launcher artwork out of release
-        if: ${{ hashFiles('app/src/betaPlaytest/res/drawable/ic_wordsearch_find_foreground.xml') != '' }}
+        if: ${{ hashFiles('app/src/betaPlaytest/res/drawable-xxxhdpi/ic_wordsearch_owl_foreground.webp') != '' }}
         run: |
           release_apk="$(find app/build/outputs/apk/release -maxdepth 1 -type f -name '*.apk' -print -quit)"
           test -n "$release_apk"
           resources="$RUNNER_TEMP/wordsearch-release-resources.txt"
           "$ANDROID_HOME/build-tools/35.0.0/aapt2" dump resources "$release_apk" > "$resources"
-          if grep -Eq 'drawable/ic_wordsearch_find_(foreground|monochrome)' "$resources"; then
+          if grep -Eq 'drawable/ic_wordsearch_owl_(foreground|monochrome)|color/wordsearch_owl_launcher_background' "$resources"; then
             echo 'Playtest launcher artwork entered the release APK.' >&2
             exit 1
           fi
