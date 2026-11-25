@@ -83,12 +83,13 @@ internal fun BookAlbumContent(album: BookAlbumProgress) {
                         BookArt(album.theme, kind, art, fieldNotes = true)
                     }
                     Column(Modifier.weight(1f), verticalArrangement = Arrangement.spacedBy(3.dp)) {
+                        val pageUnit = if (stamp.goal.target == 1) "page" else "pages"
                         Text(stamp.goal.title, color = Forest,
                             style = MaterialTheme.typography.titleMedium)
                         Text(stamp.goal.requirement, color = Muted,
                             style = MaterialTheme.typography.bodySmall)
                         Text(if (stamp.earned) "Earned"
-                            else "${stamp.completed} of ${stamp.goal.target} pages",
+                            else "${stamp.completed} of ${stamp.goal.target} $pageUnit",
                             color = Forest, style = MaterialTheme.typography.labelMedium)
                     }
                 }

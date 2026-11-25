@@ -6,6 +6,9 @@ plugins {
     kotlin("plugin.compose")
 }
 
+val wordSearchBetaCandidate = providers.gradleProperty("wordSearchBetaCandidate")
+    .map(String::toBooleanStrict).orElse(false).get()
+
 android {
     namespace = "com.playereden.gridmates.wordsearch"
     compileSdk = 35
@@ -39,8 +42,19 @@ android {
         }
         getByName("release") {
             isMinifyEnabled = false
-            // Production signing will be configured in a separate approved release pass.
+            // The beta uses the release source set and installs alongside QA.
+            if (wordSearchBetaCandidate) applicationIdSuffix = ".beta"
         }
+        create("betaPlaytest") {
+            applicationIdSuffix = ".beta"
+            isDebuggable = false
+        }
+    }
+
+    sourceSets.named("betaPlaytest") {
+        // Review the same catalog and artwork as QA under the beta identity.
+        java.srcDir("src/debug/java")
+        assets.srcDir("src/debug/assets")
     }
 
     buildFeatures {
@@ -80,12 +94,35 @@ val stageWs73PreviewAssets = tasks.register<StageFrozenPreviewAssets>("stageWs73
     output.convention(layout.buildDirectory.dir("generated/assets/ws73Preview"))
 }
 
+val previewBuildTypes = setOf("debug", "betaPlaytest")
+
+androidComponents.onVariants(androidComponents.selector().all()) { variant ->
+    if (variant.buildType in previewBuildTypes) {
+        variant.sources.assets?.addGeneratedSourceDirectory(stageWs66PreviewAssets, StageFrozenPreviewAssets::output)
+        variant.sources.assets?.addGeneratedSourceDirectory(stageWs73PreviewAssets, StageFrozenPreviewAssets::output)
+    }
+}
+
 androidComponents.onVariants(androidComponents.selector().withBuildType("debug")) { debug ->
-    debug.sources.assets?.addGeneratedSourceDirectory(stageWs66PreviewAssets, StageFrozenPreviewAssets::output)
-    debug.sources.assets?.addGeneratedSourceDirectory(stageWs73PreviewAssets, StageFrozenPreviewAssets::output)
     debug.outputs.forEach {
         it.versionCode.set(providers.gradleProperty("qaVersionCode").map(String::toInt).orElse(120))
         it.versionName.set("0.9.75-ws77-woodland-album-qa")
+    }
+}
+
+androidComponents.onVariants(androidComponents.selector().withBuildType("betaPlaytest")) { playtest ->
+    playtest.outputs.forEach {
+        it.versionCode.set(126)
+        it.versionName.set("0.9.75-beta.1-gridmates-icon-playtest")
+    }
+}
+
+androidComponents.onVariants(androidComponents.selector().withBuildType("release")) { release ->
+    if (wordSearchBetaCandidate) {
+        release.outputs.forEach {
+            it.versionCode.set(121)
+            it.versionName.set("0.9.75-beta.1")
+        }
     }
 }
 
@@ -133,7 +170,8 @@ val rasterizeWs12QaArt by tasks.registering(Exec::class) {
         "--output-dir", "app/src/debug/assets/ws12/raster"
     )
 }
-tasks.matching { it.name == "mergeDebugAssets" }.configureEach {
+val previewAssetTasks = previewBuildTypes.map { "merge${it.replaceFirstChar(Char::uppercaseChar)}Assets" }.toSet()
+tasks.matching { it.name in previewAssetTasks }.configureEach {
     dependsOn(rasterizeWs12QaArt)
 }
 
@@ -162,6 +200,6 @@ val rasterizeWs12FieldNotes by tasks.registering(Exec::class) {
         "--output-dir", "app/src/debug/assets/ws12/raster_field_notes"
     )
 }
-tasks.matching { it.name == "mergeDebugAssets" }.configureEach {
+tasks.matching { it.name in previewAssetTasks }.configureEach {
     dependsOn(rasterizeWs12FieldNotes)
 }

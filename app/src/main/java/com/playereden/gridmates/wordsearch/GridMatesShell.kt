@@ -74,10 +74,14 @@ internal fun GridMatesShell(
     val context = LocalContext.current
     val qa = qaBookshelf ?: remember(context) { QaBookshelfRuntime.installed(context) }
     val backups = remember(soloStore, qa) {
-        GameBackupManager(context, soloStore, books = {
-            if (!qa.enabled) null else BookBackupStores(qa.catalog,
-                requireNotNull(qa.progressStore), requireNotNull(qa.sessionStore))
-        })
+        GameBackupManager(
+            context, soloStore,
+            books = {
+                if (!qa.enabled) null else BookBackupStores(qa.catalog,
+                    requireNotNull(qa.progressStore), requireNotNull(qa.sessionStore))
+            },
+            allowRestoreWithoutCatalog = !qa.enabled
+        )
     }
     if (backups.needsRecovery) {
         BackHandler { /* Finish the multi-file restore before allowing play. */ }

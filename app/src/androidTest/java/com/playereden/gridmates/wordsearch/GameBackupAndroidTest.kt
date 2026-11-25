@@ -192,4 +192,33 @@ class GameBackupAndroidTest {
             assertArrayEquals(corrupt, file.readBytes())
             assertFalse(File(context.filesDir, target.journalName).exists())
         }
+
+    @Test fun portableRestoreKeepsProfileRewardsAndFontAndCanRecoverWithoutBookSaves() =
+        withSaves { source, target ->
+            source.populate()
+            val raw = source.manager().exportBackup()
+            val manager = GameBackupManager(context, target.solo, { null }, target.journalName,
+                allowRestoreWithoutCatalog = true)
+            val preview = manager.previewBackup(raw)
+            assertFalse(preview.includesBooks)
+            val journal = requireNotNull(preview.portableRestoreJournal)
+            assertFalse(manager.restoreBackup(JSONObject(raw).put("sha256", "bad").toString()))
+            assertFalse(File(context.filesDir, target.journalName).exists())
+            assertTrue(manager.restoreBackup(raw))
+
+            val reopened = Saves(target.prefix)
+            assertEquals(source.solo.profile, reopened.solo.profile)
+            assertEquals("plex", reopened.solo.effectiveBoardFontId)
+            assertTrue(reopened.progress.bookmark(bookId, "page-2"))
+            assertTrue(reopened.sessions.open(bookId, "page-2"))
+            val booksBefore = reopened.progress.progress
+            val sessionsBefore = reopened.sessions.journal
+            // The portable journal can also resume after an update adds books.
+            File(context.filesDir, target.journalName).writeText(journal)
+            val recovered = Saves(target.prefix)
+            assertFalse(recovered.manager().needsRecovery)
+            assertEquals(source.solo.profile, recovered.solo.profile)
+            assertEquals(booksBefore, recovered.progress.progress)
+            assertEquals(sessionsBefore, recovered.sessions.journal)
+        }
 }

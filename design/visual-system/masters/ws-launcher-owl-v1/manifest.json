@@ -1,0 +1,37 @@
+{
+  "asset_id": "word-search-launcher-owl-v1",
+  "review_status": "owner_artwork_selected_standard_layout_handset_review_pending",
+  "scope": "betaPlaytest",
+  "source": {
+    "method": "OpenAI image generation with the owner-supplied Sudoku badge as a style reference",
+    "date": "2026-11-25",
+    "reference_filename": "8545.png",
+    "reference_sha256": "ea3812eb46f6d3601fd5edf1d1f1f2d1c9c445a4140c7e1d2a86c08563d3367f",
+    "prompt": "Use case: illustration-story. Create one finished square Android launcher icon for GridMates Word Search. The uploaded GridMates Sudoku fox badge is the definitive SERIES STYLE reference. The two icons should look like sibling titles on the same home screen. Match its warm storybook illustration, confident dark outlines, chunky warm golden wood rim with a rounded square silhouette, deep forest-green inset, a few chartreuse leaves, luminous cream tiles, and saturated cozy colors. Keep bold shape and decoration hierarchy at app icon scale.\n\nUse a bright, friendly tawny woodland owl with large cream facial disks, clear dark eyes and a small golden beak as the distinct mascot. The owl peers from behind the board, head slightly tilted, face occupying the upper area. The owl can bring one wing to the board's upper corner, with a small cluster of vivid green leaves on the opposite side. Show a compact, front-facing, centered 4 by 4 word-search board in the lower area. Draw exactly sixteen large simple uppercase letters with one per warm ivory tile. Arrange these exact four rows:\nF O W L\nS I A R\nC E N T\nP L U D\nMake the descending F I N D diagonal unambiguously bright gold, with the four dark green letters on four gold cells and one subtle connected highlight. Use high contrast for the other letters too. The board and owl's face remain centrally grouped with breathing room from the golden outer rim so a circular Android launcher crop protects both.\n\nMatch the Sudoku badge's crafted materials, soft warm top-left lighting, gentle shading, and subtle fine wood grain. Smooth, solid silhouette with clean edges, clear graphic shapes, rich dark-green field, limited small detail. A single icon, no framing mockup, no perspective distortion, no text outside the grid, no watermark, no fox, no numbers. Genuinely transparent outside the rounded gold badge with a narrow even padding of clear alpha on the canvas."
+  },
+  "master": {
+    "path": "design/visual-system/masters/ws-launcher-owl-v1/original.png",
+    "sha256": "2137925563cc56762c187759a9eb62de1c2536b83acc9d0a09e93c97de2895c2",
+    "width": 1254,
+    "height": 1254
+  },
+  "foreground": {
+    "path": "app/src/betaPlaytest/res/drawable-xxxhdpi/ic_wordsearch_owl_foreground.webp",
+    "sha256": "924b6a1e00c5e677431f11a7f9fcb102fee5f07ab5b8c814438c46e1a1970299",
+    "width": 432,
+    "height": 432,
+    "artwork_width": 232,
+    "artwork_height": 232,
+    "offset_x": 100,
+    "offset_y": 100
+  },
+  "monochrome": {
+    "path": "app/src/betaPlaytest/res/drawable/ic_wordsearch_owl_monochrome.xml",
+    "sha256": "33d7fc62196a08e7a0255162399adbbf00873f2f1a2d2280a55a770b255c794d"
+  },
+  "background_color": "#214F3F",
+  "launcher_standard": {
+    "version": "1.0",
+    "source": "https://github.com/EdenP-Development/Eden-Development-Standards/blob/9821e84330057c7744ff0f84ae3e85d380445c57/branding/gridmates/app-icons/v1.0/README.md"
+  }
+}

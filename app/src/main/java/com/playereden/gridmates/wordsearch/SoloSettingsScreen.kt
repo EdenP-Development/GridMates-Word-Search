@@ -112,11 +112,13 @@ internal fun SoloSettingsScreen(
                     Text(preview.duelResults.size.toString() +
                         " completed Speed Duel results.",
                         color = Muted)
-                    Text(if (backup.includesBooks)
-                        "${backup.completedPages} completed book pages · " +
+                    Text(when {
+                        backup.includesBooks -> "${backup.completedPages} completed book pages · " +
                             "${backup.savedPages} saved book pages. Bookmarks, words, hints and time are included."
-                        else "This older or Solo-only backup has no book pages. " +
-                            "Your current book progress will be kept.", color = Muted)
+                        backup.portableRestoreJournal != null ->
+                            "Earned rewards carry over. Preview book saves stay in the QA app."
+                        else -> "This backup has no book pages. Your current book progress will be kept."
+                    }, color = Muted)
                     Text("Restoring replaces your current Word Search profile, " +
                         "puzzle and records on this phone. Export the current " +
                         "progress first if you want a copy.",
@@ -184,6 +186,14 @@ internal fun SoloSettingsScreen(
                 }
             }
         }
+        if (message.isNotBlank()) {
+            Column(Modifier.fillMaxWidth().semantics {
+                liveRegion = LiveRegionMode.Polite
+            }) {
+                Text(message, color = Forest, style = MaterialTheme.typography.bodyMedium)
+                TextButton(onClick = { message = "" }) { Text("Dismiss") }
+            }
+        }
         Text("Export includes Solo and Quick Play, Daily, completed Race and Duel results, " +
             "your profile and collections, plus available book progress and unfinished pages. " +
             "Restore asks before replacing progress. Older Solo backups keep your current books.",
@@ -241,15 +251,6 @@ internal fun SoloSettingsScreen(
             "open a puzzle, choose Options, then Feedback settings. " +
             "Your preferences remain on this device.",
             color = Muted, style = MaterialTheme.typography.bodyMedium)
-    }
-
-    if (message.isNotBlank()) {
-        PaperPanel(Modifier.fillMaxWidth().semantics {
-            liveRegion = LiveRegionMode.Polite
-        }) {
-            Text(message, color = Forest, style = MaterialTheme.typography.bodyMedium)
-            TextButton(onClick = { message = "" }) { Text("Dismiss") }
-        }
     }
 
     PaperPanel(Modifier.fillMaxWidth()) {

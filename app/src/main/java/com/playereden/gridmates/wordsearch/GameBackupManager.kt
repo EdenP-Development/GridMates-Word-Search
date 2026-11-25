@@ -28,7 +28,8 @@ internal data class GameBackupPreview(
     val bookSessions: ByteArray? = null,
     val completedPages: Int = 0,
     val savedPages: Int = 0,
-    val boardFontId: String? = null
+    val boardFontId: String? = null,
+    val portableRestoreJournal: String? = null
 ) {
     val includesBooks: Boolean get() = bookProgress != null
 }
@@ -45,7 +46,8 @@ internal class GameBackupManager(
     context: Context,
     private val solo: SoloStore,
     private val books: () -> BookBackupStores?,
-    journalName: String = "gridmates_wordsearch_restore_v1.json"
+    journalName: String = "gridmates_wordsearch_restore_v1.json",
+    private val allowRestoreWithoutCatalog: Boolean = false
 ) {
     private val journal: AtomicFile
     var needsRecovery by mutableStateOf(false)
@@ -75,9 +77,8 @@ internal class GameBackupManager(
         }
         val payload = JSONObject().put("solo", profile)
             .put("boardFont", solo.effectiveBoardFontId)
-            .put("books", bookData ?: JSONObject.NULL).toString()
-        val raw = JSONObject().put("format", FORMAT).put("version", 1)
-            .put("payload", payload).put("sha256", sha256(payload)).toString()
+            .put("books", bookData ?: JSONObject.NULL)
+        val raw = encodeEnvelope(payload)
         require(raw.toByteArray(Charsets.UTF_8).size <= BackupDocumentReader.MAX_BYTES)
         return raw
     }
@@ -98,10 +99,20 @@ internal class GameBackupManager(
         require(BoardFontCollection.allowed(profile, font)) { "Unsupported board font" }
         require(data.has("books"))
         if (data.isNull("books")) return GameBackupPreview(raw, profile, boardFontId = font)
-        val library = requireNotNull(books()) { "These books are unavailable in this build" }
         val bookData = data.getJSONObject("books")
         val progress = Base64.getDecoder().decode(bookData.getString("progress"))
         val sessions = Base64.getDecoder().decode(bookData.getString("sessions"))
+        val library = books()
+        if (library == null && allowRestoreWithoutCatalog) {
+            require(progress.size in 44..BookProgressCodec.MAX_BYTES)
+            require(sessions.size in 44..BookPageSessionCodec.MAX_BYTES)
+            // Record the confirmed portable scope so a future build with a catalog
+            // can finish an interrupted restore without opening these QA pages.
+            data.put("books", JSONObject.NULL)
+            return GameBackupPreview(raw, profile, boardFontId = font,
+                portableRestoreJournal = encodeEnvelope(data))
+        }
+        requireNotNull(library) { "These books are unavailable in this build" }
         val decodedProgress = BookProgressCodec.decode(library.catalog, progress)
         val decodedSessions = BookPageSessionCodec.decode(library.catalog, sessions)
         return GameBackupPreview(raw, profile, progress, sessions,
@@ -121,7 +132,9 @@ internal class GameBackupManager(
                     "Unreadable device book saves are preserved"
                 }
             }
-            check(writeJournal(raw)) { "Could not start restore. Current progress is unchanged." }
+            check(writeJournal(preview.portableRestoreJournal ?: raw)) {
+                "Could not start restore. Current progress is unchanged."
+            }
             needsRecovery = true
             applyPending(preview)
         } catch (_: Exception) {
@@ -182,6 +195,12 @@ internal class GameBackupManager(
             stream?.let { runCatching { journal.failWrite(it) } }
             false
         }
+    }
+
+    private fun encodeEnvelope(data: JSONObject): String {
+        val payload = data.toString()
+        return JSONObject().put("format", FORMAT).put("version", 1)
+            .put("payload", payload).put("sha256", sha256(payload)).toString()
     }
 
     companion object {
