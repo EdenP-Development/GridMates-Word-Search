@@ -1,3 +1,11 @@
+# Illustrated Word Search Beta 1 playtest verified
+
+Resume [draft #199](https://github.com/EdenP-Development/GridMates-Word-Search/pull/199) on `ci/word-search-beta-signing`. The tested source is `a25a99c06d1369ea284bfefefc36e34fc3d93821`. Android version code 122 uses the dedicated beta identity and all 239 v120 preview files. APK SHA-256 `f5db0a080959f30112b268ed9fa38d9c6ae88284f39ba7e1c68e5bd0833eba35`. [Signed APK ZIP](https://github.com/EdenP-Development/GridMates-Word-Search/actions/runs/45545457282/artifacts/14990404723) · [Android run](https://github.com/EdenP-Development/GridMates-Word-Search/actions/runs/45545457282) · [Screenshots and verification](https://github.com/EdenP-Development/GridMates-Word-Search/actions/runs/45545457282/artifacts/14992145523)
+
+Android 35 installed code 122 over code 121 with its saves intact. A full QA v120 backup also carried over the original bookmarks and page sessions. The Home carousel, Library spines and resumed Woodland page rendered with the art. Release art isolation passed. [Pass record](devlog/2026-11-24_WORD_SEARCH_ILLUSTRATED_BETA_PLAYTEST.md) · [Release isolation](https://github.com/EdenP-Development/GridMates-Word-Search/actions/runs/45545463731)
+
+Use signed QA v120 as the side-by-side fallback. The next distribution check is owner review of the illustrated playtest on a phone. Public catalog approval is open. Any later update for the beta package needs a version code above 122.
+
 # Signed Word Search Beta 1 and save import verified
 
 Continue from [draft #199](https://github.com/EdenP-Development/GridMates-Word-Search/pull/199) on `ci/word-search-beta-signing`. The tested source is `06f03af17835192bd189936508608a50d4bfb92c`. Beta 1 is `com.playereden.gridmates.wordsearch.beta`, version `0.9.75-beta.1` (code `121`). Its APK SHA-256 is `b43fabba58bbefe0ab042bf6bf8b708dde874c2b5cdc70d4ea96d002ca6cfdc3`. [Signed APK](https://github.com/EdenP-Development/GridMates-Word-Search/actions/runs/45538637429/artifacts/14988966094) · [Android rehearsal](https://github.com/EdenP-Development/GridMates-Word-Search/actions/runs/45538637429) · [Verification files](https://github.com/EdenP-Development/GridMates-Word-Search/actions/runs/45538637429/artifacts/14988223062)

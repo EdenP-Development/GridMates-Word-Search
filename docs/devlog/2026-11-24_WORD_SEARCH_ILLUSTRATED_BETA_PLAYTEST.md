@@ -1,6 +1,6 @@
 # November 24, 2026 — Illustrated Word Search beta playtest
 
-> **Status:** Build and install-over rehearsal pending.
+> **Status:** Signed APK and Android 35 upgrade rehearsal passed. Handset review is open.
 
 ## Handset feedback and starting point
 
@@ -14,6 +14,19 @@ The standard Android workflow prepares the same v120 art and frozen puzzle pages
 
 ## Verification
 
-The workflow will compare the packaged preview assets with the archived v120 APK. The emulator seeds the previous signed beta, installs the playtest over it and compares the portable progress. It then imports a complete v120 backup, including book bookmarks and unfinished pages, and checks the illustrated Home, Library and resumed Woodland page.
+The signed playtest, standard Android QA, and Android 35 upgrade rehearsal passed at source `a25a99c06d1369ea284bfefefc36e34fc3d93821`. The separate release art isolation check also passed at that source. [Playtest workflow](https://github.com/EdenP-Development/GridMates-Word-Search/actions/runs/45545457282) · [Release art isolation](https://github.com/EdenP-Development/GridMates-Word-Search/actions/runs/45545463731)
 
-Build, evidence and handset review are pending. The next step is to verify the package and updates on Android before handing off the test APK. [Signing draft](https://github.com/EdenP-Development/GridMates-Word-Search/pull/199)
+| Item | Verified |
+| --- | --- |
+| Android identity | `com.playereden.gridmates.wordsearch.beta` |
+| Version | `0.9.75-beta.1-playtest`, code `122` |
+| Signer SHA-256 | `c29c0c593ac99ae81b5a5aaf5fca37bbed3bbd419e8f08287296de6681babba3` |
+| APK size and SHA-256 | 30,267,030 bytes · `f5db0a080959f30112b268ed9fa38d9c6ae88284f39ba7e1c68e5bd0833eba35` |
+| Preview assets | 239 packaged art and frozen puzzle files match QA v120 byte for byte |
+| Install-over | The archived signed Beta 1 code 121 accepted the update. Its portable profile, puzzles and font matched after restart. |
+| Full QA restore | The original v120 test backup imported and re-exported with the same profile, font, book completion, bookmark and unfinished page. All three original v120 journal hashes matched. |
+| Visual check | Captures show the illustrated Home carousel, the Library with Woodland, Space and Garden, and the restored Woodland page with one word found. |
+
+[Signed APK ZIP](https://github.com/EdenP-Development/GridMates-Word-Search/actions/runs/45545457282/artifacts/14990404723) · [Android run](https://github.com/EdenP-Development/GridMates-Word-Search/actions/runs/45545457282) · [Screenshots and verification](https://github.com/EdenP-Development/GridMates-Word-Search/actions/runs/45545457282/artifacts/14992145523)
+
+Signed QA v120 remains the side-by-side fallback. The next check is handset review of the illustrated update. Public artwork and book catalog approval are open. Use a version code above 122 for any later APK intended to update this beta package. [Prior code 121 signing rehearsal](https://github.com/EdenP-Development/GridMates-Word-Search/actions/runs/45538637429/artifacts/14988966094)
