@@ -70,7 +70,15 @@ def ui(label):
 def open_settings(package):
     adb("shell", "am", "force-stop", package)
     adb("shell", "am", "start", "-W", "-n", f"{package}/{ACTIVITY}")
-    tap(ui("Open menu"))
+    entry = wait_for_node(
+        lambda node: has_label(node, "Open menu")
+        or node.get("resource-id") == "android:id/ok" and has_label(node, "Got it"),
+        "Home menu or Android full-screen prompt",
+    )
+    if entry.get("resource-id") == "android:id/ok":
+        tap(entry)
+        entry = ui("Open menu")
+    tap(entry)
     tap(ui("Settings & backup"))
     ui("Export backup")
 
