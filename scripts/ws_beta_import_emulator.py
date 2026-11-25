@@ -179,11 +179,7 @@ def main():
     tap(ui("Keep current"))
     ui("0 Solo · 0 Daily · 0 Races · 0 Duels")
     open_restore_preview()
-    tap(wait_for_node(
-        lambda node: node.get("class") == "android.widget.Button"
-        and has_label(node, "Restore backup"),
-        "dialog confirmation",
-    ))
+    tap(ui("Restore backup"))
     ui("Backup restored. Your saved progress is ready.")
 
     open_settings(BETA)
