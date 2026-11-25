@@ -186,6 +186,14 @@ internal fun SoloSettingsScreen(
                 }
             }
         }
+        if (message.isNotBlank()) {
+            Column(Modifier.fillMaxWidth().semantics {
+                liveRegion = LiveRegionMode.Polite
+            }) {
+                Text(message, color = Forest, style = MaterialTheme.typography.bodyMedium)
+                TextButton(onClick = { message = "" }) { Text("Dismiss") }
+            }
+        }
         Text("Export includes Solo and Quick Play, Daily, completed Race and Duel results, " +
             "your profile and collections, plus available book progress and unfinished pages. " +
             "Restore asks before replacing progress. Older Solo backups keep your current books.",
@@ -243,15 +251,6 @@ internal fun SoloSettingsScreen(
             "open a puzzle, choose Options, then Feedback settings. " +
             "Your preferences remain on this device.",
             color = Muted, style = MaterialTheme.typography.bodyMedium)
-    }
-
-    if (message.isNotBlank()) {
-        PaperPanel(Modifier.fillMaxWidth().semantics {
-            liveRegion = LiveRegionMode.Polite
-        }) {
-            Text(message, color = Forest, style = MaterialTheme.typography.bodyMedium)
-            TextButton(onClick = { message = "" }) { Text("Dismiss") }
-        }
     }
 
     PaperPanel(Modifier.fillMaxWidth()) {

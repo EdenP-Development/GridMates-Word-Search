@@ -72,7 +72,7 @@ def open_settings(package):
     adb("shell", "am", "start", "-W", "-n", f"{package}/{ACTIVITY}")
     entry = wait_for_node(
         lambda node: has_label(node, "Open menu")
-        or node.get("resource-id") == "android:id/ok" and has_label(node, "Got it"),
+        or (node.get("resource-id") == "android:id/ok" and has_label(node, "Got it")),
         "Home menu or Android full-screen prompt",
     )
     if entry.get("resource-id") == "android:id/ok":
@@ -114,8 +114,15 @@ def export_backup(output_path, filename=None):
         and node.get("text", "").casefold() == "save",
         "DocumentsUI Save button",
     ))
-    ui("Backup exported to your chosen location.")
-    return adb("exec-out", "cat", output_path)
+    ui("Export backup")
+    deadline = time.monotonic() + 12
+    while time.monotonic() < deadline:
+        try:
+            return payload(adb("exec-out", "cat", output_path))
+        except (subprocess.CalledProcessError, ValueError, KeyError, AssertionError):
+            time.sleep(0.3)
+    (REPORT / "downloads.txt").write_bytes(adb("shell", "ls", "-l", "/sdcard/Download"))
+    raise AssertionError(f"Android did not create a valid backup at {output_path}")
 
 
 def open_restore_preview():
@@ -160,7 +167,7 @@ def main():
     instrument("WsBetaV120BackupSeedAndroidTest", 1)
 
     open_settings(QA)
-    source = payload(export_backup(QA_BACKUP))
+    source = export_backup(QA_BACKUP)
     assert source["books"]["progress"] and source["books"]["sessions"]
     assert source["boardFont"] == "plex" and len(source["solo"]["bookAwards"]) == 1
     before = qa_journal_hashes()
@@ -181,7 +188,7 @@ def main():
 
     open_settings(BETA)
     ui("1 Solo · 1 Daily · 0 Races · 0 Duels")
-    restored = payload(export_backup(BETA_BACKUP, Path(BETA_BACKUP).name))
+    restored = export_backup(BETA_BACKUP, Path(BETA_BACKUP).name)
     assert restored["solo"] == source["solo"], "Portable profile or puzzle progress differs after restart"
     assert restored["boardFont"] == source["boardFont"], "Equipped board font changed"
     assert restored["books"] is None
