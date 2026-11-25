@@ -1,5 +1,8 @@
 # Continue GridMates: Word Search
 
+## Shared startup pilot — 2026-11-25
+Focused branch feature/shared-startup-branding-2026-11-25 based on ci/word-search-beta-signing. Two-logo overlay adapted from Crossroads, 300/1500/300 ms per logo (4.2s nominal), cream background, tap/Back skip, reduced-motion and lifecycle guard, async asset decode with fallback. Build-time pinned master artwork SHA-256 verification and offline runtime; native Android readiness splash retained. Existing shell, saves, signing and version configuration unchanged. Unit assertions added; CI/packaged assets/physical review pending. Do not publish or run private signing from unapproved source; reconcile current versionCode with actual last distributed beta before owner build. Integrate through normal project milestone after review.
+
 **Current QA build is signed v120.** Woodland has five stamps for the existing 45 pages. The signed upgrade from v119 kept all three journals and recognized prior saves. [APK ZIP](https://github.com/EdenP-Development/GridMates-Word-Search/actions/runs/45491802328/artifacts/14967073059) · [Build record](docs/devlog/2026-11-24_WS77_WOODLAND_ALBUM.md)
 
 **Current branch** is [draft #198](https://github.com/EdenP-Development/GridMates-Word-Search/pull/198), stacked on the verified v119 [draft #197](https://github.com/EdenP-Development/GridMates-Word-Search/pull/197). Continue with the Space album and its grouped-page upgrade test. Woodland’s handset check is open.
