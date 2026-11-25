@@ -125,14 +125,14 @@ def export_backup(output_path, filename=None):
     raise AssertionError(f"Android did not create a valid backup at {output_path}")
 
 
-def open_restore_preview():
+def open_restore_preview(book_scope="Preview book saves stay in the QA app."):
     tap(ui("Restore backup"))
     picker_downloads()
     tap(ui(BACKUP))
     ui("Replace saved progress?")
     wait_for_node(lambda node: node.get("text", "").startswith("Profile: V120 Test Reader · "),
                   "source profile in the preview")
-    wait_for_node(lambda node: "Preview book saves stay in the QA app." in node.get("text", ""),
+    wait_for_node(lambda node: book_scope in node.get("text", ""),
                   "book-save scope in the preview")
 
 

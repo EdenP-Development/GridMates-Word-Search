@@ -2,6 +2,12 @@ name: GridMates Word Search Android QA
 
 on:
   workflow_dispatch:
+  workflow_call:
+    inputs:
+      beta_playtest:
+        description: Build an unsigned playtest from the same assets as Android QA
+        type: boolean
+        default: false
   pull_request:
     paths:
       - 'app/**'
@@ -32,6 +38,8 @@ concurrency:
 
 jobs:
   android-qa:
+    # The trusted beta push calls this same job, including the standard checks.
+    if: ${{ github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name != github.repository || github.head_ref != 'ci/word-search-beta-signing' }}
     runs-on: ubuntu-latest
     timeout-minutes: 40
     env:
@@ -385,6 +393,24 @@ jobs:
           python3 tools/lexicon/build_qa_curation.py
           python3 tools/lexicon/render_qa_runtime.py
           git diff --exit-code -- app/src/debug/java/com/playereden/gridmates/wordsearch/QuickPlayContent.kt core/src/test/resources/reviewed-packs data/lexicon
+      - name: Assemble the illustrated beta playtest and device fixture
+        if: ${{ inputs.beta_playtest == true }}
+        shell: bash
+        run: |
+          gradle --no-daemon :app:assembleBetaPlaytest :app:assembleDebugAndroidTest
+          mapfile -t apks < <(find app/build/outputs/apk/betaPlaytest -maxdepth 1 -type f -name '*.apk')
+          test "${#apks[@]}" -eq 1
+          install -D "${apks[0]}" beta-playtest-input/app-unsigned.apk
+          install -D app/build/outputs/apk/androidTest/debug/app-debug-androidTest.apk \
+            beta-playtest-input/app-debug-androidTest.apk
+      - name: Archive unsigned playtest inputs for the signing job
+        if: ${{ inputs.beta_playtest == true }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: GridMates-WordSearch-Beta-Playtest-Inputs
+          path: beta-playtest-input/
+          if-no-files-found: error
+          retention-days: 1
       - name: Prepare WS42 device tests and v103 baseline
         id: ws42-prep
         if: ${{ (github.head_ref || github.ref_name) == 'feature/ws42-handset-polish-2026-11-17' }}

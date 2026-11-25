@@ -1,4 +1,4 @@
-name: Word Search beta signing and Android rehearsal
+name: Word Search signed beta playtest
 
 on:
   push:
@@ -65,11 +65,19 @@ jobs:
           fi
           echo "Word Search beta signing key verified. Certificate SHA-256: $EXPECTED_CERT_SHA256"
 
+  playtest-build:
+    if: ${{ github.repository_id == '1447522480' && github.ref == 'refs/heads/ci/word-search-beta-signing' }}
+    permissions:
+      contents: read
+      actions: read
+    uses: ./.github/workflows/ws01-android-qa.yml
+    with:
+      beta_playtest: true
 
   candidate:
-    needs: verify
+    needs: [verify, playtest-build]
     runs-on: ubuntu-24.04
-    timeout-minutes: 35
+    timeout-minutes: 20
     permissions:
       contents: read
       actions: read
@@ -77,57 +85,45 @@ jobs:
       - uses: actions/checkout@v4
         with:
           persist-credentials: false
-      - name: Checkout approved Woodland portraits
-        uses: actions/checkout@v4
+      - uses: actions/download-artifact@v4
         with:
-          repository: EdenP-Development/SudokuTogether
-          ref: 975e31a1e8cbfebad1fbbc7602b3340c357da7ef
-          path: _approved_sudoku
-          persist-credentials: false
-      - name: Checkout reviewed OFL fonts
-        uses: actions/checkout@v4
-        with:
-          repository: google/fonts
-          ref: 24ddc1f324cac5d9f5aedca126d298f56e3f1640
-          path: _approved_fonts
-          persist-credentials: false
-          filter: blob:none
-          sparse-checkout: |
-            ofl/atkinsonhyperlegible
-            ofl/ibmplexmono
-            ofl/dmmono
-            ofl/patrickhand
-            ofl/literata
-      - name: Verify and import shared release assets
+          name: GridMates-WordSearch-Beta-Playtest-Inputs
+          path: beta-playtest-input
+      - name: Download the signed QA and Beta 1 baselines
+        env:
+          GH_TOKEN: ${{ github.token }}
         run: |
-          python3 -m pip install --disable-pip-version-check --user fonttools==4.59.2 CairoSVG==2.8.2
-          python3 scripts/import_woodland_portraits.py --source _approved_sudoku
-          python3 scripts/import_font_library.py --source _approved_fonts
-      - uses: actions/setup-java@v5
-        with:
-          distribution: temurin
-          java-version: '17'
-      - name: Install pinned Gradle and Android build tools
+          gh run download 45491802328 --repo "$GITHUB_REPOSITORY" \
+            --name GridMates-WordSearch-Android-QA --dir qa-v120
+          echo '0650e7fc6fb6198e22b20b8f6360c7379fe668a263b4eebb9d522f787b286a09  qa-v120/app-debug.apk' | sha256sum -c
+          gh run download 45538637429 --repo "$GITHUB_REPOSITORY" \
+            --name GridMates-WordSearch-Beta1-Android --dir beta-v121
+          echo 'b43fabba58bbefe0ab042bf6bf8b708dde874c2b5cdc70d4ea96d002ca6cfdc3  beta-v121/GridMates-WordSearch-Beta1.apk' | sha256sum -c
+      - name: Compare packaged art and book previews with QA v120
         run: |
-          bash tools/ci/install_pinned_gradle.sh
+          mkdir -p beta-import-report
+          python3 - <<'PY' | tee beta-import-report/qa-assets.txt
+          from zipfile import ZipFile
+
+          with ZipFile('qa-v120/app-debug.apk') as qa, ZipFile('beta-playtest-input/app-unsigned.apk') as playtest:
+              assets = {name for name in qa.namelist() if name.startswith('assets/ws') and not name.endswith('/')}
+              assert len(assets) > 100, 'The source is missing the illustrated QA content'
+              missing = assets.difference(playtest.namelist())
+              assert not missing, f'Playtest is missing QA assets: {sorted(missing)}'
+              changed = sorted(name for name in assets if qa.read(name) != playtest.read(name))
+              assert not changed, f'Playtest art or puzzle previews differ from v120: {changed}'
+              print(f'PASS: All {len(assets)} v120 preview assets match the playtest byte for byte.')
+          PY
+        shell: bash
+      - name: Install Android build tools
+        run: |
           sdkmanager_path="$(command -v sdkmanager || true)"
           if [ -z "$sdkmanager_path" ]; then
             sdkmanager_path="$(find "$ANDROID_HOME/cmdline-tools" -type f -name sdkmanager -print -quit)"
           fi
           test -n "$sdkmanager_path"
-          "$sdkmanager_path" "platforms;android-35" "build-tools;35.0.0"
-      - uses: gradle/actions/setup-gradle@v4
-      - name: Build the release candidate and QA test APKs
-        run: |
-          gradle --no-daemon -PwordSearchBetaCandidate=true :core:test \
-            :app:testDebugUnitTest :app:assembleRelease :app:assembleDebug :app:assembleDebugAndroidTest
-      - name: Download and verify the actual signed QA v120 APK
-        env:
-          GH_TOKEN: ${{ github.token }}
-        run: |
-          gh run download 45491802328 --repo "$GITHUB_REPOSITORY" --name GridMates-WordSearch-Android-QA --dir qa-v120
-          echo '0650e7fc6fb6198e22b20b8f6360c7379fe668a263b4eebb9d522f787b286a09  qa-v120/app-debug.apk' | sha256sum -c
-      - name: Sign and verify the dedicated beta APK
+          "$sdkmanager_path" "build-tools;35.0.0"
+      - name: Sign and verify playtest code 122
         shell: bash
         env:
           KEYSTORE_BASE64: ${{ secrets.GRIDMATES_WORD_SEARCH_BETA_KEYSTORE_BASE64 }}
@@ -142,9 +138,9 @@ jobs:
           test -n "$KEYSTORE_PASSWORD"
           printf '%s' "$KEYSTORE_BASE64" | base64 --decode > "$private_dir/signer.p12"
           tools="$ANDROID_HOME/build-tools/35.0.0"
-          mkdir -p beta-candidate beta-import-report
-          apk=beta-candidate/GridMates-WordSearch-Beta1.apk
-          "$tools/zipalign" -P 16 -f 4 app/build/outputs/apk/release/app-release-unsigned.apk "$private_dir/aligned.apk"
+          mkdir -p beta-playtest
+          apk=beta-playtest/GridMates-WordSearch-Beta1-Playtest.apk
+          "$tools/zipalign" -P 16 -f 4 beta-playtest-input/app-unsigned.apk "$private_dir/aligned.apk"
           "$tools/apksigner" sign --ks "$private_dir/signer.p12" --ks-type PKCS12 \
             --ks-key-alias gridmates-word-search-beta --ks-pass env:KEYSTORE_PASSWORD \
             --key-pass env:KEYSTORE_PASSWORD --v4-signing-enabled false \
@@ -154,57 +150,41 @@ jobs:
           actual=$(sed -n 's/^Signer #[0-9]\+ certificate SHA-256 digest: //p' beta-import-report/beta-signer.txt)
           test "$actual" = "$EXPECTED_CERT_SHA256"
           "$tools/aapt" dump badging "$apk" | tee beta-import-report/beta-badging.txt
-          grep -F "name='com.playereden.gridmates.wordsearch.beta' versionCode='121' versionName='0.9.75-beta.1'" \
+          grep -F "name='com.playereden.gridmates.wordsearch.beta' versionCode='122' versionName='0.9.75-beta.1-playtest'" \
             beta-import-report/beta-badging.txt
           if grep -Fxq application-debuggable beta-import-report/beta-badging.txt; then
-            echo 'The beta APK must be non-debuggable.' >&2
+            echo 'The signed playtest must be non-debuggable.' >&2
             exit 1
           fi
-          (cd beta-candidate && sha256sum GridMates-WordSearch-Beta1.apk) | tee beta-import-report/beta-sha256.txt
-      - name: Check release isolation and enable emulator acceleration
+          (cd beta-playtest && sha256sum GridMates-WordSearch-Beta1-Playtest.apk) | tee beta-import-report/beta-sha256.txt
+      - name: Archive the signed illustrated playtest
+        uses: actions/upload-artifact@v4
+        with:
+          name: GridMates-WordSearch-Beta1-Playtest
+          path: beta-playtest/GridMates-WordSearch-Beta1-Playtest.apk
+          if-no-files-found: error
+          retention-days: 14
+      - name: Enable Android emulator acceleration
         run: |
-          python3 - <<'PY'
-          from zipfile import ZipFile
-
-          with ZipFile("qa-v120/app-debug.apk") as qa, ZipFile("beta-candidate/GridMates-WordSearch-Beta1.apk") as beta:
-              preview_assets = {name for name in qa.namelist() if name.startswith("assets/ws")}
-              assert len(preview_assets) > 100, "Wrong v120 fixture"
-              assert not preview_assets.intersection(beta.namelist()), "QA assets entered the beta"
-              assert not any(name.startswith("assets/ws") for name in beta.namelist())
-              for name in beta.namelist():
-                  if name.endswith(".dex"):
-                      code = beta.read(name)
-                      assert all(fragment not in code for fragment in (
-                          b"Ws57WoodlandPreview", b"Ws66ChapterPreview", b"Ws73VarietyPreview"
-                      )), "QA book content classes entered the beta"
-              print(f"Confirmed exclusion of {len(preview_assets)} v120 preview assets and QA book classes.")
-          PY
           echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=kvm"' | sudo tee /etc/udev/rules.d/99-kvm4all.rules
           sudo udevadm control --reload-rules
           sudo udevadm trigger --name-match=kvm
-      - name: Archive the signed beta candidate
-        uses: actions/upload-artifact@v4
-        with:
-          name: GridMates-WordSearch-Beta1-Android
-          path: beta-candidate/GridMates-WordSearch-Beta1.apk
-          if-no-files-found: error
-          retention-days: 14
-      - name: Rehearse v120 Settings export and beta restore on Android 35
+      - name: Verify the signed update, full backup restore and illustrated bookcase
         uses: reactivecircus/android-emulator-runner@v2
         with:
           api-level: 35
           target: google_apis
           arch: x86_64
           profile: pixel_4
-          avd-name: word-search-beta-import
+          avd-name: word-search-beta-playtest
           ram-size: 3072M
           disable-animations: true
           emulator-options: -no-window -gpu swiftshader -no-snapshot -noaudio -no-boot-anim
-          script: python3 scripts/ws_beta_import_emulator.py
-      - name: Archive verification results
+          script: python3 scripts/ws_beta_playtest_emulator.py
+      - name: Archive Android playtest verification
         if: ${{ always() }}
         uses: actions/upload-artifact@v4
         with:
-          name: GridMates-WordSearch-Beta1-Verification
+          name: GridMates-WordSearch-Beta1-Playtest-Verification
           path: beta-import-report/
           retention-days: 14
