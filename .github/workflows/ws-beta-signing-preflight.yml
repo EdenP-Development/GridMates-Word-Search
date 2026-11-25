@@ -96,9 +96,9 @@ jobs:
           gh run download 45491802328 --repo "$GITHUB_REPOSITORY" \
             --name GridMates-WordSearch-Android-QA --dir qa-v120
           echo '0650e7fc6fb6198e22b20b8f6360c7379fe668a263b4eebb9d522f787b286a09  qa-v120/app-debug.apk' | sha256sum -c
-          gh api "repos/$GITHUB_REPOSITORY/actions/artifacts/15000254577/zip" > beta-v124.zip
-          unzip -q beta-v124.zip -d beta-v124
-          echo 'c43462cc89ed2060ce33358e30d92c0fd0662ffdc40d847a38faf8099f392859  beta-v124/GridMates-WordSearch-Beta1-Owl-Icon-Playtest.apk' | sha256sum -c
+          gh api "repos/$GITHUB_REPOSITORY/actions/artifacts/15002893342/zip" > beta-v125.zip
+          unzip -q beta-v125.zip -d beta-v125
+          echo '2728ea8952a17e9157edf19d62142ddf8c43a551214219b5ddf601f34f686901  beta-v125/GridMates-WordSearch-Beta1-Library-Polish-Playtest.apk' | sha256sum -c
       - name: Compare packaged art and book previews with QA v120
         run: |
           mkdir -p beta-import-report
@@ -123,7 +123,7 @@ jobs:
           fi
           test -n "$sdkmanager_path"
           "$sdkmanager_path" "build-tools;35.0.0"
-      - name: Sign and verify playtest code 125
+      - name: Sign and verify playtest code 126
         shell: bash
         env:
           KEYSTORE_BASE64: ${{ secrets.GRIDMATES_WORD_SEARCH_BETA_KEYSTORE_BASE64 }}
@@ -139,7 +139,7 @@ jobs:
           printf '%s' "$KEYSTORE_BASE64" | base64 --decode > "$private_dir/signer.p12"
           tools="$ANDROID_HOME/build-tools/35.0.0"
           mkdir -p beta-playtest
-          apk=beta-playtest/GridMates-WordSearch-Beta1-Library-Polish-Playtest.apk
+          apk=beta-playtest/GridMates-WordSearch-Beta1-GridMates-Icon-Playtest.apk
           "$tools/zipalign" -P 16 -f 4 beta-playtest-input/app-unsigned.apk "$private_dir/aligned.apk"
           "$tools/apksigner" sign --ks "$private_dir/signer.p12" --ks-type PKCS12 \
             --ks-key-alias gridmates-word-search-beta --ks-pass env:KEYSTORE_PASSWORD \
@@ -150,7 +150,7 @@ jobs:
           actual=$(sed -n 's/^Signer #[0-9]\+ certificate SHA-256 digest: //p' beta-import-report/beta-signer.txt)
           test "$actual" = "$EXPECTED_CERT_SHA256"
           "$tools/aapt" dump badging "$apk" | tee beta-import-report/beta-badging.txt
-          grep -F "name='com.playereden.gridmates.wordsearch.beta' versionCode='125' versionName='0.9.75-beta.1-library-polish-playtest'" \
+          grep -F "name='com.playereden.gridmates.wordsearch.beta' versionCode='126' versionName='0.9.75-beta.1-gridmates-icon-playtest'" \
             beta-import-report/beta-badging.txt
           if grep -Fxq application-debuggable beta-import-report/beta-badging.txt; then
             echo 'The signed playtest must be non-debuggable.' >&2
@@ -159,16 +159,18 @@ jobs:
           "$tools/aapt2" dump resources "$apk" > "$private_dir/resources.txt"
           grep -F 'drawable/ic_wordsearch_owl_foreground' "$private_dir/resources.txt" | tee beta-import-report/launcher-resources.txt
           grep -F 'drawable/ic_wordsearch_owl_monochrome' "$private_dir/resources.txt" | tee -a beta-import-report/launcher-resources.txt
-          grep -F 'color/wordsearch_owl_launcher_background' "$private_dir/resources.txt" | tee -a beta-import-report/launcher-resources.txt
-          (cd beta-playtest && sha256sum GridMates-WordSearch-Beta1-Library-Polish-Playtest.apk) | tee beta-import-report/beta-sha256.txt
+          grep -F -A1 'color/wordsearch_launcher_background' "$private_dir/resources.txt" | tee -a beta-import-report/launcher-resources.txt
+          grep -Fi '214f3f' beta-import-report/launcher-resources.txt
+          (cd beta-playtest && sha256sum GridMates-WordSearch-Beta1-GridMates-Icon-Playtest.apk) | tee beta-import-report/beta-sha256.txt
       - name: Verify the source illustration and packaged launcher raster
         shell: bash
         run: |
-          python3 - beta-playtest/GridMates-WordSearch-Beta1-Library-Polish-Playtest.apk <<'PY' | tee beta-import-report/launcher-artwork.txt
+          python3 - beta-playtest/GridMates-WordSearch-Beta1-GridMates-Icon-Playtest.apk <<'PY' | tee beta-import-report/launcher-artwork.txt
           import hashlib
           import json
           from pathlib import Path
           import sys
+          from xml.etree import ElementTree
           from zipfile import ZipFile
 
           manifest = json.loads(Path('design/visual-system/masters/ws-launcher-owl-v1/manifest.json').read_text())
@@ -177,7 +179,16 @@ jobs:
               source = Path(asset['path']).read_bytes()
               assert hashlib.sha256(source).hexdigest() == asset['sha256'], asset['path']
 
-          foreground = Path(manifest['foreground']['path']).read_bytes()
+          asset = manifest['foreground']
+          assert (asset['width'], asset['height']) == (432, 432)
+          assert (asset['artwork_width'], asset['artwork_height']) == (232, 232)
+          assert (asset['offset_x'], asset['offset_y']) == (100, 100)
+          launcher = ElementTree.parse('app/src/betaPlaytest/res/mipmap-anydpi-v26/ic_launcher.xml')
+          drawable = '{http://schemas.android.com/apk/res/android}drawable'
+          assert launcher.find('background').get(drawable) == '@color/wordsearch_launcher_background'
+          colors = ElementTree.parse('app/src/main/res/values/launcher_colors.xml')
+          assert colors.find('color[@name="wordsearch_launcher_background"]').text == '#214F3F'
+          foreground = Path(asset['path']).read_bytes()
           with ZipFile(sys.argv[1]) as apk:
               assert any(
                   entry.filename.startswith('res/') and entry.file_size == len(foreground)
@@ -185,13 +196,13 @@ jobs:
                   for entry in apk.infolist()
               ), 'The signed APK does not contain the owl foreground bytes'
           print('PASS: The original artwork and adaptive layers match their source hashes.')
-          print('PASS: The signed APK contains the exact illustrated owl foreground.')
+          print('PASS: The signed APK contains the exact GridMates launcher export.')
           PY
       - name: Archive the signed illustrated playtest
         uses: actions/upload-artifact@v4
         with:
-          name: GridMates-WordSearch-Beta1-Library-Polish-Playtest
-          path: beta-playtest/GridMates-WordSearch-Beta1-Library-Polish-Playtest.apk
+          name: GridMates-WordSearch-Beta1-GridMates-Icon-Playtest
+          path: beta-playtest/GridMates-WordSearch-Beta1-GridMates-Icon-Playtest.apk
           if-no-files-found: error
           retention-days: 14
       - name: Enable Android emulator acceleration
@@ -215,6 +226,6 @@ jobs:
         if: ${{ always() }}
         uses: actions/upload-artifact@v4
         with:
-          name: GridMates-WordSearch-Beta1-Library-Polish-Playtest-Verification
+          name: GridMates-WordSearch-Beta1-GridMates-Icon-Playtest-Verification
           path: beta-import-report/
           retention-days: 14

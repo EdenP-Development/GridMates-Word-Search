@@ -489,7 +489,7 @@ jobs:
           test -n "$release_apk"
           resources="$RUNNER_TEMP/wordsearch-release-resources.txt"
           "$ANDROID_HOME/build-tools/35.0.0/aapt2" dump resources "$release_apk" > "$resources"
-          if grep -Eq 'drawable/ic_wordsearch_owl_(foreground|monochrome)|color/wordsearch_owl_launcher_background' "$resources"; then
+          if grep -Eq 'drawable/ic_wordsearch_owl_(foreground|monochrome)' "$resources"; then
             echo 'Playtest launcher artwork entered the release APK.' >&2
             exit 1
           fi

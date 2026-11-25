@@ -1,6 +1,6 @@
 {
   "asset_id": "word-search-launcher-owl-v1",
-  "review_status": "owner_artwork_selected_handset_review_pending",
+  "review_status": "owner_artwork_selected_standard_layout_handset_review_pending",
   "scope": "betaPlaytest",
   "source": {
     "method": "OpenAI image generation with the owner-supplied Sudoku badge as a style reference",
@@ -17,15 +17,21 @@
   },
   "foreground": {
     "path": "app/src/betaPlaytest/res/drawable-xxxhdpi/ic_wordsearch_owl_foreground.webp",
-    "sha256": "cd003e7068d8b48c0bdfc520d40ce19581ece71e908c954f13ce97aad7b9585a",
+    "sha256": "924b6a1e00c5e677431f11a7f9fcb102fee5f07ab5b8c814438c46e1a1970299",
     "width": 432,
     "height": 432,
-    "artwork_width": 256,
-    "artwork_height": 256
+    "artwork_width": 232,
+    "artwork_height": 232,
+    "offset_x": 100,
+    "offset_y": 100
   },
   "monochrome": {
     "path": "app/src/betaPlaytest/res/drawable/ic_wordsearch_owl_monochrome.xml",
     "sha256": "33d7fc62196a08e7a0255162399adbbf00873f2f1a2d2280a55a770b255c794d"
   },
-  "background_color": "#08351F"
+  "background_color": "#214F3F",
+  "launcher_standard": {
+    "version": "1.0",
+    "source": "https://github.com/EdenP-Development/Eden-Development-Standards/blob/9821e84330057c7744ff0f84ae3e85d380445c57/branding/gridmates/app-icons/v1.0/README.md"
+  }
 }

@@ -1,4 +1,4 @@
-"""Verify the signed library and collection update with a full QA save."""
+"""Verify the signed GridMates launcher update with a full QA save."""
 
 import re
 
@@ -20,6 +20,24 @@ def open_library():
     device.tap(device.ui("Full Library"))
     for title in ("Woodland", "Space", "Garden"):
         device.ui(f"Open {title}")
+
+
+def open_archived_qa_settings():
+    try:
+        device.open_settings(device.QA)
+    except AssertionError:
+        nodes = list(device.hierarchy().iter("node"))
+        launcher_stalled = any(
+            node.get("resource-id") == "android:id/alertTitle"
+            and node.get("text") == "Pixel Launcher isn't responding"
+            for node in nodes
+        )
+        close = next((node for node in nodes if node.get("resource-id") == "android:id/aerr_close"), None)
+        if not launcher_stalled or close is None:
+            raise
+        print("Closing the stalled emulator launcher and reopening archived QA.")
+        device.tap(close)
+        device.open_settings(device.QA)
 
 
 def check_collection():
@@ -53,7 +71,7 @@ def main():
     device.adb("install", "-t", "beta-playtest-input/app-debug-androidTest.apk")
     device.instrument("WsBetaV120BackupSeedAndroidTest", 1)
 
-    device.open_settings(device.QA)
+    open_archived_qa_settings()
     source = device.export_backup(device.QA_BACKUP)
     assert source["books"]["progress"] and source["books"]["sessions"]
     assert source["boardFont"] == "plex" and len(source["solo"]["bookAwards"]) == 1
@@ -62,19 +80,19 @@ def main():
     open_library()
     device.ui("Library options")
 
-    device.adb("install", "beta-v124/GridMates-WordSearch-Beta1-Owl-Icon-Playtest.apk")
+    device.adb("install", "beta-v125/GridMates-WordSearch-Beta1-Library-Polish-Playtest.apk")
     device.open_settings(device.BETA)
     device.open_restore_preview("1 completed book pages · 1 saved book pages.")
     device.tap(device.ui("Restore backup"))
     device.ui("Backup restored. Your saved progress is ready.")
 
     # Android's package manager checks that the new APK can update the old one.
-    device.adb("install", "-r", "beta-playtest/GridMates-WordSearch-Beta1-Library-Polish-Playtest.apk")
+    device.adb("install", "-r", "beta-playtest/GridMates-WordSearch-Beta1-GridMates-Icon-Playtest.apk")
     device.open_settings(device.BETA)
-    updated = export_playtest("WordSearch-Beta1-Library-Updated.json")
+    updated = export_playtest("WordSearch-Beta1-GridMates-Icon-Updated.json")
     assert updated == source, "The signed update changed the profile or book saves"
     assert device.qa_journal_hashes() == qa_before, "The original v120 saves changed"
-    print("PASS: The full save survived the signed update from code 124 to code 125.")
+    print("PASS: The full save survived the signed update from code 125 to code 126.")
 
     device.tap(device.ui("Back to Home"))
     device.ui("Your puzzle books")
@@ -105,7 +123,7 @@ def main():
     screenshot("installed-app-icon")
 
     result = (
-        "PASS: Beta 1 code 124 updated to the signed code 125 Library polish playtest. "
+        "PASS: Beta 1 code 125 updated to the signed code 126 GridMates icon playtest. "
         "The full portable profile, font, book bookmarks and page sessions matched after restart. "
         "Home and the illustrated Library loaded with Woodland, Space and Garden, "
         "and Woodland resumed its saved page with one word found. "
